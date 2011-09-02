@@ -173,14 +173,9 @@ namespace WCF_ENAP
         }
 
         [WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]
-        public void Delete(string id)
+        public void Delete(int id)
         {
-            var objeto = (from variable in bd.TBL_ACTIVIDAD_EVALUADA
-                          where variable.ID_ACTIVIDAD_EVALUADA == int.Parse(id)
-                          select variable).First();
-
-            bd.TBL_ACTIVIDAD_EVALUADA.DeleteOnSubmit(objeto);
-            bd.SubmitChanges();
+            HttpContext.Current.Session["TempActividadEvaluada"] = null;
         }
         string orderBy(string _sort)
         {

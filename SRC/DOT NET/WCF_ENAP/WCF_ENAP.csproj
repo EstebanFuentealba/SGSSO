@@ -2718,6 +2718,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Default.aspx" />
+    <Content Include="WebForm2.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataClassesEnap.designer.cs">
@@ -2762,6 +2763,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
     <Compile Include="WS\Accion.cs" />
     <Compile Include="WS\AccionCorrectiva.cs" />

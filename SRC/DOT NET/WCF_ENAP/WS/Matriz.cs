@@ -59,9 +59,9 @@ namespace WCF_ENAP
         }
 
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<ActividadJSONPOST> Create(int ID_ACTIVIDAD_GENERAL, int ID_CARGO, int ID_DIVISION, int ID_ACTIVIDAD_ESPECIFICA, int ID_DEPARTAMENTO_ORGANIZACION, int ID_PELIGRO, int ID_AREA, int VALORACION_CONSECUENCIA, int VALORACION_PROBABILIDAD, int MEDIDA_VALORACION_CONSECUENCIA, int MEDIDA_VALORACION_PROBABILIDAD, int CONDICION, int[] MEDIDAS)
+        public JSONCollection<TBL_MATRIZ> Create(int ID_ACTIVIDAD_GENERAL, int ID_CARGO, int ID_DIVISION, int ID_ACTIVIDAD_ESPECIFICA, int ID_DEPARTAMENTO_ORGANIZACION, int ID_PELIGRO, int ID_AREA, int VALORACION_CONSECUENCIA, int VALORACION_PROBABILIDAD, int MEDIDA_VALORACION_CONSECUENCIA, int MEDIDA_VALORACION_PROBABILIDAD, int CONDICION, int[] MEDIDAS)
         {
-            JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
+            JSONCollection<TBL_MATRIZ> objJSON = new JSONCollection<TBL_MATRIZ>();
             List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
             if (list == null)
             {
@@ -193,6 +193,7 @@ namespace WCF_ENAP
             */
 
             HttpContext.Current.Session["TempActividadEvaluada"] = null;
+            objJSON.items = nueva_matriz;
             objJSON.totalCount = bd.TBL_ACTIVIDAD_EVALUADA.Count();
             objJSON.success = true;
             return objJSON;

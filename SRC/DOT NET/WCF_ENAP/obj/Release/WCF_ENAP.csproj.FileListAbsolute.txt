@@ -4,3 +4,6 @@ C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\bin\Exce
 C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\ResolveAssemblyReference.cache
 C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.dll
 C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.pdb
+C:\Users\Alvarez\Desktop\SGSSO\SGSSO\SRC\DOT NET\WCF_ENAP\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Alvarez\Desktop\SGSSO\SGSSO\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.dll
+C:\Users\Alvarez\Desktop\SGSSO\SGSSO\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.pdb

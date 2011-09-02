@@ -7,7 +7,7 @@ TODO
 * [Menu] 						Modificar Forma de Cargar Ventanas (tree-data - layout-browser)
 * [Crear Matriz de Riesgo] 	~~Agregar Exportar Matriz,Planilla a la Tabla Agregar Matriz~~
 * [Crear Matriz de Riesgo] 	~~Boton Borrar Actual~~
-* [Busca Matriz de Riesgo] 	~~Al Modificar la actividad de Una matriz devolver el NOMBRE_MATRIZ Y NOMBRE_ACTIVIDAD_ESPECIFICA~~
+* [Busca Matriz de Riesgo] 	~~Al Modificar la actividad de Una matriz devolver el NOMBRE_MATRIZ Y NOMBRE_ACTIVIDAD_ESPECIFICA~~	
 * [Busca Matriz de Riesgo] 	Agregar la funcionalidad de evaluar (agregar) una nueva Actividad
 * [Busca Matriz de Riesgo] 	Agregar evento al descargar todos los datos mostrar tabla
 * [ALL] 						Habilitar Fechas en ExtJS <-> WCF .NET
