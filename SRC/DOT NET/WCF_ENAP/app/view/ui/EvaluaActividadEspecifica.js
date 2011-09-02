@@ -109,36 +109,28 @@
 			            }
 			            ]
 		            },
-                    /*{
-                    xtype: 'gridcolumn',
-                    align: 'center',
-                    text: 'Medidas de Control',
-                    flex: 0.2,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                    }
-                    },*/
 		            {
-		            xtype: 'gridcolumn',
-		            text: 'Re Evaluación del Riesgo',
-		            align: 'center',
-		            columns: [{
 		                xtype: 'gridcolumn',
-		                dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-		                text: 'P',
-		                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-		                    switch (value.toString()) {
-		                        case '2':
-		                            return "<span style='display: block; background-color:yellow;'>M</span>";
-		                            break;
-		                        case '3':
-		                            return "<span style='display: block; background-color:red;'>A</span>";
-		                            break;
-		                        default:
-		                            return "<span style='display: block; background-color:green;'>B</span>";
-		                            break;
+		                text: 'Re Evaluación del Riesgo',
+		                align: 'center',
+		                columns: [{
+		                    xtype: 'gridcolumn',
+		                    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
+		                    text: 'P',
+		                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+		                        switch (value.toString()) {
+		                            case '2':
+		                                return "<span style='display: block; background-color:yellow;'>M</span>";
+		                                break;
+		                            case '3':
+		                                return "<span style='display: block; background-color:red;'>A</span>";
+		                                break;
+		                            default:
+		                                return "<span style='display: block; background-color:green;'>B</span>";
+		                                break;
+		                        }
 		                    }
-		                }
-		            },
+		                },
 			            {
 			                xtype: 'gridcolumn',
 			                dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
@@ -178,7 +170,7 @@
 			                }
 			            }
 		            ]
-		        }],
+		            }],
                     dockedItems: [
                         {
                             xtype: 'toolbar',
@@ -196,9 +188,10 @@
                                 },
                                 {
                                     xtype: 'button',
-                                    text: 'Borrar Actual',
+                                    text: 'Borrar Todo',
                                     handler: function () {
-                                        
+
+                                        Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
                                     }
                                 }
                             ]
@@ -996,8 +989,76 @@
 
         var storeActividadEspecifica = Ext.data.StoreManager.lookup('dsActividadEspecifica'),
             storePeligro = Ext.data.StoreManager.lookup('dsPeligro'),
-            storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada');
+            storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada'),
+            storeMatrizRiesgo = Ext.data.StoreManager.lookup('dsMatrizRiesgo');
 
+        storeMatrizRiesgo.on('write', function (store, operation, options) {
+            var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Create') {
+                if (record.get('ID_MATRIZ')) {
+                    var idNuevaMatriz = record.get('ID_MATRIZ');
+                    var winOk = Ext.create('Ext.window.Window', {
+                        width: 673,
+                        title: 'Agregado con éxito',
+                        modal: true,
+                        items: [
+                        {
+                            xtype: 'label',
+                            height: 14,
+                            margin: '5 5 5 5',
+                            width: 47,
+                            text: 'Se guardó la matriz con éxito, ¿ Quieres Descargar un Documento ?'
+                        },
+                        {
+                            xtype: 'panel',
+                            frame: true,
+                            margin: '5 5 5 5',
+                            layout: {
+                                type: 'column'
+                            },
+                            flex: 1,
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    text: 'Planilla de Reconocimiento de Riesgo',
+                                    columnWidth: 0.33,
+                                    iconCls: 'matriz-icon',
+                                    handler: function () {
+                                        window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + idNuevaMatriz;
+                                        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    text: 'Matriz de Riesgo',
+                                    columnWidth: 0.33,
+                                    iconCls: 'matriz-icon',
+                                    handler: function () {
+                                        window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + idNuevaMatriz;
+                                        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    text: 'No',
+                                    columnWidth: 0.33,
+                                    handler: function () {
+                                        winOk.close();
+                                    }
+                                }
+                            ]
+                        }
+
+                        ]
+                    });
+                    winOk.show();
+                }
+            }
+        });
         storeActividadEspecifica.on('load', function (store, records, options, grid) {
             isLoadedActividadEspecifica = true;
             onLoadedAll();
@@ -1005,11 +1066,6 @@
         storePeligro.on('load', function (store, records, options, grid) {
             isLoadedPeligro = true;
             onLoadedAll();
-        });
-        storeActividadEvaluada.on('add', function (store, records, index, eOpts) {
-            var record = records[0];
-            console.log("AGREGADA");
-            console.log(record);
         });
     }
 });

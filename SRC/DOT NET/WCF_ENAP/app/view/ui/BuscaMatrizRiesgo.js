@@ -80,7 +80,6 @@ var dataConsecuencia = [
 				                    cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
 				                }
 				            });
-
 				        }
 				    }
 				},
@@ -242,7 +241,7 @@ var dataConsecuencia = [
                             name: 'startdt',
                             id: 'startdt',
                             vtype: 'daterange',
-                            endDateField: 'enddt' // id of the end date field
+                            endDateField: 'enddt'
                         },
                         {
                             fieldLabel: 'Y',
@@ -251,7 +250,7 @@ var dataConsecuencia = [
                             name: 'enddt',
                             id: 'enddt',
                             vtype: 'daterange',
-                            startDateField: 'startdt' // id of the start date field
+                            startDateField: 'startdt'
                         }
                     ]
                 }
@@ -290,16 +289,6 @@ var dataConsecuencia = [
         features: [groupingFeature],
         selModel: sm,
         columns: [
-        /*{
-        xtype: 'gridcolumn',
-        dataIndex: 'ID_ACTIVIDAD_ESPECIFICA',
-        flex: 0.2,
-        text: 'Actividad Especifica',
-        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-        var idx = Ext.data.StoreManager.lookup('dsActividadEspecifica').find('ID_ACTIVIDAD_ESPECIFICA', value.toString());
-        return idx !== -1 ? Ext.data.StoreManager.lookup('dsActividadEspecifica').getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
-        }
-        }*/
         {
         xtype: 'gridcolumn',
         dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
@@ -339,15 +328,12 @@ var dataConsecuencia = [
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
             switch (value.toString()) {
                 case '2':
-                    //return "<span style='display: block; background-color:yellow;'>M</span>";
                     return "Medio";
                     break;
                 case '3':
-                    //return "<span style='display: block; background-color:red;'>A</span>";
                     return "Alto";
                     break;
                 default:
-                    //return "<span style='display: block; background-color:green;'>B</span>";
                     return "Bajo";
                     break;
             }
@@ -371,15 +357,12 @@ var dataConsecuencia = [
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
-	                //return "<span style='display: block; background-color:yellow;'>M</span>";
 	                return "Dañino";
 	                break;
 	            case '3':
-	                //return "<span style='display: block; background-color:red;'>A</span>";
 	                return "Extremadamente Dañino";
 	                break;
 	            default:
-	                //return "<span style='display: block; background-color:green;'>B</span>";
 	                return "Ligeramente Dañino";
 	                break;
 	        }
@@ -389,32 +372,18 @@ var dataConsecuencia = [
 	    xtype: 'gridcolumn',
 	    text: 'MR',
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-	        /*
-	        TODO: CALCULO DE LA MAGNITUD DE RIESGO
-	        */
 	        var indicador_riesgo = parseInt(record.get('VALORACION_CONSECUENCIA')) * parseInt(record.get('VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo < 3) {
-	            /* GREEN */
 	            return "<span style='display: block; background-color:green;'><center><b>Bajo</b></center></span>";
 	        } else if (indicador_riesgo > 5) {
-	            /* RED */
 	            return "<span style='display: block; background-color:red;'><center><b>Alto</b></center></span>";
 	        } else {
-	            /* YELLOW */
 	            return "<span style='display: block; background-color:yellow;'><center><b>Medio</b></center></span>";
 	        }
 	    }
 	}
 	]
 },
-    /*{
-    xtype: 'gridcolumn',
-    align: 'center',
-    text: 'Medidas de Control',
-    flex: 0.2,
-    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-    }
-    },*/
 {
 xtype: 'gridcolumn',
 text: 'Re Evaluación del Riesgo',
@@ -437,15 +406,12 @@ columns: [{
     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
         switch (value.toString()) {
             case '2':
-                //return "<span style='display: block; background-color:yellow;'>M</span>";
                 return "Medio";
                 break;
             case '3':
-                //return "<span style='display: block; background-color:red;'>A</span>";
                 return "Alto";
                 break;
             default:
-                //return "<span style='display: block; background-color:green;'>B</span>";
                 return "Bajo";
                 break;
         }
@@ -456,12 +422,12 @@ columns: [{
 	    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
 	    text: 'C',
 	    "field": {
-	        "xtype": "combo",
-	        "displayField": "NOMBRE_CONSECUENCIA",
-	        "valueField": "ID_CONSECUENCIA",
-	        "anchor": "100%",
+	        xtype: "combo",
+	        displayField: "NOMBRE_CONSECUENCIA",
+	        valueField: "ID_CONSECUENCIA",
+	        anchor: "100%",
 	        queryMode: 'local',
-	        "store": Ext.create('Ext.data.Store', {
+	        store: Ext.create('Ext.data.Store', {
 	            model: 'Consecuencia',
 	            data: dataConsecuencia
 	        })
@@ -469,15 +435,12 @@ columns: [{
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
-	                //return "<span style='display: block; background-color:yellow;'>M</span>";
 	                return "Dañino";
 	                break;
 	            case '3':
-	                //return "<span style='display: block; background-color:red;'>A</span>";
 	                return "Extremadamente Dañino";
 	                break;
 	            default:
-	                //return "<span style='display: block; background-color:green;'>B</span>";
 	                return "Ligeramente Dañino";
 	                break;
 	        }
@@ -487,18 +450,12 @@ columns: [{
 	    xtype: 'gridcolumn',
 	    text: 'MRCC',
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-	        /*
-	        TODO: CALCULO DE LA MAGNITUD DE RIESGO
-	        */
 	        var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo_controlado < 3) {
-	            /* GREEN */
 	            return "<span style='display: block; background-color:green;'><center><b>Bajo</b></center></span>";
 	        } else if (indicador_riesgo_controlado > 5) {
-	            /* RED */
 	            return "<span style='display: block; background-color:red;'><center><b>Alto</b></center></span>";
 	        } else {
-	            /* YELLOW */
 	            return "<span style='display: block; background-color:yellow;'><center><b>Medio</b></center></span>";
 	        }
 	    }
@@ -521,11 +478,6 @@ dockedItems: [
             dock: 'top',
             anchor: '100%',
             items: [
-            /*{
-            xtype: 'button',
-            text: 'Agregar Seleccionadas a Nueva Matriz',
-            iconCls: 'add-actividad-evaluada-icon'
-            },*/
                 {
                 xtype: 'button',
                 text: 'Exportar Seleccionadas',
@@ -539,17 +491,14 @@ dockedItems: [
                                 iconCls: 'matriz-icon',
                                 handler: function () {
                                     var sm = groupingFeature.getSelectionModel();
-                                    //No he Seleccionado ninguna fila
                                     if (sm.getCount() == 0) {
                                         Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
                                         return;
                                     }
                                     var data = sm.getSelection();
-                                    console.log(data[0].get('ID_MATRIZ'));
-                                    /*
                                     window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
                                     Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
-                                    */
+                                    
                                 }
                             },
                             {
@@ -557,13 +506,13 @@ dockedItems: [
                                 text: 'Matriz de Riesgo',
                                 iconCls: 'matriz-icon',
                                 handler: function () {
-                                    /* No he Seleccionado ninguna fila */
-                                    if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getCount() == 0) {
+                                    var sm = groupingFeature.getSelectionModel();
+                                    if (sm.getCount() == 0) {
                                         Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
                                         return;
                                     }
-                                    var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
-                                    window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                    var data = sm.getSelection();
+                                     window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
                                     Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                                 }
                             }
@@ -578,32 +527,6 @@ plugins: [
         clicksToEdit: 1
     })
 ]
-/*,
-selModel: Ext.create('Ext.selection.CheckboxModel', {
-checkOnly: true,
-listeners: {
-selectionchange: function (Model, selected, options) {
-try {
-
-var id_selected = selected[0].get("ID_MATRIZ");
-
-var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
-Ext.each(items, function (name, index, item) {
-var id_row = items[index].get("ID_MATRIZ");
-if (id_selected != id_row) {
-
-if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
-Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
-Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
-return;
-}
-}
-});
-} catch (e) { }
-
-}
-}
-})*/
 }];
             me.callParent(arguments);
         }

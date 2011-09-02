@@ -1,8 +1,8 @@
 Ext.define('WCF_ENAP.model.MatrizRiesgo', {
     extend: 'Ext.data.Model',
-    idProperty: 'ID_MATRIZ_RIESGO',
+    idProperty: 'ID_MATRIZ',
     fields: [
-        { "name": "ID_MATRIZ_RIESGO", "type": "int", "useNull": true },
+        { "name": "ID_MATRIZ", "type": "int", "useNull": true },
         { "name": "ID_ACTIVIDAD_ESPECIFICA", "type": "int" },
         { "name": "NOM_ACTIVIDAD_ESPECIFICA", "type": "string" },
         { "name": "ID_PELIGRO", "type": "int" },
