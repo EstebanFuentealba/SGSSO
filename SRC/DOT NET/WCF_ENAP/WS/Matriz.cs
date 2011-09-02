@@ -63,6 +63,8 @@ namespace WCF_ENAP
         {
             JSONCollection<TBL_MATRIZ> objJSON = new JSONCollection<TBL_MATRIZ>();
             List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
+            EnapUser user = (EnapUser)HttpContext.Current.Session["enap-log"];
+           
             if (list == null)
             {
                 throw new Exception("No hay datos en la lista");
@@ -72,6 +74,10 @@ namespace WCF_ENAP
                 FECHA_CREACION = DateTime.Now,
                 ESTADO = true
             };
+            if (user != null)
+            {
+                nueva_matriz.ID_USUARIO = user.Username;
+            }
             bd.TBL_MATRIZ.InsertOnSubmit(nueva_matriz);
             bd.SubmitChanges();
             foreach (ActividadJSONPOST nueva_actividad in list)

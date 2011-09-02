@@ -173,7 +173,7 @@ namespace WCF_ENAP
         }
 
         [WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]
-        public void Delete(int id)
+        public void Delete(string id)
         {
             HttpContext.Current.Session["TempActividadEvaluada"] = null;
         }

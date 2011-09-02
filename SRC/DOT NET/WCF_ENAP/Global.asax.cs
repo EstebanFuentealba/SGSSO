@@ -49,7 +49,6 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("Organizacion", new WebServiceHostFactory(), typeof(Organizacion)));
 			RouteTable.Routes.Add(new ServiceRoute("ParteCorporal", new WebServiceHostFactory(), typeof(ParteCorporal)));
 			RouteTable.Routes.Add(new ServiceRoute("Peligro", new WebServiceHostFactory(), typeof(Peligro)));
-			RouteTable.Routes.Add(new ServiceRoute("Privilegio", new WebServiceHostFactory(), typeof(Privilegio)));
 			RouteTable.Routes.Add(new ServiceRoute("ProgramaActividad", new WebServiceHostFactory(), typeof(ProgramaActividad)));
 			RouteTable.Routes.Add(new ServiceRoute("ProgramaAnual", new WebServiceHostFactory(), typeof(ProgramaAnual)));
 			RouteTable.Routes.Add(new ServiceRoute("PuntoGeografico", new WebServiceHostFactory(), typeof(PuntoGeografico)));

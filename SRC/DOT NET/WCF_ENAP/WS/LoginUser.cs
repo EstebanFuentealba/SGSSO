@@ -48,10 +48,60 @@ namespace WCF_ENAP
                         user.Name = rs.Properties["name"][0].ToString();
                     }
                     catch (Exception ex) { }
+                    TBL_USUARIO user_update = null;
+                    var objeto = (from variable in bd.TBL_USUARIO
+                                  where variable.ID_USUARIO == USERNAME
+                                  select variable).ToList<TBL_USUARIO>();
                     
+                    if (objeto.Count == 0)
+                    {
+                        user_update = new TBL_USUARIO()
+                        {
+                            ID_USUARIO = user.Username,
+                            NOMBRES = user.Name
+                        };
 
+                        bd.TBL_USUARIO.InsertOnSubmit(user_update);
+                        bd.SubmitChanges();
+                    }
+                    else
+                    {
+                        user_update = objeto[0];
+                    }
+                    foreach (string nombre_grupo in user.Memberof)
+                    {
+                        try
+                        {
+                            TBL_GRUPO nuevo_grupo = null;
+                            var lista = (from variable in bd.TBL_GRUPO
+                                         where variable.NOMBRE_GRUPO.Equals(nombre_grupo)
+                                         select variable).ToList<TBL_GRUPO>();
+                            if (lista.Count == 0)
+                            {
+                                nuevo_grupo = new TBL_GRUPO()
+                                {
+                                    NOMBRE_GRUPO = nombre_grupo
+                                };
+                                bd.TBL_GRUPO.InsertOnSubmit(nuevo_grupo);
+                                bd.SubmitChanges();
+                            }
+                            else
+                            {
+                                nuevo_grupo = lista[0];
+                            }
+                            TBL_USUARIO_GRUPO usuario_grupo = new TBL_USUARIO_GRUPO()
+                            {
+                                ID_USUARIO = user_update.ID_USUARIO,
+                                ID_GRUPO = nuevo_grupo.ID_GRUPO
+                            };
+                            bd.TBL_USUARIO_GRUPO.InsertOnSubmit(usuario_grupo);
+                            bd.SubmitChanges();
+                        }
+                        catch (Exception ex) { }
+                    }
                     objJSON.items = user;
                     objJSON.success = true;
+
                     Session["enap-log"] = user;
                 }
                 else

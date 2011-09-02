@@ -2809,7 +2809,6 @@
     <Compile Include="WS\Organizacion.cs" />
     <Compile Include="WS\ParteCorporal.cs" />
     <Compile Include="WS\Peligro.cs" />
-    <Compile Include="WS\Privilegio.cs" />
     <Compile Include="WS\ProgramaActividad.cs" />
     <Compile Include="WS\ProgramaAnual.cs" />
     <Compile Include="WS\PuntoGeografico.cs" />

@@ -95,7 +95,7 @@ namespace WCF_ENAP
             JSONCollection<TBL_USUARIO> objJSON = new JSONCollection<TBL_USUARIO>();
             try
             {
-                objJSON.items = (from variable in bd.TBL_USUARIO where variable.ID_USUARIO == int.Parse(id) select variable).Single();
+                objJSON.items = (from variable in bd.TBL_USUARIO where variable.ID_USUARIO == id select variable).Single();
                 objJSON.totalCount = bd.TBL_USUARIO.Count();
                 objJSON.success = true;
             }
@@ -114,7 +114,7 @@ namespace WCF_ENAP
             try
             {
                 var objeto = (from variable in bd.TBL_USUARIO
-                              where variable.ID_USUARIO == int.Parse(id)
+                              where variable.ID_USUARIO == id
                               select variable).Single();
                 objeto.PASSWORD = nuevo.PASSWORD;
 				objeto.EMAIL = nuevo.EMAIL;
@@ -142,7 +142,7 @@ namespace WCF_ENAP
 		public void Delete(string id)
 		{
 			var objeto = (from variable in bd.TBL_USUARIO
-							where variable.ID_USUARIO == int.Parse(id)
+							where variable.ID_USUARIO == id
 							select variable).First();
 
 			bd.TBL_USUARIO.DeleteOnSubmit(objeto);

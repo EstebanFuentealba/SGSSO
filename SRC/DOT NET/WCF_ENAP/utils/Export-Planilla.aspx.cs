@@ -188,7 +188,7 @@ namespace WCF_ENAP.utils
                 ((Range)workSheet.Cells[52, 2]).Value2 = nombre_organizacion ;
                 ((Range)workSheet.Cells[54, 2]).Value2 = nombre_division;
                 
-                workSheet.PageSetup.PrintArea = "$A$50:$T$" + (rowIndex + indexRow);
+                workSheet.PageSetup.PrintArea = "$A$50:$I$" + (rowIndex + indexRow);
                 
                 workBook.Save();
                 workBook.Close();

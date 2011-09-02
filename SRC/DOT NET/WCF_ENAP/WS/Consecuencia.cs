@@ -58,14 +58,13 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_CONSECUENCIA> Create(string ID_PELIGRO, string NOMBRE_CONSECUENCIA)
+        public JSONCollection<TBL_CONSECUENCIA> Create(string NOMBRE_CONSECUENCIA)
 		{
             JSONCollection<TBL_CONSECUENCIA> objJSON = new JSONCollection<TBL_CONSECUENCIA>();
             try
             {
                 TBL_CONSECUENCIA nuevo = new TBL_CONSECUENCIA()
                 {
-                    ID_PELIGRO = int.Parse(ID_PELIGRO), 
 					NOMBRE_CONSECUENCIA = NOMBRE_CONSECUENCIA
                 };
                 bd.TBL_CONSECUENCIA.InsertOnSubmit(nuevo);
@@ -109,7 +108,6 @@ namespace WCF_ENAP
                 var objeto = (from variable in bd.TBL_CONSECUENCIA
                               where variable.ID_CONSECUENCIA == int.Parse(id)
                               select variable).Single();
-                objeto.ID_PELIGRO = nuevo.ID_PELIGRO;
 				objeto.NOMBRE_CONSECUENCIA = nuevo.NOMBRE_CONSECUENCIA;
                 bd.SubmitChanges();
                 objJSON.items = objeto;

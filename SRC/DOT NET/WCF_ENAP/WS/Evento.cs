@@ -71,7 +71,7 @@ namespace WCF_ENAP
 					FECHA_INGRESO = DateTime.Parse(FECHA_INGRESO), 
 					LAT_EVENTO = double.Parse(LAT_EVENTO), 
 					LNG_EVENTO = double.Parse(LNG_EVENTO), 
-					TIPO_EVENTO = bool.Parse(TIPO_EVENTO), 
+					TIPO_EVENTO = int.Parse(TIPO_EVENTO), 
 					LUGAR_EXACTO = LUGAR_EXACTO
                 };
                 bd.TBL_EVENTO.InsertOnSubmit(nuevo);

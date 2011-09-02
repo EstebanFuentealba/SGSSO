@@ -65,7 +65,7 @@ namespace WCF_ENAP
             {
                 E006_3 nuevo = new E006_3()
                 {
-                    E00_ID_INFORME = int.Parse(E00_ID_INFORME), 
+                    ID_INFORME = int.Parse(E00_ID_INFORME), 
 					ID_EVENTO_EMPRESA = int.Parse(ID_EVENTO_EMPRESA), 
 					FECHA_INGRESO = DateTime.Parse(FECHA_INGRESO), 
 					CLASIFICACION = int.Parse(CLASIFICACION)
@@ -111,7 +111,7 @@ namespace WCF_ENAP
                 var objeto = (from variable in bd.E006_3
                               where variable.ID_INFORME == int.Parse(id)
                               select variable).Single();
-                objeto.E00_ID_INFORME = nuevo.E00_ID_INFORME;
+                objeto.ID_INFORME = nuevo.ID_INFORME;
 				objeto.ID_EVENTO_EMPRESA = nuevo.ID_EVENTO_EMPRESA;
 				objeto.FECHA_INGRESO = nuevo.FECHA_INGRESO;
 				objeto.CLASIFICACION = nuevo.CLASIFICACION;

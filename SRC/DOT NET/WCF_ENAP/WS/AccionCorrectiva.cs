@@ -65,7 +65,7 @@ namespace WCF_ENAP
             {
                 TBL_ACCION_CORRECTIVA nuevo = new TBL_ACCION_CORRECTIVA()
                 {
-                    ID_USUARIO = int.Parse(ID_USUARIO), 
+                    ID_USUARIO = ID_USUARIO, 
 					ID_INFORME = int.Parse(ID_INFORME), 
 					ID_ACCION = int.Parse(ID_ACCION), 
 					FECHA_PLAZO = DateTime.Parse(FECHA_PLAZO), 
