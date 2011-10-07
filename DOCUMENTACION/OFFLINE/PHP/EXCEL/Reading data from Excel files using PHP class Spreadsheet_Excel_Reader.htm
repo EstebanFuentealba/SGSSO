@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0058)http://www.ustrem.org/en/articles/reading-xls-with-php-en/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/menu85.js"></script><script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/es.js"></script><link rel="stylesheet" type="text/css" href="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/widget68.css" media="all">
+	<title>Reading data from Excel files using PHP class Spreadsheet_Excel_Reader</title>
+	<meta name="description" content="Reading data from Excel files using PHP class Spreadsheet_Excel_Reader">
+	<meta name="keywords" content="Reading, Excel, xls, PHP,Spreadsheet_Excel_Reader">
+	
+			<link rel="canonical" href="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/Reading data from Excel files using PHP class Spreadsheet_Excel_Reader.htm">
+		<link rel="alternate" type="application/rss+xml" title="Ustrem.org rss 2.0 feed" href="http://www.ustrem.org/feeds/rss20.rss?lang=en">
+	<link rel="alternate" type="application/rss+xml" title="Ustrem.org tips rss 2.0 feed" href="http://www.ustrem.org/feeds/tips.rss?lang=en">
+	<link rel="stylesheet" type="text/css" href="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/1024px.css" title="1024px style" media="screen,projection">
+    <link rel="icon" href="http://www.ustrem.org/favicon.ico" type="image/x-MS-bmp">
+    <link rel="shortcut icon" href="http://www.ustrem.org/favicon.ico" type="image/x-MS-bmp"><meta name="robots" content="index, follow"></head>
+	
+<body><div style="visibility: hidden; height: 1px; width: 1px; position: absolute; z-index: 100000; " id="_atssh"><iframe id="_atssh703" title="AddThis utility frame" style="height: 1px; width: 1px; position: absolute; z-index: 100000; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: initial; border-color: initial; left: 0px; top: 0px; " src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/sh56.htm"></iframe></div>
+<div id="wrap">
+
+	<div id="header">
+		<p id="toplinks">
+	<a href="http://www.ustrem.org/en/article-list/" title="Complete list of articles and manuals on this site">Articles</a>
+	|
+	<a href="http://www.ustrem.org/en/search/" title="Search this site" rel="nofollow">Search</a>
+	|
+	<a href="http://www.ustrem.org/en/ask-wiseguys/" title="Ask the wiseguys - ask your question" rel="nofollow">Questions</a>
+	|
+	<a href="http://www.ustrem.org/en/pages/comming-soon/" title="This is the list of articles and manuals that are going to be published on the site" rel="nofollow">Comming up</a>
+	|
+	<a href="http://www.ustrem.org/en/sitemap/" title="Sitemap" rel="nofollow">Sitemap</a>
+	</p>
+<h1><a href="http://www.ustrem.org/">Ustrem<span class="fade">.org</span></a></h1>
+<p id="slogan">some good stuff on PHP, MySQL and Linux</p>	</div>
+
+	<div id="content">
+					
+	<h2>Reading data from Excel files using PHP class Spreadsheet_Excel_Reader</h2>
+
+			
+		<br>
+If you have already read th article about generating Excel workbooks using PHP, this is an addition. Here's an example how to read these files. It is useful if you have large database and need to update it often. Easy way to do this is to export to an Excel file, make the changes and import rather than designing interface for this purpose.<br>
+<br>
+<h3>Supplying utilities</h3>
+We'll use class Spreadsheet_Excel_Reader. Latest version of the class may be found <a href="http://sourceforge.net/project/showfiles.php?group_id=99160" target="_blank" title="Spreadsheet_Excel_Writer latest version">here</a>.<br>
+<br>
+After downloading the class, we will use it:<br>
+<br>
+<font face="Courier New">$reader=new Spreadsheet_Excel_Reader();<br>
+$reader-&gt;setUTFEncoder('iconv');<br>
+$reader-&gt;setOutputEncoding('UTF-8');<br>
+$reader-&gt;read($filename);</font><br>
+<br>
+As data is internally written in UTF-16 encoding, we should specify what should be output encoding. Here comes an issue: this class uses iconv() or mb_convert_encoding() for conversion between encodings. So at least one of hose two should be enabled in PHP. In this case setUTFEncoder() specifies iconv(). We can change the output encoding to windows-1251 for example:<br>
+<font face="Courier New">$reader-&gt;setOutputEncoding('CP-1251');</font><br>
+
+		
+		
+<div style="float: right; padding: 5px">
+<script src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/googleapis.client__plusone.js"></script><script type="text/javascript" async="" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/ga.js"></script><script type="text/javascript"><!--
+google_ad_client = "ca-pub-6648731773687039";
+/* article-box-en */
+google_ad_slot = "0875142548";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px"><iframe allowtransparency="true" frameborder="0" height="250" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="300" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins></div>
+		<div id="___plusone_0" style="height: 24px; width: 106px; display: inline-block; text-indent: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: transparent; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial; "><iframe allowtransparency="true" frameborder="0" hspace="0" id="I1_1317375376469" marginheight="0" marginwidth="0" name="I1_1317375376469" scrolling="no" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/fastbutton.htm" style="width: 106px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; height: 24px; position: static; left: 0px; top: 0px; visibility: visible; " tabindex="-1" vspace="0" width="100%" title="+1"></iframe></div>
+		
+		<h3>Displaying output data</h3>
+Now let's output the data read. Information about sheets is stored in boundsheets variable. Here's a code for displaying each sheet's name:<br>
+<font face="Courier New">&nbsp;foreach ($reader-&gt;boundsheets as $k=&gt;$sheet)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp; echo "\n$k: $sheet";<br>
+&nbsp;}</font><br>
+<br>
+&nbsp;Data of the sheets is stored in sheets variable. For every sheet, a two dimensional array holding table is created. Here's how to print all data.<br>
+<br>
+&nbsp;foreach($reader-&gt;sheets as $k=&gt;$data)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp; echo "\n\n ".$reader-&gt;boundsheets[$k]."\n\n";<br>
+<br>
+&nbsp;&nbsp;&nbsp; foreach($data['cells'] as $row)<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach($row as $cell)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "$cell\t";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "\n";<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;}<br>
+		
+	
+		<div class="boxrelated">
+	<b>Related articles:</b><br><br>
+			<a href="http://www.ustrem.org/en/articles/generate-excel-speadsheet-en/" title="How to generate Excel file in cyrilic/cyrillic with Spreadsheet_Excel_Writer Pear package in PHP">How to generate Excel file in cyrilic/cyrillic with Spreadsheet_Excel_Writer Pear package in PHP</a><br>
+			<a href="http://www.ustrem.org/en/articles/bash-iconv-all-files-from-directory-en/" title="Bash script for encoding all files from a directory to different charset on a Linux box">Bash script for encoding all files from a directory to different charset on a Linux box</a><br>
+			<a href="http://www.ustrem.org/en/articles/large-xml-files-in-php-en/" title="Handling large XML files in PHP">Handling large XML files in PHP</a><br>
+		</div>
+	<div style="clear: both"></div>
+		
+	<p>&nbsp;</p>
+
+	<blockquote>
+			<p class="big">No comments yet</p>
+	
+	<a href="http://www.ustrem.org/en/articles/reading-xls-with-php-en/#" onclick="javascript: document.getElementById(&#39;add_comment&#39;).style.display = (document.getElementById(&#39;add_comment&#39;).style.display == &#39;&#39;) ? &#39;none&#39; : &#39;&#39;; return false;" title="Post a comment">Post a comment (fixed now)</a>
+
+	<div id="add_comment" style="display:none">
+		<iframe frameborder="0" scrolling="no" style="float:left" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/comments.htm" width="450" height="550"></iframe>
+		<div style="float:right; position:relative;">
+			<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6648731773687039";
+/* small-square-en */
+google_ad_slot = "8061085665";
+google_ad_width = 250;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px"><ins id="aswift_1_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px"><iframe allowtransparency="true" frameborder="0" height="250" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="250" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;"></iframe></ins></ins>		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	</blockquote>
+
+	<p>
+	<a title="Back to articles list" href="http://www.ustrem.org/en/article-list/" style="font-size: small;">Back to articles list</a>
+
+	&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<!-- AddThis Bookmark Button BEGIN -->
+<script type="text/javascript">
+  addthis_url    = location.href;
+  addthis_title  = document.title;
+  addthis_pub    = 'bubatalazi';
+</script><script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/addthis_widget.php"></script><span id="atb4e858d8ff86f4d8e"><a href="http://www.addthis.com/bookmark.php?v=120&winname=addthis&pub=bubatalazi&source=men-120&lng=es&s=&url=http%3A%2F%2Fwww.ustrem.org%2Fen%2Farticles%2Freading-xls-with-php-en%2F&title=Reading%20data%20from%20Excel%20files%20using%20PHP%20class%20Spreadsheet_Excel_Reader&logo=&logobg=&logocolor=&ate=AT-bubatalazi/-/-/4e858d8fd5d6232c/1&frommenu=1&cr=0&uid=4e858d8f11d533ce&pre=http%3A%2F%2Fwww.google.cl%2Furl%3Fsa%3Dt%26source%3Dweb%26cd%3D1%26ved%3D0CCEQFjAA%26url%3Dhttp%253A%252F%252Fwww.ustrem.org%252Fen%252Farticles%252Freading-xls-with-php-en%252F%26rct%3Dj%26q%3Dread%2520xls%2520with%2520php%26ei%3Djo2FTvb5DcSDtgfo0uks%26usg%3DAFQjCNHDZ-AgTDfqxNwdWasPvzpcX2WjSA&tt=0" onmouseover="return addthis_open(this, &#39;share&#39;, &#39;http://www.ustrem.org/en/articles/reading-xls-with-php-en/&#39;, &#39;Reading data from Excel files using PHP class Spreadsheet_Excel_Reader&#39;)" onmouseout="addthis_close()" onclick="return addthis_to()" class="snap_noshots"><img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/lg-bookmark-en.gif" width="125" height="16" style="border:none;padding:0px" alt="AddThis"></a></span>
+<!-- AddThis Bookmark Button END -->
+
+	</p>
+
+	<p>
+	<i>This page was last modified on 2011-09-30 12:32:31</i>
+	</p>
+
+	<p><script type="text/javascript"><!--
+google_ad_client = "ca-pub-6648731773687039";
+/* links-board-en */
+google_ad_slot = "7284244013";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px"><ins id="aswift_2_anchor" style="display:block;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px"><iframe allowtransparency="true" frameborder="0" height="15" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="728" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;"></iframe></ins></ins></p>
+
+
+			</div>
+
+	<div id="sidebar">
+		
+<h2>Menu ;)</h2>
+
+<p>
+<a href="http://www.ustrem.org/bg/" title="Български" rel="nofollow">Български</a>|
+<a href="http://www.ustrem.org/en/" title="English" rel="nofollow">English</a>
+</p>
+
+<ul>
+	<li><a href="http://www.ustrem.org/en/" title="Ustrem.org">Home</a></li>
+	<li><a href="http://www.ustrem.org/en/article-list/" title="Complete list of articles and manuals on this site">Articles</a><br></li>
+	<li><a href="http://www.ustrem.org/en/search/" title="Search this site" rel="nofollow">Search</a><br></li>
+	<li><a href="http://www.ustrem.org/en/ask-wiseguys/" title="Ask the wiseguys - ask your question" rel="nofollow">Questions</a><br></li>
+	<li><a href="http://www.ustrem.org/en/pages/comming-soon/" title="This is the list of articles and manuals that are going to be published on the site" rel="nofollow">Comming up</a><br></li>
+	<li><a href="http://mail.ustrem.org/" title="Ustrem.org / webmail" rel="nofollow">WebMail</a></li>
+	<li>
+		<a href="http://twitter.com/ustremorg" title="Follow us on Twitter" rel="nofollow"><img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/ustremorg.gif" alt="twitter / ustremorg"></a>
+	</li>
+</ul>
+
+<h2>Hints and tips</h2>
+<p>
+<a href="http://www.ustrem.org/en/tips//" title="Browse all 20 tips on " style="font-size: 5.0em" rel="nofollow"></a>
+<a href="http://www.ustrem.org/en/tips/apache/" title="Browse all 3 tips on apache" style="font-size: 1.6em" rel="nofollow">apache</a>
+<a href="http://www.ustrem.org/en/tips/bash/" title="Browse all 13 tips on bash" style="font-size: 3.6em" rel="nofollow">bash</a>
+<a href="http://www.ustrem.org/en/tips/cmd/" title="Browse all 4 tips on cmd" style="font-size: 1.8em" rel="nofollow">cmd</a>
+<a href="http://www.ustrem.org/en/tips/database/" title="Browse all 4 tips on database" style="font-size: 1.8em" rel="nofollow">database</a>
+<a href="http://www.ustrem.org/en/tips/java/" title="Browse all 5 tips on java" style="font-size: 2.0em" rel="nofollow">java</a>
+<a href="http://www.ustrem.org/en/tips/javascript/" title="Browse all 1 tips on javascript" style="font-size: 1.2em" rel="nofollow">javascript</a>
+<a href="http://www.ustrem.org/en/tips/linux/" title="Browse all 6 tips on linux" style="font-size: 2.2em" rel="nofollow">linux</a>
+<a href="http://www.ustrem.org/en/tips/mod_rewrite/" title="Browse all 2 tips on mod_rewrite" style="font-size: 1.4em" rel="nofollow">mod_rewrite</a>
+<a href="http://www.ustrem.org/en/tips/mssql/" title="Browse all 1 tips on mssql" style="font-size: 1.2em" rel="nofollow">mssql</a>
+<a href="http://www.ustrem.org/en/tips/mysql/" title="Browse all 1 tips on mysql" style="font-size: 1.2em" rel="nofollow">mysql</a>
+<a href="http://www.ustrem.org/en/tips/oracle/" title="Browse all 3 tips on oracle" style="font-size: 1.6em" rel="nofollow">oracle</a>
+<a href="http://www.ustrem.org/en/tips/os/" title="Browse all 2 tips on os" style="font-size: 1.4em" rel="nofollow">os</a>
+<a href="http://www.ustrem.org/en/tips/perl/" title="Browse all 1 tips on perl" style="font-size: 1.2em" rel="nofollow">perl</a>
+<a href="http://www.ustrem.org/en/tips/php/" title="Browse all 6 tips on php" style="font-size: 2.2em" rel="nofollow">php</a>
+<a href="http://www.ustrem.org/en/tips/regex/" title="Browse all 2 tips on regex" style="font-size: 1.4em" rel="nofollow">regex</a>
+<a href="http://www.ustrem.org/en/tips/rsync/" title="Browse all 1 tips on rsync" style="font-size: 1.2em" rel="nofollow">rsync</a>
+<a href="http://www.ustrem.org/en/tips/ssh/" title="Browse all 2 tips on ssh" style="font-size: 1.4em" rel="nofollow">ssh</a>
+<a href="http://www.ustrem.org/en/tips/svn/" title="Browse all 2 tips on svn" style="font-size: 1.4em" rel="nofollow">svn</a>
+<a href="http://www.ustrem.org/en/tips/unix/" title="Browse all 1 tips on unix" style="font-size: 1.2em" rel="nofollow">unix</a>
+<a href="http://www.ustrem.org/en/tips/web_design/" title="Browse all 5 tips on web_design" style="font-size: 2.0em" rel="nofollow">web_design</a>
+<a href="http://www.ustrem.org/en/tips/windows/" title="Browse all 6 tips on windows" style="font-size: 2.2em" rel="nofollow">windows</a>
+</p>
+<p>
+	<a href="http://www.ustrem.org/en/tips/" title="Browse all tips"><i>All tips</i></a>
+</p>
+
+<h2>Newsletter</h2>
+<p>
+    Subscribe for the newsletter with the latest articles and manuals on this site.
+    Provide the address, where you would like to receive the newsletter.
+</p>
+<form action="http://www.ustrem.org/en/newsletter/subscribe/" method="post">
+<input type="text" size="10" maxlength="100" name="emailo">
+<input type="text" name="email" value="" style="display: none">
+<input type="submit" value="Subscribe">
+</form>
+<br>
+
+<h2>Links</h2>
+<ul>
+<li><br></li>
+<li>
+<a href="http://slacklinux.net/" rel="nofollow" title="SLackLINUX,slackware, linuxhelp, howto, free slacklinux.net subdomain, slackware users, how to configure -
+mailserver, webserver and etc. ...">
+        <img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/slacklinux-logo.jpg" border="0" alt="SlackLinux.net" height="48" width="170">
+</a>
+</li>
+<li>
+	<a href="http://www.bgcode.com/" title="Уеб дизайн, изработка на уеб сайтове, уеб темплейти, CMS системи и VPS хостинг">
+		<img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/bgcode.png" border="0" alt="bgcode.com" width="188" height="57">
+	</a>
+</li>
+</ul>
+
+<p><script type="text/javascript"><!--
+google_ad_client = "ca-pub-6648731773687039";
+/* skyscraper-en */
+google_ad_slot = "5337263186";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px"><ins id="aswift_3_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px"><iframe allowtransparency="true" frameborder="0" height="600" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="160" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;"></iframe></ins></ins></p>
+
+<ul>
+<li>
+<a href="http://validator.w3.org/check?uri=http%3A%2F%2Fwww.ustrem.org%2Fen%2Farticles%2Freading-xls-with-php-en%2F" rel="nofollow" title="Valid XHTML 1.0!" target="_blank">
+	<img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/valid-html-80x15.gif" border="0" alt="Valid XHTML 1.0!" height="15" width="80">
+</a>
+</li>
+<li>
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.ustrem.org%2Fen%2Farticles%2Freading-xls-with-php-en%2F" rel="nofollow" title="Valid XHTML 1.0!" target="_blank">
+	<img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/valid-css-80x15.gif" border="0" alt="Valid XHTML 1.0!" height="15" width="80">
+</a>
+</li>
+<li>
+<a href="http://www.ustrem.org/feeds/rss20.rss?lang=en" title="Ustrem.org RSS 2.0 articles feed">
+		<img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/rss-2.0-80x15.gif" border="0" alt="Ustrem.org RSS 2.0 articles feed" height="15" width="80">
+</a>
+</li>
+<li>
+<a href="http://www.ustrem.org/feeds/tips.rss?lang=en" title="Ustrem.org RSS 2.0 tips feed">
+		<img src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/rss-2.0-80x15.gif" border="0" alt="Ustrem.org RSS 2.0 tips feed" height="15" width="80">
+</a>
+</li>
+</ul>
+	</div>
+
+	<div id="footer">
+		<p>
+	<a href="http://www.ustrem.org/en/article-list/" title="Complete list of articles and manuals on this site">Articles</a>
+	|
+	<a href="http://www.ustrem.org/en/search/" title="Search this site" rel="nofollow">Search</a>
+	|
+	<a href="http://www.ustrem.org/en/ask-wiseguys/" title="Ask the wiseguys - ask your question" rel="nofollow">Questions</a>
+	|
+	<a href="http://www.ustrem.org/en/pages/comming-soon/" title="This is the list of articles and manuals that are going to be published on the site" rel="nofollow">Comming up</a>
+	|
+	<a href="http://mail.ustrem.org/" title="Webmail login page" rel="nofollow">WebMail</a>
+	|
+		<a href="http://www.ustrem.org/en/articles/reading-xls-with-php-en/#header" title="Top of the page">Top</a>
+	<br>
+	© 2006-2010 Ustrem.org is powered by bobi_at_ustrem.org, onzi_at_ustrem.org and Slackware linux
+	|
+	Design by <a href="http://andreasviklund.com/">Andreas Viklund</a>
+</p>	</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-648929-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript" src="./Reading data from Excel files using PHP class Spreadsheet_Excel_Reader_files/plusone.js"></script>
+
+
+
+</body></html>

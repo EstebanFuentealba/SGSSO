@@ -1,0 +1,6 @@
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\bin\WCF_ENAP.dll
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\bin\WCF_ENAP.pdb
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\bin\ExcelLibrary.dll
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\ResolveAssemblyReference.cache
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.dll
+C:\Users\USUARIO\Documents\ENAP\Proyecto de Titulo\SRC\DOT NET\WCF_ENAP\obj\Release\WCF_ENAP.pdb

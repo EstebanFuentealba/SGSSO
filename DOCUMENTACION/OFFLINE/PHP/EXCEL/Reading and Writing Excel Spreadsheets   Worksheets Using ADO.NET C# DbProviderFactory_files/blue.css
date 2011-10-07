@@ -1,0 +1,148 @@
+body
+{
+    font-family: Tahoma, Verdana, Helvetica, Helvetica-Narrow, sans-serif;
+    margin: 0px;
+    background: #333333;
+    font-size: 14px;
+}
+#poster
+{
+    background: url(http://www.davidhayden.com/images/davidhayden.jpg) no-repeat;
+    margin-right: auto;
+    margin-left: auto;
+    width: 760px;
+    height: 99px;
+}
+#navtop, #navbottom
+{
+    background: url(http://www.davidhayden.com/images/menu.jpg) repeat-x;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: Verdana, Helvetica, Helvetica-Narrow, Tahoma, sans-serif;
+    margin-right: auto;
+    margin-left: auto;
+    width: 760px;
+    height: 28px;
+}
+#navtop ul, #navbottom ul
+{
+    margin: 0px;
+    padding-top: 9px;
+    list-style-type: none;
+    height: 19px;
+    text-align: center;
+}
+#navtop ul li, #navbottom ul li
+{
+    display: inline;
+    color: #333333;
+    margin-right: 25px;
+}
+#navtop a:link, #navbottom a:link, #navtop a:visited, #navbottom a:visited
+{
+    color: #333333;
+    text-decoration: none;
+}
+#navtop a:hover, #navbottom a:hover
+{
+    text-decoration: underline;
+}
+#navtop a:active, #navbottom a:active
+{
+    color: #333333;
+    text-decoration: none;
+}
+.none
+{
+    display: none;
+}
+#layout
+{
+    background: #ffffff;
+    width: 760px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+	overflow:auto;
+}
+#body
+{
+    width: 740px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+	height: 100%;
+}
+#columnleft
+{
+    float: left;
+    width: 540px;
+	margin-left: 10px;
+	height: 100%;
+}
+#columnright
+{
+    margin-left: 560px;
+}
+#bottomposter
+{
+    background: url(http://www.davidhayden.com/images/davidhaydenfooter.jpg) no-repeat;
+    margin-right: auto;
+    margin-left: auto;
+    width: 760px;
+    height: 116px;
+    margin-top: 0px;
+}
+#footer
+{
+    width: 760px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 10px;
+    padding-bottom: 22px;
+    color: #FFFFFF;
+}
+h1 a:visited,
+h1 a:active,
+h1 a:link {
+	color : #000;
+}
+
+h1 a:hover {
+	color : #47F;
+}
+
+a:visited,
+a:active,
+a:link {
+	color : #00F;
+}
+
+#top {
+	background-color : #ADF;
+	color : #000;
+	border-bottom : 4px solid #47F;
+}
+
+p.date {
+	border-bottom : 1px solid #AAA;	
+}
+
+#main {
+	background-color : #EEE;
+	border-bottom : 4px solid #47F;
+}
+
+#comments h4 span {
+	color : #999;
+}
+
+h3 {
+	border-bottom : 1px solid #AAA;
+}
+

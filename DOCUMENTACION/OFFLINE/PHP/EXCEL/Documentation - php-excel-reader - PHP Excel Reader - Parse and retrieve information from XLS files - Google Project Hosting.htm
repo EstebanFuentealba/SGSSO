@@ -1,0 +1,3733 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://code.google.com/p/php-excel-reader/wiki/Documentation -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="icon" type="image/vnd.microsoft.icon" href="http://www.gstatic.com/codesite/ph/images/phosting.ico">
+ 
+ 
+ <link rel="canonical" href="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting.htm">
+ 
+ <script src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/googleapis.client__plusone.js"></script><script type="text/javascript">
+ 
+ 
+ 
+ 
+ var codesite_token = null;
+ 
+ 
+ var CS_env = {"profileUrl":null,"token":null,"assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/13841197563397998716","projectHomeUrl":"/p/php-excel-reader","relativeBaseUrl":"","projectName":"php-excel-reader","loggedInUserEmail":null};
+ var _gaq = _gaq || [];
+ _gaq.push(
+ ['siteTracker._setAccount', 'UA-18071-1'],
+ ['siteTracker._trackPageview']);
+ 
+ _gaq.push(
+ ['projectTracker._setAccount', 'UA-6382940-8'],
+ ['projectTracker._trackPageview']);
+ 
+ 
+ </script>
+ 
+ 
+ <title>Documentation - 
+ php-excel-reader -
+ 
+ 
+ PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting
+ </title>
+ 
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+ 
+ <meta name="ROBOTS" content="NOARCHIVE">
+ 
+ <link type="text/css" rel="stylesheet" href="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/core.css">
+ 
+ <link type="text/css" rel="stylesheet" href="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/ph_detail.css">
+ 
+ 
+ 
+ <link type="application/atom+xml" rel="alternate" href="http://code.google.com/feeds/p/php-excel-reader/svnchanges/basic?path=/wiki/Documentation.wiki">
+ 
+ 
+<!--[if IE]>
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/13841197563397998716/css/d_ie.css" >
+<![endif]-->
+ <style type="text/css">
+ .menuIcon.off { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -42px }
+ .menuIcon.on { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -28px }
+ .menuIcon.down { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 0; }
+ 
+ 
+ #maincol {
+ padding-top: 0;
+ padding-bottom: 0;
+ }
+
+ 
+ </style>
+<script type="text/javascript" async="" src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/ga.js"></script></head>
+<body class="t6">
+<script type="text/javascript">
+ (function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+ })();
+</script>
+<div class="headbg">
+
+ <div id="gaia">
+ 
+
+ <span>
+ 
+ <a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#" id="projects-dropdown" onclick="return false;"><u>My favorites</u> <small>▼</small></a>
+ | <a href="https://www.google.com/accounts/ServiceLogin?service=code&ltmpl=phosting&continue=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation&followup=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation" onclick="_CS_click(&#39;/gb/ph/signin&#39;);"><u>Sign in</u></a>
+ 
+ </span>
+
+ </div>
+
+ <div class="gbh" style="left: 0pt;"></div>
+ <div class="gbh" style="right: 0pt;"></div>
+ 
+ 
+ <div style="height: 1px"></div>
+<!--[if lte IE 7]>
+<div style="text-align:center;">
+Your version of Internet Explorer is not supported. Try a browser that
+contributes to open source, such as <a href="http://www.firefox.com">Firefox</a>,
+<a href="http://www.google.com/chrome">Google Chrome</a>, or
+<a href="http://code.google.com/chrome/chromeframe/">Google Chrome Frame</a>.
+</div>
+<![endif]-->
+
+
+
+
+ <table style="padding:0px; margin: 0px 0px 10px 0px; width:100%" cellpadding="0" cellspacing="0" itemscope="" itemtype="http://schema.org/CreativeWork">
+ <tbody><tr style="height: 58px;">
+ 
+ <td id="plogo">
+ <link itemprop="url" href="http://code.google.com/p/php-excel-reader">
+ <a href="http://code.google.com/p/php-excel-reader/">
+ 
+ 
+ <img src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/logo" alt="Logo" itemprop="image">
+ 
+ </a>
+ </td>
+ 
+ <td style="padding-left: 0.5em">
+ 
+ <div id="pname">
+ <a href="http://code.google.com/p/php-excel-reader/"><span itemprop="name">php-excel-reader</span></a>
+ </div>
+ 
+ <div id="psum">
+ <a id="project_summary_link" href="http://code.google.com/p/php-excel-reader/"><span itemprop="description">PHP Excel Reader - Parse and retrieve information from XLS files</span></a>
+ 
+ </div>
+ 
+ 
+ </td>
+ <td style="white-space:nowrap;text-align:right; vertical-align:bottom;">
+ 
+ <form action="http://code.google.com/hosting/search">
+ <input size="30" name="q" value="" type="text">
+ 
+ <input type="submit" name="projectsearch" value="Search projects">
+ </form>
+ 
+ </td></tr>
+ </tbody></table>
+
+</div>
+
+ 
+<div id="mt" class="gtb"> 
+ <a href="http://code.google.com/p/php-excel-reader/" class="tab ">Project&nbsp;Home</a>
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/php-excel-reader/downloads/list" class="tab ">Downloads</a>
+ 
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/php-excel-reader/w/list" class="tab active">Wiki</a>
+ 
+ 
+ 
+ 
+ 
+ <a href="http://code.google.com/p/php-excel-reader/issues/list" class="tab ">Issues</a>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <div class="gtbc"></div>
+</div>
+<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="st">
+ <tbody><tr>
+ 
+ 
+ 
+ <td class="subt">
+ <div class="issueDetail">
+<div class="isf">
+ 
+ <span class="inIssueList"> 
+ <span>Search</span>
+ <form action="http://code.google.com/p/php-excel-reader/w/list" method="GET" style="display:inline">
+ <select id="can" name="can">
+ <option disabled="disabled">Search within:</option>
+ 
+ <option value="1">&nbsp;All wiki pages</option>
+ <option value="3">&nbsp;Featured pages</option>
+ <option value="2" selected="selected">&nbsp;Current pages</option>
+ 
+ 
+ <option value="4">&nbsp;Deprecated pages</option>
+ 
+ </select>
+ <span>for</span>
+ <span id="qq"><input type="text" size="38" id="searchq" name="q" value="" autocomplete="off"></span>
+ 
+ 
+ 
+ <input type="submit" value="Search">
+ </form>
+ </span>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+</div>
+</div>
+
+ </td>
+ 
+ 
+ 
+ 
+ 
+ 
+ <td align="right" valign="top" class="bevel-right"></td>
+ </tr>
+</tbody></table>
+
+
+<script type="text/javascript">
+ var cancelBubble = false;
+ function _go(url) { document.location = url; }
+</script>
+<div id="maincol">
+
+ 
+<!-- IE -->
+
+
+
+
+
+
+
+ <style type="text/css">
+ .delcom { background: #e8e8e8 }
+ .commentcontent {
+ margin: 2em;
+ padding: 0px 10px;
+ width: 66em;
+ }
+ .artifactcomment {
+ border-top: 3px solid #c3d9ff;
+ }
+ #commentform {
+ border-top: 3px solid #c3d9ff;
+ }
+ </style>
+
+<div id="wikipage">
+<table>
+ <tbody><tr>
+ 
+ 
+ <td style="vertical-align:top; padding-left:5px">
+ 
+ <div id="wikiheader">
+ 
+ <span style="font-size:120%;font-weight:bold">Documentation</span>
+ &nbsp;
+ <div> 
+ 
+ 
+ 
+ <div id="wikiauthor" style="float:right">
+ Updated <span title="Thu Feb  4 12:07:47 2010">
+ Feb 4, 2010</span>
+ 
+ by <a style="white-space: nowrap" href="http://code.google.com/u/@UBBeR11VBxZMXgN7FXteUF5QAQ%3D%3D/">matthew....@gmail.com</a>
+ 
+ </div>
+ </div>
+ </div>
+ 
+ <div id="wikicontent">
+ <div class="vt" id="wikimaincol">
+ <h1><a name="Creating_The_Reader_Object"></a>Creating The Reader Object<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Creating_The_Reader_Object" class="section_anchor"></a></h1><blockquote><tt>$data = new Spreadsheet_Excel_Reader("test.xls");</tt> 
+</blockquote><p>Or conserve memory for large worksheets by not storing the extended information about cells like fonts, colors, etc. </p><blockquote><tt>$data = new Spreadsheet_Excel_Reader("test.xls",false);</tt> 
+</blockquote><p>To use a coding other than UTF-8 (default) you can pass it as the 3rd parameter. </p><blockquote><tt>$data = new Spreadsheet_Excel_Reader("test.xls",true,"UTF-16");</tt> 
+</blockquote><h1><a name="Dumping_Worksheet_Contents"></a>Dumping Worksheet Contents<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Dumping_Worksheet_Contents" class="section_anchor"></a></h1><p>The simplest way to interact with an XLS file is to just dump it to HTML for display in a browser. This method will generate a table with inline CSS and all available formatting. </p><blockquote><tt>$data-&gt;dump($row_numbers=false,$col_letters=false,$sheet=0,$table_class='excel')</tt> 
+</blockquote><p>  </p><h1><a name="Accessing_Cell_Values"></a>Accessing Cell Values<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Accessing_Cell_Values" class="section_anchor"></a></h1><p>It is recommended that the public API functions be used to access data rather than relying on the underlying data structure, which may change between releases. </p><p>Retrieve the formatted value of a cell (what is displayed by Excel) on the first (or only) worksheet: </p><blockquote><tt>$data-&gt;val($row,$col)</tt> 
+</blockquote><p>You can also use column names rather than numbers: </p><blockquote><tt>$data-&gt;val(10,'AZ')</tt> 
+</blockquote><p>Access data on a different sheet: </p><blockquote><tt>$data-&gt;val($row,$col,$sheet_index)</tt> 
+</blockquote><h1><a name="Sheet_Info"></a>Sheet Info<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Sheet_Info" class="section_anchor"></a></h1><p>Get the count of how many rows/cols are on a sheet (default: first sheet): </p><blockquote><tt>$data-&gt;rowcount($sheet_index=0)</tt> 
+<tt>$data-&gt;colcount($sheet_index=0)</tt> 
+</blockquote><p>  </p><h1><a name="Cell_Info"></a>Cell Info<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Cell_Info" class="section_anchor"></a></h1><p>  The type of data in the cell: number|date|unknown   </p><blockquote><tt>$data-&gt;type($row,$col,$sheet=0)</tt> 
+</blockquote>  The raw data stored for the cell. For example, a cell may contain 123.456 but display as 123.5 because of the cell's format. Raw accesses the underlying value.   <blockquote><tt>$data-&gt;raw($row,$col,$sheet=0)</tt> 
+</blockquote><p></p><p>If the cell has a hyperlink associated with it, the url can be retrieved. </p><blockquote><tt>$data-&gt;hyperlink($row,$col,$sheet=0)</tt> 
+</blockquote><p>  Rowspan/Colspan of the cell.   </p><blockquote><tt>$data-&gt;rowspan($row,$col,$sheet=0)</tt> 
+<tt>$data-&gt;colspan($row,$col,$sheet=0)</tt> 
+</blockquote>  <p></p><h1><a name="Formatting_Details"></a>Formatting Details<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Formatting_Details" class="section_anchor"></a></h1><p>  The <strong>style</strong> method retrieves all available formatting information and returns a CSS string with all attributes. </p><blockquote><tt>$data-&gt;style($row,$col,$sheet=0)</tt> 
+</blockquote><p>  The format string for the cell. </p><blockquote><tt>$data-&gt;format($row,$col,$sheet=0)</tt> 
+</blockquote><p>  Cell alignment. Either 'right', 'center', or '' (left) </p><blockquote><tt>$data-&gt;align($row,$col,$sheet=0)</tt> 
+</blockquote><p>  Background color, in #FFFFFF format. </p><blockquote><tt>$data-&gt;bgColor($row,$col,$sheet=0)</tt> 
+</blockquote><p>Get border type for any of the cell's sides. Possible return values are: </p><ul><li>Thin </li><li>Medium </li><li>Dashed </li><li>Dotted </li><li>Thick </li><li>Double </li><li>Hair </li><li>Medium dashed </li><li>Thin dash-dotted </li><li>Medium dash-dotted </li><li>Thin dash-dot-dotted </li><li>Medium dash-dot-dotted </li><li>Slanted medium dash-dotted </li></ul><p></p><blockquote><tt>$data-&gt;borderLeft($row,$col,$sheet=0)</tt> 
+</blockquote><p>  </p><blockquote><tt>$data-&gt;borderRight($row,$col,$sheet=0)</tt> 
+</blockquote>  <blockquote><tt>$data-&gt;borderTop($row,$col,$sheet=0)</tt> 
+</blockquote>  <blockquote><tt>$data-&gt;borderBottom($row,$col,$sheet=0)</tt> 
+</blockquote>  Get the color of each of the borders, in #FFFFFF format. <p></p><blockquote><tt>$data-&gt;borderLeftColor($row,$col,$sheet=0)</tt> 
+</blockquote><p>  </p><blockquote><tt>$data-&gt;borderRightColor($row,$col,$sheet=0)</tt> 
+</blockquote>  <blockquote><tt>$data-&gt;borderTopColor($row,$col,$sheet=0)</tt> 
+</blockquote>  <blockquote><tt>$data-&gt;borderBottomColor($row,$col,$sheet=0)</tt> 
+</blockquote><p></p><p>The font color, which may be determined either by cell properties or by format properties, in #FFFFFF format. </p><blockquote><tt>$data-&gt;color($row,$col,$sheet=0)</tt> 
+</blockquote><p>  Other font properties: </p><blockquote><tt>$data-&gt;bold($row,$col,$sheet=0) // Boolean </tt> 
+</blockquote><p>  </p><blockquote><tt>$data-&gt;italic($row,$col,$sheet=0) // Boolean </tt> 
+</blockquote>  <blockquote><tt>$data-&gt;underline($row,$col,$sheet=0) // Boolean </tt> 
+</blockquote>  <blockquote><tt>$data-&gt;height($row,$col,$sheet=0) // Number in pixels </tt> 
+</blockquote>  <blockquote><tt>$data-&gt;font($row,$col,$sheet=0) // Font name </tt> 
+</blockquote>  <p></p>
+ </div>
+ </div>
+ </td></tr><tr>
+</tr></tbody></table>
+ </div>
+
+
+ 
+ <div id="wikicommentcol">
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+<div class="collapse">
+
+
+ 
+
+
+<div id="commentlist">
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxlUQF1RBxRBWQN1/">rootxfl...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun 10 06:57:06 2009">Jun 10, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>bravo </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxFWSlBVBxhCXQJ5/">raviansh...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun 17 00:53:16 2009">Jun 17, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>can it be used to acess all the fields of .xls file and then do vlaidation on them and finally saved into the mysql? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/bimal.poudel/">bimal.poudel</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jun 18 04:50:05 2009">Jun 18, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I have extracted .csv format data from the excel. Bimal / <a href="http://bimal.org.np/" rel="nofollow">http://bimal.org.np</a> </p><p>Just add the below method to your class: </p><blockquote>/<strong></strong> 
+</blockquote><ul><li>Exports an excel file into .csv format </li><li>Written by Bimal </li><li> </li></ul><blockquote>function dump_csv($row_numbers=false, $col_letters=false, $sheet=0, $table_class='excel') 
+{ 
+<blockquote>$outs = array(); 
+for($row=1; $row&lt;=$this-&gt;rowcount($sheet); $row++) 
+{ 
+<blockquote>$outs_inner = array(); 
+for($col=1; $col&lt;=$this-&gt;colcount($sheet); $col++) 
+{ 
+<blockquote>// Account for Rowspans/Colspans 
+$rowspan = $this-&gt;rowspan($row, $col, $sheet); 
+$colspan = $this-&gt;colspan($row, $col, $sheet); 
+for($i=0; $i&lt;$rowspan; $i++) 
+{ 
+<blockquote>for($j=0; $j&lt;$colspan; $j++) 
+{ 
+<blockquote>if ($i&gt;0 || $j&gt;0) 
+{ 
+<blockquote>$this-&gt;sheets$sheet<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>$row+$i<a href="http://code.google.com/p/php-excel-reader/w/edit/$row+$i">?</a>$col+$j<a href="http://code.google.com/p/php-excel-reader/w/edit/$col+$j">?</a>'dontprint'<a href="http://code.google.com/p/php-excel-reader/w/edit/'dontprint'">?</a>=1; 
+</blockquote>} 
+</blockquote>} 
+</blockquote>} 
+if(!$this-&gt;sheets$sheet<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>$row<a href="http://code.google.com/p/php-excel-reader/w/edit/$row">?</a>$col<a href="http://code.google.com/p/php-excel-reader/w/edit/$col">?</a>'dontprint'<a href="http://code.google.com/p/php-excel-reader/w/edit/'dontprint'">?</a>) 
+{ 
+<blockquote>$val = $this-&gt;val($row, $col, $sheet); 
+$val = ($val=='')?'':addslashes(htmlentities($val)); 
+</blockquote><ol><li>outs_inner<a href=""></a> = "\"{$val}\""; </li></ol><blockquote>$outs_inner<a href=""></a> = $val; 
+</blockquote>} 
+</blockquote>} 
+$outs<a href=""></a> = implode(',', $outs_inner); 
+</blockquote>} 
+$out = implode("\n", $outs); 
+return($out); 
+</blockquote>} 
+</blockquote>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBFQRVRQDxRHVwY%3D/">jmoose...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sat Jun 20 21:56:03 2009">Jun 20, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>This is a fantastic script.  Thank you so much for providing it.  I can't believe how easy it is to use! </p><p>- Justin </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhVeQFdTDxJGVwU%3D/">euromixs...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul  2 08:52:24 2009">Jul 2, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Is possible to integrate a method to change sheet during the read-cycle?  I've tried using a variable ,for example called $pag, to change sheet but is doesn't function. Can you help me? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhlUQVJQABRDXgh1/">popefe...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul  2 12:36:38 2009">Jul 2, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Note that if extended information is turned off, the output of raw() and type() will both be null.  Internally, it appears that when extended information is disabled in the constructor, the entire 'cellsInfo' key in $sheets$sheetNumber<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheetNumber">?</a> is not set. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhZfRlBXAxZFXQd7/">diegosub...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Jul  5 17:53:23 2009">Jul 5, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>it is possible to return false on Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a> if the file couldn´t be read? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBlURlJWBhFFXwM%3D/">boz_...@yahoo.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul 16 13:46:15 2009">Jul 16, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Awesome!, 5 Min and I already import excel to mysql. Easy and powerfull script. Thanks!  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxNSQ11WBRNGWwZ4/">keanloon...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jul 21 08:47:08 2009">Jul 21, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Just a quick note - if you need to have the sheet label (the name of the particular worksheet which is usually Sheet 1, Sheet 2 etc), use $object-&gt;boundsheets$sheet_number<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet_number">?</a>'name'<a href="http://code.google.com/p/php-excel-reader/w/edit/'name'">?</a>. There's no documentation for this, so I had to use var_dump to find it out. ;) </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBRVQlNYBhNNXwF%2B/">ahmad.fu...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jul 21 21:15:25 2009">Jul 21, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>thanks a lot for the lib.. </p><p>i guess we need also to add dump to array function so that it can be modified for further needed, such as validation etc. </p><pre class="prettyprint"><span class="kwd">function</span><span class="pln"> dumptoarray</span><span class="pun">(</span><span class="pln">$sheet</span><span class="pun">=</span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; $arr </span><span class="pun">=</span><span class="pln"> array</span><span class="pun">();</span><span class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">=</span><span class="lit">1</span><span class="pun">;</span><span class="pln">$row</span><span class="pun">&lt;=</span><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">rowcount</span><span class="pun">(</span><span class="pln">$sheet</span><span class="pun">);</span><span class="pln">$row</span><span class="pun">++)</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$col</span><span class="pun">=</span><span class="lit">1</span><span class="pun">;</span><span class="pln">$col</span><span class="pun">&lt;=</span><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">colcount</span><span class="pun">(</span><span class="pln">$sheet</span><span class="pun">);</span><span class="pln">$col</span><span class="pun">++)</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $arr</span><span class="pun">[</span><span class="pln">$row</span><span class="pun">][</span><span class="pln">$col</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $this</span><span class="pun">-&gt;</span><span class="pln">val</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">,</span><span class="pln">$col</span><span class="pun">,</span><span class="pln">$sheet</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pln"> $arr</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxRXRFNWDxRGVwV8/">acem...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul 23 17:07:58 2009">Jul 23, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Hi! I'm using Codeigniter to develop my app. I have add the library successfully (or at least I thought). But when I test this code  </p><pre class="prettyprint"><span class="pln">$archivo </span><span class="pun">=</span><span class="pln"> </span><span class="str">'example.xls'</span><span class="pun">;</span><span class="pln"><br>$this</span><span class="pun">-&gt;</span><span class="pln">load</span><span class="pun">-&gt;</span><span class="pln">library</span><span class="pun">(</span><span class="str">'Spreadsheet_Excel_Reader'</span><span class="pun">,</span><span class="pln"> $archivo</span><span class="pun">);</span><span class="pln"><br>echo $this</span><span class="pun">-&gt;</span><span class="pln">spreadsheet_excel_reader</span><span class="pun">-&gt;</span><span class="kwd">dump</span><span class="pun">(</span><span class="pln">$row_numbers</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">,</span><span class="pln">$col_letters</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">,</span><span class="pln">$sheet</span><span class="pun">=</span><span class="lit">0</span><span class="pun">,</span><span class="pln">$table_class</span><span class="pun">=</span><span class="str">'excel'</span><span class="pun">);</span></pre><p>I got an Undefined offset: 0 error. Does anyone know what this means?? Thanks on advance </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxRXRFNWDxRGVwV8/">acem...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jul 24 15:56:17 2009">Jul 24, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I fix it! I missed to include the <strong>error_reporting(E_ALL ^ E_NOTICE);</strong>. I works perfectly! Thank you so much for the library!!! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhFVQlJZAhNCWgZ9/">patrick...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jul 31 16:22:55 2009">Jul 31, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Can I use this to import xls files into my database?  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRBQQVNZBxhDVgV%2F/">yor...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Aug  9 00:27:57 2009">Aug 9, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Hey can you help0 me with my problem? </p><blockquote><a title="How do i select a sheet within a work book?" href="http://code.google.com/p/php-excel-reader/issues/detail?id=41">Issue 41</a>:  	 How do i select a sheet within a work book? 
+</blockquote><p><a href="http://code.google.com/p/php-excel-reader/issues/detail?id=41" rel="nofollow">http://code.google.com/p/php-excel-reader/issues/detail?id=41</a> </p><p>I hope you can, i can't get it to read across the workbook. I can't see where i can get it to look at different sheets </p><p>im so confused </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRdTRVZYDhFEWQh7/">yrk1...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Aug 21 04:58:49 2009">Aug 21, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>hi acemacu, my excel sheet is password protected. how can i read that with your API? </p><p>Thanks in advance. Roop </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBFQRVRRAxVMWQl%2B/">webmas...@lfcforever.co.uk</a>,
+ 
+ </span>
+ <span class="date" title="Sat Aug 22 13:09:50 2009">Aug 22, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Comment by yorrel, Aug 09, 2009 Hey can you help0 me with my problem?  </p><p><a title="How do i select a sheet within a work book?" href="http://code.google.com/p/php-excel-reader/issues/detail?id=41">Issue 41</a>: How do i select a sheet within a work book? <a href="http://code.google.com/p/php-excel-reader/issues/detail?id=41" rel="nofollow">http://code.google.com/p/php-excel-reader/issues/detail?id=41</a>  </p><p>I hope you can, i can't get it to read across the workbook. I can't see where i can get it to look at different sheets  </p><p>im so confused  </p><p>Note sure if this is what you are after but the below code opens the first worksheet then searches through workbook and lists the names of the worksheets as buttons on the page. Clicking on a button then changes worksheet.  </p><p>example.php  </p><pre class="prettyprint"><span class="pun">&lt;?</span><span class="pln">php<br>error_reporting</span><span class="pun">(</span><span class="pln">E_ALL </span><span class="pun">^</span><span class="pln"> E_NOTICE</span><span class="pun">);</span><span class="pln"><br>require_once </span><span class="str">'excel_reader2.php'</span><span class="pun">;</span><span class="pln"><br>$data </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Spreadsheet_Excel_Reader</span><span class="pun">(</span><span class="str">"production.xls"</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">?&gt;</span><span class="pln"><br></span><span class="dec">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span><span class="pln"><br></span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns</span><span class="pun">=</span><span class="atv">"http://www.w3.org/1999/xhtml"</span><span class="tag">&gt;</span><span class="pln"><br></span><span class="tag">&lt;head&gt;</span><span class="pln"><br></span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"scripts/excel.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln"><br></span><span class="tag">&lt;style&gt;</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border-style</span><span class="pun">:</span><span class="pln">ridge</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border-width</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border-collapse</span><span class="pun">:</span><span class="pln">collapse</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-family</span><span class="pun">:</span><span class="pln">sans-serif</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-size</span><span class="pun">:</span><span class="lit">12px</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel thead th</span><span class="pun">,</span><span class="pln"> table</span><span class="pun">.</span><span class="pln">excel tbody th </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">background</span><span class="pun">:</span><span class="lit">#CCCCCC</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border-style</span><span class="pun">:</span><span class="pln">ridge</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border-width</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">text-align</span><span class="pun">:</span><span class="pln"> center</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">vertical-align</span><span class="pun">:</span><span class="pln">bottom</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel tbody th </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">text-align</span><span class="pun">:</span><span class="pln">center</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">width</span><span class="pun">:</span><span class="lit">20px</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel tbody td </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">vertical-align</span><span class="pun">:</span><span class="pln">bottom</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">.</span><span class="pln">clearfloat </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">clear</span><span class="pun">:</span><span class="pln"> both</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel tbody td </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="lit">3px</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid </span><span class="lit">#EEEEEE</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br>table</span><span class="pun">.</span><span class="pln">excel tname </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-family</span><span class="pun">:</span><span class="pln"> Arial</span><span class="pun">,</span><span class="pln"> Helvetica</span><span class="pun">,</span><span class="pln"> sans-serif</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-size</span><span class="pun">:</span><span class="pln"> </span><span class="lit">12px</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-weight</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">color</span><span class="pun">:</span><span class="pln"> </span><span class="lit">#000000</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">padding-right</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">padding-left</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">.</span><span class="pln">sheetnames </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-family</span><span class="pun">:</span><span class="pln"> Arial</span><span class="pun">,</span><span class="pln"> Helvetica</span><span class="pun">,</span><span class="pln"> sans-serif</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-size</span><span class="pun">:</span><span class="pln"> </span><span class="lit">12px</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">font-weight</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">text-transform</span><span class="pun">:</span><span class="pln"> uppercase</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">color</span><span class="pun">:</span><span class="pln"> </span><span class="lit">#000000</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">padding-right</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20px</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">float</span><span class="pun">:</span><span class="pln"> left</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">padding-bottom</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20px</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="tag">&lt;/style&gt;</span><span class="pln"><br></span><span class="tag">&lt;/head&gt;</span><span class="pln"><br><br></span><span class="tag">&lt;body</span><span class="pln"> </span><span class="atn">onLoad</span><span class="pun">=</span><span class="atv">"</span><span class="pln">changeSheet</span><span class="pun">(</span><span class="lit">0</span><span class="pun">)</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln"><br>&lt;form action="</span><span class="pun">&lt;?</span><span class="pln">php echo $editFormAction</span><span class="pun">;</span><span class="pln"> </span><span class="pun">?&gt;</span><span class="pln">" method="post" name="worksheet"&gt;<br></span><span class="pun">&lt;?</span><span class="pln">php<br>$i </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$s</span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> $s</span><span class="pun">&lt;</span><span class="pln">count</span><span class="pun">(</span><span class="pln">$data</span><span class="pun">-&gt;</span><span class="pln">sheets</span><span class="pun">)-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> $s</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>$i</span><span class="pun">++;</span><span class="pln"><br></span><span class="pun">?&gt;</span><span class="pln"><br></span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"sheetnames"</span><span class="tag">&gt;</span><span class="pln"><br>&lt;input name="sheet" type="button" value="</span><span class="pun">&lt;?</span><span class="pln">php echo $data</span><span class="pun">-&gt;</span><span class="pln">boundsheets</span><span class="pun">[</span><span class="pln">$i</span><span class="pun">][</span><span class="str">'name'</span><span class="pun">];?&gt;</span><span class="pln">" onClick="changeSheet(</span><span class="pun">&lt;?</span><span class="pln">php echo $i </span><span class="pun">?&gt;</span><span class="pln">)"&gt;<br></span><span class="tag">&lt;/div&gt;</span><span class="pln"><br></span><span class="pun">&lt;?</span><span class="pln">php<br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">?&gt;</span><span class="pln"><br></span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"clearfloat"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln"><br></span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"test"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln"><br></span><span class="tag">&lt;/form&gt;</span><span class="pln"><br></span><span class="tag">&lt;/body&gt;</span><span class="pln"><br></span><span class="tag">&lt;/html&gt;</span></pre><p>excel.js </p><pre class="prettyprint"><span class="kwd">var</span><span class="pln"> xmlHttp <br><br></span><span class="kwd">function</span><span class="pln"> changeSheet</span><span class="pun">(</span><span class="pln">n</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"> <br>xmlHttp</span><span class="pun">=</span><span class="typ">GetXmlHttpObject</span><span class="pun">()</span><span class="pln"><br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">xmlHttp</span><span class="pun">==</span><span class="kwd">null</span><span class="pun">)</span><span class="pln"><br>&nbsp;</span><span class="pun">{</span><span class="pln"><br>&nbsp;alert </span><span class="pun">(</span><span class="str">"Browser does not support HTTP Request"</span><span class="pun">)</span><span class="pln"><br>&nbsp;</span><span class="kwd">return</span><span class="pln"><br>&nbsp;</span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">var</span><span class="pln"> url</span><span class="pun">=</span><span class="str">"script pages/changeSheet.php"</span><span class="pln"><br>url</span><span class="pun">=</span><span class="pln">url</span><span class="pun">+</span><span class="str">"?q="</span><span class="pun">+</span><span class="pln">n<br>xmlHttp</span><span class="pun">.</span><span class="pln">onreadystatechange</span><span class="pun">=</span><span class="pln">stateChanged <br>xmlHttp</span><span class="pun">.</span><span class="pln">open</span><span class="pun">(</span><span class="str">"GET"</span><span class="pun">,</span><span class="pln">url</span><span class="pun">,</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"><br>xmlHttp</span><span class="pun">.</span><span class="pln">send</span><span class="pun">(</span><span class="kwd">null</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="kwd">function</span><span class="pln"> stateChanged</span><span class="pun">()</span><span class="pln"> <br></span><span class="pun">{</span><span class="pln"> <br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">xmlHttp</span><span class="pun">.</span><span class="pln">readyState</span><span class="pun">==</span><span class="lit">4</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> xmlHttp</span><span class="pun">.</span><span class="pln">readyState</span><span class="pun">==</span><span class="str">"complete"</span><span class="pun">)</span><span class="pln"><br>&nbsp;</span><span class="pun">{</span><span class="pln"> <br>&nbsp;document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">"test"</span><span class="pun">).</span><span class="pln">innerHTML</span><span class="pun">=</span><span class="pln">xmlHttp</span><span class="pun">.</span><span class="pln">responseText <br>&nbsp;</span><span class="pun">}</span><span class="pln"> <br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="kwd">function</span><span class="pln"> </span><span class="typ">GetXmlHttpObject</span><span class="pun">()</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br></span><span class="kwd">var</span><span class="pln"> xmlHttp</span><span class="pun">=</span><span class="kwd">null</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">try</span><span class="pln"><br>&nbsp;</span><span class="pun">{</span><span class="pln"><br>&nbsp;</span><span class="com">// Firefox, Opera 8.0+, Safari</span><span class="pln"><br>&nbsp;xmlHttp</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">XMLHttpRequest</span><span class="pun">();</span><span class="pln"><br>&nbsp;</span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">catch</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"><br>&nbsp;</span><span class="pun">{</span><span class="pln"><br>&nbsp;</span><span class="com">//Internet Explorer</span><span class="pln"><br>&nbsp;</span><span class="kwd">try</span><span class="pln"><br>&nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; xmlHttp</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ActiveXObject</span><span class="pun">(</span><span class="str">"Msxml2.XMLHTTP"</span><span class="pun">);</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp;</span><span class="kwd">catch</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"><br>&nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; xmlHttp</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ActiveXObject</span><span class="pun">(</span><span class="str">"Microsoft.XMLHTTP"</span><span class="pun">);</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp;</span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">return</span><span class="pln"> xmlHttp</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span></pre><p>changeSheet.php </p><pre class="prettyprint"><span class="pun">&lt;?</span><span class="pln">php<br>error_reporting</span><span class="pun">(</span><span class="pln">E_ALL </span><span class="pun">^</span><span class="pln"> E_NOTICE</span><span class="pun">);</span><span class="pln"><br>require_once </span><span class="str">'../excel_reader2.php'</span><span class="pun">;</span><span class="pln"><br>$data </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Spreadsheet_Excel_Reader</span><span class="pun">(</span><span class="str">"../production.xls"</span><span class="pun">);</span><span class="pln"><br><br>$q </span><span class="pun">=</span><span class="pln"> $_GET</span><span class="pun">[</span><span class="str">'q'</span><span class="pun">];</span><span class="pln"><br></span><span class="pun">?&gt;</span><span class="pln"><br></span><span class="dec">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span><span class="pln"><br></span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns</span><span class="pun">=</span><span class="atv">"http://www.w3.org/1999/xhtml"</span><span class="tag">&gt;</span><span class="pln"><br></span><span class="tag">&lt;head&gt;</span><span class="pln"><br></span><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">http-equiv</span><span class="pun">=</span><span class="atv">"Content-Type"</span><span class="pln"> </span><span class="atn">content</span><span class="pun">=</span><span class="atv">"text/html; charset=utf-8"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln"><br></span><span class="tag">&lt;title&gt;</span><span class="pln">Untitled Document</span><span class="tag">&lt;/title&gt;</span><span class="pln"><br></span><span class="tag">&lt;/head&gt;</span><span class="pln"><br></span><span class="tag">&lt;body&gt;</span><span class="pln"><br></span><span class="pun">&lt;?</span><span class="pln">php<br>echo $data</span><span class="pun">-&gt;</span><span class="kwd">dump</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">,</span><span class="kwd">false</span><span class="pun">,</span><span class="pln"> $sheet</span><span class="pun">=</span><span class="pln">$q</span><span class="pun">);</span><span class="pln"> <br></span><span class="pun">?&gt;</span><span class="pln"><br></span><span class="tag">&lt;/body&gt;</span><span class="pln"><br></span><span class="tag">&lt;/html&gt;</span></pre><p>Hope this helps. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRdTRVZYDhFEWQh7/">yrk1...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Aug 24 00:31:14 2009">Aug 24, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>hi matthew.a.kruse, roxburghm </p><p>How can i read a password protected excel file, is there any function to use which actually takes the password as an argument?? </p><p>Thanks Roop </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBVeQl1XAhVAWgV7/">pascal.m...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Aug 24 14:07:50 2009">Aug 24, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I started to use it, decoding thousands of cells for an excel_to_database job, unbelieving my chance to find such a good code, but unfortunatly, I stumbled upon cells containing int values and val() returns an ugly binary string for them </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhJUSlJYBRZHXwB%2F/">rishabhs...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Sep  1 12:54:03 2009">Sep 1, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Nice class I used it to build a sms reporter on my site <a href="http://lifs.in/" rel="nofollow">LIFS</a> My Site </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhJUSlJYBRZHXwB%2F/">rishabhs...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Sep  1 12:55:44 2009">Sep 1, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Also Building website <a href="http://smsreporter.co.cc/" rel="nofollow">SMS Reporter</a>SMSReporter using this class </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRdTRVZYDhFEWQh7/">yrk1...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep  2 08:18:48 2009">Sep 2, 2009</span>
+ <div>
+<div class="commentcontent">
+<h1><a name="Heading1_:Reading_password-protected_Excel_files"></a>Heading1 <a title="Reading password-protected Excel files" href="http://code.google.com/p/php-excel-reader/issues/detail?id=26">Issue 26</a>:Reading password-protected Excel files<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Heading1_:Reading_password-protected_Excel_files" class="section_anchor"></a></h1><p>Any help or any investigation on this issue??? </p><p>Owenrs Please respond .. </p><p>Please tell whether we can do or not?? </p><p>Thanks Roop </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhVRRFxZBRFMWAF6/">luckythr...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Oct  5 08:45:22 2009">Oct 5, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Really great code but how to extract formula rather than result value from a cell ? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRdXSlRTDhFBWAJ%2F/">yongha...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Oct  8 10:55:45 2009">Oct 8, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Hi,is it possible to write to excel files?Thanks.. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBhWRFdXARhCWAJ7/">piotr.ja...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Oct 22 03:20:02 2009">Oct 22, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>well done. thx </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRdfQ1BYBhRCXQh1/">benjamin...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Oct 23 01:37:23 2009">Oct 23, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>If you use php 5.3.x, the function "split()" is depreciated. It is used in line 79 and and 844 of excel_reader_2.php. You can simply replace it with the function "explode()", which has the same parameters. </p><p>Another depreceated thing is referencing the return-value of "new ANYCLASS()", which is done in line 916. Replace it by "$this-&gt;<i>ole = new OLERead();" and all works fine! </i></p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRdfQ1BYBhRCXQh1/">benjamin...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Oct 23 03:22:24 2009">Oct 23, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I built a CodeIgniter<a href="http://code.google.com/p/php-excel-reader/w/edit/CodeIgniter">?</a> compatible version, look here: <a href="http://codeigniter.com/wiki/another_Excel_Reader/" rel="nofollow">http://codeigniter.com/wiki/another_Excel_Reader/</a> </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxVXS1RSBhhEVwF5/">zhiet...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Nov 22 08:19:26 2009">Nov 22, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>hi just asking how can i parse the specific row and column to run some status code example </p><blockquote>A             C         D             E           
+</blockquote>1 ComputerName<a href="http://code.google.com/p/php-excel-reader/w/edit/ComputerName">?</a>	Type	  Category	Status 2 CCV02BP001	Standard  Deployed	UP 3 <p></p><p>i want to parse the row 2 column A, to give the value of Column E status "online of offline" </p><p>really need your help on this sir, big help for a nooby like me </p><p>tnx </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxVXRFdVBxNAVgR8/">pancho.e...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Nov 23 08:23:49 2009">Nov 23, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I don't know if I'm doing something wrong, but it seems to be a limit in the number of rows. It reads a maximum of 65.500 rows more or less. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/bimal.poudel/">bimal.poudel</a>,
+ 
+ </span>
+ <span class="date" title="Fri Nov 27 13:24:29 2009">Nov 27, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>My code comments were lost due to the comments, and here is a remake. This function extracts an excel sheet data into csv. </p><pre class="prettyprint"><span class="pln">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">function</span><span class="pln"> dump_csv</span><span class="pun">(</span><span class="pln">$row_numbers</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">,</span><span class="pln"> $col_letters</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">,</span><span class="pln"> $sheet</span><span class="pun">=</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> $table_class</span><span class="pun">=</span><span class="str">'excel'</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $outs </span><span class="pun">=</span><span class="pln"> array</span><span class="pun">();</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">=</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> $row</span><span class="pun">&lt;=</span><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">rowcount</span><span class="pun">(</span><span class="pln">$sheet</span><span class="pun">);</span><span class="pln"> $row</span><span class="pun">++)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $outs_inner </span><span class="pun">=</span><span class="pln"> array</span><span class="pun">();</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$col</span><span class="pun">=</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> $col</span><span class="pun">&lt;=</span><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">colcount</span><span class="pun">(</span><span class="pln">$sheet</span><span class="pun">);</span><span class="pln"> $col</span><span class="pun">++)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// Account for Rowspans/Colspans</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $rowspan </span><span class="pun">=</span><span class="pln"> $this</span><span class="pun">-&gt;</span><span class="pln">rowspan</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">,</span><span class="pln"> $col</span><span class="pun">,</span><span class="pln"> $sheet</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $colspan </span><span class="pun">=</span><span class="pln"> $this</span><span class="pun">-&gt;</span><span class="pln">colspan</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">,</span><span class="pln"> $col</span><span class="pun">,</span><span class="pln"> $sheet</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$i</span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> $i</span><span class="pun">&lt;</span><span class="pln">$rowspan</span><span class="pun">;</span><span class="pln"> $i</span><span class="pun">++)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">$j</span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> $j</span><span class="pun">&lt;</span><span class="pln">$colspan</span><span class="pun">;</span><span class="pln"> $j</span><span class="pun">++)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$i</span><span class="pun">&gt;</span><span class="lit">0</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> $j</span><span class="pun">&gt;</span><span class="lit">0</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $this</span><span class="pun">-&gt;</span><span class="pln">sheets</span><span class="pun">[</span><span class="pln">$sheet</span><span class="pun">][</span><span class="str">'cellsInfo'</span><span class="pun">][</span><span class="pln">$row</span><span class="pun">+</span><span class="pln">$i</span><span class="pun">][</span><span class="pln">$col</span><span class="pun">+</span><span class="pln">$j</span><span class="pun">][</span><span class="str">'dontprint'</span><span class="pun">]=</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pun">(!</span><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">sheets</span><span class="pun">[</span><span class="pln">$sheet</span><span class="pun">][</span><span class="str">'cellsInfo'</span><span class="pun">][</span><span class="pln">$row</span><span class="pun">][</span><span class="pln">$col</span><span class="pun">][</span><span class="str">'dontprint'</span><span class="pun">])</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $val </span><span class="pun">=</span><span class="pln"> $this</span><span class="pun">-&gt;</span><span class="pln">val</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">,</span><span class="pln"> $col</span><span class="pun">,</span><span class="pln"> $sheet</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $val </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$val</span><span class="pun">==</span><span class="str">''</span><span class="pun">)?</span><span class="str">''</span><span class="pun">:</span><span class="pln">addslashes</span><span class="pun">(</span><span class="pln">htmlentities</span><span class="pun">(</span><span class="pln">$val</span><span class="pun">));</span><span class="pln"> <br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $outs_inner</span><span class="pun">[]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"\"{$val}\""</span><span class="pun">;</span><span class="pln"> </span><span class="com"># Quote or not?</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">#$outs_inner[] = $val; </span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $outs</span><span class="pun">[]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> implode</span><span class="pun">(</span><span class="str">','</span><span class="pun">,</span><span class="pln"> $outs_inner</span><span class="pun">);</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $out </span><span class="pun">=</span><span class="pln"> implode</span><span class="pun">(</span><span class="str">"\r\n"</span><span class="pun">,</span><span class="pln"> $outs</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pun">(</span><span class="pln">$out</span><span class="pun">);</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> </span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhZRRFxQARRBXAl5/">bardo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sat Dec  5 07:09:27 2009">Dec 5, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>I spent this whole day to find a good php xls reader and this is the best one indeed. I am not a php expert and I could not figure out how to remove the Excel subheading (A,B,C on the top and 1,2,3,4,etc. on the left) Can someone help me out? Thanks in advance. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBSS1NRBhFCXAB0Eg%3D%3D/">cdg.fore...@googlemail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Dec  7 04:04:03 2009">Dec 7, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Really very useful, this php excel reader. But: I have still not found a solution to the <a title="Warning: array_key_exists() [function.array-key-exists]: The second argument should be either an array or an object in [..." href="http://code.google.com/p/php-excel-reader/issues/detail?id=17">issue #17</a>: Warning: array_key_exists() function.array-key-exists<a href="http://code.google.com/p/php-excel-reader/w/edit/function.array-key-exists">?</a>: The second argument should be either an array or an object in ...<a href="http://code.google.com/p/php-excel-reader/w/edit/...">?</a>\xlsReader\excel_reader2.php on line ... Sometimes it works without any problem for weeks, and then after a tiny change in the excel file, suddenly the error occurs. Drives me crazy. Help. Desperately looking for a solution. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxhQRVNXBhhNXAZ%2F/">freddan....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Dec  9 04:03:18 2009">Dec 9, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>bardossi : </p><p>when you dump the excel on your webpage with this code: echo $data-&gt;dump(true, true); </p><p>remove the parameters true, and the "subheadings" will be gone.. </p><p>Hope it helped... </p><p>Nice php-class! Good work! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhZRRFxQARRBXAl5/">bardo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Dec  9 10:36:29 2009">Dec 9, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Yes, it was a great help, thanx!!! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/kpoxo6op/">kpoxo6op</a>,
+ 
+ </span>
+ <span class="date" title="Sun Dec 13 22:35:58 2009">Dec 13, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>How to read only one specific row from a file? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxVQR1JQBhdEXwd1/">DennysRe...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Dec 20 13:43:19 2009">Dec 20, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, great work! Your code is easy to use and modify! Thanks for share it! I wondered if there is a way, using your code, to explode a unique .xls file in several files correspond to his work sheets. </p><p>Thanks </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBFSQVZQBBFGWwl8/">gprod....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Dec 22 03:29:46 2009">Dec 22, 2009</span>
+ <div>
+<div class="commentcontent">
+<p>Does anyone know how to determine the actual active sheet(s) ? Thanks </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBdXS1NVBBJGVwJ6/">rvian...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jan  6 01:49:06 2010">Jan 6, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Great Script...thanks. However ive an issue, i've tried to align to the left a decimal number, it works in the spreadsheet but not using the parser. It stay on the right on my web page. Do you have any idea why? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBhSQVBWBRVAWwV7/">xgra...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jan 14 03:46:08 2010">Jan 14, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Thanks for the script. It solves to me a great problem! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRdVR11ZAxZBXwJ%2F/">delorme....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jan 20 08:12:52 2010">Jan 20, 2010</span>
+ <div>
+<div class="commentcontent">
+<blockquote>Comment by kpoxo6op,  Dec 13, 2009 
+</blockquote><p>How to read only one specific row from a file? </p><p>???????? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRNURVVYBxRDWwF0/">david.fi...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jan 29 03:15:56 2010">Jan 29, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>I don't see anything about formatting numbers. Has anyone encountered this? I get spreadsheets with numbers that are formatted as currency (i.e. displays the dollar sign, and parens for negative numbers) and I need to convert those to general format for import to mysql. I'm leaning towards writing my own regex to do it, but didn't want to spend the time if this class can already do it. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhNXQVRSDhlDXQR%2F/">buitrand...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Feb  3 22:52:18 2010">Feb 3, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi all, I'm encountered a problem like this, my excel file value date is 01-01-2010, then the script can not paser, but if I format to format shall be 01/01/2010, please help, thanks. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhNVQFFTDhRAXAJ5/">bujub...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Feb 10 22:09:14 2010">Feb 10, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi All, I am having problem running the script , it is showing "Fatal error: Maximum execution time of 30 seconds exceeded in "php-excel-reader\excel_reader2.php" on line 137". I edited execution time in my php.ini but still it is showing the same error...please help !!! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxFfQFJTBhZBWgh4/">bua...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Feb 16 11:09:32 2010">Feb 16, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>HI I think a function to go from a SHEET label to a SHEET index is missing: </p><p>'function getSheetIndex($label) { </p><blockquote>foreach ($this -&gt; boundsheets as $key =&gt; $item) 
+<blockquote>if ($item'name'<a href="http://code.google.com/p/php-excel-reader/w/edit/'name'">?</a> == $label) 
+<blockquote>return $key; 
+</blockquote></blockquote></blockquote><p></p><blockquote>return false; 
+</blockquote><p>}'          </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBRURVRTBhJDWgJ9/">thiago.s...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Feb 22 18:33:39 2010">Feb 22, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>In the PHP 5.3 the function split() is deprected.  To fix this, you should replace " split(';'...) " to " preg_split(';<a href="http://code.google.com/p/php-excel-reader/w/edit/;">?</a>'...) " where needed. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxVXRFdVBxNAVgR8/">pancho.e...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Mar  8 10:18:14 2010">Mar 8, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>¿How can I know if... $data = new Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a>("test.xls",false); ... returned a valid object? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBZSSl1ZAhRHXAd8/">nc_ch...@hotmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Mar  9 15:31:37 2010">Mar 9, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>How can I read a workbook from a diferent server than the apache's server?? Now i can't, the reader says me that is a file no readable, if the files are out of server and/or the web aplication is not called from the server says the same and obviously don't read... =S  (sorry i don't speak/write english very well lol) thanks and i'll wait an answer .. <sup>^</sup>^ </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBFXSlNZBRZNXQJ%2B/">axx...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Mar 30 05:18:21 2010">Mar 30, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hello all! Anybody knows how to read bitmap from excel files? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBdSRFJWDhhGWwB1/">php...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Mar 30 12:06:10 2010">Mar 30, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Really great code but how to extract formula rather than result value from a cell ?  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhdUQ11YABJCWgM%3D/">andher...@googlemail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Apr  6 01:59:44 2010">Apr 6, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, </p><p>I use the excel reader in my visual db importer tool. <a href="http://www.dbtube.org/" rel="nofollow">dbTube</a> . Try it, is free - no coding required. </p><p>Greetings </p><blockquote>Andreas  
+</blockquote>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBhRQ1JVAhBDVwB7/">abhinav....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Apr 19 03:30:36 2010">Apr 19, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Awsome script thankyou very much </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBRRVdZBhZCWQV%2BFA%3D%3D/">focusby...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Apr 20 01:42:12 2010">Apr 20, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, </p><blockquote>Its Good script but No proper documentation .  
+</blockquote><p></p><p><a href="http://www.focusbytes.com/" rel="nofollow">FocusBytes</a> </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRlUR11YDxRDXAF%2F/">Freak...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Apr 28 01:26:29 2010">Apr 28, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>great work, thanks =) </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxJQR1BTBxRCXAR%2F/">usual...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon May 10 01:27:02 2010">May 10, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, I got a problem when I using this class with non-latin characters, example: 2010/11早春渡假高級成衣 =  2010/11æ�©æ�¥æ¸¡å��é«�ç´�æ��è¡£ Any issue about that ? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBSRVFYAxhAVgF6Fg%3D%3D/">tai.nguy...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon May 10 08:52:01 2010">May 10, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>I also make error As Mr Usualpro about character when using this class ($data = new Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a>("test.xls",true,"UTF-16");). i find many solution that execute, but not success. Hope everybody help me. Thanks </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhhTR1ZWARlHXAF7/">zique13s...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon May 10 14:20:31 2010">May 10, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>it seems that Accessing Cell Values by name doesn't work. $data-&gt;val(2,'Test Case Name',$sheet=0); </p><p>I get Debug Strict (PHP 5): C:\php-5.2.13\Excel\excel_reader2.php line 916 - Assigning the return value of new by reference is deprecated </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBBVSldQDxRNWAZ7/">gregko...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue May 11 08:54:10 2010">May 11, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Any solution about filename is not readable? Thanks in advance! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBRRR1NUBRVNXQV6/">webmaste...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu May 13 07:01:27 2010">May 13, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>2gregkoron Set CHMOD 644 on .xls file </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBBTQVxYDxlNXAR4/">SerafimP...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun May 16 20:36:51 2010">May 16, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>&gt;Hi, I got a problem when I using this class with non-latin characters, example </p><p>For Japanese character, I've fixed line 635<a href="http://code.google.com/p/php-excel-reader/w/edit/635">?</a> $val = htmlentities($val,ENT_NOQUOTES, 'utf-8');  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhhTR1ZWARlHXAF7/">zique13s...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon May 17 11:11:58 2010">May 17, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>can anyone help me figure out why I can't get a value by specifing column name </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBNeQ1NVABNCXQd5/">renato.f...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon May 31 08:34:46 2010">May 31, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Function to get the colunm by index number. </p><pre class="prettyprint"><span class="kwd">function</span><span class="pln"> letras</span><span class="pun">(</span><span class="pln">$index</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br><br>$letras </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">(</span><span class="str">"A"</span><span class="pun">,</span><span class="pln"><br></span><span class="str">"B"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"C"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"D"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"E"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"F"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"G"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"H"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"I"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"J"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"K"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"L"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"M"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"N"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"O"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"P"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"Q"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"R"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"S"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"T"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"U"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"V"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"W"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"X"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"Y"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"Z"</span><span class="pun">);</span><span class="pln"><br>$tam </span><span class="pun">=</span><span class="pln"> count</span><span class="pun">(</span><span class="pln">$letras</span><span class="pun">);</span><span class="pln"><br></span><span class="kwd">if</span><span class="pun">(</span><span class="pln">$index </span><span class="pun">&gt;</span><span class="pln"> $tam</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>$div </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$index</span><span class="pun">/</span><span class="pln">$tam</span><span class="pun">)-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> $sub </span><span class="pun">=</span><span class="pln"> </span><span class="pun">((</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">$div</span><span class="pun">/(</span><span class="pln">$index</span><span class="pun">-</span><span class="pln">$tam</span><span class="pun">))-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> $exibe </span><span class="pun">=</span><span class="pln"> $letras</span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">$div</span><span class="pun">?.</span><span class="pln">$letras$sub</span><span class="pun">?;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">return</span><span class="pln"> $exibe</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxlSSlRXBhNBVwB8/">pascal.g...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jun  4 13:26:37 2010">Jun 4, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>how can i display only the first 2 columns ? Thanks </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxdSQVNRDxBMWAN9/">jmichel....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  9 03:34:38 2010">Jun 9, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, I want to know if anybody have some problems to read large files (more than 3 MB): even if I change php parameters (ini_set("memory_limit","800M"); set_time_limit(600);) the parsing is still long and sometimes, I need more than 800MB memory... </p><p>(my code:  {{{&lt;?php  $data = new Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a>("planning/planning.xls");   //$data-&gt;setOutputEncoding('CP1251');   $data-&gt;read("planning/planning.xls");   </p><p>error_reporting(E_ALL ^ E_NOTICE);  </p><p>for ($i = 2; $i &lt;= $data-&gt;sheets1<a href="http://code.google.com/p/php-excel-reader/w/edit/1">?</a>'numRows'<a href="http://code.google.com/p/php-excel-reader/w/edit/'numRows'">?</a>; $i++) {   </p><blockquote>for ($j = 1; $j &lt;= $data-&gt;sheets1<a href="http://code.google.com/p/php-excel-reader/w/edit/1">?</a>'numCols'<a href="http://code.google.com/p/php-excel-reader/w/edit/'numCols'">?</a>; $j++) {   
+</blockquote>         <blockquote>$donnees=$data-&gt;sheets1<a href="http://code.google.com/p/php-excel-reader/w/edit/1">?</a>'cells'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cells'">?</a>$i<a href="http://code.google.com/p/php-excel-reader/w/edit/$i">?</a>$j<a href="http://code.google.com/p/php-excel-reader/w/edit/$j">?</a>;		 
+</blockquote><p></p><p>		 </p><blockquote>$bgcolor=$data-&gt;bgColor($i,$j,$sheet=0); 
+if ($bgcolor!="") { 
+<blockquote>$bgcolor = $data-&gt;colors$bgcolor<a href="http://code.google.com/p/php-excel-reader/w/edit/$bgcolor">?</a>; 
+</blockquote>} 
+</blockquote><blockquote>}   
+echo "\n";   
+</blockquote><p>} echo "finish"; </p><p>?&gt; </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBNeQ1NVABNCXQd5/">renato.f...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Jun  9 05:28:01 2010">Jun 9, 2010</span>
+ <div>
+<div class="commentcontent">
+<p><strong>REPLACE:</strong> Function to get the colunm by index number. </p><pre class="prettyprint"><span class="kwd">function</span><span class="pln"> letras</span><span class="pun">(</span><span class="pln">$index</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; $letras </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">(</span><span class="str">"A"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"B"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"C"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"D"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"E"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"F"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"G"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"H"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"I"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"J"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"K"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"L"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"M"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"N"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"O"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"P"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"Q"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"R"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"S"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"T"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"U"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"V"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"W"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"X"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"Y"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"Z"</span><span class="pun">);</span><span class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; $tam </span><span class="pun">=</span><span class="pln"> count</span><span class="pun">(</span><span class="pln">$letras</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">$index </span><span class="pun">&gt;</span><span class="pln"> $tam</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $div </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$index</span><span class="pun">/</span><span class="pln">$tam</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; settype</span><span class="pun">(</span><span class="pln">$div</span><span class="pun">,</span><span class="pln"> </span><span class="str">"integer"</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $sub </span><span class="pun">=</span><span class="pln"> $tam</span><span class="pun">*</span><span class="pln">$div</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $sub </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$index</span><span class="pun">-</span><span class="pln">$sub</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $div </span><span class="pun">=</span><span class="pln"> $div</span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $sub </span><span class="pun">=</span><span class="pln"> $sub</span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $exibe </span><span class="pun">=</span><span class="pln"> $letras</span><span class="pun">[</span><span class="pln">$div</span><span class="pun">].</span><span class="pln">$letras</span><span class="pun">[</span><span class="pln">$sub</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pln"> $exibe</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pln"> $letras</span><span class="pun">[</span><span class="pln">$index</span><span class="pun">-</span><span class="lit">1</span><span class="pun">];</span><span class="pln"><br></span><span class="pun">}</span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBWQV1XBhVNWwJ%2FEw%3D%3D/">miguel.r...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jul  2 03:21:00 2010">Jul 2, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>I need to searh for a specific cell, named i.e. "total", how can I do this? I've tried this: if($data-&gt;sheets0<a href="http://code.google.com/p/php-excel-reader/w/edit/0">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>$i<a href="http://code.google.com/p/php-excel-reader/w/edit/$i">?</a>$j<a href="http://code.google.com/p/php-excel-reader/w/edit/$j">?</a>=="total") Is it possible for PHP to search for a specific named cell, in order to use that value? </p><blockquote>Thanks! 
+</blockquote><p></p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBVRFJZDxJGVwZ6EQ%3D%3D/">memin.co...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Jul  5 15:06:49 2010">Jul 5, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>The class is excellent, but when I try to read a Cell with a datetime, the result is something bad. For example: my Excel Cell contains 16/06/2010  09:20:01, and PHP Excel reader displays: 17/06/2010 04:20:00. </p><p>Is this a Bug? or something I do bad?. (The XLS File was made by Excel 2007 saved as Excel 97-2003 format) </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBRVS1RQBhdFWgV9/">ast...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul 22 10:10:34 2010">Jul 22, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>thanks  this is the only one who works for my page </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhZQQFJUARZMXgV8/">jjhlh...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul 29 09:36:12 2010">Jul 29, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Thanks You! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhBWQF1QAxdCWwR4/">vaibhav....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Aug 12 18:55:08 2010">Aug 12, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi I am trying to use the example.php (on windows)but it never gives me any result. script is running for log time and then halt with nothing on screen but when i tried it on Linux it works for me  is there any configuration required? so that this script works on windows as well    please help me </p><p>Vaibhav </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBZXSlNYBRFCXAN6/">jspe...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Sep  7 00:07:29 2010">Sep 7, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>does this thing work for excel 2007(.xlsx) formats </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBRSS1xUAhNEXAR5/">sacha.va...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep  8 05:10:32 2010">Sep 8, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Doesn't work with .xlsx because those are zipped .xls files </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBRRV1TAhREXAB5GA%3D%3D/">rdalmul...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep  8 06:15:01 2010">Sep 8, 2010</span>
+ <div>
+<div class="commentcontent">
+<p><a href="http://phpexcel.codeplex.com/" rel="nofollow">http://phpexcel.codeplex.com/</a> </p><p>This works with XLSX files and a whole bunch more </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhhURFdWBRVBXwd7/">07hc...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Sep 16 03:45:20 2010">Sep 16, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi everyone, I found that the script does not support for images that included inside worksheets. My worksheet contains my company logo, and once the worksheet exported to HTML, there is no image. Any suggestion? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhdWRVFVBRBDWQJ%2B/">tan.viet...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Sep 20 20:27:52 2010">Sep 20, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>How read bitmap from excel? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRBQQFFSBxdMVgd4/">diavoli...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Oct 25 12:33:32 2010">Oct 25, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, Excellent class! What about an excel file that have 5.000+ rows? It will take a lot of time or freeze? There is a limit? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhFSQ1JRBBJGWAR8/">twe.alex...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Nov  4 02:32:56 2010">Nov 4, 2010</span>
+ <div>
+<div class="commentcontent">
+<h3><a name="Thanks_?,_You_sloved_the_chinese_problem,too."></a>Thanks SerafimPanov<a href="http://code.google.com/p/php-excel-reader/w/edit/SerafimPanov">?</a>?, You sloved the chinese problem,too.<a href="http://code.google.com/p/php-excel-reader/wiki/Documentation#Thanks_?,_You_sloved_the_chinese_problem,too." class="section_anchor"></a></h3><p>|For Japanese character, I've fixed line 635?  <tt>$val = htmlentities($val,ENT_NOQUOTES, 'utf-8'); </tt> <i></i><i></i> 這行改下去 中文問題也就解決了 </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxRWRF1YARhNWwF1/">emiliano...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Nov  5 11:13:17 2010">Nov 5, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>very nice work but it possible to create/write to excel files with this class? note: we can already do it with the hexcel class <a href="http://code.google.com/p/hexcel/" rel="nofollow">http://code.google.com/p/hexcel/</a> </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhZXS1RWAhJCVgE%3D/">caut...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Nov 11 00:24:50 2010">Nov 11, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Only one thing, i have seen that font-size is not exactly like original excel file because in style function on class Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a>, size is assigned in pixel not dots. So changing the line: </p><p>$css .= "font-size:$height"."px;"; </p><p>for </p><p>$css .= "font-size:$height"."pt;"; </p><p>will keep the correct font size like original excel. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxhXRlRTABNAWgB%2B/">shahvez....@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Nov 12 06:32:44 2010">Nov 12, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi, </p><p>i am trying to read the excel file having the 3008 colunms but the data is getting truncate after 256 column. </p><p>is there any workaround to read all columns from the excel file. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBZRQlRSBhhGXgh5/">zt5...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Nov 22 05:58:59 2010">Nov 22, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi! </p><p>"Comment by david.fitch, Jan 29, 2010 I don't see anything about formatting numbers. Has anyone encountered this? I get spreadsheets with numbers that are formatted as currency (i.e. displays the dollar sign, and parens for negative numbers) and I need to convert those to general format for import to mysql. I'm leaning towards writing my own regex to do it, but didn't want to spend the time if this class can already do it." </p><p>Anybody solved it? </p><p>How i can get title and count of sheets? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxZQQlFSABNNWgh7/">joelnie...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Nov 22 09:42:38 2010">Nov 22, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi! I'm relatively new to php programming. In case anybody like me needs to know the number of sheets in the book </p><pre class="prettyprint"><span class="pln">$data </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Spreadsheet_Excel_Reader</span><span class="pun">(</span><span class="pln">$file</span><span class="pun">);</span><span class="pln"><br>$max_sheets </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">sizeof</span><span class="pun">(</span><span class="pln">$data</span><span class="pun">-&gt;</span><span class="pln">sheets</span><span class="pun">);</span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBTQlRUDxJNVgl5Eg%3D%3D/">jbmais...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Nov 24 00:57:15 2010">Nov 24, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>hi there ! </p><p>Is it possible to load a specific sheet by using its name ? </p><p>for example  echo $data-&gt;dump(true,true,'sheet1'); </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBJeS1xXBhhDXAZ9/">trapa...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Dec 10 23:44:44 2010">Dec 10, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Thanks for this script ,but i want to insert all data in my mysql database ,how it is possible. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxFRS1NQDhVCXAd1/">Hoefleh...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Dec 21 15:25:40 2010">Dec 21, 2010</span>
+ <div>
+<div class="commentcontent">
+<p>Hi and thanks for this great script! </p><p>Is it possible to read files from a different server? </p><p>Thx </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxhUQ1ZWBxBBWwl9/">ad...@goldcoastwireless.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jan 11 12:16:57 2011">Jan 11, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>How can we change the format of a range of cells? I need a range of cells to output the 'raw' data while others remain in the default 'val' format. This is because numbers are being displayed as "General" in worksheets because php excel reader is not parsing numbers stored as text correctly. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRNRRVBSARhNWQB4/">ostroumo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jan 14 00:35:23 2011">Jan 14, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Чтобы читать файлы Excel (Excel 2002, Windows XP SP3 RUS) в русской кодировке, надо на строке 635 файла excel2reader.php изменить строку </p><p>$val = htmlentities($val); </p><p>на </p><p>$val = htmlentities($val,ENT_QUOTES,"cp1251"); </p><p>If you change </p><p>$val = htmlentities($val); </p><p>to </p><p>$val = htmlentities($val,ENT_QUOTES,"cp1251"); </p><p>on 635 string, you will be able to correctly read ms excel files in russiab encoding.						 </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VRReRFNWBBNFWQB%2B/">lizza...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Fri Jan 28 06:02:59 2011">Jan 28, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>There is also another setting if Cyrillic is still not displayed correctly - try changing line 912:  </p><pre class="prettyprint"><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">setUTFEncoder</span><span class="pun">(</span><span class="str">'iconv'</span><span class="pun">);</span><span class="pln"> </span></pre><p>to this  </p><pre class="prettyprint"><span class="pln">$this</span><span class="pun">-&gt;</span><span class="pln">setUTFEncoder</span><span class="pun">(</span><span class="str">'mb'</span><span class="pun">);</span></pre><p>I found this problem when moved script under Linux environment </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBVWRl1XBRRGXAF%2B/">joey.moo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Jan 30 02:45:11 2011">Jan 30, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>My code comments were lost due to the comments, and here is a remake. This function extracts an excel sheet data into csv. </p><blockquote>function dump_csv($row_numbers=false, $col_letters=false, $sheet=0, $table_class='excel') 
+{  
+<blockquote>$outs = array(); 
+for($row=1; $row&lt;=$this-&gt;rowcount($sheet); $row++) 
+{  
+<blockquote>$outs_inner = array(); 
+for($col=1; $col&lt;=$this-&gt;colcount($sheet); $col++) 
+{  
+<blockquote>// Account for Rowspans/Colspans 
+$rowspan = $this-&gt;rowspan($row, $col, $sheet); 
+$colspan = $this-&gt;colspan($row, $col, $sheet); 
+for($i=0; $i&lt;$rowspan; $i++) 
+{ 
+<blockquote>for($j=0; $j&lt;$colspan; $j++) 
+{  
+<blockquote>if ($i&gt;0 || $j&gt;0) 
+{  
+<blockquote>$this-&gt;sheets$sheet<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>$row+$i<a href="http://code.google.com/p/php-excel-reader/w/edit/$row+$i">?</a>$col+$j<a href="http://code.google.com/p/php-excel-reader/w/edit/$col+$j">?</a>'dontprint'<a href="http://code.google.com/p/php-excel-reader/w/edit/'dontprint'">?</a>=1; 
+</blockquote>}  
+</blockquote>}  
+</blockquote>} 
+</blockquote></blockquote></blockquote></blockquote><blockquote>if(!$this-&gt;sheets$sheet<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>$row<a href="http://code.google.com/p/php-excel-reader/w/edit/$row">?</a>$col<a href="http://code.google.com/p/php-excel-reader/w/edit/$col">?</a>'dontprint'<a href="http://code.google.com/p/php-excel-reader/w/edit/'dontprint'">?</a>) 
+{  
+<blockquote>$val = $this-&gt;val($row, $col, $sheet); 
+$val = ($val=='')?'':addslashes(htmlentities($val));  
+</blockquote></blockquote><blockquote>$outs_inner<a href=""></a> = "\"{$val}\""; # Quote or not? 
+</blockquote><ol><li>outs_inner<a href=""></a> = $val;  </li></ol><blockquote>}  
+</blockquote><blockquote>} 
+$outs<a href=""></a> = implode(',', $outs_inner);  
+</blockquote><blockquote>} 
+$out = implode("\r\n", $outs); 
+return($out);  
+</blockquote><blockquote>}  
+</blockquote><p>possible n00b-question: I paste this code in the excel_reader2.php file but what should I do next to get the CSV-file?? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxRRRFBWBRZEXwd%2F/">marc.s...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Feb  7 08:52:35 2011">Feb 7, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>PHP 5.3 deprecated split() warning: Replace split with explode... you don't need regular expressions </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxFWSldVDxdMWwN7/">m.manz...@mpmas.it</a>,
+ 
+ </span>
+ <span class="date" title="Wed Feb  9 03:01:54 2011">Feb 9, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Hello everyone, I have a question but if I wanted to make the cells editable file php, how can I do? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxhUQ1ZWBxBBWwl9/">ad...@goldcoastwireless.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Feb  9 16:16:23 2011">Feb 9, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Why are numbers being converted to the word 'General' when using this script? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBheR1NXBBNMXwI%3D/">bixb...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Feb  9 23:23:21 2011">Feb 9, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>How would I return the row number for a row containing the specific data I am looking for?  i.e., I need to return the value '5' for the cell B5 which contains the data I am searching for.  in excel, this function would be "=match lookup_value,lookup_array,match_type<a href="http://code.google.com/p/php-excel-reader/w/edit/match_type">?</a>)" </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRdTRVNQBRdGXgh%2F/">wordlor...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Feb 15 16:05:58 2011">Feb 15, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>super good work. </p><p>I noticed the function type() does not return anything. I checked the php file and noticed that it should be 'rectype' and not 'type'.  </p><p>Location: excel_reader2.php line 367.   </p><p>I came to this conclusion by performing a print_r($data-&gt;sheets$sheet<a href="http://code.google.com/p/php-excel-reader/w/edit/$sheet">?</a>'cellsInfo'<a href="http://code.google.com/p/php-excel-reader/w/edit/'cellsInfo'">?</a>) and found that there were no keys named 'type', there was however one named 'rectype'. </p><p>Cheers. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBFQRFRRAhREXAB5/">zylor...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Feb 28 08:37:50 2011">Feb 28, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Thank you very much to lizza... </p><p>Adding  <tt>$this-&gt;setUTFEncoder('mb');</tt>  around line 912 solved my problem when I got something about iconv cannot convert between certain charsets. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBFQRFRRAhREXAB5/">zylor...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Feb 28 10:45:21 2011">Feb 28, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Excellent software! I must make one more notice: if your date or times are screwed up and are using OpenOffice<a href="http://code.google.com/p/php-excel-reader/w/edit/OpenOffice">?</a>.org Calc, note that the date and time are stored in different formats. To fix this, open the file in Excel (I had a copy on a different computer) and change the format of all the date and time cells. I am too lazy right now to experiment with changing the Format Code within Calc, but someone with the right amount of motivation could figure it out since Excel worked beautifully. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxNeRVBQARNCWAF%2F/">Dr.Yur...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Mon Apr 11 14:57:52 2011">Apr 11, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Thank you, great work! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxJXS11WBhJCXA%3D%3D/">amer...@volstate.net</a>,
+ 
+ </span>
+ <span class="date" title="Tue Apr 12 16:44:47 2011">Apr 12, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Phone formatted fields in Excel 2003 don't show up properly. They output something like this: </p><pre class="prettyprint"><span class="pun">[&lt;=</span><span class="lit">1234567891</span><span class="pun">]</span><span class="lit">1234567891</span><span class="pun">-</span><span class="lit">123456789</span></pre><p>I made a fix by passing:  </p><pre class="prettyprint"><span class="pln">format_phone</span><span class="pun">(</span><span class="pln">$class_ref</span><span class="pun">-&gt;</span><span class="pln">val</span><span class="pun">(</span><span class="pln">$row</span><span class="pun">,</span><span class="pln">$col</span><span class="pun">,</span><span class="pln">$sheet</span><span class="pun">))</span></pre><p>To this function... </p><pre class="prettyprint"><span class="kwd">function</span><span class="pln"> format_phone</span><span class="pun">(</span><span class="pln">$phone</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; $new_phone </span><span class="pun">=</span><span class="pln"> preg_replace</span><span class="pun">(</span><span class="str">"/\[&lt;=(\d{10,})\](\d{10,})-(\d{3,})(\d{3})(\d{4})/"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"($3) $4-$5"</span><span class="pun">,</span><span class="pln"> $phone</span><span class="pun">);</span><span class="pln"> </span><span class="com">//Outputs (###) ###-####</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">$new_phone </span><span class="pun">==</span><span class="pln"> $phone </span><span class="pun">||</span><span class="pln"> $new_phone </span><span class="pun">==</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pln"> $phone</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="kwd">else</span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pln"> $new_phone</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br></span><span class="pun">}</span></pre>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBZXQFRVBxZNXQd5/">saba.ra...@jotixtech.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu May 12 23:31:49 2011">May 12, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>i have excel file having calender in it and each day has two values like day 1 has 20 rooms and 70euro price i want to insert this calender with values in database please please help me in this regard i'll be very thankful. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhJRRl1UDhNBWwB5/">markitos...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jun 23 16:51:27 2011">Jun 23, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>I was trying to import a InfoGenesis<a href="http://code.google.com/p/php-excel-reader/w/edit/InfoGenesis">?</a> POS XLS file into MySQL using this new version, but I couldn't do it. I tried to use the raw value but it was worse X_X. I guess this new version is too fancy for my file. I had to use the old sourceforge version. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxNfQVZXAxdDXAB8/">allampal...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sat Jul  9 02:29:26 2011">Jul 9, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Intersting, but when i tried, it shows lot of depreciated functions and also there is no proper documentation.I dont want to print the whole file in my website... </p><p>1.I just want to send some values to some cells in xls. 2.save the xls file  3.then get some cell values and echo them in php. and reference to those cell numbers...can be given like 1,A or 2,B etc... Can anyone help on this clearly?? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBVRFVVDxVMWQZ%2FFA%3D%3D/">phillips...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Jul 17 07:44:56 2011">Jul 17, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Humans read Excel locations column first then row, for example "C5" not "5C". The argument order for the method "val" should be switched so that you code it how you'd read it.  </p><p>Change function val($row,$col,$sheet)to ($col,$row,$sheet). It reads better and easier to write and debug later... I've changed my copy. </p><p>In fact, there are allot of them that should be switched. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBNXQFJYBxVNXwR0/">elak...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Jul 21 11:37:11 2011">Jul 21, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>PROBLEM!!! This class don't support protected workbook. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRNUSlVZARFEWgF1/">nathanlo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jul 26 12:25:54 2011">Jul 26, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>I have found your code very useful in the gradebook application that I'm creating. </p><p>However, it seems that zeroes are getting stripped out.  I'm using the dump() method, and empty cells and cells with zeroes in them become <tt>&lt;nobr&gt;&amp;nbsp;&lt;/nobr&gt;</tt>. So I can't distinguish between no grade and a grade of 0.  I would appreciate any advice.  Thanks! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRNUSlVZARFEWgF1/">nathanlo...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Tue Jul 26 13:10:49 2011">Jul 26, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>I ended up changing: </p><pre class="prettyprint"><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$val</span><span class="pun">==</span><span class="str">''</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> $val</span><span class="pun">=</span><span class="str">"&amp;nbsp;"</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></pre><p>to </p><pre class="prettyprint"><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$val</span><span class="pun">===</span><span class="str">''</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> $val</span><span class="pun">=</span><span class="str">"&amp;nbsp;"</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></pre><p>on line 633 and now it is working properly (zeroes stay zeroes).  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxJQSlZSAhVMXwN%2B/">adrien.s...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Jul 31 03:39:21 2011">Jul 31, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Very nice lib, but i figured that all rows are limited at 255 chars max. I have a lot of long rows with text, someone knows if there is a way to get them ? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRhWQ1VZBhBBXwJ9/">kirkill...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Aug  3 05:54:02 2011">Aug 3, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>I had trouble with "time column" in my file. This lib convert 13:00 to 1:00 (without PM). </p><p>To fix this problem. I add new value in $dateFormats array (676 line) with needed index. I find this index in 1241 line. Just print $indexCode after if ($indexCode &gt; 0) </p><p>I don't sure it is correct solution </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VBVfQ1RWABZBXQF9/">craig.ma...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Aug 11 14:08:29 2011">Aug 11, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Nice work! Please update the documentation for bgColors() because it returns the Excel color code and not the HTML color code. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WBBSQ1BTAxVDWQl7/">xtrememe...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sat Aug 13 13:53:26 2011">Aug 13, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Nice Work.. Been looking for this.. $data = new Spreadsheet_Excel_Reader<a href="http://code.google.com/p/php-excel-reader/w/edit/Spreadsheet_Excel_Reader">?</a>("example.xls"); Is it possible to create a php code to give user desired location to upload the example.xls file??? </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxNUR11YDhNHXQV8/">aapopw...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Aug 17 04:59:59 2011">Aug 17, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Great library. Seems that $data-&gt;rowcount and $data-&gt;colcount are off by 1 though. Therefore $data-&gt;dump also misses the last column and the last row. However $data-&gt;val works if you just specify the last column and row number. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UxFSRl1YAhFMXAB%2B/">alexhh.a...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Sun Aug 21 21:11:31 2011">Aug 21, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>check @aapopw   i dont have problems using : for ($i = 1; $i &lt;= $row; $i++){ </p><blockquote>for ($j = 1; $j &lt;= $col; $j++) { 
+<blockquote>echo $data-&gt;val($i,$j)."($i,$j)&lt;br/&gt;"; 
+</blockquote>} 
+</blockquote><blockquote>} 
+</blockquote>im developing something with this library, so all the data i get from the excel gonna insert in a DB, its a list of the employee with date,id and check in/out <p></p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VxNUR11YDhNHXQV8/">aapopw...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Aug 25 06:30:26 2011">Aug 25, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Weird. Some files have the correct number of columns/rows, some are off by 1. The example file included with the library works correct. Some excel sheets I have don't work. Others do. So far I don't know the cause. </p><p>BTW I'm also developing a tool to put the data in a DB. How do you handle dates? Do you somehow force them to have a fixed date format suitable for inserting into the DB? </p><p>regards </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UhNRSlBXAhNEWgF7/">mohd.ta...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep 14 04:10:34 2011">Sep 14, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Useless! Have to fix number of issues before getting it do actual function. Crap! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@VhlURlxYDxNHXAN%2B/">ksinghsa...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Thu Sep 15 09:39:54 2011">Sep 15, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Is it possible to count how many words in excel fie? OR is it possible to convert excel file into simple txt file? thanks </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBUQlJYDhVDVwJ7Fg%3D%3D/">Marcin.M...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep 21 09:14:09 2011">Sep 21, 2011</span>
+ <div>
+<div class="commentcontent">
+<p>Is it possible to parse only one sheet of the whole document? I have a large file, so memory (64M) quickly runs out. </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@WRBQRVRTBxZHWwF%2F/">jaryalpa...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep 28 03:46:28 2011">Sep 28 (46 hours ago)</span>
+ <div>
+<div class="commentcontent">
+<p>Very nice work... but the code seems to be little depreceted..  </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+ 
+ <div class="artifactcomment">
+ 
+ 
+ 
+ 
+ 
+ 
+ <span class="author">Comment
+ 
+ by 
+ 
+ <a style="white-space: nowrap" href="http://code.google.com/u/@UBBQRFZTDhNNWAl6EA%3D%3D/">juliogui...@gmail.com</a>,
+ 
+ </span>
+ <span class="date" title="Wed Sep 28 10:04:53 2011">Yesterday (40 hours ago)</span>
+ <div>
+<div class="commentcontent">
+<p>There is possibility to optimize the code to use less memory? I can not upload a spreadsheet with 800kb (memory_limit = 64MB on the server). It's a lot of memory! </p>
+</div>
+ 
+ 
+ </div>
+ </div>
+ 
+
+</div>
+</div>
+
+ 
+
+
+ <script type="text/javascript">
+ function delComment(sequence_num, create_time, delete_mode) {
+ var f = document.forms["delcom"];
+ f.sequence_num.value = sequence_num;
+ f.create_time.value = create_time;
+ f.mode.value = delete_mode;
+ f.submit();
+ return false;
+ }
+ </script>
+
+
+ </div>
+ 
+ 
+ 
+ 
+ <br>
+ <div class="artifactcomment">
+ <span class="indicator">►</span> <a href="https://www.google.com/accounts/ServiceLogin?service=code&ltmpl=phosting&continue=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation&followup=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation">Sign in</a> to add a comment
+ </div>
+ 
+ 
+ 
+ 
+ <form name="delcom" action="http://code.google.com/p/php-excel-reader/w/delComment.do" method="POST">
+ <input type="hidden" name="sequence_num" value="">
+ <input type="hidden" name="create_time" value="">
+ <input type="hidden" name="mode" value="">
+ <input type="hidden" name="pagename" value="Documentation">
+ <input type="hidden" name="token" value="">
+ </form>
+
+
+
+ <script src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/prettify.js"></script>
+ <script type="text/javascript">
+ prettyPrint();
+ </script>
+
+<script type="text/javascript" src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/dit_scripts.js"></script>
+
+
+<script type="text/javascript" src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/plusone.js">
+</script>
+
+  
+ 
+ 
+ <script type="text/javascript" src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/ph_core.js"></script>
+ 
+ 
+ 
+ 
+ <script type="text/javascript" src="./Documentation - php-excel-reader - PHP Excel Reader - Parse and retrieve information from XLS files - Google Project Hosting_files/codesite_product_dictionary_ph.pack.041020.js"></script>
+</div> 
+<div id="footer" dir="ltr">
+ <div class="text">
+ ©2011 Google -
+ <a href="http://code.google.com/projecthosting/terms.html">Terms</a> -
+ <a href="http://www.google.com/privacy.html">Privacy</a> -
+ <a href="http://code.google.com/p/support/">Project Hosting Help</a>
+ </div>
+</div>
+ <div class="hostedBy" style="margin-top: -20px;">
+ <span style="vertical-align: top;">Powered by <a href="http://code.google.com/projecthosting/">Google Project Hosting</a></span>
+ </div>
+ 
+ 
+
+
+ 
+ 
+
+
+
+<div class="menuDiv instance0" id="menuDiv-projects-dropdown" style="display: none; "><div class="menuCategory controls"><a class="menuItem" style="display: block; " href="http://www.google.com/accounts/ServiceLogin?service=code&ltmpl=phosting&continue=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation&amp;followup=http%3A%2F%2Fcode.google.com%2Fp%2Fphp-excel-reader%2Fwiki%2FDocumentation">Sign in to see your favorites</a><hr class="menuSeparator"><a class="menuItem" style="display: block; " href="http://code.google.com/more/">Find developer products...</a><a class="menuItem" style="display: block; " href="http://code.google.com/hosting/">Find open source projects...</a></div></div></body></html>

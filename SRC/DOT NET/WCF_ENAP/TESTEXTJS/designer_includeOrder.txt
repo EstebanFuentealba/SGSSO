@@ -1,0 +1,3 @@
+<script type="text/javascript" src="app/view/ui/MyWindow.js"></script>
+<script type="text/javascript" src="app/view/MyWindow.js"></script>
+<script type="text/javascript" src="app/store/dsGrupo.js"></script>

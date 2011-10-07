@@ -1,0 +1,405 @@
+
+body
+{
+	
+	
+}
+
+#divQuestion
+{		
+	left: 161px; 
+	width: 650px; 
+	top: 200px; 
+	position: relative;	
+}
+
+#RightSidePanel
+{	
+	font-size: 4pt;
+	left: 840px;
+	width: 150px;
+	font-family: Arial;
+	position: absolute;
+	top: 125px;
+	height: 2500px;
+	background-color: navajowhite;
+}
+
+a.rspHref
+{
+	font-size: 9pt;	
+	font-family: Arial;	
+	text-decoration: none;
+}
+
+a.AnchorHeadline
+{
+	font-size: 14pt;	
+	font-family: Arial;	
+	color: Black;
+	text-decoration: none;
+}
+span.rspHref
+{
+	font-size: 9pt;	
+	font-family: Arial;	
+	text-decoration: none;
+	color: steelblue;
+	
+}
+a.rspHref2
+{
+	font-size: 8pt;	
+	font-family: Arial;	
+	text-decoration: none;
+}
+
+.itemTemplate
+{
+	FONT-FAMILY: Verdana, Arial, Helvetica; 
+	FONT-SIZE: 9pt; 
+	COLOR: blue;
+}
+
+
+#rspAdvert
+{
+	font-size: 8pt;	
+	font-family: Arial;		
+}
+
+#tblTopAd
+{
+	width:650;
+	height:80;			
+	 border-width:medium;
+	 border-color:Navy;
+	 text-align:center;
+	 border-style:solid;	 
+}
+
+.p.BoldAd
+{
+	font-style:normal;
+	font-family:Arial;
+	font-size:8pt;
+	
+}
+
+
+#BoldAd
+{
+	font-style:normal;
+	font-family:Arial;
+	font-size:10pt;
+	
+}
+
+.p.DescriptionFont
+{
+	font-style:normal;
+	font-family:Verdana,Arial,Helvetica;
+	font-size:8px;
+	font-weight:normal;
+}
+
+
+
+.table.headertable
+{
+	font-family:Verdana,Arial;
+	font-size:12pt;
+	width:650px;
+	border-width:thin; 
+	 text-align:left;
+	 border-style:ridge;
+}
+
+.td.headercolumn
+{
+	font-family:Verdana,Arial;
+	font-size:12pt;
+	width:50%;
+	border-width:thin;	 
+	 text-align:left;
+	 border-style:ridge;
+}
+
+#divSidePanel
+{
+	
+	LEFT: 10px; 
+	WIDTH: 150px; 
+	POSITION: absolute; 
+	TOP: 125px; 
+	HEIGHT: 2500px; 
+	BACKGROUND-COLOR: lightsteelblue;	
+}
+
+div.divTopAd
+{
+	LEFT: 161px; 
+	WIDTH: 670px; 
+	POSITION: absolute; 
+	TOP: 130px; 
+	BORDER-COLLAPSE: separate; 
+	HEIGHT: 90px; 
+	
+}
+
+
+
+.h3.BlueBan
+{
+	background-color:FFF199;
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;
+	color:Blue;
+}
+
+pre 
+{
+	background-color:FFF199;
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;
+	width:400px;
+}
+
+.pre.cpp-code
+{
+	background-color:FFF199;
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;
+	color:Blue;
+}
+.pre.answers
+{
+	background-color:FFF199;
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;	
+	width:400;
+}
+
+p.test {
+   font: 20px/24px cursive;
+   background: #ccc;
+   color: red;
+   text-align: center;
+  }
+
+  p.test::before, p.test::after {
+   display: block;
+   height: 25px;
+   background: yellow none no-repeat top right;
+   text-align: left;
+  }
+  
+ p.test::before {
+   
+   background-image: url(top-right.gif);
+  }
+
+  p.test::after {
+   
+   background-image: url(bottom-right.gif);
+  }
+
+.p7tbsub
+{	
+	background-color:green;	
+	text-decoration:none;
+	background:url("m2img/dtp1b5.gif") right ;
+}
+
+li.myTry
+{
+	LIST-STYLE-IMAGE: url(file:///C:\Inetpub\wwwroot\ExamCram2\WebTools\ReadHtml\gearKen2.gif); 
+	LIST-STYLE-TYPE: disc;
+}
+
+.li.a.blue
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;
+	list-style-image: url(images/gearken4.gif);
+	background-repeat: no-repeat;
+	
+}
+
+.li.hyperlink.blue
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	
+}
+
+.hyperlink.blue
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	
+}
+
+a.ranch
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+}
+
+a.blue
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+}
+
+a.orange
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size: 10pt;
+	text-decoration: none;
+	list-style-image: url(images/gearken4.gif);
+	background-repeat: no-repeat;
+	
+}
+
+.li.a.orange
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;
+	list-style-image: url(images/gearken4.gif);
+	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
+.li.hyperlink.orange
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:x-small;
+	text-decoration: none;
+	list-style-image: url(images/gearken4.gif);
+	background-repeat: no-repeat;
+	
+}
+
+.ul.hyperlink.orange1
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size: 8pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	background-image: url(images/gearken4.gif);
+}
+
+a.orange2
+{	
+	font-family:Verdana,Arial;
+	font-size: 8pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	list-style-image: url(images/gearken4.gif);
+	
+}
+
+
+
+.weights
+{
+	font-family:Verdana,Arial;
+	font-size:10pt;
+	color:navy;
+}
+.bluehead
+{
+	font-family:Verdana,Arial;
+	font-size:14pt;
+	color:navy;	
+}
+
+#divShirts
+{
+	font-family:Verdana,Arial;
+	font-size:12pt;
+	color:navy;	
+	LEFT: 161px; 
+	WIDTH: 650px; 
+	POSITION: relative; 
+	TOP: 150px;  
+	BORDER-COLLAPSE: separate; 
+	HEIGHT: 1000px; 
+	BACKGROUND-COLOR: "#ffffff";
+}
+
+#divHeadline
+{
+	font-family:Verdana,Arial;
+	font-size:16px;
+	color:navy;	
+	
+}
+
+.landscapeBox
+{
+	 border:1px solid gray;
+	 width:150px; 
+	 text-align:center;
+	 font-size: 8pt;
+}
+
+#divReadComments
+{		
+	width: 650px; 
+	background-color: lightsteelblue;		
+}
+
+.commentTextBoxes
+{
+	width:300px;	 
+}
+
+.addYourCommentTextBox
+{
+	width: 500px;
+	height: 200px;
+}
+
+#test
+{
+	background-color: lightsteelblue;
+	float: right;
+	text-align: right;
+	width: 100%;
+	font-style:italic;
+	margin-left:100px;
+	
+}
+
+a.blueKingTut
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	color: #f4f9d9;
+}
+
+a.ranchKingTut
+{	
+	font-family:Verdana,Arial,Helvetica;
+	font-size:10pt;
+	text-decoration: none;	
+	background-repeat: no-repeat;
+	color: #f4f9d9;
+}
+
+
+
+

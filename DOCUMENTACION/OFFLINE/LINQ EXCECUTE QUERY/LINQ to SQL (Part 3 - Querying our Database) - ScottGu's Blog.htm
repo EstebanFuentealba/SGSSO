@@ -1,0 +1,2685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd">
+<!-- saved from url=(0095)http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head id="ctl00_ctl00"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="description" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="keywords" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="GENERATOR" content="CommunityServer 2007 SP1 (Build: 20510.895)">
+<link rel="pingback" href="http://weblogs.asp.net/scottgu/pingback.aspx">
+<link rel="shortcut icon" type="image/ico" href="http://weblogs.asp.net/favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rss.aspx">
+<link rel="alternate" type="application/atom+xml" title="ScottGu&#39;s Blog  (Atom 1.0)" href="http://weblogs.asp.net/scottgu/atom.aspx">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  - All Comments (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx">
+<link rel="alternate" type="application/rss+xml" title="LINQ to SQL (Part 3 - Querying our Database) - Comments for this post (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx?PostID=2973713">
+
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=7">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/print.css" type="text/css" media="print">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/DynamicStyle.aspx" type="text/css" media="screen">
+	<!--[if lte IE 6]>
+		<style>
+		#titleWrapper { padding: 62px 65px 14px 14px; border-bottom: solid 1px #000; border-right: solid 1px #000;}
+		</style>
+	<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://weblogs.asp.net/scottgu/rsd.ashx">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://weblogs.asp.net/scottgu/wlwmanifest.ashx">
+<title>
+	LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog.htm" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3MDQ0Njc3MDNkZGGxIdN4f8DDhPlg2TGLA9S0FlHm">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource(1).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource(2).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource(3).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource(4).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/WebResource(5).axd" type="text/javascript"></script>
+    			
+
+        <div id="wrapper">
+            <div id="container">
+                <div id="header">
+		            <div id="titleWrapper">
+		            	<div id="title">
+	                        <h1><a class="headermaintitle" href="http://weblogs.asp.net/scottgu/default.aspx">ScottGu's Blog </a></h1>
+	                        <div>Scott Guthrie lives in Seattle and builds a few products for Microsoft</div>
+	                    </div>
+                    </div> 
+                </div>
+                <div id="navigation">
+        	        <div id="welcome">
+				        
+        <a href="http://weblogs.asp.net/login.aspx?ReturnUrl=%2fscottgu%2farchive%2f2007%2f06%2f29%2flinq-to-sql-part-3-querying-our-database.aspx">Sign in </a>
+         | <a href="http://weblogs.asp.net/user/CreateUser.aspx?ReturnUrl=">Join</a>
+     
+
+
+		        	</div>
+                	<ul>
+                		<li><a href="http://weblogs.asp.net/scottgu/default.aspx">Home</a></li>
+			            
+			            <li><a href="http://weblogs.asp.net/scottgu/about.aspx">About</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/rss.aspx">RSS</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/atom.aspx">Atom</a></li>
+		                <li id="RssComments"><a href="http://weblogs.asp.net/scottgu/rsscomments.aspx">Comments RSS</a></li>
+			            
+                	</ul>
+                </div>
+                <div id="contentwrapper">                    
+                        
+                
+                    <div id="sidebar-a">
+                        <div id="TasksSideBar">    
+                            
+                            
+                        </div>                                
+                        <div id="SubscriptionsSideBar">
+			                    
+                        </div>
+                        <div id="SearchSideBar">
+                            <div id="Search">
+                                <h3>Search</h3>
+                                <ul>
+                                <div id="Search" align="left">
+                                            <li><input name="ctl00$SideBar$ctl02$ctl00$SearchBox" type="text" id="ctl00_SideBar_ctl02_ctl00_SearchBox" class="searchBox" button="SearchButton" onclick="if(this.defaultValue==this.value) this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;) this.value=this.defaultValue;"> <input type="submit" name="ctl00$SideBar$ctl02$ctl00$SearchButton" value="Go" id="ctl00_SideBar_ctl02_ctl00_SearchButton" class="SearchButton"></li>
+                                    </div>
+                                </ul>
+                            </div>
+                         </div>
+            		        
+                        
+                        <div id="TagSideBar">
+                                <h3>Tags</h3>
+                            <ul class="SidebarTagCloud">
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Ajax/default.aspx" rel="tag">Ajax</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Atlas/default.aspx" rel="tag">Atlas</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Azure/default.aspx" rel="tag">Azure</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Commerce+Server/default.aspx" rel="tag">Commerce Server</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Community+News/default.aspx" rel="tag">Community News</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/IIS7/default.aspx" rel="tag">IIS7</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/jQuery/default.aspx" rel="tag">jQuery</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Link+Listing/default.aspx" rel="tag">Link Listing</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/MVC/default.aspx" rel="tag">MVC</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/NuGet/default.aspx" rel="tag">NuGet</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Security/default.aspx" rel="tag">Security</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Silverlight/default.aspx" rel="tag">Silverlight</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/SQL+Server/default.aspx" rel="tag">SQL Server</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Talks/default.aspx" rel="tag">Talks</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Tips+and+Tricks/default.aspx" rel="tag">Tips and Tricks</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Visual+Studio/default.aspx" rel="tag">Visual Studio</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Web+Forms/default.aspx" rel="tag">Web Forms</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Windows+Phone/default.aspx" rel="tag">Windows Phone</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF/default.aspx" rel="tag">WPF</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF_2F00_E/default.aspx" rel="tag">WPF/E</a></li>
+</ul>
+</div>
+                        
+                        
+                        <div id="NewsSidebar">
+                                <h3>News</h3>
+                                <ul>
+                            <iframe src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/cm.htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<br><br>
+
+<iframe src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/cm(1).htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+                                </ul>
+                            </div>
+                                            
+                        
+                        <div id="NavSideBar"><h3>Navigation</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/">Home</a></li><li><a href="http://weblogs.asp.net/">Blogs</a></li>
+</ul></div>
+                             
+                        
+                        <div id="ArchiveSideBar"><h3>Archives</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/scottgu/archive/2011/09.aspx">September 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/08.aspx">August 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/06.aspx">June 2011 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/05.aspx">May 2011 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/04.aspx">April 2011 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/03.aspx">March 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/02.aspx">February 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/01.aspx">January 2011 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/12.aspx">December 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/11.aspx">November 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/10.aspx">October 2010 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/09.aspx">September 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/08.aspx">August 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/07.aspx">July 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/06.aspx">June 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/05.aspx">May 2010 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/04.aspx">April 2010 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/03.aspx">March 2010 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/02.aspx">February 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/01.aspx">January 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/12.aspx">December 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/11.aspx">November 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/10.aspx">October 2009 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/09.aspx">September 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/08.aspx">August 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/07.aspx">July 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/06.aspx">June 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/05.aspx">May 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/04.aspx">April 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/03.aspx">March 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/02.aspx">February 2009 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/01.aspx">January 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/12.aspx">December 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/11.aspx">November 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/10.aspx">October 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/09.aspx">September 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/07.aspx">July 2008 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/06.aspx">June 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/05.aspx">May 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/04.aspx">April 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/03.aspx">March 2008 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/02.aspx">February 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/01.aspx">January 2008 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/12.aspx">December 2007 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/11.aspx">November 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/10.aspx">October 2007 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/09.aspx">September 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/08.aspx">August 2007 (13)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/07.aspx">July 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/06.aspx">June 2007 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05.aspx">May 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/04.aspx">April 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/03.aspx">March 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/02.aspx">February 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/01.aspx">January 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/12.aspx">December 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/11.aspx">November 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/10.aspx">October 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/09.aspx">September 2006 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/08.aspx">August 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/07.aspx">July 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/06.aspx">June 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/05.aspx">May 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/04.aspx">April 2006 (23)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/03.aspx">March 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/02.aspx">February 2006 (27)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/01.aspx">January 2006 (35)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/12.aspx">December 2005 (29)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/11.aspx">November 2005 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/10.aspx">October 2005 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/09.aspx">September 2005 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/08.aspx">August 2005 (11)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/06.aspx">June 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/05.aspx">May 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/04.aspx">April 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/03.aspx">March 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/02.aspx">February 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/01.aspx">January 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/11.aspx">November 2004 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/10.aspx">October 2004 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/12.aspx">December 2003 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/11.aspx">November 2003 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/10.aspx">October 2003 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/09.aspx">September 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/05.aspx">May 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/04.aspx">April 2003 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/03.aspx">March 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/02.aspx">February 2003 (5)</a></li>
+</ul></div> 
+                        
+                        
+                        
+                                    <h3>Favorite Links</h3>
+                                    <div id="LinkSideBar">
+                                        
+<ul class="CommonSidebarList">
+<li><a href="http://www.scottgu.com/">ScottGu.com</a></li><li><a href="http://asp.net/">ASP.Net Home</a></li><li><a href="http://www.nikhilk.net/">Nikhil Kothari</a></li><li><a href="http://www.dotnetslackers.com/">DotNetSlackers</a></li><li><a href="http://www.aspalliance.com/">ASPAlliance</a></li><li><a href="http://blog.joycode.com/scottgu/">My Blog in Chinese</a></li><li><a href="http://weblogs.asp.net/scottgufrench/default.aspx">My Blog in French</a></li><li><a href="http://thinkingindotnet.wordpress.com/category/scott-guthrie/">My Blog in Spanish</a></li><li><a href="http://weblogs.asp.net/scottguportuguese/">My Blog in Portuguese</a></li>
+</ul>
+                                    </div>
+                            
+                    </div>
+                
+
+                <div id="content"><div id="content2">
+	                
+    <h2 class="pageTitle">
+       LINQ to SQL (Part 3 - Querying our Database)               
+    </h2>
+    <div class="post">
+        <div class="postsub">
+            <font face="arial" size="2"> <p>Last month I started a blog post series covering LINQ to SQL.&nbsp; LINQ to SQL is a built-in O/RM (object relational mapping) framework that ships in the .NET Framework 3.5 release, and which enables you to easily model relational databases using .NET classes.&nbsp; You can then use LINQ expressions to query the database with them, as well as update/insert/delete data from it.</p> <p>Below are the first two parts of my LINQ to SQL series:</p> <ul> <li><a href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx" target="_blank">Part 1: Introduction to LINQ to SQL</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx" target="_blank">Part 2: Defining our Data Model Classes</a></li></ul> <p>In today's blog post I'll be going into more detail on how to use the data model we created in the <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx" target="_blank">Part 2</a> post, and show how to use it to query data within an ASP.NET project.</p> <h3><u>Northwind Database Modeled using LINQ to SQL</u></h3> <p>In <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx" target="_blank">Part 2</a> of this series I walked through how to create a LINQ to SQL class model using the LINQ to SQL designer that is built-into VS 2008.&nbsp; Below is the class model that we created for the Northwind sample database:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step1.jpg"> </p> <h3><u>Retrieving Products</u></h3> <p>Once we have defined our data model classes above, we can easily query and retrieve data from our database.&nbsp; LINQ to SQL enables you to do this by writing LINQ syntax queries against the NorthwindDataContext class that we created using the LINQ to SQL designer above.</p> <p>For example, to retrieve and iterate over a sequence of Product objects I could write code like below:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step1(1).jpg"> </p> <p>In the query above I have&nbsp;used a "where" clause in my LINQ syntax query to only return those products within a specific category.&nbsp; I am using the CategoryID of the Product to perform the filter.</p> <p>One of the nice things above LINQ to SQL is that I have a lot of flexibility in how I query my data, and I can take advantage of the associations I've setup when modeling my LINQ to SQL data classes to perform richer and more natural queries against the database.&nbsp; For example, I could modify the query to filter by the&nbsp;product's CategoryName instead of its CategoryID by writing my LINQ query like so:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step2.jpg"> </p> <p>Notice above how I'm using the "Category" property that is on each of the Product objects to filter by the CategoryName of the Category that the Product belongs to.&nbsp; This property was automatically created for us by LINQ to SQL because we modeled the Category and Product classes as having a many to one relationship with each other in the database.</p> <p>For another simple example of using our data model's association relationships within queries, we could write the below LINQ query to retrieve only&nbsp;those products that have had 5 or more orders placed for them:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step3.jpg"> </p> <p>Notice above how we are using the&nbsp;"OrderDetails" collection that LINQ to SQL has created for us on each Product class (because of the 1 to many relationship we modeled in the LINQ to SQL designer).</p> <h3><u>Visualizing LINQ to SQL Queries in the Debugger</u></h3> <p>Object relational mappers like LINQ to SQL handle automatically creating and executing the appropriate SQL code for you when you perform&nbsp;a query or update against their object model.&nbsp; </p> <p>One of the biggest concerns/fears that developers new to ORMs have is "but what SQL code is it actually executing?"&nbsp; One of the really nice things about LINQ to SQL is that it makes it super&nbsp;easy to see <em>exactly</em> what SQL code it is executing when you run your application within the debugger.</p> <p>Starting with Beta2 of Visual Studio 2008 you can use a new LINQ to SQL visualizer plug-in to easily see (and test out) any LINQ to SQL query expression.&nbsp; Simply set a breakpoint and then hover over a LINQ to SQL query and click the magnify glass to pull up its expression visualizer within the debugger:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step4.jpg"> </p> <p>This will then bring up a dialog that shows you the exact SQL that LINQ to SQL will use when executing the query to retrieve the Product objects:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step5.jpg"> </p> <p>If you press the "Execute" button within this dialog it will allow you to evaluate the SQL directly within the debugger and see the exact data results returned from the database:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step6.jpg"> </p> <p>This obviously makes it super easy to see precisely what SQL query logic LINQ to SQL is doing for you.&nbsp; Note that you can optionally override the raw SQL that LINQ to SQL executes in cases where you want to change it - although in 98% of scenarios I think you'll find that the SQL code that LINQ to SQL executes is really, really good.</p> <h3><u>Databinding LINQ to SQL Queries to ASP.NET Controls</u></h3> <p>LINQ queries return results that implement the IEnumerable interface - which is also an interface that ASP.NET server controls support to databind object.&nbsp; What this means is that you can databind the results of any LINQ, LINQ to SQL, or LINQ to XML query to any ASP.NET control.</p> <p>For example, we could declare an &lt;asp:gridview&gt; control in a .aspx page like so:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step8.jpg"> </p> <p>I could then databind the result of the LINQ to SQL query we wrote before to the GridView like so:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step7.jpg"> </p> <p>This will then generate a page that looks like below:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step9.jpg"> </p> <h3><u>Shaping our Query Results</u></h3> <p>Right now when we are evaluating our product query, we are retrieving by default all of the column data needed to populate the Product entity classes.&nbsp; </p> <p>For example, this query to retrieve products:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step2.jpg"> </p> <p>Results in all of this data being returned:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step6.jpg">&nbsp;</p> <p>Often we only want to return a subset of the data about each product.&nbsp; We can use the new <a href="http://weblogs.asp.net/scottgu/archive/2007/04/21/new-orcas-language-feature-query-syntax.aspx" target="_blank">data shaping features</a> that LINQ and the new C# and VB compilers support to indicate that we only want a subset of the data by modifying our LINQ to SQL query&nbsp;like so:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step10.jpg"> </p> <p>This will result in only this data subset being returned from our database (as seen via our debug visualizer):</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step11.jpg"> </p> <p>What is cool about LINQ to SQL is that I can take full advantage of my data model class associations&nbsp;when shaping my data.&nbsp; This enables me to express really useful (and very efficient) data queries.&nbsp; For example, the below query retrieves the ID and Name from the Product entity, the total number of orders that have been made for the Product, and then sums up the total revenue value of each of the Product's orders:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step12.jpg"> </p> <p>The expression to the right of the "Revenue" property above is an example of using the "Sum" <a href="http://weblogs.asp.net/scottgu/archive/2007/03/13/new-orcas-language-feature-extension-methods.aspx" target="_blank">extension method</a> provided by LINQ.&nbsp; It takes a <a href="http://weblogs.asp.net/scottgu/archive/2007/04/08/new-orcas-language-feature-lambda-expressions.aspx" target="_blank">Lambda expression</a> that returns the value of each product order item as an argument.&nbsp; </p> <p>LINQ to SQL is smart and is able to convert the above LINQ expression to the below SQL when it is evaluated (as seen via our debug visualizer):</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step13.jpg"> </p> <p>The above SQL causes all of the NumOrders and Revenue value computations to be done inside the SQL server, and results in only the below data being retrieved from the database (making it really fast):</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step14.jpg"> </p> <p>We can then databind the result sequence against our GridView control to generate pretty UI:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step21.jpg"> </p> <p>BTW - in case you were wondering, you do get full intellisense within VS 2008 when writing these types of LINQ shaping queries:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step15.jpg"> </p> <p>In the example above I'm declaring an <a href="http://weblogs.asp.net/scottgu/archive/2007/05/15/new-orcas-language-feature-anonymous-types.aspx?CommentPosted=true" target="_blank">anonymous type</a> that uses <a href="http://weblogs.asp.net/scottgu/archive/2007/03/08/new-c-orcas-language-features-automatic-properties-object-initializers-and-collection-initializers.aspx" target="_blank">object initialization</a> to shape and define the result structure.&nbsp; What is really cool is that VS 2008 provides full intellisense, compilation checking, and refactoring support&nbsp;when working against these anonymous result sequences as well:</p> <p>&nbsp;<img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step16.jpg"> </p> <h3><u>Paging our Query Results</u></h3> <p>One of the common needs in web scenarios is to be able to efficiently build data paging UI.&nbsp; LINQ provides built-in support for two extension methods that make this both easy and&nbsp;efficient&nbsp;- the Skip() and Take() methods.</p> <p>We can use the Skip() and Take() methods below to indicate that we only want to return 10 product objects - starting at an initial product row that we specify as a parameter argument:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step17.jpg"> </p> <p>Note above how I&nbsp;did not&nbsp;add the Skip() and Take() operator on the initial products query declaration - but instead added it later to the query (when binding it to my GridView datasource).&nbsp; People often ask me "but doesn't this mean that the query first grabs all the data from the database and then does the paging in the middle tier (which is bad)?"&nbsp; No.&nbsp; The reason is that LINQ uses a deferred execution model - which means that the query doesn't actually execute until you try and iterate over the results.&nbsp; </p> <p>One of the benefits of this deferred execution model is that it enables you to nicely compose queries across multiple code&nbsp;statements (which improves code readability).&nbsp; It also enables you to compose queries out of other queries - which enables some very flexible query composition and re-use scenarios.</p> <p>Once I have the BindProduct() method defined above, I can write the code below in my page to retrieve the starting index from the querystring and cause the products to be paged and displayed in the gridview:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step18.jpg"> </p> <p>This will then give us a products page, filtered to list only those products with more than 5 orders, showing dynamically computed product data,&nbsp;and which is pageable via a querystring argument:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step19.jpg"> </p> <p>Note: When working against SQL 2005, LINQ to SQL will use the ROW_NUMBER() SQL function to perform all of the data paging logic in the database.&nbsp; This ensures that only the 10 rows of data we want in the current page view are returned from the database when we execute the above code:</p> <p><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/step20.jpg"> </p> <p>This makes it efficient and easy to page over large data sequences.</p> <h3><u>Summary</u></h3> <p>Hopefully the above walkthrough provides a good overview of some of the cool data query opportunities that LINQ to SQL provides.&nbsp; To learn more about LINQ expressions and the new language syntax supported by the C# and VB compilers with VS 2008, please read these earlier posts of mine:</p> <ul> <li><a href="http://weblogs.asp.net/scottgu/archive/2007/03/08/new-c-orcas-language-features-automatic-properties-object-initializers-and-collection-initializers.aspx" target="_blank">Automatic Properties, Object Initializer and Collection Initializers</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/03/13/new-orcas-language-feature-extension-methods.aspx" target="_blank">Extension Methods</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/04/08/new-orcas-language-feature-lambda-expressions.aspx" target="_blank">Lambda Expressions</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/04/21/new-orcas-language-feature-query-syntax.aspx" target="_blank">Query Syntax</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05/15/new-orcas-language-feature-anonymous-types.aspx?CommentPosted=true" target="_blank">Anonymous Types</a> </li></ul> <p>In my next post in this LINQ to SQL series I'll cover how&nbsp;we can&nbsp;cleanly add validation logic to our data model classes, and demonstrate how we can use it to encapsulate business logic that executes every time we update, insert, or delete our data.&nbsp; I'll then cover more advanced lazy and eager loading query scenarios, how to use the new &lt;asp:LINQDataSource&gt; control to support declarative databinding of ASP.NET controls, optimistic concurrency error resolution, and more.</p> <p>Hope this helps,</p> <p>Scott</p></font>
+            
+            <div class="postfoot">
+                
+                Published
+                Friday, June 29, 2007 1:11 AM
+			    by
+			    <a href="http://weblogs.asp.net/members/ScottGu.aspx">ScottGu</a>
+                <span id="ctl00_Main_WeblogPostRating1" title="Rated Excellent [5 out of 5]." class="CommonRateControlReadOnly"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"></span><input type="hidden" value="5" id="ctl00_Main_WeblogPostRating1_Value">
+                <div class="em"><span id="ctl00_Main_ctl06_ctl01">Filed under: <a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/Visual+Studio/default.aspx" rel="tag">Visual Studio</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a></span><input type="hidden" name="ctl00$Main$ctl06$ctl01" id="ctl00_Main_ctl06_ctl01_State" value="value:Filed%20under%3A%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FASP.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3EASP.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FVisual%2BStudio%2Fdefault.aspx%22%20rel%3D%22tag%22%3EVisual%20Studio%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2F.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3E.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FLINQ%2Fdefault.aspx%22%20rel%3D%22tag%22%3ELINQ%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FData%2Fdefault.aspx%22%20rel%3D%22tag%22%3EData%3C%2Fa%3E"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+                    
+                    <h3 class="pageTitle">Comments</h3>
+                    <div id="comments">
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974226">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 5:13 AM
+                            by
+                            elixir
+                            
+	                    </div>
+	                    <p>I love how you combined functional programming, query language and normal imperative programming into the whole language model and do so elegantly</p>
+<p>now, even subsonic won't be neccessary :)</p>
+<p>keep up the great work!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974507">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 5:53 AM
+                            by
+                            Koen
+                            
+	                    </div>
+	                    <p>Hi,</p>
+<p>Will there be a LINQDataSource control also? And what if I want to have a dynamic query (where clause depends on user input, e.g. filter controls)?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974617">#</a>
+	                        <span>
+	                            Functional programming &amp;laquo; chakrit
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:06 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://chakrit.wordpress.com/2007/06/29/functional-programming/">Functional programming « chakrit</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Functional programming &amp;laquo; chakrit</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974623">#</a>
+	                        <span>
+	                             LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:07 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.dotnetkicks.com/aspnet/LINQ_to_SQL_Part_3_Querying_our_Database">DotNetKicks.com</a>
+                            
+	                    </div>
+	                    <p>You've been kicked (a good thing) - Trackback from DotNetKicks.com</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974624">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:08 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog.htm">LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974649">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:13 AM
+                            by
+                            <a title="Manuel Abadia" rel="nofollow" href="http://www.manuelabadia.com/">Manuel Abadia</a>
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>some time ago I wrote a DebuggerVisualizer for LINQ expressions that is available here:</p>
+<p><a rel="nofollow" target="_new" href="http://www.manuelabadia.com/blog/PermaLink,guid,9160035f-490f-46bd-ab55-516b5c7545af.aspx">www.manuelabadia.com/.../PermaLink,guid,9160035f-490f-46bd-ab55-516b5c7545af.aspx</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974731">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:23 AM
+                            by
+                            Juan
+                            
+	                    </div>
+	                    <p>Hi Scott, </p>
+<p>Great series of posts!. Very excited about this!,</p>
+<p>Can't wait to start using it in our apps!</p>
+<p>Cheers,</p>
+<p>Juan</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2974855">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 6:56 AM
+                            by
+                            Chris Moseley
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>This looks fantastic but I have a few questions:</p>
+<p>Using your paging method, will I have to implement my own custom pager or is there a way to get the inbuilt GridView pager to behave correctly using this method of server-side paging?</p>
+<p>Thanks, Chris</p>
+<p>Also, If I want to use Link To Sql to bind to a GridView, how do I implement column sorting? I'll need to be able to add a dynamic field name into the select query...</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975111">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 8:03 AM
+                            by
+                            <a title="Muhammad Adnan" rel="nofollow" href="http://realfantasy.wordpress.com/">Muhammad Adnan</a>
+                            
+	                    </div>
+	                    <p>would need of ado.net and sql get remove and what about sql injection security</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975153">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 8:22 AM
+                            by
+                            Akaka
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>I have one question about data paging on Gridview , as I know that gridview is also have feature to paging data, How can we use gridview paging feature works with LINQ.</p>
+<p>Thank for your post.</p>
+<p>Akaka</p>
+<p>Akaka</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975202">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 8:37 AM
+                            by
+                            <a title="Peter Bridger" rel="nofollow" href="http://www.avonandsomerset.police.uk/">Peter Bridger</a>
+                            
+	                    </div>
+	                    <p>Hi Scott, apologies to post off topic, but I was wondering if you recevied the e-mail I sent to your Microsoft address yesterday?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975367">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 9:24 AM
+                            by
+                            Rob Mathieson
+                            
+	                    </div>
+	                    <p>Hi Scott</p>
+<p>When submitting an object to the database for updating, is it possible to manipulate the query to include logic?</p>
+<p>For example, I may wish to insert or update, based on whether or not that item's id is already in a database table.</p>
+<p>Also, just want to say that the stuff you guys are doing is fantastic. We are starting to get to a point where we can produce applications at a speed that has never been possible before. Well done!</p>
+<p>Regards</p>
+<p>Rob</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975515">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 10:41 AM
+                            by
+                            Mike Loll
+                            
+	                    </div>
+	                    <p>Scott - I am tinkering with Orcas and the 3.5 beta. &nbsp;I love linq, but what I want to do is use linq to sql to get my data, but I use interfaces in my business layer. &nbsp;So I might have an IProduct which has various properties and methods. &nbsp;Using an architecture like this, would I be better of using linq to sql to populate some new domain object that implements my interface, or is there some way to marry my interface with what linq to sql will give me?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975546">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 11:08 AM
+                            by
+                            <a title="Josh Stodola" rel="nofollow" href="http://blog.josh420.com/">Josh Stodola</a>
+                            
+	                    </div>
+	                    <p>Hi Scott, thanks for posting this. &nbsp;I have been quite intrigued by LINQ, but unfortunately the provided examples somewhat leave me at a loss. &nbsp;Please show some love to the millions of VB programmers by providing examples in both languages! &nbsp;C# should never considered superior!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975768">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:20 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Koen,</p>
+<p>There will be a &lt;asp:linqdatasource&gt; control, and I'll be blogging about it more over the next few weeks.</p>
+<p>You can also use dynamic queries with LINQ - this allows end-users to dynamically specify what columns/filters they want and then build it via code. &nbsp;I'll try and put a sample together that shows this in the future.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975774">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:25 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Chris,</p>
+<p>The good news is that you can point the GridView at the &lt;asp:linqdatasource&gt; control, and get automatic server-side paging with it using the GridView UI. &nbsp;We also now have a &lt;asp:datapager&gt; control that you can use with other controls (like the new &lt;asp:listview&gt;) to enable server-side paging UI for them as well.</p>
+<p>I'll show more how to use the linqdatasource control in the future. &nbsp;I wanted to show the code-approach first so that people wouldn't get confused about LINQ only being a databinding scenario - the great news is that you can use it with both code and declarative binding and have it work great everywhere.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975777">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:27 PM
+                            by
+                            Bryan
+                            
+	                    </div>
+	                    <p>Scott:</p>
+<p>I just love this stuff! &nbsp;I can't wait for VS 2008 Beta 2 to be made available!</p>
+<p>I attended sessions at Tech Ed that went through all of these LINQ to SQL features, but it is good to go over it all again at a pace I can keep up with!</p>
+<p>And the opposite of Lazy Loading is Eager Loading...makes sense.</p>
+<p>Thanks to your team for all of their hard work!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975789">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:28 PM
+                            by
+                            John
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>I noticed that one of the lines is</p>
+<p>WHERE p.OrderDetails.Count &gt; 5 </p>
+<p>This is a little confusing. LINQ is structured to be like SQL, but it seems to me, that if we wanted it to be similar to SQL, it would have been written:</p>
+<p>HAVING p.OrderDetails.Count &gt; 5</p>
+<p>Does LINQ contain the "HAVING" sql keyword?</p>
+<p>Thanks.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975797">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:30 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Muhammad,</p>
+<p>The good news is that LINQ to SQL protects you against SQL injection attacks. &nbsp;All parameters are automatically SQL encoded for you so that you don't have to-do anything to make them safe.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975812">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:33 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Rob,</p>
+<p>I'll be posting about the validation logic shortly. &nbsp;You should be able to perform the conditional logic you are after to check whether and order (or its order items) are already in the database prior to completing the transaction.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2975834">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 12:35 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mike,</p>
+<p>There are a couple of approaches you can use if you want to use your own interfaces:</p>
+<p>1) Add the interfaces to your LINQ to SQL data model classes. &nbsp;The LINQ to SQL classes are partial classes - which means you could add the interface directly to them.</p>
+<p>2) Modify your LINQ queries to return not the origional model types, but rather separate objects that implement your interfaces. &nbsp;You can control this via the select clause in your LINQ to SQL query. &nbsp;This blog post shows a little how to-do this: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/04/21/new-orcas-language-feature-query-syntax.aspx">weblogs.asp.net/.../new-orcas-language-feature-query-syntax.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2976097">#</a>
+	                        <span>
+	                            New and Notable 176
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 1:23 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://codebetter.com/blogs/sam.gentile/archive/2007/06/29/new-and-notable-176.aspx">Sam Gentile</a>
+                            
+	                    </div>
+	                    <p>TGIF!! I am super busy right now designing a multi-CPU/multi-threaded Parallel Calculation Engine and</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2976235">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 1:37 PM
+                            by
+                            <a title="Sean Chase" rel="nofollow" href="http://www.unboxedsolutions.com/sean">Sean Chase</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>How do you envision a traditional "n-tier" / "layered" application approach using these technologies. For example, *today* many of us don't want to see SQL outside of a DAL or DBMS, calls from thee UI layer go through a business interface (or facade layer) and then possibly 1 or more calls from the business interface layer into a business logic layer then DAL. You get the jist. &nbsp;:-) &nbsp; &nbsp; Perhaps I'm missing something. Do you think it will be "best practice" to use LINQ query syntax at the UI layer such as an ASP.NET application or would that be more reserved for a DAL layer.</p>
+<p>Appreciate the input.</p>
+<p>Sean</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2976332">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 1:54 PM
+                            by
+                            MIke
+                            
+	                    </div>
+	                    <p>What about Stored Procedures? &nbsp;Are we expected to give read/write rights to all of our tables? &nbsp; &nbsp;What about query performance? &nbsp;This is also the problem I have with (n)Hibernate or Rails. &nbsp;I can't believe people aren't demanding more control over the sql statements generated. &nbsp;It looks awesome, but my company would never give users to update tables directly. &nbsp;We currently use iBatis.Net which gives the OR mapping, but lets us still have complete control over the sql and permissions (at the cost of development time).</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2977707">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 4:41 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mike,</p>
+<p>The good news is that you can use Stored Procedures with LINQ to SQL, and can design your data model so that updates, inserts, deletes all go through SPROCs. &nbsp;This ends up being transparent to anyone consumer of a data model.</p>
+<p>You can also use SPROCs for queries, so you can integrate those with your data models as well. &nbsp;I have a small sample of this in my blog post here: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx">weblogs.asp.net/.../using-linq-to-sql-part-1.aspx</a></p>
+<p>I'll be doing a dedicated blog post on using SPROCs with LINQ to SQL in the next few weeks where I'll go into more detail on this.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2977727">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 4:49 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Sean,</p>
+<p>There are a couple of ways you can use LINQ to SQL. &nbsp;One is to use it to effectively replace your DAL layer, and encapsulate a separate business layer between your UI and it.</p>
+<p>One of the nice things about LINQ to SQL, though, is that it enables you to build a pretty flexible object oriented layer for your data/business logic. &nbsp;Specifically, it provides a very clean way to add business logic and rules in your entity classes. &nbsp;The entity classes for LINQ to SQL also support persistance ignorance and flexible inheritance (no base class required). &nbsp;I'll cover some of these in blog posts over the next few weeks. &nbsp;I expect a lot of developers will use these features to merge their data and business layers together for many projects (which for 90% of projects is just fine).</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2977770">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 4:58 PM
+                            by
+                            Alan
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>Regarding paging, you say that if we're using SQL2k5, that ROW_NUMBER() will be used to facilitate paging. &nbsp;Can LINQ be used with SQL2k and still have built-in paging support? &nbsp;If so, what type of SQL pattern is it using?</p>
+<p>Also, for the ROW_NUMBER() approach, I've read things which say that in large volumes, ROW_NUMBER() is quite slow. &nbsp;Is ROW_NUMBER() still appropriate when paging sets of millions of records? &nbsp;What performant alternatives are there?</p>
+<p>I like that LINQ appears to know the right type of JOINs to perform-- this is good because most developers don't ;) It's usually left to our DBAs to optimize the mess. &nbsp;Does LINQ allow you to programatically specify join hints in the cases where they're useful? &nbsp;Or would we need to go the custom sproc route and bypass LINQ fanciness?</p>
+<p>Can you describe the domain of cases where LINQ-genereated SQL might not be the most efficient? &nbsp;In general, LINQ appears to be a great way to prototype at the very least.. but in high volume production scenarios, we'd like to make sure that we're not going to have to go through and tweak (beyond propery indexing) the LINQ-generated SQL everywhere due to performance reasons.</p>
+<p>-Alan</p>
+<p>BTW: Assuming the performance holds up in production scenarios, this approach really beats the hell out of J2EE's EJB/CMP approach ;)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2980353">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 8:39 PM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Hi Scott;</p>
+<p>As always, great article. Can't tell you how valuable you articles are. This is well spent time educating us the way you write.</p>
+<p>One question: I know LINQ and all the related parts have been changing and getting ready for production and it's hard to write our production code against a moving target. I like to know if starting Beta 2 of VS2008, the feature list have been locked and we can begin to write code against LINQ and ASP.Net 3.5?</p>
+<p>Thanks again!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2980587">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 9:23 PM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Hi Scott;</p>
+<p>&gt;&gt;I expect a lot of developers will use these features to merge their data and business layers together for many projects (which for 90% of projects is just fine)&lt;&lt;</p>
+<p>This was a comment you made to Sean, and I had been thinking about the exact thing you said prior to reading your post. Seems like the DAL is already done for you when VS creates the ORM DataContext, we just do the rest in the Business layer using LINQ.</p>
+<p>..Ben</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2981633">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 11:38 PM
+                            by
+                            Kangnoz
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>You said,"When working against SQL 2005, LINQ to SQL will use the ROW_NUMBER() SQL function to perform all of the data paging logic in the database. &nbsp;This ensures that only the 10 rows of data we want in the current page view are returned from the database when we execute the above code."</p>
+<p>so current page view has 10 rows at most,if we will render &gt;10 rows,Linq To SQL can't do it? &nbsp;The function of Linq To SQL is limited.</p>
+<p>Sorry ,I am Chinese. My English is not good.</p>
+<p>Thank you.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2981841">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 12:08 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Kangnoz,</p>
+<p>You can have any sized page of data that you want. &nbsp;In the code above I am passing 10 to the Take() method - which is why it is returning 10 rows of data. &nbsp;You could change this to be any number you want.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2981846">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 12:09 AM
+                            by
+                            <a title="Vikram" rel="nofollow" href="http://www.vikramlakhotia.com/">Vikram</a>
+                            
+	                    </div>
+	                    <p>Hi scott,</p>
+<p>This was really good example. Can we also have an example on how to use LINQ with stored procedures</p>
+<p>Thanks</p>
+<p><a rel="nofollow" target="_new" href="http://www.vikramlakhotia.com/">http://www.vikramlakhotia.com</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2981855">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 12:09 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Ben,</p>
+<p>The Beta2 release of .NET 3.5 and VS 2008 should be fairly baked in terms of feaure set - I wouldn't expect LINQ and ASP.NET to change much after that (a few minor tweaks - but nothing substantial). &nbsp;So I thjink you could start then to write applications with it and not be worried about having to change much for the final release.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2984856">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 9:05 AM
+                            by
+                            <a title="Juan Mar&amp;#237;a" rel="nofollow" href="http://thinkingindotnet.wordpress.com/">Juan María</a>
+                            
+	                    </div>
+	                    <p>Hi!</p>
+<p>Great post, </p>
+<p>you can read it in spanish here:</p>
+<p><a rel="nofollow" target="_new" href="http://thinkingindotnet.wordpress.com/2007/06/30/linq-to-sql-3%c2%aa-parte-consultando-la-base-de-datos/">thinkingindotnet.wordpress.com/.../linq-to-sql-3%c2%aa-parte-consultando-la-base-de-datos</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2985615">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 12:13 PM
+                            by
+                            <a title="Eric" rel="nofollow" href="http://zhouruifu.spaces.live.com/">Eric</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>I have the same question with Chris, about sorting the data through LINQ dynamically. </p>
+<p>The paging feature is very convenient for us web developers, and what should we do if we want sort the data in a gridview depending on which column header the user has click?</p>
+<p>Thanks</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2988702">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 30, 2007 8:09 PM
+                            by
+                            Matt
+                            
+	                    </div>
+	                    <p>Is Microsoft striving to support other databases besides SQL Server? How about Oracle?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2991853">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 01, 2007 2:54 AM
+                            by
+                            <a title="Microogle" rel="nofollow" href="http://zhouruifu.spaces.live.com/">Microogle</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>I have the same question with Chris, about sorting the data through LINQ dynamically. </p>
+<p>The paging feature is very convenient for us web developers, and what should we do if we want sort the data in a gridview depending on which column header the user has click?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2995387">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 01, 2007 10:32 AM
+                            by
+                            JasonBSteele
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Loving the series, and I am looking forward to the next part which I condsider to be the most useful.</p>
+<p>I share some of the other posters concerns about how this can be used in an n-tier project and have read your responses with interest.</p>
+<p>For obvious reasons examples of implementing business logic can be pretty trivial (e.g. is ToDate &gt; FromDate). I think it would be of real value if something a bit more substantial could be shown that involves more than one enitity. For example: Is this a new Order, and if so deduct quantities from the Stock table for each Order Detail checking that they do not fall below 0.</p>
+<p>Just a suggestion ;)</p>
+<p>Thanks,</p>
+<p>Jason</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2996371">#</a>
+	                        <span>
+	                            Enlaces .NET 01-07-2007
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 01, 2007 3:07 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://oberdata.com.ar/pred/blogs/ob/archive/2007/07/01/44242.aspx">OberData</a>
+                            
+	                    </div>
+	                    <p>TreeView con Ajax .NETValidaciones con Enterprise Library 3.xLINQ to SQL (Part 3 - Querying our Database)Busqueda...</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2998995">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 01, 2007 11:33 PM
+                            by
+                            <a title="Sambo" rel="nofollow" href="http://www.usofttechnology.com.kh/">Sambo</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>This is a great post of LINQ. Could you tell me, when the VS 2008 release?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#2999361">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 2:54 AM
+                            by
+                            <a title="Softlion" rel="nofollow" href="http://www.softlion.com/">Softlion</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>99% of the projects I've worked on use 90% of simple sproc using a NOLOCK isolation level, and 10% of advanced sproc which uses mixed isolation levels to prevent dead locks. An advanced sproc may be written using C# and calls to smaller sprocs. But LOCK controls (NOLOCK, HOLDLOCK, ROWLOCK, ...) are finely tuned.</p>
+<p>Will LINQ be smart enough or soft enough to let us retain control over these ?</p>
+<p>Also what about search facilities ? (indexed searches ?).</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3000069">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 5:31 AM
+                            by
+                            Ilias Hossain
+                            
+	                    </div>
+	                    <p>But where is the sorting facilities. Suppose i want to short the above grid with Product name of Product table </p>
+<p>and </p>
+<p>Quentity, price fields of the OrderDetail table. All these field are in on the same grid. Is there any way.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3001756">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 11:28 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Sambo,</p>
+<p>VS 2008 Beta2 will ship in a few weeks. &nbsp;The final release of VS 2008 and .NET 3.5 will then ship in a few months.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3001762">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 11:30 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Microogle and Eric,</p>
+<p>I'll be covering sorting (including dynamic scenarios involving the GridView) in a future blog post. &nbsp;There is an orderby keyword that LINQ supports that makes this easy to support. &nbsp;When you point a GridView control at a LinqDataSource the paging and sorting support works automatically.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3001774">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 11:32 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Matt,</p>
+<p>LINQ itself is a datasource agnostic - so you can use it against in-memory objects, XML files, and any relational database.</p>
+<p>On the database front, what you need is a data provider that performs the appropriate mappings between LINQ queries and the database. &nbsp;Both LINQ to Entities and LINQ to NHibernate will support Oracle.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3001777">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 11:33 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Jason,</p>
+<p>Thanks for the suggestion - I'll try and incorporate that scenario into my validation logic post.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3003432">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 02, 2007 5:42 PM
+                            by
+                            <a title="Zack Owens" rel="nofollow" href="http://blogs.eagleenvision.net/">Zack Owens</a>
+                            
+	                    </div>
+	                    <p>oooo... .NET Framework 3.5 June CTP is out! (<a rel="nofollow" target="_new" href="http://www.microsoft.com/downloads/details.aspx?FamilyID=e6fd8663-8b77-4649-8d36-3830e18528fa&DisplayLang=en">www.microsoft.com/.../details.aspx</a>)</p>
+<p>I'm thinking that Visual Studio 2008 CTP is not far behind. Is this a fair assumption?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3007321">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 03, 2007 12:07 PM
+                            by
+                            Boris Yeltsin's Zombie
+                            
+	                    </div>
+	                    <p>Hey Scott,</p>
+<p>You didn't get back to my previous comment on your blog.</p>
+<p>Will you guys release the source to LINQ to SQL?</p>
+<p>You guys did a fabulous job releasing the source for the SQL Server Membership Provider which let people quickly modify the code and connect to whatever flavour of database they were using in-house.</p>
+<p>The source for LINQ to SQL would let people quickly go through and replace out all the SQL statements with the equivalents for other DBs.</p>
+<p>I realise those in the hierarchy above you might feel that it reduces the MS lock-in, but there are plenty of us out there that love .NET and Visual Studio and are happy to buy Windows servers all day long, but where SQL Server is not the right database for the task, or just not an option because of other application stacks that are in use at the organization.</p>
+<p>I badly want to use LINQ to SQL exclusively and drop all the other DALs I'm using. Ease my pain and release the source. Pretty please?</p>
+<p>- BY's Zombie</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3008231">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 03, 2007 3:14 PM
+                            by
+                            Alan
+                            
+	                    </div>
+	                    <p>Scott, just a quick ping to see if you had any comments on my reply above regarding ROW_NUMBER() and performance issues.</p>
+<p>-Alan</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3008441">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 03, 2007 3:55 PM
+                            by
+                            shashi 
+                            
+	                    </div>
+	                    <p>How to do Insert, Update, Delete. Do I need individual table adapters like vs2005 DataSets?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3008549">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 03, 2007 4:12 PM
+                            by
+                            <a title="Judah" rel="nofollow" href="http://judagabriel.blogspot.com/">Judah</a>
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>First, excellent post. Functional concepts are like deferred execution are really making this all look very elegant.</p>
+<p>I've a question: does LINQ to SQL do anything for updating the data? Say I bind the data to a WinForms DataGridView. I make a change to the data in the UI - what happens then? Does LINQ to SQL play any role there?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3017177">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 9:03 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Zack,</p>
+<p>Yep - Beta2 isn't that far away. &nbsp;I'd probably recommend holding off for that - since the quality will be much higher than the CTP, and it shouldn't be more than about 3 weeks away.... :-)</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3017190">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 9:07 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Boris,</p>
+<p>Sorry for the delay in getting back to you - for some reason your first comment didn't go through (the spam filter might have nuked it!).</p>
+<p>To answer your question - I'm hoping we'll be able to release the source for LINQ to SQL - I definitely think that is something we should do. &nbsp;</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3017200">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 9:09 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Judah,</p>
+<p>Yep - LINQ to SQL supports not just querying data, but also applying updates back to the database. &nbsp;It is really easy to-do this both with WinForms (using say a DataGridView) as well as with ASP.NET. &nbsp;I'll be covering this more in the next few weeks.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3017240">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 9:14 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Alan,</p>
+<p>Sorry for the delay in getting back to you!</p>
+<p>I've heard relatively good things about ROW_NUMBER() performance, but in general if you have extremely large result sets (millions of rows) then you might want to look hard at how you page it. &nbsp;Note that by result-set I don't mean millions of rows in the table - but rather millions of rows in the table that match the where filter and are to be paged in the UI.</p>
+<p>LINQ to SQL allows you to call SPROCs (or embed custom SQL) for totally custom queries - so that is an option if you find ROW_NUMBER() causes problems.</p>
+<p>I don't know the query optmizer in LINQ to SQL well enough to know the exact domain models that are best with LINQ to SQL. &nbsp;But Matt Warren from the LINQ to SQL team has a great blog here: <a rel="nofollow" target="_new" href="http://blogs.msdn.com/mattwar/default.aspx">blogs.msdn.com/.../default.aspx</a> and would be a great person to ask for more suggestions on this.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3017242">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 9:16 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Shashi,</p>
+<p>My next set of posts will start to cover insert, update and delete scenarios for LINQ to SQL. &nbsp;Here is a post I did earlier that shows a few syntax examples on how to-do them: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx">weblogs.asp.net/.../using-linq-to-sql-part-1.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3023948">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 05, 2007 10:10 AM
+                            by
+                            <a title="Brendan Enrick" rel="nofollow" href="http://aspadvice.com/blogs/name/default.aspx">Brendan Enrick</a>
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>Great post. It is very helpful.</p>
+<p>When do you think we may look forward to the next post in this series?</p>
+<p>Thanks again,</p>
+<p>Brendan</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3026512">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 05, 2007 4:50 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Brendan,</p>
+<p>I'm hoping to have a newer post on LINQ to SQL up this weekend or early next week.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3030660">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 05, 2007 10:13 PM
+                            by
+                            <a title="Brian Anderson" rel="nofollow" href="http://www.tourneylogic.com/blogs/brian/">Brian Anderson</a>
+                            
+	                    </div>
+	                    <p>Thanks for another great post. &nbsp;LINQ looks great and is a long awaited addition to the stack. &nbsp;After doing some testing with LINQ and the SQL mapping tool I realized that I can't change the namespaces of my generated classes. &nbsp;Are there any plans to allow this before RTM?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3039254">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 06, 2007 10:08 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Brian,</p>
+<p>I don't have the older builds of LINQ to SQL installed so can't check if this behavior is new, but with Beta2 builds there are two properties on the root designer called "Entity Namespace" and "Context Namespace". &nbsp;You can set these in order to change the namespaces for the data entitity classes generated as well as the root DataContext class generated.</p>
+<p>If you don't set these, then the designer will default to using the project namespace.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3039394">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 06, 2007 10:15 AM
+                            by
+                            Boris Yeltsin's Zombie
+                            
+	                    </div>
+	                    <p>Thanks for the reply Scott. Hope you can release that LINQ to SQL source.</p>
+<p>p.s. You work too hard. I talked to your boss - he said you can have next week off.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3097124">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 10, 2007 4:05 PM
+                            by
+                            Steve
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>You previously mentioned that you will be discussing many to many relationships and how to work around them. &nbsp;Can you point me to something that might get me started or give me confidence that I can migrate my application from nHibernate to LINQ to SQL? &nbsp;I have an existing ASP.net 2.0 app that has around 10 tables but 2 of them have a m-m relationship. &nbsp;I don't want to start learning this tool if it will be a dead end due to lack of m-m support.</p>
+<p>Thanks,</p>
+<p>Steve</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3102006">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 11, 2007 5:20 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Steve,</p>
+<p>Here is a good blog post that talks about how you can implement M:M relationships using LINQ to SQL: <a rel="nofollow" target="_new" href="http://blogs.msdn.com/mitsu/archive/2007/06/21/how-to-implement-a-many-to-many-relationship-using-linq-to-sql.aspx">blogs.msdn.com/.../how-to-implement-a-many-to-many-relationship-using-linq-to-sql.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3103536">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 11, 2007 10:00 AM
+                            by
+                            Enrock
+                            
+	                    </div>
+	                    <p>I wonder if linq can link any database without changing it,how can it deal with different SQLs,you know ,the SQL translater of every database is improving</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3106585">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 4 - Updating our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 11, 2007 1:33 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/07/11/linq-to-sql-part-4-updating-our-database.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I've been writing a series of blog posts that cover LINQ to SQL. LINQ to SQL</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3134150">#</a>
+	                        <span>
+	                            UPDATE: Table Joins in LINQ - Simplify it! &amp;laquo; Ramblings of the Sleepy&amp;#8230;
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 13, 2007 1:22 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://tiredblogger.wordpress.com/2007/07/13/update-table-joins-in-linq-simplify-it/">UPDATE: Table Joins in LINQ - Simplify it! « Ramblings of the Sleepy…</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;UPDATE: Table Joins in LINQ - Simplify it! &amp;laquo; Ramblings of the Sleepy&amp;#8230;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3151145">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 15, 2007 4:10 AM
+                            by
+                            Jarle Nygård
+                            
+	                    </div>
+	                    <p>As far as I can see LINQ is based on mapping tables and classes more or less 1:1, but how about mapping classes and table patterns 1:1? In our database we have a lot of "codetable" tables that follows the same patterns; ie. they have the same columns and "sub-tables" (connected). So the classes would basically be the same, within a specific pattern. We have 4 different "codetable" patterns (hierarchial etc.). </p>
+<p>Is this a scenario you already support or are planning to support? </p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3159960">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 15, 2007 6:20 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Jarle,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; As far as I can see LINQ is based on mapping tables and classes more or less 1:1, but how about mapping classes and table patterns 1:1? In our database we have a lot of "codetable" tables that follows the same patterns; ie. they have the same columns and "sub-tables" (connected). So the classes would basically be the same, within a specific pattern. We have 4 different "codetable" patterns (hierarchial etc.). </p>
+<p>Can you provide more details on the schema model you are using with these table patterns? </p>
+<p>LINQ to SQL does support the ability to use the single-table inheritance pattern, which allows you to model sub-classes based on a discriminator key in a table. &nbsp;That sounds loosely like what you are looking for above - but I'm not entirely sure.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3189375">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 17, 2007 9:08 AM
+                            by
+                            <a title="Amr Elsehemy" rel="nofollow" href="http://amr-elsehemy.blogspot.com/">Amr Elsehemy</a>
+                            
+	                    </div>
+	                    <p>Hello Scott,</p>
+<p>Where can I find the code samples of this article.</p>
+<p>Thanks,</p>
+<p>Amr</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3192619">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 17, 2007 3:18 PM
+                            by
+                            Lucas Krause
+                            
+	                    </div>
+	                    <p>I have beta 2 and i can't see the linq to sql visualizer, i took the c# samples folder build the express viewer, then drop it in both users\document\VS 2008\Visualizers, and program files\vs 9.0\common7\debugger\visualizers\ and it doesn't show up, is there a setting inside VS or a tweak needed for this?</p>
+<p>i am running vista, have VS 2005SP1, and VS 2008 beta 2, with Team explorer as well.</p>
+<p>thanks!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3192939">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 17, 2007 4:12 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Lucas,</p>
+<p>To install the debug visualizer, you'll want to follow these following steps:</p>
+<p>1. &nbsp; &nbsp; &nbsp; Unzip &lt;VSOrcas Install Dir&gt;\Samples\CShaprLinqSamples.zip</p>
+<p>2. &nbsp; &nbsp; &nbsp; Build the query visualizer project</p>
+<p>3. &nbsp; &nbsp; &nbsp; Copy the DLL to &lt;VSOrcas Install Dir&gt;\Common7\Packages\Debugger\Visualizers\</p>
+<p>You'll then want to shutdown and restart VS 2008. &nbsp;It should then work.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3235851">#</a>
+	                        <span>
+	                            LINQ to SQL (パート 3 - データベースの検索) 
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 20, 2007 8:19 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.wankuma.com/chicasharp/archive/0001/01/01/86254.aspx">Chica's Blog</a>
+                            
+	                    </div>
+	                    <p>LINQ to SQL (パート 3 - データベースの検索)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3256879">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 23, 2007 10:51 AM
+                            by
+                            discovia
+                            
+	                    </div>
+	                    <p>Whats the best way to return the results you get through LINQ as xml, or JSON?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3267655">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 24, 2007 1:59 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi discovia,</p>
+<p>There are a couple of ways to transfer the result of a LINQ query into XML. &nbsp;The best way is to probably use LINQ to XQL - which is built-in with .NET 3.5. &nbsp;I'll try and do a few samples that show this off in the near future.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3272536">#</a>
+	                        <span>
+	                            &amp;raquo; Functional programming &amp;laquo; chakrit-My 1983
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 25, 2007 2:24 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.booknn.cn/index.php/life/12685/functional-programming-chakrit">» Functional programming « chakrit-My 1983</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;&amp;raquo; Functional programming &amp;laquo; chakrit-My 1983</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3276438">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 25, 2007 2:41 PM
+                            by
+                            Discovia
+                            
+	                    </div>
+	                    <p>Thanks Scott,</p>
+<p>You do great posts. &nbsp;It'll be real nice to see a write up on using LINQ for a web service as consumer and provider.</p>
+<p>It's be great to see it being used from the client, with nothing to do with asp.net controls. &nbsp;The controls are great for quick impressive demos, but personally I'm not a fan. &nbsp;It'd be great to see how it would be used with AJAX controls like extjs grid, etc.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3335360">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 30, 2007 8:06 PM
+                            by
+                            <a title="Mark" rel="nofollow" href="http://markyologist.com/">Mark</a>
+                            
+	                    </div>
+	                    <p>Say I want to cache some lookup data from SQL Server and I want to use LINQ to do the query. Is there a way to use SQL Notification Services to be notified when data retrieved with LINQ to SQL has been updated in the database?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3339789">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 31, 2007 4:36 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mark,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Say I want to cache some lookup data from SQL Server and I want to use LINQ to do the query. Is there a way to use SQL Notification Services to be notified when data retrieved with LINQ to SQL has been updated in the database?</p>
+<p>There isn't automatic support for this scenario today, but you could manually handle it. &nbsp;I'll put it on my list of things to post about in the future.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3340957">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 31, 2007 8:10 AM
+                            by
+                            Chad
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>When writing static methods to access data, does the deferred query "feature" work? See the code below, is this safe to run? or will it be extremely slow in large query situations?</p>
+<p>	public static IQueryable&lt;Lesson&gt; SelectAllLessons()</p>
+<p>	{</p>
+<p>		eigoDB db = new eigoDB();</p>
+<p>		var lessons = from l in db.Lessons</p>
+<p>					 &nbsp;orderby l.DateAdded descending</p>
+<p>					 &nbsp;select l;</p>
+<p>		return lessons;</p>
+<p>	}</p>
+<p>	public static IQueryable&lt;Lesson&gt; SelectAllLessons(int skip, int take)</p>
+<p>	{</p>
+<p>		return SelectAllLessons().Skip(skip).Take(take);</p>
+<p>	}</p>
+<p>Notice how I'm simply reusing the static method, and adding .Skip/.Take to it? It works, but I'd like to know if I should not be doing it this way.</p>
+<p>Thanks!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3342027">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 31, 2007 10:54 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Chad,</p>
+<p>The deferred query exection still works fine in your sample above. It won't access the database until someone starts trying to access the database - which allows you to cleanly compose Skip() and Take() operators like you are above.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3342298">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 31, 2007 11:53 AM
+                            by
+                            <a title="Mark" rel="nofollow" href="http://markyologist.com/">Mark</a>
+                            
+	                    </div>
+	                    <p>Thanks for the quick response Scott. I would really like to see a sample of this. In the mean time, I'll try to figure it out myself.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3359074">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, August 01, 2007 3:24 PM
+                            by
+                            Kevin
+                            
+	                    </div>
+	                    <p>I saw a comment above about defining the namespace for the entities and the context, is there a way to set the namespace per entity? &nbsp;I am trying to replace some (hopefully all) of some business objects that are just containers and at the present they are seperated into many namespaces.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3361229">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, August 01, 2007 6:15 PM
+                            by
+                            Orrin
+                            
+	                    </div>
+	                    <p>Scott, </p>
+<p>Your posts are always clear and extraordinarily helpful. However, I have not been able to find many examples that use both OrderBy and Distinct together. The most helpful was by Matt Warren at MSFT &lt;a href="<a rel="nofollow" target="_new" href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=1712059&SiteID=1%22%3E">forums.microsoft.com/.../ShowPost.aspx</a> here&lt;/a&gt;.</p>
+<p>It appears that OrderBy must come after Distinct or the SQL generated omits the OrderBy clause. The solution proposed by Matt requires the query to be more verbose and definitely less intuitive than one would expect. The syntax he says is necessary is:</p>
+<p>var query = from city in</p>
+<p>(from addr in context.Address </p>
+<p>select addr.City).Distinct()</p>
+<p>orderby city</p>
+<p>select city;</p>
+<p>Even more troubling, is when a Where clause is introduced into the mix along with OrderBy and Distinct. (Everything works fine when using any one of the clauses, the problem is just when they are used together) When the Where clause references a linked entity, it causes the query to bomb when examined in the LINQ Visual Debugger. Specifically a query like the following doesn’t work and throws a “Specified cast is not valid “error.</p>
+<p>IEnumerable&lt;string&gt; list =</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;from abbr in</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(from c in context.Currencies </p>
+<p>where c.Country.Name.StartsWith("A") </p>
+<p>select c.Abbr).Distinct()</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;orderby abbr descending</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;select abbr;</p>
+<p>If the Where clause references a property in that entity, and not a linked entity as above, then it works. (Although the generated SQL appears odd.)</p>
+<p>SELECT [t1].[Abbr]</p>
+<p>FROM (</p>
+<p> &nbsp; &nbsp;SELECT DISTINCT [t0].[Abbr]</p>
+<p> &nbsp; &nbsp;FROM [dbo].[Currency] AS [t0]</p>
+<p> &nbsp; &nbsp;) AS [t1]</p>
+<p>WHERE [t1].[Abbr] LIKE 'A%'</p>
+<p>ORDER BY [t1].[Abbr] DESC</p>
+<p>When what I thought it would generate is simply:</p>
+<p>SELECT DISTINCT [t0].[Abbr]</p>
+<p>FROM [dbo].[Currency] AS [t0]</p>
+<p>WHERE [t0].[Abbr] LIKE 'A%'</p>
+<p>ORDER BY [t0].[Abbr] DESC</p>
+<p>I would greatly appreciate seeing examples of the more complicated scenarios and also learning if the above is a bug or, hopefully, just my wetware error. I am using Orcas Beta 2.</p>
+<p>Thanks so much.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3379623">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 03, 2007 4:06 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Orrin,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; I would greatly appreciate seeing examples of the more complicated scenarios and also learning if the above is a bug or, hopefully, just my wetware error. I am using Orcas Beta 2.</p>
+<p>If you can send me email (scottgu@microsoft.com), I can loop you in with the LINQ to SQL team to get an answer on this.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3379635">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 03, 2007 4:07 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Kevin,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; I saw a comment above about defining the namespace for the entities and the context, is there a way to set the namespace per entity? &nbsp;I am trying to replace some (hopefully all) of some business objects that are just containers and at the present they are seperated into many namespaces.</p>
+<p>Unfortunately right now I don't think the LINQ to SQL designer supports configuring separate namespaces per data model entiity. &nbsp;You could create the data model classes by hand, though.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3433419">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, August 08, 2007 3:31 AM
+                            by
+                            <a title="Kangnoz" rel="nofollow" href="http://kangnoz/">Kangnoz</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Why can't I see SQL Server query visualizer window?</p>
+<p>I already set a breakpoint and run website,then hover over the linq to sql.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3455090">#</a>
+	                        <span>
+	                            The asp:ListView control (Part 1 - Building a Product Listing Page with Clean CSS UI)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 10, 2007 5:12 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/10/the-asp-listview-control-part-1-building-a-product-listing-page-with-clean-css-ui.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>One of the new controls in ASP.NET 3.5 that I think will be very popular is the &amp;lt;asp:ListView&amp;gt;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3463221">#</a>
+	                        <span>
+	                            LINT TO SQL介绍(数据库查询) - Part.3
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, August 11, 2007 12:11 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.cnblogs.com/JimmyZhang/archive/2007/08/11/851684.html">JimmyZhang</a>
+                            
+	                    </div>
+	                    <p>在此系列的第三篇文章中，ScottGu 详细地介绍了如何应用 数据模型类 来对数据库进行查询以及分页显示。</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3522968">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 7:49 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3568840">#</a>
+	                        <span>
+	                            LINQ To SQL Debugger Visualizer Concerns
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 5:08 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://codebetter.com/blogs/david.hayden/archive/2007/08/20/linq-to-sql-debugger-visualizer-concerns.aspx">David Hayden [MVP C#]</a>
+                            
+	                    </div>
+	                    <p>I mentioned this on my personal blog and 1 person in particular has a problem with what I am saying,</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3599235">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 7 - Updating our Database using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 23, 2007 5:09 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/23/linq-to-sql-part-7-updating-our-database-using-stored-procedures.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#3840582">#</a>
+	                        <span>
+	                            Visualize your LINQ Queries
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, September 12, 2007 7:08 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.msdn.com/usisvde/archive/2007/09/12/visualize-your-linq-queries.aspx">US ISV Developer Evangelism Team</a>
+                            
+	                    </div>
+	                    <p>One of the biggest concerns/fears that developers new to object relational mappers (ORMs) have is "but</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#4593273">#</a>
+	                        <span>
+	                            LINQ with SQL Server Compact (a.k.a. DLINQ with SQL CE)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, October 16, 2007 4:02 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.msdn.com/sqlservercompact/archive/2007/08/21/linq-with-sql-server-compact-a-ka-dlinq-over-sql-ce.aspx">SQL Server Compact - Compact yet capable</a>
+                            
+	                    </div>
+	                    <p>Querying data from SSC database gets easier! “ LINQ ” stands for .net L anguage IN tegrated Q uery. LINQ-enabled</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#5873786">#</a>
+	                        <span>
+	                            Detailed Look: Key components in LINQ to SQL and their Key Roles
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, February 27, 2008 7:53 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://userfriendlythinking.com/blogs/corey_gaudin/archive/2008/02/26/detailed-look-key-components-in-linq-to-sql-and-their-key-roles.aspx">Corey Gaudin</a>
+                            
+	                    </div>
+	                    <p>As part of this blog, I plan to have an on-going set of articles that takes a detailed look into some</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6020712">#</a>
+	                        <span>
+	                            Linq to SQL in a multi-tier application &amp;laquo; Freekshow
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, March 24, 2008 5:52 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://freekleemhuis.wordpress.com/2008/03/24/linq-to-sql-in-a-multi-tier-application/">Linq to SQL in a multi-tier application « Freekshow</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Linq to SQL in a multi-tier application &amp;laquo; Freekshow</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6401088">#</a>
+	                        <span>
+	                            朴实的生活  &amp;raquo; Blog Archive   &amp;raquo; LINQ to SQL系列Part 3 - Querying our Database
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 15, 2008 3:53 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.jinlei.name/?p=114">朴实的生活  » Blog Archive   » LINQ to SQL系列Part 3 - Querying our Database</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;朴实的生活 &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; LINQ to SQL系列Part 3 - Querying our Database</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6454078">#</a>
+	                        <span>
+	                            Didrex.
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, July 28, 2008 11:19 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.ign.com/annywillkins/">Didrex on line-in stock.</a>
+                            
+	                    </div>
+	                    <p>Didrex safescripts. Buy didrex. Mexico didrex. Didrex.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6494326">#</a>
+	                        <span>
+	                            Effexor.
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 07, 2008 3:50 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.ign.com/siey/">Horror stories effexor alcohol.</a>
+                            
+	                    </div>
+	                    <p>Effexor xr 37.5. Effexor side effects. Effexor. When will effexor xr start to work for me. Effexor have any side effects.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6631036">#</a>
+	                        <span>
+	                            foreign exchange trading
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, September 17, 2008 10:05 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.forexspot.com/">foreign exchange trading</a>
+                            
+	                    </div>
+	                    <p>Dark Poo&amp;# 108s: &amp;# 65 w&amp;# 101&amp;# 108&amp;# 108- capita&amp;# 108iz&amp;# 101d and broad&amp;# 108y bas&amp;# 101d s&amp;# 101ri&amp;# 101s of s&amp;# 101cr&amp;# 101t stock &amp;# 101&amp;# 120chang&amp;# 101s known as“ Dark Poo&amp;# 108s of &amp;# 76i&amp;# 113uidity,” “ Dark &amp;# 76i&amp;# 113uidity,” or &amp;# 106ust</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6631365">#</a>
+	                        <span>
+	                            Business blog  &amp;raquo; Blog Archive   &amp;raquo; foreign exchange trading
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, September 18, 2008 1:56 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://business.pitauto.com/2008/09/foreign-exchange-trading/">Business blog  » Blog Archive   » foreign exchange trading</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Business blog &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; foreign exchange trading</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6631745">#</a>
+	                        <span>
+	                            Business blog  &amp;raquo; Blog Archive   &amp;raquo; Business blog ?? Blog Archive ?? foreign exchange trading
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, September 18, 2008 6:02 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://business.pitauto.com/2008/09/business-blog-%c2%bb-blog-archive-%c2%bb-foreign-exchange-trading/">Business blog  » Blog Archive   » Business blog ?? Blog Archive ?? foreign exchange trading</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Business blog &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; Business blog ?? Blog Archive ?? foreign exchange trading</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6632217">#</a>
+	                        <span>
+	                            Business blog  &amp;raquo; Blog Archive   &amp;raquo; Business blog ?? Blog Archive ?? Business blog ?? Blog Archive &amp;#8230;
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, September 18, 2008 10:16 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://business.pitauto.com/2008/09/business-blog-%c2%bb-blog-archive-%c2%bb-business-blog-blog-archive/">Business blog  » Blog Archive   » Business blog ?? Blog Archive ?? Business blog ?? Blog Archive …</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Business blog &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; Business blog ?? Blog Archive ?? Business blog ?? Blog Archive &amp;#8230;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6916438">#</a>
+	                        <span>
+	                            4. LINQ to SQL (Part 4 - Updating our Database) 
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, February 18, 2009 8:44 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://community.icburner.com/blogs/sample_weblog/archive/2009/02/19/linq-to-sql-part-4-updating-our-database.aspx">Sample Weblog</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#6916445">#</a>
+	                        <span>
+	                            6. LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) 
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, February 18, 2009 8:52 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://community.icburner.com/blogs/sample_weblog/archive/2009/02/19/6-linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx">Sample Weblog</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#7138117">#</a>
+	                        <span>
+	                            Alex Medina  &amp;raquo; Blog Archive   &amp;raquo; Linq to SQL Debug Visualizer, depura facilmente tus consultas LINQ to SQL
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 01, 2009 1:18 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://alexmedina.net/blog/2009/07/01/linq-to-sql-debug-visualizer-depura-facilmente-tus-consultas-linq-to-sql/">Alex Medina  » Blog Archive   » Linq to SQL Debug Visualizer, depura facilmente tus consultas LINQ to SQL</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Alex Medina &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; Linq to SQL Debug Visualizer, depura facilmente tus consultas LINQ to SQL</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#7220406">#</a>
+	                        <span>
+	                            LINQ to SQL Paging Gotcha
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, September 30, 2009 7:53 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/rajbk/archive/2009/09/30/linq-to-sql-paging-gotcha.aspx">Raj Kaimal </a>
+                            
+	                    </div>
+	                    <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New",</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#7220563">#</a>
+	                        <span>
+	                            LINQ to SQL Paging Gotcha | I love .NET!
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, September 30, 2009 2:12 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.ilovenet.com.ar/2009-09-30/linq-to-sql-paging-gotcha/">LINQ to SQL Paging Gotcha | I love .NET!</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ to SQL Paging Gotcha | I love .NET!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx#7226878">#</a>
+	                        <span>
+	                            LINQ to SQL Debug Visualizer &amp;nbsp;|&amp;nbsp;Vietnam Developer Club
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, October 10, 2009 12:56 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.vndeveloper.com/vn/index.php/2009/10/10/linq-to-sql-debug-visualizer/">LINQ to SQL Debug Visualizer &nbsp;|&nbsp;Vietnam Developer Club</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ to SQL Debug Visualizer &amp;nbsp;|&amp;nbsp;Vietnam Developer Club</p>
+
+        	            
+	                </div>
+	            
+                    </div>
+                
+            
+            
+            
+                
+        
+        
+                </div></div>
+
+            </div>
+            <div id="contentfooter">
+                
+				    <div> <span><a href="http://www.microsoft.com/info/cpyright.mspx">Terms of Use</a></span></div>
+					
+				
+            </div>       
+        </div>
+    </div>
+    <script type="text/javascript" src="./LINQ to SQL (Part 3 - Querying our Database) - ScottGu's Blog_files/omniture_all.js"></script>
+            <noscript>&lt;a href="http://www.omniture.com" title="Web Analytics"&gt;&lt;img
+                src="http://msstonojsaspnet.112.2O7.net/b/ss/msstonojsaspnet/1/H.20.2--NS/0"
+                height="1" width="1" border="0" alt="" /&gt;&lt;/a&gt;</noscript>
+    
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx"
+dc:identifier="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx"
+dc:title="LINQ to SQL (Part 3 - Querying our Database)"
+trackback:ping="http://weblogs.asp.net/scottgu/trackback.ashx?PostID=2973713" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('/utility/loading.htm',['Modal'],['ModalTitle'],['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalMask'],100);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_Main_WeblogPostRating1=new PostRating('ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1_Value', 5, 'http://i1.asp.net/wan/default/images/common/', false, 'CommonRateControl','CommonRateControlActive','CommonRateControlReadOnly',['Terrible','Poor','Fair','Average','Good','Excellent'],true,true);
+// ]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+WebForm_InitCallback();//]]>
+</script>
+<script type="text/javascript">
+            // <![CDATA[
+            var ctl00_Main_WeblogPostRating1_ajax={"SaveRating":function(rating,successFunction,failureFunction){WebForm_DoCallback('ctl00$Main$WeblogPostRating1',rating,successFunction,rating,failureFunction,false)}};
+            // ]]>
+            </script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_Main_ctl06_ctl01 = new Telligent_InlineEditorPanel('ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01_State','ctl00_Main_ctl06_ctl00',false,null,null,null);
+// ]]>
+</script></form>
+
+
+</body></html>

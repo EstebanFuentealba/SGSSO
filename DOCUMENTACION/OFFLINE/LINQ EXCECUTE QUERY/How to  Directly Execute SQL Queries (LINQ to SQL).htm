@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="ctl00_Head1" xmlns="http://www.w3.org/1999/xhtml"><title>
+	
+  How to: Directly Execute SQL Queries (LINQ to SQL)
+
+</title><meta http-equiv="content-type" content="text/html; charset=utf-8" /><meta name="DCS.dcsuri" content="/en-us/library/bb399403(d=lightweight,l=en-us,v=VS.100).aspx" /><meta name="NormalizedUrl" content="http://msdn.microsoft.com/en-us/library/bb399403(d=lightweight,l=en-us,v=VS.100).aspx" /><meta name="DCSext.ProductFamily" content="LIB_DG" /><meta name="DCSext.Product" content="P_BPUE" /><meta name="DCSext.Title" content="How to: Directly Execute SQL Queries (LINQ to SQL)" /><meta name="VotingContextUrl" content="http://msdn.microsoft.com/en-us/library/bb399403(l=en-us,v=VS.100).aspx" /><meta name="MN" content="4829725E-7:11:17 PM" /><meta name="Search.ShortId" content="bb399403" /><meta name="Ms.Locale" content="en-us" /><link href="http://i3.msdn.microsoft.com/Hash/239ea4b97225fbf3bd8e505180f8a7fe.css" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/xhtml" /><link rel="canonical" href="http://msdn.microsoft.com/en-us/library/bb399403.aspx" xmlns="http://www.w3.org/1999/xhtml" /><link rel="alternate" media="print" href="http://msdn.microsoft.com/en-us/library/bb399403(d=printer).aspx" xmlns="http://www.w3.org/1999/xhtml" /><link rel="stylesheet" type="text/css" href="http://i3.msdn.microsoft.com/Hash/a15fcf392bf954133123e209735029c3.css" media="print" title="printonly" xmlns="http://www.w3.org/1999/xhtml" /></head>
+<body>
+
+   
+    <div class="MetricsContainer">
+    
+    <div class="WebtrendsContainer">
+      
+
+<script type="text/javascript" language="javascript">
+//<![CDATA[
+  var literalNormalizedUrl = '/en-us/library/bb399403(d=lightweight,l=en-us,v=VS.100).aspx';
+  var wt_nvr_ru = 'WT_NVR_RU';
+  var wt_fpcdom = '.microsoft.com';
+  var wt_domlist = 'msdn.microsoft.com';
+  var wt_pathlist = '';
+  var wt_paramlist = 'DCSext.mtps_devcenter';
+  var wt_siteid = 'MSDN';
+  var gDomain = 'm.webtrends.com';
+  var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m';
+  var gFpc = 'WT_FPC';
+  if (document.cookie.indexOf(gFpc + "=") == -1) {
+    document.write("<scr" + "ipt type='text/javascript' src='" + "http" + (window.location.protocol.indexOf('https:') == 0 ? 's' : '') + "://" + gDomain + "/" + gDcsId + "/wtid.js" + "'><\\/scr" + "ipt>");
+  }
+  var detectedLocale = 'en-us';
+  var wtsp = 'msdnlib_dotnet';
+  var gTrackEvents = '0';
+/*]]>*/
+</script>
+<noscript><div><img alt="DCSIMG" id="Img1" width="1" height="1" src="http://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div></noscript>
+
+
+    </div>
+    
+    <div class="OmnitureContainer">
+      
+
+
+
+<script type="text/javascript">
+  var omni_guid = '019a41d2-85a6-41a8-b23b-41bd9d25cce8'; 
+</script>
+
+
+
+<noscript>
+    <a href="http://www.omniture.com" title="Web Analytics">
+        <img src="//msstonojsmsdn.112.2o7.net/b/ss/msstonojsmsdn/1/H.20.2--NS/0" height="1" width="1" border="0" alt="" /></a>
+</noscript>
+
+
+    </div>
+    
+  
+</div>
+  <script language="javascript" type="text/javascript" src="//js.microsoft.com/library/svy/sto/broker.js"></script>
+
+
+  <div class="header">
+    
+
+<table border="0" cellpadding="0" cellspacing="0" class="headerBar cl_lightweight_topnav_slice">
+		<tr>
+			<td class="leftSection cl_lightweight_header_leftSection_wave leftSectionImageClusterOverride">
+        <div class="tabContainer">
+          <a href="http://msdn.microsoft.com/en-us/default.aspx" title="Home" class=" headerTab">Home</a>
+          <a href="http://msdn.microsoft.com/en-us/library/default.aspx" title="Library" class="headerTabSelected cl_lightweight_selected_tab_repeatX ">Library</a>
+          <a href="http://msdn.microsoft.com/en-us/bb188199.aspx" title="Learn" class=" headerTab">Learn</a>
+          <a href="http://msdn.microsoft.com/en-us/aa570309.aspx" title="Downloads" class=" headerTab">Downloads</a>
+          <a href="http://msdn.microsoft.com/en-us/aa570318.aspx" title="Support" class=" headerTab">Support</a>
+          <a href="http://msdn.microsoft.com/en-us/aa497440.aspx" title="Community" class=" headerTab">Community</a>
+          
+        </div>
+      </td>
+			<td class="rightSection cl_lightweight_header_rightSection_wave rightSectionImageClusterOverride">
+        <div class="tabContainer">
+            
+            <a href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=11&amp;ct=1316743877&amp;rver=6.0.5276.0&amp;wp=MCLBI&amp;wlcxt=msdn%24msdn%24msdn&amp;wreply=http:%2F%2Fmsdn.microsoft.com%2Fen-us%2Flibrary%2Fbb399403.aspx&amp;lc=1033&amp;cb=&amp;id=254354" title="Sign in" rel="nofollow">Sign in </a>
+            <span class="pipe">|</span>
+            <a href="http://msdn.microsoft.com/en-us/library/preferences/locale/?returnurl=%252fen-us%252flibrary%252fbb399403.aspx" title="España - Español" rel="nofollow">España - Español </a>
+            <span class="pipe">|</span>
+            <a class="dispinline clip15x15" href="http://msdn.microsoft.com/en-us/library/preferences/experience/?returnurl=%252fen-us%252flibrary%252fbb399403.aspx" title="Preferences" rel="nofollow"><img class="head_gear" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" alt="" /></a>
+            <span class="pipe">|</span>
+            <a id="exportPrintLink" class="dispinline clip30x15 moveToDown" href="/en-us/library/bb399403(d=printer).aspx" title="Print/Export"><img class="head_print_noarrow" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" alt="" /></a>
+            
+            <div id="exportPrintLinkArrowDiv" class="exportPrintLinkArrow">
+            <a id="exportPrintLinkArrow" class="dispinline clip30x15 moveToDown" href="javascript:void(0);" title="Print/Export"><img class="head_print_arrow" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" alt="" /></a>
+            </div>
+            
+        </div>
+			</td>
+	</tr>
+</table>
+
+  </div>
+    
+  <div class="contentPlaceHolder">
+    
+    
+  <div class="navigation" id="Navigation" style="width:280px;padding-bottom:96px;">
+    <div class="searchcontainer">
+      
+<form id="SearchForm" action="http://social.msdn.microsoft.com/Search/en-us" method="get" style="margin: 0; padding: 0;" onsubmit="return checkSearchBox()">
+<div class="searchBoxContainer" style="">
+  <table class="searchBox" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td class="searchTextBoxTd">
+        <input id="SearchInput" type="text" maxlength="200" class="searchTextBox" name="query" />
+      </td>
+      <td class="searchButtonTd">
+          <input type="image" src="http://i.msdn.microsoft.com/Hash/0d0542f5f45cf9fc7273abd11cf5c0ee.gif" style="position: relative;" title="Search " />
+      </td>
+    </tr>
+  </table>
+</div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    if (!MTPS) var MTPS = {};
+    if (!MTPS.Watermarks) MTPS.Watermarks = {};
+    MTPS.Watermarks.SearchInput = {
+        "control": "SearchInput",
+        "defaultValue": "Search MSDN with Bing",
+        "defaultCSS": "searchTextBox",
+        "focusCSS": "searchTextBoxTrue"
+    };
+    function checkSearchBox() {
+        if (document.getElementById("SearchInput").value == MTPS.Watermarks.SearchInput.defaultValue) {
+            document.getElementById("SearchInput").value = "";
+        }
+    }
+ //]]>
+</script>
+
+
+    </div>
+    <div class="navcontainer">
+      
+<div class="nav">
+    
+    <div id="tocnav">
+        
+        <div class="toclevel0 ancestry">
+            
+            <div class="clip5x9 nav_root">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_bullet" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/ms123401.aspx" id="ms310241_MSDN.10_en-us" title="MSDN Library">MSDN Library</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/ff361664(v=VS.110).aspx" id="aa139615_MSDN.10_en-us" title=".NET Development">.NET Development</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/w0x726c2.aspx" id="dd429910_VS.100_en-us" title=".NET Framework 4">.NET Framework 4</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/190bkk9s.aspx" id="dd429984_VS.100_en-us" title=".NET Framework Core Development">.NET Framework Core Development</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/951h6we4.aspx" id="ee414146_VS.100_en-us" title="Data Access and Modeling">Data Access and Modeling</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/e80y5yhx.aspx" id="ms308558_VS.100_en-us" title="ADO.NET">ADO.NET</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/kb9s9ks0.aspx" id="cc704101_VS.100_en-us" title="SQL Server and ADO.NET">SQL Server and ADO.NET</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/bb386976.aspx" id="cc704041_VS.100_en-us" title="LINQ to SQL">LINQ to SQL</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_arrow" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/bb399408.aspx" id="cc704045_VS.100_en-us" title="Programming Guide (LINQ to SQL)">Programming Guide (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_arrows">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/bb882680.aspx" id="cc704054_VS.100_en-us" title="Querying the Database (LINQ to SQL)">Querying the Database (LINQ to SQL)</a>
+            </div>
+            
+        </div>
+        
+        <div class="toclevel1 children" style="border-bottom: 1px solid #bbbbbb;">
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb546192.aspx" title="How to: Query for Information (LINQ to SQL)">How to: Query for Information (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb399418.aspx" title="How to: Retrieve Information As Read-Only (LINQ to SQL)">How to: Retrieve Information As Read-Only (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb882681.aspx" title="How to: Control How Much Related Data Is Retrieved (LINQ to SQL)">How to: Control How Much Related Data Is Retrieved (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb882678.aspx" title="How to: Filter Related Data (LINQ to SQL)">How to: Filter Related Data (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb386920.aspx" title="How to: Turn Off Deferred Loading (LINQ to SQL)">How to: Turn Off Deferred Loading (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div class="toclevel1 current">
+                <a href="http://msdn.microsoft.com/en-us/library/bb399403.aspx" title="How to: Directly Execute SQL Queries (LINQ to SQL)">How to: Directly Execute SQL Queries (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb399335.aspx" title="How to: Store and Reuse Queries (LINQ to SQL)">How to: Store and Reuse Queries (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb399391.aspx" title="How to: Handle Composite Keys in Queries (LINQ to SQL)">How to: Handle Composite Keys in Queries (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb386917.aspx" title="How to: Retrieve Many Objects At Once (LINQ to SQL)">How to: Retrieve Many Objects At Once (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb386915.aspx" title="How to: Filter at the DataContext Level (LINQ to SQL)">How to: Filter at the DataContext Level (LINQ to SQL)</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_nav_dots" alt="" />
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/bb386913.aspx" id="cc704055_VS.100_en-us" title="Query Examples (LINQ to SQL)">Query Examples (LINQ to SQL)</a>
+            </div>
+            
+        </div>
+        
+    </div>
+    <img src="http://i.msdn.microsoft.com/Hash/030c41d9079671d09a62d8e2c1db6973.gif" alt="Separator" class="communityContentNavigationSeparator cl_lt_cc_line_top" />
+    
+</div>
+
+<script type="text/javascript"> 
+  //<![CDATA[
+  if (!MTPS) var MTPS = {};
+  MTPS.TopicNodes= {
+  
+            "_last": ''
+    };
+  //]]>
+</script>
+
+    </div>
+    
+  </div>
+  <div id="tocResizeContainer" style="visibility:hidden">
+  <a href="#" class="tocResize" id="TocResize" style="left:280px">
+    <img id="ResizeImageIncrease" class="cl_nav_resize_open" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" title="Expand" alt="Expand" />
+      <img id="ResizeImageReset" class="cl_nav_resize_close" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" style="display:none" title="Minimize" alt="Minimize" />
+  </a>
+  </div>
+  <div class="content">
+    <img class="TOC_Fade_Top cl_lw_toc_fade_top" src="http://i.msdn.microsoft.com/Hash/030c41d9079671d09a62d8e2c1db6973.gif" alt="" />
+    
+
+<div class="clip117x31 logo">
+  <a href="http://msdn.microsoft.com/en-us/default.aspx">
+    <img src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="msdn_body_logo" alt="MSDN" title="MSDN" />
+  </a>
+</div>
+
+    <div class="topicContainer" style="">
+      
+<div class="topic" xmlns="http://www.w3.org/1999/xhtml">
+  <h1 class="title">How to: Directly Execute SQL Queries (LINQ to SQL)</h1>
+  <div class="lw_vs">
+    <div id="curversion">
+      <strong>
+            .NET Framework 4</strong>
+    </div>
+    <div id="versionclick" style="visibility:hidden">
+      <div id="vsseperator" class="cl_lw_vs_seperator"></div>
+      <div id="versionclick_c1"></div>
+      <div id="versionclick_c2">
+        <div class="">
+          <a id="vsLink" href="javascript:;">
+                    Other Versions
+                </a>
+        </div>
+        <div class="cl_vs_arrow clip10x10">
+          <img class="cl_lw_vs_arrow" id="vsArrow" alt="" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" />
+        </div>
+      </div>
+      <div id="versionclick_c3"></div>
+    </div>
+    <ul id="vsPanel">
+      <li>
+        <a href="/en-us/library/bb399403(v=VS.90).aspx" title="">Visual Studio 2008</a>
+      </li>
+      <li>
+        <a href="/en-us/library/bb399403(v=VS.110).aspx" title="">.NET Framework 4.5</a>
+      </li>
+    </ul>
+  </div>
+  <div style="clear:both;"></div>
+  
+  <div id="mainSection">
+    <div id="mainBody">
+      <p>
+        
+      </p> <div class="introduction"><p>LINQ to SQL translates the queries you write into parameterized SQL queries (in text form) and sends them to the SQL server for processing.</p><p>SQL cannot execute the variety of methods that might be locally available to your application. LINQ to SQL tries to convert these local methods to equivalent operations and functions that are available inside the SQL environment. Most methods and operators on .NET Framework built-in types have direct translations to SQL commands. Some can be produced from the functions that are available. Those that cannot be produced generate run-time exceptions. For more information, see <span><a href="http://msdn.microsoft.com/en-us/library/bb386947.aspx">SQL-CLR Type Mapping (LINQ to SQL)</a></span>.</p><p>In cases where a LINQ to SQL query is insufficient for a specialized task, you can use the <span><a href="http://msdn.microsoft.com/en-us/library/system.data.linq.datacontext.executequery.aspx">ExecuteQuery</a></span> method to execute a SQL query, and then convert the result of your query directly into objects.</p></div><div xmlns=""><script type="text/javascript">if (!MTPS) var MTPS = {};if (!MTPS.LocalizedStrings) MTPS.LocalizedStrings = {}; 
+              MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; 
+              MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse';</script><div class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img src="http://i.msdn.microsoft.com/Hash/030c41d9079671d09a62d8e2c1db6973.gif" class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" /><span class="LW_CollapsibleArea_Title">Example</span></a><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></div><div class="sectionblock"><a id="exampleToggle" xmlns="http://www.w3.org/1999/xhtml">
+  
+</a>
+<p xmlns="http://www.w3.org/1999/xhtml">In the following example, assume that the data for the <span class="code">Customer</span> class is spread over two tables (customer1 and customer2). The query returns a sequence of <span class="code">Customer</span> objects.</p>
+<div id="snippetGroup" xmlns="http://www.w3.org/1999/xhtml">
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="/Areas/Global/Content/CodeSnippet.js"></script>
+  <link href="/Areas/Brand/Content/CodeSnippet.css" rel="stylesheet" type="text/css" />
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTab codeSnippetContainerTabActive codeSnippetContainerTabFirst" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab codeSnippetContainerTabLast" dir="ltr"><a href="javascript: CodeSnippet_SetLanguage('CodeSnippetContainerLang', 'Programming', 'Visual Basic');">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_00b68a58-c8b2-4465-a87b-cc845094a6ea');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_00b68a58-c8b2-4465-a87b-cc845094a6ea" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+Northwnd db = <span style="color:Blue;">new</span> Northwnd(<span style="color:#A31515;">@"c:\northwnd.mdf"</span>);
+IEnumerable&lt;Customer&gt; results = db.ExecuteQuery&lt;Customer&gt;
+(<span style="color:#A31515;">@"SELECT c1.custid as CustomerID, c2.custName as ContactName
+    FROM customer1 as c1, customer2 as c2
+    WHERE c1.custid = c2.custid"</span>
+);
+
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+</div>
+<p xmlns="http://www.w3.org/1999/xhtml">As long as the column names in the tabular results match column properties of your entity class, LINQ to SQL creates your objects out of any SQL query.</p>
+<p xmlns="http://www.w3.org/1999/xhtml">The <span><a href="http://msdn.microsoft.com/en-us/library/system.data.linq.datacontext.executequery.aspx">ExecuteQuery</a></span> method also allows for parameters. Use code such as the following to execute a parameterized query.</p>
+<div id="snippetGroup1" xmlns="http://www.w3.org/1999/xhtml">
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="/Areas/Global/Content/CodeSnippet.js"></script>
+  <link href="/Areas/Brand/Content/CodeSnippet.css" rel="stylesheet" type="text/css" />
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTab codeSnippetContainerTabActive codeSnippetContainerTabFirst" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab codeSnippetContainerTabLast" dir="ltr"><a href="javascript: CodeSnippet_SetLanguage('CodeSnippetContainerLang', 'Programming', 'Visual Basic');">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_5a42909d-3d9e-4fa7-a503-7a9861384c75');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_5a42909d-3d9e-4fa7-a503-7a9861384c75" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+Northwnd db = <span style="color:Blue;">new</span> Northwnd(<span style="color:#A31515;">@"c:\northwnd.mdf"</span>);
+IEnumerable&lt;Customer&gt; results = db.ExecuteQuery&lt;Customer&gt;
+    (<span style="color:#A31515;">"SELECT contactname FROM customers WHERE city = {0}"</span>,
+    <span style="color:#A31515;">"London"</span>);
+
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+</div>
+<p xmlns="http://www.w3.org/1999/xhtml">The parameters are expressed in the query text by using the same curly notation used by <span class="code">Console.WriteLine()</span> and <span class="code">String.Format()</span>. In fact, <span class="code">String.Format()</span> is actually called on the query string you provide, substituting the curly braced parameters with generated parameter names such as @p0, @p1 …, @p(n).</p></div></div><div xmlns=""><div class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img src="http://i.msdn.microsoft.com/Hash/030c41d9079671d09a62d8e2c1db6973.gif" class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" /><span class="LW_CollapsibleArea_Title">See Also</span></a><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></div><div class="sectionblock"><a id="seeAlsoToggle" xmlns="http://www.w3.org/1999/xhtml">
+  
+</a>
+<h4 class="subHeading" xmlns="http://www.w3.org/1999/xhtml">Other Resources</h4>
+<div class="seeAlsoStyle" xmlns="http://www.w3.org/1999/xhtml">
+  <span>
+    <a href="http://msdn.microsoft.com/en-us/library/bb386974.aspx">Background Information (LINQ to SQL)</a>
+  </span>
+</div>
+<div class="seeAlsoStyle" xmlns="http://www.w3.org/1999/xhtml">
+  <span>
+    <a href="http://msdn.microsoft.com/en-us/library/bb882680.aspx">Querying the Database (LINQ to SQL)</a>
+  </span>
+</div></div></div></div>
+  </div>
+</div>
+    </div>
+    
+  </div>
+  
+  </div>
+  <div class="footer">
+    
+
+<div id="footer" class="footerContainer cl_footer_slice">
+  <div class="footerLogoContainer">
+    <div class="footerContent">
+    <div class="copyright">
+      © 2011 Microsoft. All rights reserved.</div>
+    <div class="footerLogo cl_footer_logo"></div>
+    <a href="/cc300389.aspx">Terms of Use</a><span class="pipe"> | </span>
+    <a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a><span class="pipe"> | </span>
+    <a href="http://www.microsoft.com/info/privacy.mspx">Privacy Statement</a>
+    <span class="pipe">| </span>
+    <span class="FeedbacklinkDisabled" id="FeedbacklinkDisabled">Feedback</span>
+    <a id="Feedbacklink" title="Feedback" class="FeedbackLink" href="http://social.msdn.microsoft.com/Forums/en-US/libraryfeedback/threads">
+      Feedback
+        <span class="FeedbackButton clip20x21" id="FeedbackButton">
+          <img id="feedBackImg" class="cl_footer_feedback_icon" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" alt="Feedback" />
+        </span>
+      </a>
+    
+  <div id="FeedbackContainer" class="FeedbackContainer">
+    <form method="post" action="/en-us/library/feedback/add/bb399403.aspx">
+    <div class="FeedbackTitleContainer">
+        <div class="FeedbackTitle">
+            Feedback</div>
+        <div class="FeedbackCancel">
+            <a href="javascript:;" onclick="document.getElementById('FeedbackContainer').style.display = 'none';">x</a>
+            </div>
+    </div>
+    <div class="FeedbackData">
+        <div class="FeedbackInfoText">
+            Tell us about your experience...
+        </div>
+        <div class="QuestionText">
+            Did the page load quickly?
+        </div>
+        <div class="AnswerText">
+            
+            <span>
+                Yes<span>
+                    <input id="searchBox" name="searchBox" type="radio" value="1" /></span></span>
+            
+            <span>
+                No<span>
+                    <input id="searchBox" name="searchBox" type="radio" value="0" /></span></span>
+            
+        </div>
+        <div class="QuestionText">
+            Do you like the page design?
+        </div>
+        <div class="AnswerText">
+            
+            <span>
+                Yes<span>
+                    <input id="tabbedCode" name="tabbedCode" type="radio" value="1" /></span></span>
+            
+            <span>
+                No<span>
+                    <input id="tabbedCode" name="tabbedCode" type="radio" value="0" /></span></span>
+            
+        </div>
+        <div class="QuestionText">
+            How useful is this topic?
+        </div>
+        <div class="FeedbackGraphicHolder clip269x23">            
+                <img alt="" src="http://i3.msdn.microsoft.com/Hash/e2f8b209c0746db5bf36152a22fc6ca8.png" class="cl_online_scale FeedbackSiderGraphic" />
+        </div>        
+            <div class="RadioButtonHolder"><div class="RateRadioOne">
+                    <input id="topicUseful" name="topicUseful" title="Really disliked it" type="radio" value="1" />
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="Disliked it" type="radio" value="2" />
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="OK" type="radio" value="3" />
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="Good" type="radio" value="4" />
+                </div>
+               <div class="RateRadioLast">
+                    <input id="topicUseful" name="topicUseful" title="Really Good" type="radio" value="5" />
+                </div>
+               
+            </div>            
+        <div class="QuestionText">
+            Tell us more
+        </div>
+        <div class="FeedbackTextAreaContainer">
+            <textarea id="feedbackText" data-maxlength="4000" name="feedbackText" cols="25" rows="5" class="FeedbackTextArea"></textarea>
+            
+            <textarea id="feedbackDescription" name="feedbackDescription" cols="25" rows="10" style="display:none;">Enter description here.</textarea>
+            <input type="hidden" id="feedbackPriority" name="feedbackPriority" value="" />
+            <input type="hidden" id="feedbackSourceUrl" name="feedbackSourceUrl" value="" />
+            <input type="hidden" id="ClientIP" name="ClientIP" value="" />
+            <input type="hidden" id="ClientOS" name="ClientOS" value="" />
+            <input type="hidden" id="ClientBrowser" name="ClientBrowser" value="" />
+            <input type="hidden" id="ClientTime" name="ClientTime" value="" />
+            <input type="hidden" id="ClientTimeZone" name="ClientTimeZone" value="" />
+            
+            
+        </div>
+        <div>
+            <input type="submit" value="Send" class="FeedbackSubmit" onclick="document.getElementById('feedbackDescription').value='';document.getElementById('feedBackVersion').value = '-1';" />
+        </div>
+    </div>
+    <input type="hidden" id="returnUrl" name="returnUrl" value="http://msdn.microsoft.com/en-us/library/bb399403.aspx" />
+    
+    
+    <input type="hidden" id="feedBackVersion" name="feedBackVersion" value="1" />
+    
+  </form> 
+</div>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+ 
+<script type="text/javascript" src="http://i2.msdn.microsoft.com/Hash/a9baf4b946107397edcad883f74c108a.js" xmlns="http://www.w3.org/1999/xhtml"></script></body>
+</html>

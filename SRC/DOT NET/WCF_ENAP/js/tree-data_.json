@@ -1,0 +1,116 @@
+﻿{ 
+    text: '.',
+    children: [{
+            text:'Eventos',
+            expanded: false,
+			iconCls: "evento-icon",
+            children:[
+				{"text":"Ingreso de Evento","id":"IngresoEvento","leaf":true,iconCls: "add-evento-icon","stores":[]},
+				{"text":"Seguimiento","id":"SeguimientoEvento","leaf":true,iconCls: "seguimiento-icon","stores":[]},
+				{"text":"Busqueda","id":"BusquedaEvento","leaf":true,iconCls: "buscar-icon","stores":[]}
+			/*
+                {"text":"Accion","id":"Accion","leaf":true,"stores":["dsAccion"]},
+                {"text":"AccionCorrectiva","id":"AccionCorrectiva","leaf":true,"stores":["dsAccionCorrectiva","dsEvento","dsAccion","dsUsuario"]},
+                {"text":"ActividadResponsable","id":"ActividadResponsable","leaf":true,"stores":["dsActividadResponsable","dsSubActividad","dsCargo"]},
+                {"text":"ActividadTrabajador","id":"ActividadTrabajador","leaf":true,"stores":["dsActividadTrabajador"]},
+                {"text":"Area","id":"Area","leaf":true,"stores":["dsArea","dsDivision"]},
+                {"text":"AreaGeografica","id":"AreaGeografica","leaf":true,"stores":["dsAreaGeografica","dsDepartamento"]},
+                {"text":"Calificacion","id":"Calificacion","leaf":true,"stores":["dsCalificacion"]},
+                {"text":"Cargo","id":"Cargo","leaf":true,"stores":["dsCargo"]},
+                {"text":"DatoEvento","id":"DatoEvento","leaf":true,"stores":["dsDatoEvento"]},
+                {"text":"Departamento","id":"Departamento","leaf":true,"stores":["dsDepartamento"]},
+                {"text":"Division","id":"Division","leaf":true,"stores":["dsDivision"]},
+                {"text":"Empresa","id":"Empresa","leaf":true,"stores":["dsEmpresa"]},
+                {"text":"EvaluacionMensual","id":"EvaluacionMensual","leaf":true,"stores":["dsEvaluacionMensual","dsSubActividad"]},
+                {"text":"Evento","id":"Evento","leaf":true,"stores":["dsEvento","dsEmpresa","dsDepartamento"]},
+                {"text":"EventoCalificacion","id":"EventoCalificacion","leaf":true,"stores":["dsEventoCalificacion","dsCalificacion","dsEvento"]},
+                {"text":"Evidencia","id":"Evidencia","leaf":true,"stores":["dsEvidencia"]},
+                {"text":"Grupo","id":"Grupo","leaf":true,"stores":["dsGrupo"]},
+                {"text":"HerramientaPreventiva","id":"HerramientaPreventiva","leaf":true,"stores":["dsHerramientaPreventiva"]},
+                {"text":"HistorialEmpresa","id":"HistorialEmpresa","leaf":true,"stores":["dsHistorialEmpresa","dsEmpresa"]},
+                {"text":"Imagenes","id":"Imagenes","leaf":true,"stores":["dsImagenes","dsEvento"]},
+                {"text":"InvestigacionAccionCorrectiva","id":"InvestigacionAccionCorrectiva","leaf":true,"stores":["dsInvestigacionAccionCorrectiva","dsAccionCorrectiva"]},
+                {"text":"Modulo","id":"Modulo","leaf":true,"stores":["dsModulo"]},
+                {"text":"Organizacion","id":"Organizacion","leaf":true,"stores":["dsOrganizacion"]},
+                {"text":"Privilegio","id":"Privilegio","leaf":true,"stores":["dsPrivilegio"]},
+                {"text":"ProgramaActividad","id":"ProgramaActividad","leaf":true,"stores":["dsProgramaActividad","dsProgramaAnual"]},
+                {"text":"ProgramaAnual","id":"ProgramaAnual","leaf":true,"stores":["dsProgramaAnual"]},
+                {"text":"SubActividad","id":"SubActividad","leaf":true,"stores":["dsSubActividad","dsProgramaActividad","dsEvidencia"]},
+                {"text":"Trabajador","id":"Trabajador","leaf":true,"stores":["dsTrabajador","dsCargo"]},
+                {"text":"Usuario","id":"Usuario","leaf":true,"stores":["dsUsuario","dsEmpresa"]}
+				*/
+            ]
+        },
+			{
+				text:'Programa Anual',
+				expanded: false,
+				iconCls: "programa-icon",
+				children:[
+					{"text":"Crear Programa","id":"AddProgramaAnual","leaf":true,iconCls: "add-programaanual-icon","stores":[]},
+					{"text":"Actualizar Programa","id":"ModificaProgramaAnual","leaf":true,iconCls: "update-programaanual-icon","stores":[]},
+					{"text":"Busca Programa Anual","id":"BuscaProgramaAnual","leaf":true,iconCls: "buscar-icon","stores":[]}
+				]
+			},
+			{
+				text:'Reportes',
+				expanded: false,
+				iconCls: "reportes-icon",
+				children:[
+					{"text":"Semanal","id":"Semanal","leaf":true,iconCls: "reportes-icon","stores":[]},
+					{"text":"Mensual","id":"Mensual","leaf":true,iconCls: "reportes-icon","stores":[]},
+					{"text":"Anual","id":"Anual","leaf":true,iconCls: "reportes-icon","stores":[]},
+					{"text":"Filtro & Análisis","id":"Accion","leaf":true,iconCls: "buscar-icon","stores":[]}
+				]
+			},
+			
+			{
+				text:'Matriz de Riesgo',
+				expanded: false,
+				iconCls: "matriz-icon",
+				children:[
+					{"text":"Crear Matriz de Riesgo","id":"EvaluaActividadEspecifica","leaf":true,iconCls: "add-matriz-icon","stores":[
+						'dsOrganizacion',
+						'dsDepartamento',
+						'dsDivision',
+						'dsArea',
+						'dsActividadGeneral',
+						'dsCargo',
+						'dsActividadEspecifica',
+						'dsPeligro',
+						'dsPeligroMedida',
+						'dsMedidaDeControl',
+						'dsTempActividadEvaluada',
+						'dsActividadEvaluada'
+					]},
+					
+					{"text":"Busca Matriz de Riesgo","id":"BuscaMatrizRiesgo","leaf":true,iconCls: "buscar-icon","stores":[
+						'dsOrganizacion',
+						'dsActividadEspecifica',
+						'dsPeligro',
+						'dsDivision',
+						'dsArea',
+						'dsDepartamento',
+						'dsActividadGeneral',
+						'dsCargo',
+						'dsActividadEvaluada'
+						
+					]}
+				]	
+		},{
+            text:'Administración',
+            expanded: false,
+			iconCls: "administracion-icon",
+            children:[
+				{"text":"Grupos","id":"Grupo","leaf":true,iconCls: "grupo-icon","stores":["dsGrupo"]},
+				{"text":"Usuarios","id":"Usuario","leaf":true,iconCls: "user-icon","stores":["dsEmpresa","dsUsuario" ]},
+				{"text":"Empresas Contratistas","id":"Empresa","leaf":true,"stores":["dsEmpresa"]},
+				{"text":"Usuario Grupo","id":"UsuarioGrupo","leaf":true,"stores":["dsUsuarioGrupo"]}
+			]
+		},{
+            text:'Logout',
+			iconCls: "logout-icon",
+            expanded: false,
+            children:[]
+		}
+	]
+}

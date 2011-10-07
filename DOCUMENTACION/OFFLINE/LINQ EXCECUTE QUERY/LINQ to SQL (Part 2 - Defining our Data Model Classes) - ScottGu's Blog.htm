@@ -1,0 +1,2477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd">
+<!-- saved from url=(0105)http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head id="ctl00_ctl00"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="description" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="keywords" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="GENERATOR" content="CommunityServer 2007 SP1 (Build: 20510.895)">
+<link rel="pingback" href="http://weblogs.asp.net/scottgu/pingback.aspx">
+<link rel="shortcut icon" type="image/ico" href="http://weblogs.asp.net/favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rss.aspx">
+<link rel="alternate" type="application/atom+xml" title="ScottGu&#39;s Blog  (Atom 1.0)" href="http://weblogs.asp.net/scottgu/atom.aspx">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  - All Comments (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx">
+<link rel="alternate" type="application/rss+xml" title="LINQ to SQL (Part 2 - Defining our Data Model Classes) - Comments for this post (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx?PostID=2681237">
+
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=7">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/print.css" type="text/css" media="print">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/DynamicStyle.aspx" type="text/css" media="screen">
+	<!--[if lte IE 6]>
+		<style>
+		#titleWrapper { padding: 62px 65px 14px 14px; border-bottom: solid 1px #000; border-right: solid 1px #000;}
+		</style>
+	<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://weblogs.asp.net/scottgu/rsd.ashx">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://weblogs.asp.net/scottgu/wlwmanifest.ashx">
+<title>
+	LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog.htm" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3MDQ0Njc3MDNkZGGxIdN4f8DDhPlg2TGLA9S0FlHm">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource(1).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource(2).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource(3).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource(4).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/WebResource(5).axd" type="text/javascript"></script>
+    			
+
+        <div id="wrapper">
+            <div id="container">
+                <div id="header">
+		            <div id="titleWrapper">
+		            	<div id="title">
+	                        <h1><a class="headermaintitle" href="http://weblogs.asp.net/scottgu/default.aspx">ScottGu's Blog </a></h1>
+	                        <div>Scott Guthrie lives in Seattle and builds a few products for Microsoft</div>
+	                    </div>
+                    </div> 
+                </div>
+                <div id="navigation">
+        	        <div id="welcome">
+				        
+        <a href="http://weblogs.asp.net/login.aspx?ReturnUrl=%2fscottgu%2farchive%2f2007%2f05%2f29%2flinq-to-sql-part-2-defining-our-data-model-classes.aspx">Sign in </a>
+         | <a href="http://weblogs.asp.net/user/CreateUser.aspx?ReturnUrl=">Join</a>
+     
+
+
+		        	</div>
+                	<ul>
+                		<li><a href="http://weblogs.asp.net/scottgu/default.aspx">Home</a></li>
+			            
+			            <li><a href="http://weblogs.asp.net/scottgu/about.aspx">About</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/rss.aspx">RSS</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/atom.aspx">Atom</a></li>
+		                <li id="RssComments"><a href="http://weblogs.asp.net/scottgu/rsscomments.aspx">Comments RSS</a></li>
+			            
+                	</ul>
+                </div>
+                <div id="contentwrapper">                    
+                        
+                
+                    <div id="sidebar-a">
+                        <div id="TasksSideBar">    
+                            
+                            
+                        </div>                                
+                        <div id="SubscriptionsSideBar">
+			                    
+                        </div>
+                        <div id="SearchSideBar">
+                            <div id="Search">
+                                <h3>Search</h3>
+                                <ul>
+                                <div id="Search" align="left">
+                                            <li><input name="ctl00$SideBar$ctl02$ctl00$SearchBox" type="text" id="ctl00_SideBar_ctl02_ctl00_SearchBox" class="searchBox" button="SearchButton" onclick="if(this.defaultValue==this.value) this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;) this.value=this.defaultValue;"> <input type="submit" name="ctl00$SideBar$ctl02$ctl00$SearchButton" value="Go" id="ctl00_SideBar_ctl02_ctl00_SearchButton" class="SearchButton"></li>
+                                    </div>
+                                </ul>
+                            </div>
+                         </div>
+            		        
+                        
+                        <div id="TagSideBar">
+                                <h3>Tags</h3>
+                            <ul class="SidebarTagCloud">
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Ajax/default.aspx" rel="tag">Ajax</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Atlas/default.aspx" rel="tag">Atlas</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Azure/default.aspx" rel="tag">Azure</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Commerce+Server/default.aspx" rel="tag">Commerce Server</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Community+News/default.aspx" rel="tag">Community News</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/IIS7/default.aspx" rel="tag">IIS7</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/jQuery/default.aspx" rel="tag">jQuery</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Link+Listing/default.aspx" rel="tag">Link Listing</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/MVC/default.aspx" rel="tag">MVC</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/NuGet/default.aspx" rel="tag">NuGet</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Security/default.aspx" rel="tag">Security</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Silverlight/default.aspx" rel="tag">Silverlight</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/SQL+Server/default.aspx" rel="tag">SQL Server</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Talks/default.aspx" rel="tag">Talks</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Tips+and+Tricks/default.aspx" rel="tag">Tips and Tricks</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Visual+Studio/default.aspx" rel="tag">Visual Studio</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Web+Forms/default.aspx" rel="tag">Web Forms</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Windows+Phone/default.aspx" rel="tag">Windows Phone</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF/default.aspx" rel="tag">WPF</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF_2F00_E/default.aspx" rel="tag">WPF/E</a></li>
+</ul>
+</div>
+                        
+                        
+                        <div id="NewsSidebar">
+                                <h3>News</h3>
+                                <ul>
+                            <iframe src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/cm.htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<br><br>
+
+<iframe src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/cm(1).htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+                                </ul>
+                            </div>
+                                            
+                        
+                        <div id="NavSideBar"><h3>Navigation</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/">Home</a></li><li><a href="http://weblogs.asp.net/">Blogs</a></li>
+</ul></div>
+                             
+                        
+                        <div id="ArchiveSideBar"><h3>Archives</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/scottgu/archive/2011/09.aspx">September 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/08.aspx">August 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/06.aspx">June 2011 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/05.aspx">May 2011 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/04.aspx">April 2011 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/03.aspx">March 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/02.aspx">February 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/01.aspx">January 2011 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/12.aspx">December 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/11.aspx">November 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/10.aspx">October 2010 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/09.aspx">September 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/08.aspx">August 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/07.aspx">July 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/06.aspx">June 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/05.aspx">May 2010 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/04.aspx">April 2010 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/03.aspx">March 2010 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/02.aspx">February 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/01.aspx">January 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/12.aspx">December 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/11.aspx">November 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/10.aspx">October 2009 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/09.aspx">September 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/08.aspx">August 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/07.aspx">July 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/06.aspx">June 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/05.aspx">May 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/04.aspx">April 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/03.aspx">March 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/02.aspx">February 2009 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/01.aspx">January 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/12.aspx">December 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/11.aspx">November 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/10.aspx">October 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/09.aspx">September 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/07.aspx">July 2008 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/06.aspx">June 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/05.aspx">May 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/04.aspx">April 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/03.aspx">March 2008 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/02.aspx">February 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/01.aspx">January 2008 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/12.aspx">December 2007 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/11.aspx">November 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/10.aspx">October 2007 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/09.aspx">September 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/08.aspx">August 2007 (13)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/07.aspx">July 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/06.aspx">June 2007 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05.aspx">May 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/04.aspx">April 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/03.aspx">March 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/02.aspx">February 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/01.aspx">January 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/12.aspx">December 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/11.aspx">November 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/10.aspx">October 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/09.aspx">September 2006 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/08.aspx">August 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/07.aspx">July 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/06.aspx">June 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/05.aspx">May 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/04.aspx">April 2006 (23)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/03.aspx">March 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/02.aspx">February 2006 (27)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/01.aspx">January 2006 (35)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/12.aspx">December 2005 (29)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/11.aspx">November 2005 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/10.aspx">October 2005 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/09.aspx">September 2005 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/08.aspx">August 2005 (11)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/06.aspx">June 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/05.aspx">May 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/04.aspx">April 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/03.aspx">March 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/02.aspx">February 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/01.aspx">January 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/11.aspx">November 2004 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/10.aspx">October 2004 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/12.aspx">December 2003 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/11.aspx">November 2003 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/10.aspx">October 2003 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/09.aspx">September 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/05.aspx">May 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/04.aspx">April 2003 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/03.aspx">March 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/02.aspx">February 2003 (5)</a></li>
+</ul></div> 
+                        
+                        
+                        
+                                    <h3>Favorite Links</h3>
+                                    <div id="LinkSideBar">
+                                        
+<ul class="CommonSidebarList">
+<li><a href="http://www.scottgu.com/">ScottGu.com</a></li><li><a href="http://asp.net/">ASP.Net Home</a></li><li><a href="http://www.nikhilk.net/">Nikhil Kothari</a></li><li><a href="http://www.dotnetslackers.com/">DotNetSlackers</a></li><li><a href="http://www.aspalliance.com/">ASPAlliance</a></li><li><a href="http://blog.joycode.com/scottgu/">My Blog in Chinese</a></li><li><a href="http://weblogs.asp.net/scottgufrench/default.aspx">My Blog in French</a></li><li><a href="http://thinkingindotnet.wordpress.com/category/scott-guthrie/">My Blog in Spanish</a></li><li><a href="http://weblogs.asp.net/scottguportuguese/">My Blog in Portuguese</a></li>
+</ul>
+                                    </div>
+                            
+                    </div>
+                
+
+                <div id="content"><div id="content2">
+	                
+    <h2 class="pageTitle">
+       LINQ to SQL (Part 2 - Defining our Data Model Classes)               
+    </h2>
+    <div class="post">
+        <div class="postsub">
+            <font face="arial" size="2"> <p>In <a href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx" target="_blank">Part 1</a> of my LINQ to SQL blog post series I discussed "What is LINQ to SQL" and provided a basic&nbsp;overview of some of the data scenarios it enables.</p> <p>In my first post I&nbsp;provided code samples that demonstrated how to perform common data scenarios using LINQ to SQL including:</p> <ul> <li>How to query a database  </li><li>How to update rows in a database  </li><li>How to insert and relate multiple rows in a database  </li><li>How to delete rows in a database  </li><li>How to call a stored procedure  </li><li>How to retrieve data with server-side paging</li></ul> <p>I performed all of these data scenarios using a LINQ to SQL class model that looked like the one below:</p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step1.jpg">  <p>In this second blog post in the series I'm going to go into more detail on how to create the above LINQ to SQL data model.</p> <p>LINQ to SQL, the LINQ to SQL Designer, and all of the features that I'm covering in this blog post series will ship as part of the .NET 3.5 and Visual Studio "Orcas" release.&nbsp; </p> <p>You can follow all of the steps below by downloading either <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=5d9c6b2d-439c-4ec2-8e24-b7d9ff6a2ab2&DisplayLang=en" target="_blank">Visual Studio "Orcas" Beta 1</a> or <a href="http://msdn.microsoft.com/vstudio/express/future/downloads/default.aspx" target="_blank">Visual Web Developer Express "Orcas" Beta1</a>.&nbsp; Both can be installed and used side-by-side with VS 2005.</p> <h3><u>Create a New LINQ to SQL Data Model</u></h3> <p>You can add a LINQ to SQL data model to an ASP.NET, Class Library&nbsp;or Windows client project&nbsp;by using the&nbsp;"Add New Item"&nbsp;option within Visual Studio and selecting the "LINQ to SQL" item within it:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step1(1).jpg"> </p> <p>Selecting the "LINQ to SQL" item will launch the LINQ to SQL designer, and allow you to model classes that represent a relational database.&nbsp; It will also create a strongly-typed&nbsp;"DataContext" class that will have properties that represent each Table we modeled within the database, as well as methods for each Stored Procedure we modeled.&nbsp; As I described in <a href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx" target="_blank">Part 1</a> of this blog post series, the DataContext&nbsp;class is the main conduit by which we'll query entities from the database as well as apply changes back to it.</p> <p>Below is a screen-shot&nbsp;of&nbsp;an empty&nbsp;LINQ to SQL ORM designer surface, and is what you'll see immediately after creating a new LINQ to SQL data model:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step2.jpg">&nbsp;</p> <h3><u>Entity Classes</u></h3> <p>LINQ to SQL&nbsp;enables you to model classes that map to/from a database.&nbsp; These classes are typically referred to as "Entity Classes" and instances of them are called "Entities".&nbsp; Entity classes map to tables within&nbsp;a database.&nbsp; The properties of entity classes typically map to the table's columns.&nbsp; Each instance of an entity class then represents a row within the database table.</p> <p>Entity classes defined with LINQ to SQL <u>do not</u> have to derive from a specific base class, which means that you can have them inherit from any object you want.&nbsp; All classes created using the LINQ to SQL designer are defined as "partial classes" - which means that you can optionally drop into code and add additional properties, methods and events to them.</p> <p>Unlike the DataSet/TableAdapter feature provided in VS 2005, when using the LINQ to SQL designer you do not have to&nbsp;specify the SQL queries&nbsp;to use when creating your data model and access layer.&nbsp; </p> <p>Instead, you&nbsp;focus on defining your entity classes, how they map to/from the database, and the relationships between them.&nbsp; The LINQ to SQL OR/M implementation will then take care of generating the appropriate SQL execution logic for you at runtime when you interact and use the data entities.&nbsp; You can use LINQ query syntax to expressively indicate how to query your data model in a strongly typed way.</p> <h3><u>Creating Entity Classes From a Database</u></h3> <p>If you already have a database schema defined,&nbsp;you can use it to quickly create LINQ to SQL entity classes modeled off of it.</p> <p>The easiest way to accomplish this is to open up a database in the Server Explorer within Visual Studio, select the Tables and Views you want to model in it, and drag/drop them onto the LINQ to SQL designer surface:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step5.jpg">&nbsp;</p> <p>When you add the above 2 tables (Categories and Products)&nbsp;and 1 view (Invoices)&nbsp; from the "Northwind" database onto the LINQ to SQL designer surface, you'll automatically have the following three entity classes created for you based on the database schema:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step6.jpg">&nbsp;</p> <p></p> <p>Using the data model classes defined above, I can now run all of&nbsp;the code samples (expect the SPROC one) described in <a href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx" target="_blank">Part 1</a> of this LINQ to SQL series.&nbsp; I don't need to add any additional code or configuration&nbsp;in order to enable these query, insert, update, delete, and server-side paging scenarios.&nbsp; </p> <h3><u>Naming and Pluralization</u></h3> <p>One of the things you'll notice when using the LINQ to SQL designer&nbsp;is that it automatically "pluralizes" the various table and column names when it creates entity classes based on your database schema.&nbsp; For example: the "Products" table in our&nbsp;example above&nbsp;resulted in a "Product" class, and the "Categories" table resulted in a "Category" class.&nbsp; This class naming helps make your models consistent with the .NET naming conventions, and I usually find having the designer fix these up for me really convenient (especially when adding lots of tables to your model).&nbsp;&nbsp; </p> <p>If you don't like the name of a class or property that the designer generates, though, you can always override it and change it to any name you want.&nbsp; You can do this&nbsp;either by editing the entity/property name in-line within the designer&nbsp;or by modifying it via the property grid:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step7.jpg">&nbsp;</p> <p>The ability to have entity/property/association names be different&nbsp;from your database schema ends up being very useful in a number of cases.&nbsp; In particular:</p> <p>1) When your backend database table/column schema names&nbsp;change.&nbsp; Because your entity models can have different names from the backend schema, you can decide to just update your mapping rules and not&nbsp;update your application or query code&nbsp;to use the new table/column name.</p> <p>2) When you have database schema&nbsp;names that aren't very "clean".&nbsp; For example, rather than use "au_lname" and "au_fname"&nbsp;for the property names on an entity class, you can just name them to "LastName" and "FirstName" on your entity class and develop against that instead (without having to rename the column names in the&nbsp;database).</p> <h3><u>Relationship Associations</u></h3> <p>When you drag objects from the server explorer onto the LINQ to SQL designer, Visual Studio will&nbsp;inspect the&nbsp;primary key/foreign key relationships of the objects, and based on them automatically create default&nbsp;"relationship associations" between the different entity classes it creates.&nbsp; For example, when I added both the Products and Categories tables from Northwind onto my LINQ to SQL designer you can see that a one to many relationship between&nbsp;the&nbsp;two is inferred (this is denoted by the arrow in the designer):</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step13.jpg"> </p> <p>The above association will cause cause the Product entity class to have a "Category" property that developers can use to access the Category entity for a given Product.&nbsp; It will also cause the Category class to have a "Products" collection that enables developers to retrieve all products within that Category.</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step9.jpg"> </p> <p>If you don't like how the designer has modeled or named an association, you can always override it.&nbsp; Just click on the association arrow within the designer and access its properties via the property grid to rename, delete&nbsp;or modify it.</p> <h3><u>Delay/Lazy Loading</u></h3> <p>LINQ to SQL enables developers to specify whether the properties on entities should be prefetched or delay/lazy-loaded on first access.&nbsp; You can customize the default pre-fetch/delay-load rules for entity properties by selecting any entity property or association in the designer, and then within the property-grid set the "Delay Loaded" property to true or false.</p> <p>For a simple example of when I'd want to-do this, consider the "Category" entity class we modeled above.&nbsp; The categories table inside "Northwind" has a "Picture" column which stores a (potentially large) binary image of each category, and I only want to retrieve the binary image from the database when I'm actually using it (and not when doing a simply query just to list the category names in a list).</p> <p>I could configure the Picture property to be delay loaded by selecting it within the LINQ to SQL designer and by settings its Delay Loaded value in the property grid:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step8.jpg"> </p> <p>Note: In addition to configuring the default pre-fetch/delay load semantics on entities, you can also override them via code when you perform LINQ queries on the entity class (I'll show how to-do this in the next blog post in this series).</p> <h3><u>Using Stored Procedures</u></h3> <p>LINQ to SQL allows you to optionally model stored procedures as methods on your DataContext class.&nbsp; For example, assume we've defined the simple SPROC below to retrieve product information based on a categoryID:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step10.jpg"> </p> <p>I can use the server explorer within Visual Studio to drag/drop the SPROC onto the LINQ to SQL designer surface in order to add a strongly-typed method that will invoke the SPROC.&nbsp; If I drop the SPROC on top of the "Product" entity in the designer, the LINQ to SQL designer will declare the SPROC to return an IEnumerable&lt;Product&gt; result:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step11.jpg"> </p> <p>I can then use either LINQ Query Syntax (which will generate an adhoc SQL query) or alternatively&nbsp;invoke the SPROC method added above to retrieve product entities&nbsp;from the database:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step12.jpg"> </p> <p><u>Using SPROCs to Update/Delete/Insert Data</u></p> <p>By default LINQ to SQL will automatically create the appropriate SQL expressions for you when you insert/update/delete entities.&nbsp; For example, if you wrote the LINQ to SQL code below to update some values on&nbsp;a "Product" entity instance:</p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step5(1).jpg"> </p> <p>By default LINQ to SQL would create and execute the appropriate "UPDATE" statement for you when you submitted the changes (I'll cover this more in a later blog post on updates).</p> <p>You can also optionally define and use custom INSERT, UPDATE, DELETE sprocs instead.&nbsp; To configure these, just click on an entity class in the LINQ to SQL designer and within its property-grid&nbsp;click the "..." button on the Delete/Insert/Update values, and&nbsp;pick a particular SPROC you've defined instead: </p> <p><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/step14.jpg"> </p> <p>What is nice about changing the above setting is that it is done purely at the mapping layer of LINQ to SQL - which means the update code I showed earlier continues to work with no modifications required.&nbsp; This avoids developers using a LINQ to SQL data model from having to change&nbsp;code even if they later decide to put in a custom SPROC optimization later.</p> <h3><u>Summary</u></h3> <p>LINQ to SQL provides a nice, clean way to model the data layer of your application.&nbsp; Once you've defined your data model you can easily and efficiently perform queries, inserts, updates and deletes against it.&nbsp; </p> <p>Using the built-in LINQ to SQL designer within Visual Studio and Visual Web Developer Express you can create and manage your data models for LINQ to SQL extremely fast.&nbsp; The LINQ to SQL designer also provides a lot of flexibility that enables you to customize the default behavior and override/extend the system to meet your specific needs.</p> <p>In upcoming posts I'll be using the data model&nbsp;we created above to drill into querying, inserts, updates and deletes further.&nbsp; In the update, insert and delete posts I'll also discuss how to add custom business/data validation logic to the entities we designed above to perform additional validation logic.</p> <p>Mike Taulty also has a number of great LINQ to SQL videos that I recommend checking out <a href="http://mtaulty.com/CommunityServer/blogs/mike_taultys_blog/archive/2007/05/10/9322.aspx" target="_blank">here</a>.&nbsp; These provide a great way to learn by watching someone walkthrough using LINQ to SQL in action.</p> <p>Hope this helps,</p> <p>Scott</p></font>
+            
+            <div class="postfoot">
+                
+                Published
+                Tuesday, May 29, 2007 1:17 AM
+			    by
+			    <a href="http://weblogs.asp.net/members/ScottGu.aspx">ScottGu</a>
+                <span id="ctl00_Main_WeblogPostRating1" title="Rated Excellent [5 out of 5]." class="CommonRateControlReadOnly"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"></span><input type="hidden" value="5" id="ctl00_Main_WeblogPostRating1_Value">
+                <div class="em"><span id="ctl00_Main_ctl06_ctl01">Filed under: <a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/Visual+Studio/default.aspx" rel="tag">Visual Studio</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a></span><input type="hidden" name="ctl00$Main$ctl06$ctl01" id="ctl00_Main_ctl06_ctl01_State" value="value:Filed%20under%3A%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FASP.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3EASP.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FVisual%2BStudio%2Fdefault.aspx%22%20rel%3D%22tag%22%3EVisual%20Studio%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2F.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3E.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FLINQ%2Fdefault.aspx%22%20rel%3D%22tag%22%3ELINQ%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FData%2Fdefault.aspx%22%20rel%3D%22tag%22%3EData%3C%2Fa%3E"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+                    
+                    <h3 class="pageTitle">Comments</h3>
+                    <div id="comments">
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2681963">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 6:57 AM
+                            by
+                            <a title="FransBouma" href="http://weblogs.asp.net/fbouma">FransBouma</a>
+                            
+	                    </div>
+	                    <p>Two questions:</p>
+<p>1) the proc seems to return a strongly typed element. In SqlServer there's only one way to find out the resultset of a proc, via SET FMTONLY ON; exec proc ; SET FMTONLY OFF. The thing is that with a temptable in the proc or multiple selectstatements (with if's for example) it often gives up, i.o.w.: it's not 100% reliable. (the temptable situation even throws an exception). How is linq to sql make sure this always works and also, how does it deal with renamed columns in the resultset or slightly different named columns which mean the same ? Or is it parsing the SQL from the proc? (which doesn't work in encrypted proc scenario's)</p>
+<p>2) you say you can use a proc for insert/update of an entity. While that's cool, it has restrictions: the proc has to obey a given format otherwise updates/inserts won't work. (which field maps to which proc parameter, which parameter returns the new identity value, new NEW_SEQUENTIALID() value etc. and for updates, which parameters are for the predicates and which for the values). I haven't read anything about this yet, while it does seem to me it's very important because you're effectively mapping your entity on a proc, not on a table/view anymore. </p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2682111">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 7:31 AM
+                            by
+                            Mike
+                            
+	                    </div>
+	                    <p>Looks great!</p>
+<p>When you want to use custom stored procedures for insert/update, is the method signature (name, arguments and return value) completely free, or does it need to conform to something you have defined? For instance, if we have a Product, with some properties lazy loaded, and we change only one of the properties, what arguments does the update SPROC receive? If it receives all properties of the Product as arguments, are they first loaded to their original values? How does it handle properties that are null? Hope you can clear this up for me.</p>
+<p>Thanks for the post!</p>
+<p>PS. How does the pluralization work for non-english table names?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2683114">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 10:59 AM
+                            by
+                            Peter
+                            
+	                    </div>
+	                    <p>1) What happens when my database schema changes? Are all those settings you mentioned (like "Delay Loaded") stored separately? Would I lose those? Can I refresh only certain tables or is it an all or nothing deal?</p>
+<p>2) Following your example: each product has a category. When I ask for all the products in the database (let's say I have 50 products), would LINQ to SQL generate 1 query that would bring everything or 1 query for the products and 50 queries for each category. I imagine it only generates one query but then how does it distinguish between the Name field in the Products table and the Name field in the Categories table, or do I have to make sure to name them differently?</p>
+<p>3) You talked about "pluralization" where the name of the entity class is altered. What happens if my table names are already in "singular" form? Does it just leave them like that?</p>
+<p>Thanks.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2683283">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:26 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Peter,</p>
+<p>1) The settings for different entities are stored separately, so it isn't an all or nothing thing. &nbsp;If you want, you can just re-create certain tables or individual settings. &nbsp;This makes it much easier to handle schema changes.</p>
+<p>2) If each product has a category association, and you look over 50 products and access each product's category, the number of SQL queries performed will depend on how you've configured the entity relationship to be loaded. &nbsp;If you delay/lazy load it, then there will be a separate database call for each product (so potentially up to 50 calls). &nbsp;If you set delay load to false, or programmatically indicate that you want to retrieve the category as well when querying for the products, then you'll have 2 queries to the database - one to retrieve the products, and then another to retrieve all of the categories for the 50 products. &nbsp;LINQ to SQL will then associate the retrieved categies to the appropriate Products. &nbsp;I'll cover this more in my next post in this series which will cover querying.</p>
+<p>3) If you already have a name that isn't plural, then it will just keep it as-is. &nbsp;You can also optionally change it to anything else you want as well.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2683432">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 12:51 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Frans,</p>
+<p>1) LINQ to SQL does use the 'FMTONLY' approach at design-time. &nbsp;It is possible that this method does not produce the correct result or any result. &nbsp;In these cases you can describe the procedures yourself using the designer, hand editting the DBML file or by adding the appropriately mapped signatures directly on your DataContext.</p>
+<p>2) The mapping of procedure arguments against entity fields is fully configurable in the designer, DBML or mapping file/attributes. &nbsp;For updates you can choose between mapping original or current state values and in which direction the information flows in/out. &nbsp;Note that when you click on the "..." elipse in the property grid to customize the INSERT, UPDATE, DELETE behavior it will bring up a dialog that allows you to map the entity parameters to/from the sprocs. &nbsp;</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2683905">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 4:48 PM
+                            by
+                            Mesan
+                            
+	                    </div>
+	                    <p>So when is Linq to SQL going to support DB2?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2683951">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu&amp;#39;s Blog
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 5:03 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog.htm">LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu&amp;#39;s Blog</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2684190">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 5:43 PM
+                            by
+                            Paul R
+                            
+	                    </div>
+	                    <p>Is the Code Generation "Type" restricted by System types or will developers be able to use custom data types?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2685773">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 8:08 PM
+                            by
+                            <a title="Juan mar&amp;#195;&amp;#173;a" rel="nofollow" href="http://thinkingindotnet.wordpress.com/">Juan marÃ­a</a>
+                            
+	                    </div>
+	                    <p>Great post Scott.</p>
+<p>You can read this post in spanish here:</p>
+<p><a rel="nofollow" target="_new" href="http://thinkingindotnet.wordpress.com/2007/05/30/linq-to-sql-2%c2%aa-parte-definiendo-nuestras-clases-del-modelo-de-datos/">thinkingindotnet.wordpress.com/.../linq-to-sql-2%c2%aa-parte-definiendo-nuestras-clases-del-modelo-de-datos</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686166">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 8:38 PM
+                            by
+                            <a title="Kyle @ RPMWare" rel="nofollow" href="http://rpmware.com/">Kyle @ RPMWare</a>
+                            
+	                    </div>
+	                    <p>First ... Nice new look!</p>
+<p>What about complex FK relationships? Ecommerce is an easy example ...</p>
+<p>Brands (Id, Name), Items (Id, Name, Price), Multimedia (Id, Type, ItmId, Image)</p>
+<p>The the above example if Type is "B" then ItmId (Multimedia) refers to a BrandId if Type is "I" then ItmId refers to an ItemId. Is there an easy way to create those relationships? </p>
+<p>This seems great for the simple stuff, I can't wait to play with it on some more complex things. It hard for us dataset guys to wrap our heads around the OR/M world. </p>
+<p>Can you "go live" with Orcas code?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686491">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 9:54 PM
+                            by
+                            <a title="Vikram" rel="nofollow" href="http://www.vikramlakhotia.com/">Vikram</a>
+                            
+	                    </div>
+	                    <p>wow Briliant. But I wold also like to see a post on LINQ with SQl (Stored procedures only) and alos a situation where by I can update only a certain values in the database</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686628">#</a>
+	                        <span>
+	                            Link Listing - May 29, 2007
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 10:23 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://dotnetjunkies.com/WebLog/csteen/archive/2007/05/29/239241.aspx">Christopher Steen</a>
+                            
+	                    </div>
+	                    <p>RESTful Web Services [Via: Jon Udell ] SCSFContrib is Alive! [Via: bsimser ] Expression Studio on MSDN...</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686811">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:07 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Kyle,</p>
+<p>You can support inheritance with entities, and vary the sub-class of a row based on the content values within it. &nbsp;So for example, you could have a "Car" entity class and then have a "SportsCar" and "SUV" sub-class. &nbsp;All three of these could persist into a single table. &nbsp;The entity instance for each row could then be driven based on a column value within the table.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+<p>P.S. "Orcas" Beta2 which will ship later this summer will support a go-live license. &nbsp;:-)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686825">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:08 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mesan,</p>
+<p>Unfortunately LINQ to SQL doesn't support DB2 yet. &nbsp;There is, though, a LINQ to NHibernate implementation out there, and I believe that supports DB2. &nbsp;The mapping layer is different than LINQ to SQL, but you can use the same LINQ queries against both.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2686853">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:10 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi PaulR,</p>
+<p>Can you clarify what you mean by the "code generation type"? &nbsp;You can create complex entities that map to rows using LINQ to SQL, so that isn't limited to only system types.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2687195">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:27 PM
+                            by
+                            Aleksey
+                            
+	                    </div>
+	                    <p>Scott, the only thing I don't like about LINQ is that I cannot return unnamed type var from a function. Why can't we name it? </p>
+<p>Instead of: </p>
+<p>var myCustomers = from ... in ... select ...;</p>
+<p>why not to use something like:</p>
+<p>IEnumerable&lt;public class Customer&gt; myCustomers = from ... in ... select ...;</p>
+<p>letting compiler to define new public class Customer making it possible to return IEnumerable&lt;Customer&gt; from the function.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2687539">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, May 29, 2007 11:51 PM
+                            by
+                            Steve
+                            
+	                    </div>
+	                    <p>Thanks for the writeup - good stuff Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2687760">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 12:07 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Aleksey,</p>
+<p>Anonymous types in C# and VB unfortunately don't allow you to specify return arguments like that. &nbsp;What you can do, though, is have the return type be IEnumerable&lt;Customer&gt; and then pass things back that way.</p>
+<p>My samples in this Query Syntax blog post: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/04/21/new-orcas-language-feature-query-syntax.aspx">weblogs.asp.net/.../new-orcas-language-feature-query-syntax.aspx</a> show how to-do this.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2688614">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 3:16 AM
+                            by
+                            <a title="Keith Patton" rel="nofollow" href="http://blog.keithpatton.com/">Keith Patton</a>
+                            
+	                    </div>
+	                    <p>Hi, </p>
+<p>The following article talks about inheritance support only being available in Linq for Entities/Entity Framework which i understand is delayed till next year.</p>
+<p><a rel="nofollow" target="_new" href="http://dotnetaddict.dotnetdevelopersjournal.com/adoef_vs_linqsql.htm">dotnetaddict.dotnetdevelopersjournal.com/adoef_vs_linqsql.htm</a></p>
+<p>When you say Linq for Sql suppors inheritance, is this "table per class" inheritance only? Does the designer support the definition of a discriminator value to distinguish between types in the hierarchy? An example of table per class inheritance would be very useful!</p>
+<p>Finally, i'm wondering what the "upgrade" path to Linq for Entities will be like. Presumably, as long as we keep the entity class structure the same we can swap in the mapping to the conceptual model and remove the direct to db mappings without affecting the application.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2688711">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 3:35 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Keith,</p>
+<p>LINQ to SQL supports single table inheritance, and the LINQ to SQL designer supports this modeling as well (you can use the "inheritance" element from the toolbox to setup relationships between entities on the designer surface, and there is a discriminator property you can set to distinguish them). &nbsp;</p>
+<p>For a good overview of how LINQ to SQL entity inheritance works, I'd recommend downloading these LINQ whitepapers: <a rel="nofollow" target="_new" href="http://download.microsoft.com/download/2/4/6/246adaed-0bc1-4671-883f-c9cffcf6a55a/orcasmarchctpwhitepapers.zip">download.microsoft.com/.../orcasmarchctpwhitepapers.zip</a> &nbsp;</p>
+<p>If you open the "LINQ to SQL Overview" document and go to page 38 you can see an example of how inheritance works.</p>
+<p>In terms of what the "upgrade" path to LINQ to Entities will be, it will probably depend a little on your application. &nbsp;But if you keep the entity class structure the same, you should be able to use the same LINQ queries against both, which should make swapping out the mapping layer much easier.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2689243">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 4:44 AM
+                            by
+                            Mikael Östberg
+                            
+	                    </div>
+	                    <p>Hello Scott!</p>
+<p>Excellent post! </p>
+<p>I'm really convinced that LINQ really helps developing a nice and clean data layer. It's really what we all have been waiting for.</p>
+<p>However, my concern is performance. I have an upcoming project which is a funds trading system that has extremely demanding requirements regarding performance. I really would like to choose LINQ to SQL, but do I dare to? This design decision comes with a heavy load of responsibility, so I really want to be certain that it’ll hold.</p>
+<p>Have you made any performance tests so far?</p>
+<p>Thanks!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690502">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 7:58 AM
+                            by
+                            Stephen Woolhead
+                            
+	                    </div>
+	                    <p>Was wondering if there is going to be any support for creating these models off of DB schemas defined in a Team Edition for Database Professionals project? &nbsp;Or if there is going to be any other form of intergration between DBPro and the Linq technology?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690644">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 9:04 AM
+                            by
+                            Dan
+                            
+	                    </div>
+	                    <p>Hey Scott,</p>
+<p>Is there any way to wire up LinqToSql to SQL Server 2005 query notifications?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690707">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 10:23 AM
+                            by
+                            Walter
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>1) is there support in LINQ to SQL for recognising (for example) a new column added to a table in the database on the fly? Or does this always necessitate revisiting the designer and a recompile?</p>
+<p>2) how easy is it to fetch from a database using LINQ and then serialize this to an in-memory XML document? (And then do something like process the XML using an external XSLT file)</p>
+<p>It would be nice to be able to add a new column into the database and then refer to it in the XSLT without having to recompile the classes in between.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690768">#</a>
+	                        <span>
+	                            links for 2007-05-30 &amp;raquo; mhinze.com
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 11:30 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://mhinze.com/links-for-2007-05-30/">links for 2007-05-30 » mhinze.com</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;links for 2007-05-30 &amp;raquo; mhinze.com</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690793">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 12:05 PM
+                            by
+                            <a title="Josh" rel="nofollow" href="http://blog.josh420.com/">Josh</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>What happened to the &lt;RECOMMENDED&gt;&lt;/RECOMMENDED&gt; link in the nav bar? &nbsp;It had the tips, tricks, and gotchas. &nbsp;That was an excellent reference, is it still available?</p>
+<p>Thanks &nbsp;:)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2690949">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 12:37 PM
+                            by
+                            <a title="Morten" rel="nofollow" href="http://www.sharpgis.net/">Morten</a>
+                            
+	                    </div>
+	                    <p>How will the new spatial features of Katmai fit into all of this? Will I get spatial keywords (intersects, within etc) that I can use as part of my LINQ expression?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2691041">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 12:53 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mikael,</p>
+<p>The good news is that the performance of LINQ to SQL is really, really good. &nbsp;I believe the numbers I've seen has the Beta2 numbers within ~10% of raw datareader performance for common scenaros.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2691061">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 12:56 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Stephen,</p>
+<p>&gt;&gt;&gt; "Was wondering if there is going to be any support for creating these models off of DB schemas defined in a Team Edition for Database Professionals project? &nbsp;Or if there is going to be any other form of intergration between DBPro and the Linq technology?"</p>
+<p>That is a good question, and to be honest with you I'm not 100% sure. &nbsp;LINQ to SQL does ship with a command-line tool for creating models, so it is possible to automate creating your data layer from the command/build line. &nbsp;I don't know if you can create them directly from a .SQL file though (I don't think you can but am not 100% sure).</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+<p>P.S. Note that you can definitely use DBPro with LINQ to SQL, and LINQ to SQL makes it much easier to refactor your database. &nbsp;I'm just not sure about the model creation part of your question.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2691097">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 1:00 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Walter,</p>
+<p>&gt;&gt; 1) is there support in LINQ to SQL for recognising (for example) a new column added to a table in the database on the fly? Or does this always necessitate revisiting the designer and a recompile?</p>
+<p>If you add a new column to the database your LINQ to SQL entity classes should continue to work just fine, unless you add some constraint or restriction on the column that prevents the table from being used. &nbsp;If you want to actually access and manipulate the new column, then you'll need to add the property that maps to it to your entitiy class. </p>
+<p>&gt;&gt; 2) how easy is it to fetch from a database using LINQ and then serialize this to an in-memory XML document? (And then do something like process the XML using an external XSLT file)</p>
+<p>XML datatypes in SQL are represented as strings with LINQ to SQL Entities. &nbsp;You could use XLINQ to query on an XML column within your LINQ to SQL entitiy - but this querying would happen in your middle-tier (within ASP.NET). &nbsp;You can't execute a remote XQuery against the database and filter returned results based on that in the first release.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2691127">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 1:05 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Josh,</p>
+<p>I'm working on getting my tips/tricks link back on the site (I seemed to lose it when I updated the skin of my blog).</p>
+<p>Here is a pointer to access it in the meantime: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/pages/ASP.NET-2.0-Tips_2C00_-Tricks_2C00_-Recipes-and-Gotchas.aspx">weblogs.asp.net/.../ASP.NET-2.0-Tips_2C00_-Tricks_2C00_-Recipes-and-Gotchas.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2691382">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 1:59 PM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Hi Scott;</p>
+<p>Two questions:</p>
+<p>a) When you create a model class of your table, can you then create instances of that class within a form? i.e. Having two instances of customer object on my form that points to two different customers?</p>
+<p>b) Can you have the model to create SP on server side when Inserting/Updating/deleting records, instead doing it from he client side?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2692524">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 4:21 PM
+                            by
+                            Walter
+                            
+	                    </div>
+	                    <p>Hi Scott, thanks for your earlier reply.</p>
+<p>Regarding point 2, I wasn't thinking about XML-type columns in the database, but about taking the entire entity as fetched by LINQ to SQL and mapping that to some form of in-memory XML document.</p>
+<p>I suppose manually iterating over the IEnumerable&lt;T&gt; collection and creating XElement, XAttribute, etc, objects is one possibility but can you suggest a nice way of automating this?</p>
+<p>Perhaps a solution that makes use of the System.Xml.Serialization namespace...could the LINQ to SQL entity classes be decorated with attributes such as XmlRoot to enable this? I am interested to hear your thoughts on this.</p>
+<p>Thanks</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2694837">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 8:04 PM
+                            by
+                            Will
+                            
+	                    </div>
+	                    <p>How would you insert a record and return the primary key of the new record using LINQ?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2695006">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, May 30, 2007 9:15 PM
+                            by
+                            Rob
+                            
+	                    </div>
+	                    <p>How does LINQ to SQL support data concurrency? &nbsp;Must I maintain a list of changed fields (and original values) in my data objects and craft sprocs to get concurrency?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2696492">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 3:19 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Rob,</p>
+<p>LINQ to SQL supports concurrency, and allows you to detect changes in a couple of ways. &nbsp;</p>
+<p>One way is to compare origional and changed values when doing updates. &nbsp;LINQ to SQL entities support this automatically.</p>
+<p>Another option is to add a timestamp column to your table. &nbsp;LINQ to SQL will then use this to detect if the underlying row has changed and automatically handle concurrency for you this way.</p>
+<p>I'll cover both approaches in an upcoming blog post when I talk about updates.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2696502">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 3:21 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Ben,</p>
+<p>You can definitely have multiple instances of entity/model classes within a form. &nbsp;Each instance can point to different customer objects.</p>
+<p>In my sproc section above I talked a little about how you can define stored procedures to handle insert/update/delete scenarios for your entities. &nbsp;This is definitely supported.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2696513">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 3:23 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Will,</p>
+<p>In my LINQ to SQL Part 1 post: <a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx">weblogs.asp.net/.../using-linq-to-sql-part-1.aspx</a> I showed an insert code sample.</p>
+<p>To retrieve the new primary key of an added object, you can access its primary key column immediately after the SubmitChanges() call. &nbsp;The entity will at that point have been updated to reflect the new PK from the database.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2696520">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 3:24 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Walter,</p>
+<p>LINQ ships with XLINQ - and the projection features of LINQ enable you to-do some pretty nice transformations of objects into XML with it. &nbsp;All you'd need to-do is modify the select clause of your LINQ to SQL query and specify a XLINQ projection in that to convert it to XML. </p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2696937">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 5:11 AM
+                            by
+                            <a title="Skup" rel="nofollow" href="http://www.pixvillage.com/blogs/devblog">Skup</a>
+                            
+	                    </div>
+	                    <p>Hi,</p>
+<p>the DataContext object is IDisposable. I did not try, but I guess that enumarating elements from a query after disposing the DataContext will result in an exception.</p>
+<p>The question is, in ASP.Net, where is the best place to dispose the DataContext ?</p>
+<p>For now, I do it in a OnDispose() override, is there a better place ?</p>
+<p>Thanks</p>
+<p>Skup</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2697428">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 6:56 AM
+                            by
+                            Boris Yeltsin's Zombie
+                            
+	                    </div>
+	                    <p>Hey Scott,</p>
+<p>Is there a button in the designer to automatically refresh all the database schema changes into the DAL? (this is a nice feature in LLBLGen)</p>
+<p>Also - do you have any links for writing my own LINQ to XXXX - where XXXX is the database du jour. I imagine this might be a royal pain-in-the-ass, but I'd love to see how possible it is to build a LINQ to MySQL and LINQ to PostgreSQL.</p>
+<p>Is the source to LINQ to SQL going to be available?</p>
+<p>- BY's Zombie</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2698582">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 31, 2007 11:47 AM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Hi Scott;</p>
+<p>Thank you for answering my questions. I do want to tell you what a great job you're doing by breaking this new technology into "Understandable" blogs. Your time and effort is very much appreciated and your style of writing brings excitement to read about LINQ.</p>
+<p>I have not downloaded the Orcas yet to get the SDK docs, but do you have any links to good docs on C# 3.0 and LINQ that are "Up to date"? Most of the stuff I find, are old and things have already changed with LINQ!</p>
+<p>Thanks! </p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2703903">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 01, 2007 6:44 AM
+                            by
+                            <a title="Damien Guard" rel="nofollow" href="http://www.damieng.com/blog/">Damien Guard</a>
+                            
+	                    </div>
+	                    <p>Would still love to see some guidance on the scopen and usage of the DataContext especially in shared web environments taking the caching into consideration.</p>
+<p>[)amien</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2704997">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 01, 2007 1:03 PM
+                            by
+                            Matt
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>is it possible to design a model in Linq and then let link create the Database with all table structures?</p>
+<p>And, assuming I have imported e.g. the northwind databases table customers. Now I add a new property to this entity. Can Linq add this property to the customers table, if I set all necessary properties?</p>
+<p>Regards,</p>
+<p>Matt</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2709237">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 02, 2007 12:26 PM
+                            by
+                            <a title="Mehfuz Hossain" rel="nofollow" href="http://www.mehfuz.com/">Mehfuz Hossain</a>
+                            
+	                    </div>
+	                    <p>Great post! in addtion i have downloaded the session of Mix07 = &gt; Dev 04 , where Anders gives a hand on of working with dbml. Must check out!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2727589">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, June 04, 2007 5:44 PM
+                            by
+                            Claudia
+                            
+	                    </div>
+	                    <p>Hello Scott,</p>
+<p>I'd like to know how to represent one to many relationship to the same table. Eg: Category table has many categories, and I have a parentCategoryID in my Category table. Is there a way to return a Category object within the Category class using this graphic tool ? If not, can I do it using this:</p>
+<p>[Table(Name = "Category")]</p>
+<p>class Category</p>
+<p>{</p>
+<p>...</p>
+<p>[Association(Storage = "someCategoryVariable",OtherKey = "parentCategoryID")]</p>
+<p> public Category CategoryParent{ ... }</p>
+<p>}</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2732498">#</a>
+	                        <span>
+	                            Linq - Way too easy!
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, June 05, 2007 7:32 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://rockymoore.com/TheCoder/archive/2007/06/05/Linq_way_too_easy.aspx">TheCoder</a>
+                            
+	                    </div>
+	                    <p>Linq - Way too easy!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2743374">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, June 06, 2007 12:07 PM
+                            by
+                            El Guapo
+                            
+	                    </div>
+	                    <p>Hello,</p>
+<p>Thanks for the post. Is it possible to create many-to-one relationships? (i.e., just an entity reference, no collections). I don't see any way to do it. But it must be possible?</p>
+<p>Thanks</p>
+<p>El Guapo</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2755904">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, June 07, 2007 2:07 PM
+                            by
+                            <a title="Fduch" href="http://weblogs.asp.net/user/Profile.aspx?UserID=3769">Fduch</a>
+                            
+	                    </div>
+	                    <p>Thanks for the tutorials.</p>
+<p>Is there any way to update values in database without fetching any data from it?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2767767">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, June 09, 2007 9:51 AM
+                            by
+                            James
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>How does the generated entity classes behave when serialized? Specifically, I'm thinking of a tree-like object graph scenario. What happens when you deserialize the entities? Is there a manual detach/attach process involved or can you immediately start using it as if it were a "live" object graph?</p>
+<p>Very interested to know the answers to this.</p>
+<p>Thanks</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2818678">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, June 14, 2007 1:12 PM
+                            by
+                            Scott Roberts
+                            
+	                    </div>
+	                    <p>I too am eager to see more. Specifically:</p>
+<p>1. How do I update my dbml when the DB schema changes? I don't see a "refresh" button on the designer.</p>
+<p>2. What is the recommended "best practice" for using this in an ASP.NET environment? In Part 1 you mentioned releasing the DataContext after each page and just storing the Entity Objects themselves then using Attach() to attach them to a new DataContext on postback. However, it appears that changes made to the object prior to Attach() are "lost". That means I can't pass an Entity Object from page to page (updating the object along the way, in a wizard for example) then save all changes at the end.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2824605">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 15, 2007 2:34 AM
+                            by
+                            Stuart
+                            
+	                    </div>
+	                    <p>Hi,</p>
+<p>Ever since I installed the Visual Web Developer beta, I've been getting the following error notice when I interact with a connection string (such as opening a file containing table adapters or clicking on an adapter's properties):</p>
+<p>Following error occurred while getting connection string information from configuration.</p>
+<p>"Object reference not set to an instance of an object"</p>
+<p>This happens now in both VS 2005 and VWD. &nbsp;I've tried restoring an old web.config, but no dice. &nbsp;The program still compiles and runs, but it's a pain clicking through 20 or 30 warnings when I want to open a file</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2827996">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 15, 2007 4:13 PM
+                            by
+                            Todd
+                            
+	                    </div>
+	                    <p>Is it possible to use many-to-many relationships with LINQ to SQL? &nbsp;For example, a Person table and a Group table could be related with a mapping table so that one Person can belong to multiple Groups and a single Group can 'contain' multiple Persons.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2847824">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, June 17, 2007 4:23 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Stuart,</p>
+<p>If you can send me an email with more details about the error, I'll have someone help figure out what is going wrong.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2847838">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, June 17, 2007 4:24 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>In general what I do when the schema changes is to delete the entity and then drag/drop it onto the surface again. &nbsp;</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2847851">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, June 17, 2007 4:26 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Ed/Todd,</p>
+<p>With LINQ to SQL in .NET 3.5 you need to model M:M relationships using an intermediate class. &nbsp;I'll cover how to-do this in a future blog post.</p>
+<p>LINQ to Entities supports M:M without needing an intermediate class - so that is another option to use.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2935659">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, June 25, 2007 7:56 PM
+                            by
+                            <a title="mathmax" href="http://weblogs.asp.net/user/Profile.aspx?UserID=3996">mathmax</a>
+                            
+	                    </div>
+	                    <p>Hi ScottGu,</p>
+<p>you said : "You can support inheritance with entities, and vary the sub-class of a row based on the content values within it. &nbsp;So for example, you could have a "Car" entity class and then have a "SportsCar" and "SUV" sub-class. &nbsp;All three of these could persist into a single table. &nbsp;The entity instance for each row could then be driven based on a column value within the table."</p>
+<p>Could you give me an example. I tried writting this :</p>
+<p> &nbsp; &nbsp;public class Item</p>
+<p> &nbsp; &nbsp;{</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column(Id = true)]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private int Id;</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column()]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private int Category_Id;</p>
+<p> &nbsp; &nbsp;}</p>
+<p> &nbsp; &nbsp;[Table()]</p>
+<p> &nbsp; &nbsp;public class Product : Item</p>
+<p> &nbsp; &nbsp;{</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private Iso _Origin; &nbsp;</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column(DBType = "nchar(3)")]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;public Iso Origin</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;{</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;get { return _Origin; }</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set { _Origin = value; }</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;}</p>
+<p> &nbsp; &nbsp;}</p>
+<p>but it doesn't work. It however works well if I write :</p>
+<p> &nbsp; &nbsp;[Table()]</p>
+<p> &nbsp; &nbsp;public class Product : Item</p>
+<p> &nbsp; &nbsp;{</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column(Id = true)]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private int Id;</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column()]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private int Category_Id; &nbsp; &nbsp; &nbsp; </p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;private Iso _Origin; &nbsp;</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;[Column(DBType = "nchar(3)")]</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;public Iso Origin</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;{</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;get { return _Origin; }</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set { _Origin = value; }</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp;}</p>
+<p> &nbsp; &nbsp;}</p>
+<p>An other point that is not clear for me :</p>
+<p>what is the difference between linq to sql and linq to Entities ? Is the code above linq to Entities ? If not, is there currently a beta from linq to Entities ?</p>
+<p>Thank you in advance.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2967166">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, June 28, 2007 2:56 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mathmax,</p>
+<p>Here is a pointer to a recent LINQ to SQL whitepaper that discusses how to handle single table inheritance: <a rel="nofollow" target="_new" href="http://download.microsoft.com/download/2/4/6/246adaed-0bc1-4671-883f-c9cffcf6a55a/orcasmarchctpwhitepapers.zip">download.microsoft.com/.../orcasmarchctpwhitepapers.zip</a></p>
+<p>I am going to try and put together a blog post in the next few weeks that shows a good example of it as well.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2973852">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 4:27 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>Last month I started a blog post series covering LINQ to SQL. LINQ to SQL is a built-in O/RM (object</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#2974244">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 3 - Querying our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, June 29, 2007 5:16 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://labnet.cc.isel.ipl.pt/blogs/aspnet/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx">ASP.NET</a>
+                            
+	                    </div>
+	                    <p>Last month I started a blog post series covering LINQ to SQL. LINQ to SQL is a built-in O/RM (object</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3016575">#</a>
+	                        <span>
+	                            Quick LINQ link list
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 04, 2007 5:48 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/fmarguerie/archive/2007/07/04/quick-linq-link-list.aspx">Fabrice's weblog</a>
+                            
+	                    </div>
+	                    <p>Some quick links about LINQ: Articles about extension methods by the Visual Basic team Third-party LINQ</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3038743">#</a>
+	                        <span>
+	                            Quick LINQ link list
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 06, 2007 8:12 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://linqinaction.net/blogs/main/archive/2007/07/04/quick-linq-link-list.aspx">Linq in Action News</a>
+                            
+	                    </div>
+	                    <p>Some quick links about LINQ: Articles about extension methods by the Visual Basic team Third-party LINQ</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3069154">#</a>
+	                        <span>
+	                            Linq to SQL之查询和添加。
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 08, 2007 8:35 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blog.csdn.net/onlyzhangqin/archive/2007/07/09/1683176.aspx">勤勤同学</a>
+                            
+	                    </div>
+	                    <p>本文以Northwind数据库中的Customers和Orders表为例说明Linq to SQL的查询和添加是怎样操作的。</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3106449">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 4 - Updating our Database)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 11, 2007 1:20 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/07/11/linq-to-sql-part-4-updating-our-database.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3126855">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 13, 2007 12:12 AM
+                            by
+                            Arnaud
+                            
+	                    </div>
+	                    <p>Adding attributes to Associations doesn't work.</p>
+<p>I have a Member entity that has ChildMembers and a ParentMember. In the table, Member rows have a parent_id column that points to their parent Member in the same table. To represent this as a WCF DataContract, I have added the DataMember attribute to the Associations so that when I pass a Member object to a client, the client has access to it's childMembers. The DataMember attribute is never added to the .designer.cs file.</p>
+<p>I tried adding it manually, that works fine.</p>
+<p>Must be a bug with the designer.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3190407">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 17, 2007 10:55 AM
+                            by
+                            Daniel Plomp
+                            
+	                    </div>
+	                    <p>Hello Scott,</p>
+<p>This are great articles. I have a question about the pluralization (is that how you write this!??)</p>
+<p>If you have in dutch a table called 'Persoon' (which means 'Person'), the plural would become 'Persoons' (which should mean 'Persons'). Only in dutch it should be 'Personen'.</p>
+<p>Is there any way to change this behaviour? I couldn't find a property i.e. to change this. Only in code, but then if you change your .dbml file, it would regenerate the classes.</p>
+<p>Hope there is or will be a solution for this.</p>
+<p>Thanks,</p>
+<p>Daniel Plomp</p>
+<p>The Netherlands</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3228506">#</a>
+	                        <span>
+	                            LINQ to SQL
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 19, 2007 10:18 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blog.opsan.com/archive/2007/07/19/524544.aspx">OpsanBlog</a>
+                            
+	                    </div>
+	                    
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3239621">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, July 20, 2007 5:26 PM
+                            by
+                            AzamSharp
+                            
+	                    </div>
+	                    <p>Hi Scott, </p>
+<p>I got one question about lazy loading. I know that by default the lazy loading is disabled. Let's say I am using the Categories table which off course has Products. Now, I don't want to load Products when I am loading Categories. How can I disable that. I think the LINQ to SQL diagram created using drag and drop lacks the foreign key relationships. It simply mirrors the database schema. It should show all the properties associated with Categories which includes Products. &nbsp;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3267679">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 24, 2007 2:27 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Amam,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; I got one question about lazy loading. I know that by default the lazy loading is disabled. Let's say I am using the Categories table which off course has Products. Now, I don't want to load Products when I am loading Categories. How can I disable that. I think the LINQ to SQL diagram created using drag and drop lacks the foreign key relationships. It simply mirrors the database schema. It should show all the properties associated with Categories which includes Products. &nbsp;</p>
+<p>By default lazy loading is enabled for association properties. &nbsp;That means when you retrieve a category it does not actively load the products for each category. &nbsp;It only does this the first you access a category's products property. &nbsp;This avoids you running into performance issues with large graphs of objects.</p>
+<p>You can optionally then choose to tell the DataContext to pre-load particular associations so that you grab the data all in one go. &nbsp;</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3272570">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, July 25, 2007 2:41 AM
+                            by
+                            Daniel Plomp
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>I still like to know about the plural(s) inside LINQ. What can I do? See my previous post...</p>
+<p>Thanks,</p>
+<p>Daniel</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3287916">#</a>
+	                        <span>
+	                            Valer BOCAN&amp;#8217;s Web Log  &amp;raquo; Blog Archive   &amp;raquo; Visual Studio 2008 Beta 2 is here!
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 26, 2007 5:02 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.dataman.ro/?p=57">Valer BOCAN’s Web Log  » Blog Archive   » Visual Studio 2008 Beta 2 is here!</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Valer BOCAN&amp;#8217;s Web Log &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; Visual Studio 2008 Beta 2 is here!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3289222">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, July 26, 2007 7:28 PM
+                            by
+                            Clayton Powell
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>I was wondering if the the LINQ to SQL will support SQL Server 2000. If yes, then are there any features that will not work (or are perhaps less efficient - like paging with TAKE etc).</p>
+<p>Also can you put the ORM in a class library and use it from both a web application and an EXE? Will it automatically use a connection string from web.config/app.config depending on the calling environment (like the dataset designer does)?</p>
+<p>Clayton</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3302842">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, July 28, 2007 2:01 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Clayton,</p>
+<p>LINQ to SQL will support SQL 2000. &nbsp;One feature that requires SQL 2005 is the server-side paging support (where you only do the paging in the database). &nbsp;This uses the SQL 2005 ROW_NUMBER() feature which is only in SQL 2005.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3302848">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 2 - Defining our Data Model Classes)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, July 28, 2007 2:03 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Daniel,</p>
+<p>&gt;&gt;&gt;&gt;&gt; I still like to know about the plural(s) inside LINQ. What can I do? See my previous post...</p>
+<p>You can change the pluralization in the LINQ to SQL ORM designer by selecting class entity and then clicking on the name. &nbsp;It will then give you an edit box that allows you to name it whatever you want.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3347750">#</a>
+	                        <span>
+	                            All you can LINQ &amp;raquo; Quick LINQ link list
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, July 31, 2007 10:38 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://linq.blogstogo.com/2007/07/31/quick-linq-link-list/">All you can LINQ » Quick LINQ link list</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;All you can LINQ &amp;raquo; Quick LINQ link list</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3350310">#</a>
+	                        <span>
+	                            LINQ to SQL Debug Visualizer
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, August 01, 2007 1:40 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/07/31/linq-to-sql-debug-visualizer.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>Probably the biggest programming model improvement being made in .NET 3.5 is the work being done to make</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3454887">#</a>
+	                        <span>
+	                            The asp:ListView control (Part 1 - Building a Product Listing Page with Clean CSS UI)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 10, 2007 4:21 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/10/the-asp-listview-control-part-1-building-a-product-listing-page-with-clean-css-ui.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>One of the new controls in ASP.NET 3.5 that I think will be very popular is the &amp;lt;asp:ListView&amp;gt;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3460533">#</a>
+	                        <span>
+	                            Common Data Patterns with LINQ &amp;laquo; blog.jemm.net
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 10, 2007 4:32 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blog.jemm.net/2007/08/09/common-data-patterns-with-linq/">Common Data Patterns with LINQ « blog.jemm.net</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Common Data Patterns with LINQ &amp;laquo; blog.jemm.net</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3522282">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:47 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I've been writing a series of blog posts that cover LINQ to SQL. LINQ to SQL</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3562582">#</a>
+	                        <span>
+	                            Creating a Web Portal with CRM 3 and LINQ
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 12:40 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://rosslotharius.com/archive/2007/08/20/creating-a-web-portal-with-crm-3-and-linq.aspx">rosslotharius.com</a>
+                            
+	                    </div>
+	                    <p>I have been spending a decent amount of time reading up and playing around with the new features that</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3562620">#</a>
+	                        <span>
+	                            Creating a Web Portal with CRM 3 and LINQ
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 12:51 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://rosslotharius.com/archive/2007/08/20/creating-a-web-portal-with-crm-3-and-linq.aspx">rosslotharius.com</a>
+                            
+	                    </div>
+	                    <p>I have been spending a decent amount of time reading up and playing around with the new features that</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3583161">#</a>
+	                        <span>
+	                            Creating a Web Portal with CRM 3 and LINQ
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, August 22, 2007 1:46 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.invokesystems.com/cs/blogs/mscrm/archive/2007/08/20/378.aspx">Invoke Systems Microsoft Dynamics CRM 3.0 Developer's Weblog</a>
+                            
+	                    </div>
+	                    <p>I have been spending a decent amount of time reading up and playing around with the new features that...</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3594205">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 7 - Updating our Database using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 23, 2007 4:41 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/23/linq-to-sql-part-7-updating-our-database-using-stored-procedures.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3633470">#</a>
+	                        <span>
+	                            LINQ to SQL (Part 8 - Executing Custom SQL BLOCKED EXPRESSION
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 27, 2007 8:10 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/08/27/linq-to-sql-part-8-executing-custom-sql-expressions.aspx">Blogs</a>
+                            
+	                    </div>
+	                    <p>Over the last few weeks I&amp;#39;ve been writing a series of blog posts that cover LINQ to SQL. LINQ to</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3812217">#</a>
+	                        <span>
+	                            LINQ to SQL Tutorials von Scott Guthrie
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, September 10, 2007 2:35 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.aspnetzone.de/blogs/juergengutsch/archive/2007/09/07/linq-to-sql-tutorials-von-scott-guthrie.aspx">Jürgen Gutsch</a>
+                            
+	                    </div>
+	                    <p>Wer das Blog von Scott Guthrie (1) kennt, kennt sicher auch seine Tutorials über LINQ to SQL (2). Auf</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#3842824">#</a>
+	                        <span>
+	                            My Slides/Samples from MIX:UK - Building Silverlight Apps with .NET and Building ASP.NET Apps with VS 2008
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, September 12, 2007 10:19 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottgu/archive/2007/09/12/slides-samples-from-my-talks-from-mix-uk-building-silverlight-apps-with-net-and-building-asp-net-apps-with-vs-2008.aspx">Community Blogs</a>
+                            
+	                    </div>
+	                    <p>The last two days I've been speaking at the the MIX:UK conference that was held this week in London.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#4114876">#</a>
+	                        <span>
+	                            Inserting Data with LINQ | Andy Brudtkuhl
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, September 24, 2007 2:13 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://brudtkuhl.com/index.php/2007/09/24/inserting-data-with-linq/">Inserting Data with LINQ | Andy Brudtkuhl</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Inserting Data with LINQ | Andy Brudtkuhl</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#4152285">#</a>
+	                        <span>
+	                            Community Convergence XXXI
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, September 25, 2007 8:43 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.msdn.com/charlie/archive/2007/09/25/community-convergence-xxxi.aspx">Charlie Calvert's Community Blog</a>
+                            
+	                    </div>
+	                    <p>Welcome to the thirty-first edition of Community Convergence. This issue features links to seven very</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#4281660">#</a>
+	                        <span>
+	                             LINQ to SQL (Part 3 - 查询数据库)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, October 01, 2007 9:21 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.cnblogs.com/robinsmile/archive/2007/10/02/912838.html">exp</a>
+                            
+	                    </div>
+	                    <p>LastmonthIstartedablogpostseries</p>
+<p>coveringLINQtoSQL.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#5556647">#</a>
+	                        <span>
+	                            ScottGu's 博客之－－LINQ to SQL 第二部分－定义数据模型类－－LINQ to SQL (Part 2 - Defining our Data Model Classes) 
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, January 06, 2008 12:40 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.cnblogs.com/hanxianlong/archive/2007/11/17/960914.html">韩现龙</a>
+                            
+	                    </div>
+	                    <p>更为简洁的版本将会发布在博客堂（除去了英文的版本），希望本文能对您有所帮助！ 允许转载，麻烦注明出处：<a rel="nofollow" target="_new" href="http://www.cnblogs.com/hanxianlong">www.cnblogs.com/hanxianlong</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#5616957">#</a>
+	                        <span>
+	                            More Linq to SQL &amp;laquo; Jaspers&amp;#8217; Weblog
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, January 18, 2008 3:20 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://jsiegmund.wordpress.com/2008/01/18/more-linq-to-sql/">More Linq to SQL « Jaspers’ Weblog</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;More Linq to SQL &amp;laquo; Jaspers&amp;#8217; Weblog</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#5812714">#</a>
+	                        <span>
+	                            &amp;nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&amp;nbsp;by&amp;nbsp;Aneef.Net
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, February 18, 2008 3:40 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.aneef.net/2008/02/18/visual-studio-2008-c-30-linq-aspnet-35-getting-started/">&nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&nbsp;by&nbsp;Aneef.Net</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;&amp;nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&amp;nbsp;by&amp;nbsp;Aneef.Net</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#5872518">#</a>
+	                        <span>
+	                            Detailed Look: Key components in LINQ to SQL and their Key Roles
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, February 27, 2008 4:02 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://userfriendlythinking.com/blogs/corey_gaudin/archive/2008/02/26/detailed-look-key-components-in-linq-to-sql-and-their-key-roles.aspx">Corey Gaudin</a>
+                            
+	                    </div>
+	                    <p>As part of this blog, I plan to have an on-going set of articles that takes a detailed look into some</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#5988414">#</a>
+	                        <span>
+	                            Greg Hochard&amp;#8217;s Blog &amp;raquo; LINQ and ScottGu
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, March 17, 2008 12:49 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.bericotechnologies.com/greg/?p=6">Greg Hochard’s Blog » LINQ and ScottGu</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Greg Hochard&amp;#8217;s Blog &amp;raquo; LINQ and ScottGu</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#6072582">#</a>
+	                        <span>
+	                            [转自Scott]ASP.NET MVC框架(第四部分): 处理表单编辑和提交场景 
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, April 06, 2008 11:52 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.cnblogs.com/yjmyzz/archive/2008/04/07/1140133.html">菩提树下的杨过</a>
+                            
+	                    </div>
+	                    <p>英文原文地址:<a rel="nofollow" target="_new" href="http://weblogs.asp.net/scottgu/archive/2007/12/09/asp-net-mvc-framework-part-4-handling-form-">weblogs.asp.net/.../asp-net-mvc-framework-part-4-handling-form-</a>...</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#6073890">#</a>
+	                        <span>
+	                            [转自Scott]ASP.NET MVC框架(第四部分): 处理表单编辑和提交场景
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, April 08, 2008 12:37 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blog.csdn.net/yjmyzz/archive/2008/04/08/2260223.aspx">yjmyzz</a>
+                            
+	                    </div>
+	                    <p>ASP.NET MVC框架(第四部分): 处理表单编辑和提交场景</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#6365986">#</a>
+	                        <span>
+	                            ???????????????  &amp;raquo; Blog Archive   &amp;raquo; LINQ to SQL??????Part 2 - Defining our Data Model Classes
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, July 06, 2008 5:01 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.jinlei.name/?p=115">???????????????  » Blog Archive   » LINQ to SQL??????Part 2 - Defining our Data Model Classes</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;??????????????? &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; LINQ to SQL??????Part 2 - Defining our Data Model Classes</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#6829997">#</a>
+	                        <span>
+	                            ASP.NET MVC Archived Buzz, Page 1
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, January 11, 2009 1:56 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://aspdotnetmvc.com/buzz/default.aspx">ASP.NET MVC Archived Buzz, Page 1</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;ASP.NET MVC Archived Buzz, Page 1</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx#6843357">#</a>
+	                        <span>
+	                            LINQ Resources &amp;laquo; Vakul Kumar More
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, January 17, 2009 10:20 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://vakul.wordpress.com/2009/01/16/linq-resources/">LINQ Resources « Vakul Kumar More</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ Resources &amp;laquo; Vakul Kumar More</p>
+
+        	            
+	                </div>
+	            
+                    </div>
+                
+            
+            
+            
+                
+        
+        
+                </div></div>
+
+            </div>
+            <div id="contentfooter">
+                
+				    <div> <span><a href="http://www.microsoft.com/info/cpyright.mspx">Terms of Use</a></span></div>
+					
+				
+            </div>       
+        </div>
+    </div>
+    <script type="text/javascript" src="./LINQ to SQL (Part 2 - Defining our Data Model Classes) - ScottGu's Blog_files/omniture_all.js"></script>
+            <noscript>&lt;a href="http://www.omniture.com" title="Web Analytics"&gt;&lt;img
+                src="http://msstonojsaspnet.112.2O7.net/b/ss/msstonojsaspnet/1/H.20.2--NS/0"
+                height="1" width="1" border="0" alt="" /&gt;&lt;/a&gt;</noscript>
+    
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx"
+dc:identifier="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx"
+dc:title="LINQ to SQL (Part 2 - Defining our Data Model Classes)"
+trackback:ping="http://weblogs.asp.net/scottgu/trackback.ashx?PostID=2681237" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('/utility/loading.htm',['Modal'],['ModalTitle'],['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalMask'],100);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_Main_WeblogPostRating1=new PostRating('ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1_Value', 5, 'http://i1.asp.net/wan/default/images/common/', false, 'CommonRateControl','CommonRateControlActive','CommonRateControlReadOnly',['Terrible','Poor','Fair','Average','Good','Excellent'],true,true);
+// ]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+WebForm_InitCallback();//]]>
+</script>
+<script type="text/javascript">
+            // <![CDATA[
+            var ctl00_Main_WeblogPostRating1_ajax={"SaveRating":function(rating,successFunction,failureFunction){WebForm_DoCallback('ctl00$Main$WeblogPostRating1',rating,successFunction,rating,failureFunction,false)}};
+            // ]]>
+            </script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_Main_ctl06_ctl01 = new Telligent_InlineEditorPanel('ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01_State','ctl00_Main_ctl06_ctl00',false,null,null,null);
+// ]]>
+</script></form>
+
+
+</body></html>

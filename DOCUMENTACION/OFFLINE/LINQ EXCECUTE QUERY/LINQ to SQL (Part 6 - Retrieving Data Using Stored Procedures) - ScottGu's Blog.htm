@@ -1,0 +1,2365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd">
+<!-- saved from url=(0113)http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head id="ctl00_ctl00"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="description" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="keywords" content="ASP.NET, Visual Studio, ASP.NET 2.0, .NET ">
+<meta name="GENERATOR" content="CommunityServer 2007 SP1 (Build: 20510.895)">
+<link rel="pingback" href="http://weblogs.asp.net/scottgu/pingback.aspx">
+<link rel="shortcut icon" type="image/ico" href="http://weblogs.asp.net/favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rss.aspx">
+<link rel="alternate" type="application/atom+xml" title="ScottGu&#39;s Blog  (Atom 1.0)" href="http://weblogs.asp.net/scottgu/atom.aspx">
+<link rel="alternate" type="application/rss+xml" title="ScottGu&#39;s Blog  - All Comments (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx">
+<link rel="alternate" type="application/rss+xml" title="LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - Comments for this post (RSS 2.0)" href="http://weblogs.asp.net/scottgu/rsscomments.aspx?PostID=3522052">
+
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=7">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/print.css" type="text/css" media="print">
+	<link rel="stylesheet" href="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/DynamicStyle.aspx" type="text/css" media="screen">
+	<!--[if lte IE 6]>
+		<style>
+		#titleWrapper { padding: 62px 65px 14px 14px; border-bottom: solid 1px #000; border-right: solid 1px #000;}
+		</style>
+	<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://weblogs.asp.net/scottgu/rsd.ashx">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://weblogs.asp.net/scottgu/wlwmanifest.ashx">
+<title>
+	LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog.htm" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3MDQ0Njc3MDNkZGGxIdN4f8DDhPlg2TGLA9S0FlHm">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource(1).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource(2).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource(3).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource(4).axd" type="text/javascript"></script>
+<script src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/WebResource(5).axd" type="text/javascript"></script>
+    			
+
+        <div id="wrapper">
+            <div id="container">
+                <div id="header">
+		            <div id="titleWrapper">
+		            	<div id="title">
+	                        <h1><a class="headermaintitle" href="http://weblogs.asp.net/scottgu/default.aspx">ScottGu's Blog </a></h1>
+	                        <div>Scott Guthrie lives in Seattle and builds a few products for Microsoft</div>
+	                    </div>
+                    </div> 
+                </div>
+                <div id="navigation">
+        	        <div id="welcome">
+				        
+        <a href="http://weblogs.asp.net/login.aspx?ReturnUrl=%2fscottgu%2farchive%2f2007%2f08%2f16%2flinq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx">Sign in </a>
+         | <a href="http://weblogs.asp.net/user/CreateUser.aspx?ReturnUrl=">Join</a>
+     
+
+
+		        	</div>
+                	<ul>
+                		<li><a href="http://weblogs.asp.net/scottgu/default.aspx">Home</a></li>
+			            
+			            <li><a href="http://weblogs.asp.net/scottgu/about.aspx">About</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/rss.aspx">RSS</a></li>
+			            <li><a href="http://weblogs.asp.net/scottgu/atom.aspx">Atom</a></li>
+		                <li id="RssComments"><a href="http://weblogs.asp.net/scottgu/rsscomments.aspx">Comments RSS</a></li>
+			            
+                	</ul>
+                </div>
+                <div id="contentwrapper">                    
+                        
+                
+                    <div id="sidebar-a">
+                        <div id="TasksSideBar">    
+                            
+                            
+                        </div>                                
+                        <div id="SubscriptionsSideBar">
+			                    
+                        </div>
+                        <div id="SearchSideBar">
+                            <div id="Search">
+                                <h3>Search</h3>
+                                <ul>
+                                <div id="Search" align="left">
+                                            <li><input name="ctl00$SideBar$ctl02$ctl00$SearchBox" type="text" id="ctl00_SideBar_ctl02_ctl00_SearchBox" class="searchBox" button="SearchButton" onclick="if(this.defaultValue==this.value) this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;) this.value=this.defaultValue;"> <input type="submit" name="ctl00$SideBar$ctl02$ctl00$SearchButton" value="Go" id="ctl00_SideBar_ctl02_ctl00_SearchButton" class="SearchButton"></li>
+                                    </div>
+                                </ul>
+                            </div>
+                         </div>
+            		        
+                        
+                        <div id="TagSideBar">
+                                <h3>Tags</h3>
+                            <ul class="SidebarTagCloud">
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Ajax/default.aspx" rel="tag">Ajax</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Atlas/default.aspx" rel="tag">Atlas</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Azure/default.aspx" rel="tag">Azure</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Commerce+Server/default.aspx" rel="tag">Commerce Server</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Community+News/default.aspx" rel="tag">Community News</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/IIS7/default.aspx" rel="tag">IIS7</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/jQuery/default.aspx" rel="tag">jQuery</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Link+Listing/default.aspx" rel="tag">Link Listing</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/MVC/default.aspx" rel="tag">MVC</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/NuGet/default.aspx" rel="tag">NuGet</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/Security/default.aspx" rel="tag">Security</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Silverlight/default.aspx" rel="tag">Silverlight</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/SQL+Server/default.aspx" rel="tag">SQL Server</a></li>
+<li class="Tag3"><a href="http://weblogs.asp.net/scottgu/archive/tags/Talks/default.aspx" rel="tag">Talks</a></li>
+<li class="Tag2"><a href="http://weblogs.asp.net/scottgu/archive/tags/Tips+and+Tricks/default.aspx" rel="tag">Tips and Tricks</a></li>
+<li class="Tag1"><a href="http://weblogs.asp.net/scottgu/archive/tags/Visual+Studio/default.aspx" rel="tag">Visual Studio</a></li>
+<li class="Tag6"><a href="http://weblogs.asp.net/scottgu/archive/tags/Web+Forms/default.aspx" rel="tag">Web Forms</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/Windows+Phone/default.aspx" rel="tag">Windows Phone</a></li>
+<li class="Tag4"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF/default.aspx" rel="tag">WPF</a></li>
+<li class="Tag5"><a href="http://weblogs.asp.net/scottgu/archive/tags/WPF_2F00_E/default.aspx" rel="tag">WPF/E</a></li>
+</ul>
+</div>
+                        
+                        
+                        <div id="NewsSidebar">
+                                <h3>News</h3>
+                                <ul>
+                            <iframe src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/cm.htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<br><br>
+
+<iframe src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/cm(1).htm" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+                                </ul>
+                            </div>
+                                            
+                        
+                        <div id="NavSideBar"><h3>Navigation</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/">Home</a></li><li><a href="http://weblogs.asp.net/">Blogs</a></li>
+</ul></div>
+                             
+                        
+                        <div id="ArchiveSideBar"><h3>Archives</h3>
+<ul>
+<li><a href="http://weblogs.asp.net/scottgu/archive/2011/09.aspx">September 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/08.aspx">August 2011 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/06.aspx">June 2011 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/05.aspx">May 2011 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/04.aspx">April 2011 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/03.aspx">March 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/02.aspx">February 2011 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2011/01.aspx">January 2011 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/12.aspx">December 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/11.aspx">November 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/10.aspx">October 2010 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/09.aspx">September 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/08.aspx">August 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/07.aspx">July 2010 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/06.aspx">June 2010 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/05.aspx">May 2010 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/04.aspx">April 2010 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/03.aspx">March 2010 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/02.aspx">February 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2010/01.aspx">January 2010 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/12.aspx">December 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/11.aspx">November 2009 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/10.aspx">October 2009 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/09.aspx">September 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/08.aspx">August 2009 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/07.aspx">July 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/06.aspx">June 2009 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/05.aspx">May 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/04.aspx">April 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/03.aspx">March 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/02.aspx">February 2009 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2009/01.aspx">January 2009 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/12.aspx">December 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/11.aspx">November 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/10.aspx">October 2008 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/09.aspx">September 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/07.aspx">July 2008 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/06.aspx">June 2008 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/05.aspx">May 2008 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/04.aspx">April 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/03.aspx">March 2008 (6)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/02.aspx">February 2008 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2008/01.aspx">January 2008 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/12.aspx">December 2007 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/11.aspx">November 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/10.aspx">October 2007 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/09.aspx">September 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/08.aspx">August 2007 (13)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/07.aspx">July 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/06.aspx">June 2007 (10)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05.aspx">May 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/04.aspx">April 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/03.aspx">March 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/02.aspx">February 2007 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/01.aspx">January 2007 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/12.aspx">December 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/11.aspx">November 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/10.aspx">October 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/09.aspx">September 2006 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/08.aspx">August 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/07.aspx">July 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/06.aspx">June 2006 (14)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/05.aspx">May 2006 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/04.aspx">April 2006 (23)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/03.aspx">March 2006 (12)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/02.aspx">February 2006 (27)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2006/01.aspx">January 2006 (35)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/12.aspx">December 2005 (29)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/11.aspx">November 2005 (17)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/10.aspx">October 2005 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/09.aspx">September 2005 (8)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/08.aspx">August 2005 (11)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/06.aspx">June 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/05.aspx">May 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/04.aspx">April 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/03.aspx">March 2005 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/02.aspx">February 2005 (1)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2005/01.aspx">January 2005 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/11.aspx">November 2004 (9)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2004/10.aspx">October 2004 (5)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/12.aspx">December 2003 (4)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/11.aspx">November 2003 (7)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/10.aspx">October 2003 (15)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/09.aspx">September 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/05.aspx">May 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/04.aspx">April 2003 (3)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/03.aspx">March 2003 (2)</a></li><li><a href="http://weblogs.asp.net/scottgu/archive/2003/02.aspx">February 2003 (5)</a></li>
+</ul></div> 
+                        
+                        
+                        
+                                    <h3>Favorite Links</h3>
+                                    <div id="LinkSideBar">
+                                        
+<ul class="CommonSidebarList">
+<li><a href="http://www.scottgu.com/">ScottGu.com</a></li><li><a href="http://asp.net/">ASP.Net Home</a></li><li><a href="http://www.nikhilk.net/">Nikhil Kothari</a></li><li><a href="http://www.dotnetslackers.com/">DotNetSlackers</a></li><li><a href="http://www.aspalliance.com/">ASPAlliance</a></li><li><a href="http://blog.joycode.com/scottgu/">My Blog in Chinese</a></li><li><a href="http://weblogs.asp.net/scottgufrench/default.aspx">My Blog in French</a></li><li><a href="http://thinkingindotnet.wordpress.com/category/scott-guthrie/">My Blog in Spanish</a></li><li><a href="http://weblogs.asp.net/scottguportuguese/">My Blog in Portuguese</a></li>
+</ul>
+                                    </div>
+                            
+                    </div>
+                
+
+                <div id="content"><div id="content2">
+	                
+    <h2 class="pageTitle">
+       LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)               
+    </h2>
+    <div class="post">
+        <div class="postsub">
+            <font face="arial" size="2"> <p>Over the last few weeks I've been writing a series of blog posts that cover LINQ to SQL.&nbsp; LINQ to SQL is a built-in O/RM (object relational mapper) that ships in the .NET Framework 3.5 release, and which enables you to model relational databases using .NET classes.&nbsp; You can use LINQ expressions to query the database with them, as well as update/insert/delete data. </p><p>Below are the first five parts of my LINQ to SQL series: </p><ul> <li><a href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx" target="_blank">Part 1: Introduction to LINQ to SQL</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx" target="_blank">Part 2: Defining our Data Model Classes</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx" target="_blank">Part 3: Querying our Database</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/07/11/linq-to-sql-part-4-updating-our-database.aspx" target="_blank">Part 4: Updating our Database</a>  </li><li><a href="http://weblogs.asp.net/scottgu/archive/2007/07/16/linq-to-sql-part-5-binding-ui-using-the-asp-linqdatasource-control.aspx" target="_blank">Part 5: Binding UI using the ASP:LinqDataSource Control</a></li></ul> <p>In these previous LINQ to SQL blog posts I demonstrated how you could use LINQ query expressions to programmatically retrieve data from a database. </p><p>In today's blog post I'll cover how you can also use database stored procedures (SPROCs) and user defined functions (UDFs) with your LINQ to SQL data model.&nbsp; Today's blog post will specifically cover how to call SPROCs to query and retrieve data from the database.&nbsp; In my next blog post in this series I'll then show how you can optionally also use SPROCs to update/insert/delete data from the database. </p><h3><u>To SPROC or not to SPROC?&nbsp; That is the question....</u></h3> <p>The question of whether to use Dynamic SQL generated by an ORM or instead use Stored Procedures when building a data layer is a topic that generates endless (very passionate) debate amongst developers, architects and DBAs.&nbsp; A lot of people much smarter than me have written on this topic, so I won't rehash the arguments for and against each side here. </p><p>The LINQ to SQL ORM that ships in .NET 3.5 is pretty flexible, and can be used to create data model classes whose object model can be independent of the underlying database schema, and which can <a href="http://weblogs.asp.net/scottgu/archive/2007/07/11/linq-to-sql-part-4-updating-our-database.aspx" target="_blank">encapsulate business logic and validation rules</a> that work regardless of whether the data model is populated/persisted via dynamic SQL or via SPROCs. </p><p>In my <a href="http://weblogs.asp.net/scottgu/archive/2007/06/29/linq-to-sql-part-3-querying-our-database.aspx" target="_blank">LINQ to SQL Part 3: Querying our Database</a> post I discussed how you can write LINQ query expressions against&nbsp;a LINQ to SQL data model using code like below: </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step30.jpg">  </p><p>When you write LINQ query expressions like this the LINQ to SQL ORM will execute the necessary dynamic SQL for you to retrieve Product objects that matches your query. </p><p>As you'll learn in this post, you can also optionally&nbsp;map SPROCs in the database to your LINQ to SQL DataContext class, which allows you to alternatively retrieve the same Product objects by calling a stored procedure instead: </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step31.jpg">&nbsp; </p><p>This ability to use both dynamic SQL and SPROCs with a clean data model layer is pretty powerful, and provides a great deal of flexibility when working on projects. </p><h3><u>The Steps to Map and Call a SPROC using LINQ to SQL</u></h3> <p>In my&nbsp;<a href="http://weblogs.asp.net/scottgu/archive/2007/05/29/linq-to-sql-part-2-defining-our-data-model-classes.aspx" target="_blank">Part 2: Defining our Data Model Classes</a>&nbsp;tutorial I discussed how to use the LINQ to SQL ORM designer to create a LINQ to SQL class model like below:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step1.jpg">  </p><p>Notice above how there are two panes on the LINQ to SQL ORM&nbsp;designer surface.&nbsp; The left pane enables us to define data model classes that map to our database.&nbsp; The right method pane allows us to optionally map SPROCs (and UDFs) to our LINQ to SQL DataContext object, which we can then use in-place of dynamic SQL to populate the data model objects.  </p><p><u><strong>How to Map a SPROC to a LINQ to SQL DataContext</strong></u>  </p><p>To map SPROCs to our DataContext class, let's first go to&nbsp;the&nbsp;VS 2008&nbsp;Server Explorer window and look at the SPROCs within&nbsp;our database:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step2.jpg">  </p><p>We can double click any of the SPROCs above to open and edit them.&nbsp; For example, below is the "CustOrderHist" SPROC in Northwind:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step3.jpg">  </p><p>To map the above SPROC to our LINQ to SQL DataContext, we can drag/drop&nbsp;it&nbsp;from the Server Explorer onto our LINQ to SQL ORM designer.&nbsp; This will automatically create a new method on our LINQ to SQL DataContext class like below:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step4.jpg">  </p><p>By default the method name created on the DataContext class will be the same as the SPROC name, and the return type of the method&nbsp;will be&nbsp;an automatically created type that follows the "[SprocName]Result" naming pattern. For example: the SPROC above would return a sequence of "CustOrderHistResult" objects.&nbsp; We could optionally change the name of the method by selecting it in the designer and then use the property grid to rename it.  </p><p><u><strong>How to Call our Newly Mapped SPROC</strong></u>  </p><p>Once we've done the steps above to map a SPROC onto our DataContext class, it is easy&nbsp;to use it to programmatically retrieve data.&nbsp; All we need to-do is call the new method we mapped on our&nbsp;DataContext class to get back a sequence of strongly typed results from the SPROC:  </p><p><u>Calling the SPROC in VB:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step7.jpg">  </p><p><u>Calling the Sproc in C#:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step6.jpg">  </p><p>In addition to programming looping over the result like in the code samples above, I could also obviously bind the results to any UI control to display them.&nbsp; For example, the below code databinds the result of our SPROC to a &lt;asp:gridview&gt; control:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step8.jpg">  </p><p>Which then displays the product history of our customer on a page like so:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step9.jpg">  </p><h3><u>Mapping the Return Type of SPROC Methods to Data Model Classes</u></h3> <p>In the "CustOrderHist" SPROC example above the stored procedure returned a sequence of product history results containing two columns of data:&nbsp;the&nbsp;ProductName of the product, and the Total Number of orders the customer has made for that product.&nbsp; The LINQ to SQL designer automatically defined a new "CustOrderHistResult" class to represent this result.  </p><p>We could alternatively choose to have the return result of a SPROC map to an existing data model class we have already defined in the LINQ to SQL designer (for example: an existing Product or Order entity class).&nbsp;  </p><p>For example, assume we have a "GetProductsByCategory" SPROC in our database that returns product information like so:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step10.jpg">  </p><p>Like before we&nbsp;can&nbsp;create a&nbsp;"GetProductsByCategory" method on our DataContext that calls this SPROC by dragging it onto our LINQ to SQL designer.&nbsp; Rather than just dropping the SPROC anywhere on the designer, though, we'll instead drop the SPROC on top of the existing&nbsp;"Product" class in our data model designer:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step11.jpg">  </p><p>This gesture of dropping the SPROC <em>onto</em> the Product class tells the LINQ to SQL designer to have the "GetProductsByCategory" method return a sequence of "Product" objects as a return result:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step12.jpg">&nbsp;  </p><p>One of the cool things about&nbsp;having our SPROC return "Product" objects like above is that LINQ to SQL will automatically track the changes made to the returned Product objects just like it would Product objects returned via&nbsp;LINQ queries.&nbsp; When we call the "SubmitChanges()" method on our DataContext, the changes we have made to these objects will automatically be saved back to the database.  </p><p>For example, we could write the code below to retrieve&nbsp;(using a SPROC)&nbsp;and change the price of all products within a specific Category to be 90% of their current value:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step13.jpg">  </p><p>When we call SubmitChanges() at the end it will transactionally update all of the product prices.&nbsp; To understand more about how change tracking and the SubmitChanges() method work, as well as about how Validation Business Logic can be added to data model entities, please read&nbsp;my <a href="http://weblogs.asp.net/scottgu/archive/2007/07/11/linq-to-sql-part-4-updating-our-database.aspx" target="_blank">LINQ to SQL Part 4: Updating our Database</a>&nbsp;tutorial.&nbsp;  </p><p>In my next blog post in this LINQ to SQL series I'll also cover how you can replace the dynamic insert/update/delete SQL generated by the ORM with custom SPROCs that handle the database updates instead.&nbsp; The nice thing is that the code above wouldn't change at all if I configured my DataContext to use SPROCs for updates - it would purely be a mapping layer change and the code written against my data model would be oblivious to it.&nbsp;  </p><h3><u>Handling SPROC Output Parameters</u> </h3> <p>LINQ to SQL maps "out" parameters in SPROCs&nbsp;as reference parameters (ref keyword), and for value types declares the parameter as nullable.  </p><p>For example, consider the below "GetCustomerDetails" SPROC which takes a CustomerID as an input parameter, and&nbsp;which&nbsp;returns&nbsp;the company name as an output parameter in addition to its order history as a query result:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step16.jpg">  </p><p>If we drag the above SPROC onto our "Order" class in the LINQ to SQL designer, we could then write the below code to call it:  </p><p><u>VB</u>:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step17.jpg">  </p><p><u>C#:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step15.jpg">  </p><p>Notice in the code above how the SPROC helper method returns back a sequence of Order objects - but also then returns the CompanyName as an output parameter to the helper method.  </p><h3><u>Handling Multiple Result Shapes&nbsp;from SPROCs</u></h3> <p>When a stored procedure can return multiple result shapes, the return type of the SPROC method on the DataContext cannot be strongly typed to a single class shape.&nbsp; For example, consider the SPROC below which returns either a product result or an order result depending on the&nbsp;input parameter:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step18.jpg">  </p><p>LINQ to SQL supports the ability to create SPROC helper methods that can return either a Product or Order shape by adding a partial "NorthwindDataContext" class to the project that defines a&nbsp;method (which in this case we'll call "VariablesShapeSample") that invokes the SPROC and returns an IMultipleResult object like so:  </p><p><u>VB:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step21.jpg">  </p><p><u>C#:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step22.jpg">  </p><p>Once this method is added into our project we can then call it and convert the result to be either a Product or Order sequence when we are using it:  </p><p><u>VB:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step23.jpg">  </p><p><u>C#:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step24.jpg">  </p><h3><u>Supporting User Defined Functions (UDFs)</u></h3> <p>In addition to SPROCS, LINQ to SQL also supports both scalar-valued and table-valued user defined&nbsp;functions (UDFs), as well as the in-line counterpart to both.&nbsp; Once added to your DataContext as a method, you can use these UDF functions within your LINQ queries.  </p><p>For example, consider a simple scalar user defined function called "MyUpperFunction":  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step25.jpg">  </p><p>We can drag/drop it from the Visual Studio Server Explorer onto our LINQ to SQL Designer to add it as a method on our DataContext:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step26.jpg">  </p><p>We can then use&nbsp;this UDF&nbsp;function&nbsp;inline&nbsp;within our LINQ expressions when writing queries against our LINQ to SQL data model (notice it is being used within the "where" clause below):  </p><p><u>VB:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step27.jpg">  </p><p><u>C#:</u>  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step28.jpg">  </p><p>If you use the <a href="http://weblogs.asp.net/scottgu/archive/2007/07/31/linq-to-sql-debug-visualizer.aspx" target="_blank">LINQ to SQL Debug Visualizer</a> that I blogged about <a href="http://weblogs.asp.net/scottgu/archive/2007/07/31/linq-to-sql-debug-visualizer.aspx" target="_blank">here</a>, you can see how LINQ to SQL transforms the above expression queries into raw SQL that execute the UDF inside the database&nbsp;at runtime:  </p><p><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/step29.jpg">  </p><h3><u>Summary</u></h3> <p>LINQ to SQL supports the ability to call Stored Procedures and UDFs within the database and nicely integrate them into our data model.&nbsp; In this blog post I demonstrated how you can use SPROCs to easily retrieve data and populate our data model classes.&nbsp; In my next blog post in this series I'll cover how you can also use SPROCs to override the update/insert/delete logic when you SubmitChanges() on your DataContext to persist back to the database.  </p><p>Hope this helps,  </p><p>Scott</p></font>
+            
+            <div class="postfoot">
+                
+                Published
+                Thursday, August 16, 2007 2:16 AM
+			    by
+			    <a href="http://weblogs.asp.net/members/ScottGu.aspx">ScottGu</a>
+                <span id="ctl00_Main_WeblogPostRating1" title="Rated Excellent [5 out of 5]." class="CommonRateControlReadOnly"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-left-on.gif" align="absmiddle" border="0"><img src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/star-right-on.gif" align="absmiddle" border="0"></span><input type="hidden" value="5" id="ctl00_Main_WeblogPostRating1_Value">
+                <div class="em"><span id="ctl00_Main_ctl06_ctl01">Filed under: <a href="http://weblogs.asp.net/scottgu/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/.NET/default.aspx" rel="tag">.NET</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/Data/default.aspx" rel="tag">Data</a>, <a href="http://weblogs.asp.net/scottgu/archive/tags/SQL+Server/default.aspx" rel="tag">SQL Server</a></span><input type="hidden" name="ctl00$Main$ctl06$ctl01" id="ctl00_Main_ctl06_ctl01_State" value="value:Filed%20under%3A%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FASP.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3EASP.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2F.NET%2Fdefault.aspx%22%20rel%3D%22tag%22%3E.NET%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FLINQ%2Fdefault.aspx%22%20rel%3D%22tag%22%3ELINQ%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FData%2Fdefault.aspx%22%20rel%3D%22tag%22%3EData%3C%2Fa%3E%2C%20%3Ca%20href%3D%22%2Fscottgu%2Farchive%2Ftags%2FSQL%2BServer%2Fdefault.aspx%22%20rel%3D%22tag%22%3ESQL%20Server%3C%2Fa%3E"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+                    
+                    <h3 class="pageTitle">Comments</h3>
+                    <div id="comments">
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3522295">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:50 AM
+                            by
+                            <a title="Ibrahim Mohammed" rel="nofollow" href="http://ibrahimmohammed.blogspot.com/">Ibrahim Mohammed</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Great demonstration! We are deploying an online pharmacist information management system in Nigeria and I'm the solution architect on the program, which we will start deploying by January 2008 and we are going to use .NET 3.5,VB 9.0,C# 3.0,ASP.NET 3.5,SQL Server 2008 and it will feature most of LINQ technologies, We will launch the site when VS 2008 will be shipped in february 2008 unless if it is changed. All the demonstrations we've learnt from you, Anders, Luca Bolognese and the rest will be leveraged. Thanks for supporting .NET world.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3522325">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:59 AM
+                            by
+                            Josh
+                            
+	                    </div>
+	                    <p>How will the Enterprise Library be used with LINQ to SQL? Or does this new technology remove that layer of abstraction?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3522338">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 6:05 AM
+                            by
+                            <a title="webabcd" rel="nofollow" href="http://webabcd.cnblogs.com/">webabcd</a>
+                            
+	                    </div>
+	                    <p>great!</p>
+<p>great!</p>
+<p>great!</p>
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3522479">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 6:38 AM
+                            by
+                            <a title="SirMike" rel="nofollow" href="http://www.sirmike.org/">SirMike</a>
+                            
+	                    </div>
+	                    <p>This looks pretty nice but I have some problems with SPROCs.</p>
+<p>Let's say that we have some optional parameters with default values different than NULL. Linq generated methods pass NULL's that override default values, so the procedure doesn't work correctly.</p>
+<p>Second problem is that mappings are bad when columns in a SPROC's select are written as [Field] (with square brackets)</p>
+<p>The third problem I encountered is that when a procedure has a return value different than zero. In this case Linq takes this return value as recordset.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3522836">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 7:31 AM
+                            by
+                            <a title="paints" rel="nofollow" href="http://www.paintshow.cn/">paints</a>
+                            
+	                    </div>
+	                    <p>Hi,Scott</p>
+<p>My WPF Application program(builded by vs2008 beta1) can run at other vista machine with .net framework3.0 before,</p>
+<p>when I installed vs2008 beta2,the .Net framework 3.0 has updated to Service pack 1,</p>
+<p>then I rebuilded my program by vs2008 beta2 target to .net framework3.0 too,Now the program cann't run at the vista machine with .net framework3.0 , &nbsp;What can i do to update .Net Framework3.0 to sp1 in other machine? or must i install the .net framework3.5?</p>
+<p>thanks</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3523151">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 8:14 AM
+                            by
+                            <a title="Jan Bannister" rel="nofollow" href="http://londoncoder.wordpress.com/">Jan Bannister</a>
+                            
+	                    </div>
+	                    <p>Can LINQ for SQL return/handle multiple tables? So if a SPROC returns 2 tables how would iterate across them both?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3523244">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 8:30 AM
+                            by
+                            Dave Davis
+                            
+	                    </div>
+	                    <p>Scott, </p>
+<p>Is there a way to generate the database schema from objects using code? Most demos that I have seen create the context class from databases that already exist. </p>
+<p>NHibernate allows you to create the objects and xml mapping files before creating the database. &nbsp;Once you are happy with your object structure you can call NHibernate.Tool.hbm2ddl to create the database. &nbsp;This creates all the tables with the appropriate relationships.</p>
+<p>If there is no such functionality are there plans to implement it.</p>
+<p>Thanks </p>
+<p>Dave</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3523440">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 8:54 AM
+                            by
+                            Hakan
+                            
+	                    </div>
+	                    <p>Brilliant, looks like many 3rd party ORM mappers will be obsolete with Linq. </p>
+<p>Im wondering if Linq can support dynamic sql where the 'where' clause is build using multiple optional filters like so inside a stored procedure,</p>
+<p>if filter1 exists @sql_where = @sql_where + '.....'</p>
+<p>if filter2 exists @sql_where = @sql_where + '.....'</p>
+<p>and so on</p>
+<p>Basically I am hoping there is a way to build a conditional/nested linq statement</p>
+<p>Maybe you can shed some light on this, </p>
+<p>Article is very well written and easy to understand as usual, great job</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3523713">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 9:53 AM
+                            by
+                            Roger
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>This was the tutorial I've been waiting for! I'm really glad to see support for out variables and multiple result shapes.</p>
+<p>Unfortunately for me I lie on the "procs only" side of the debate, as I've never worked with a DBA who would allow ad-hoc SQL queries.</p>
+<p>So, I'm wondering if there is a way to use the object-mapping and stored proc features of LINQ, but to turn off the ability to run ad-hoc SQL?</p>
+<p>I've been investigating this since the last beta but haven't found a way. I also haven't seen any way to specify a default select command, in the same way you can specify default update/insert/delete statements.</p>
+<p>I also remember hearing some talk of a difference between "Linq to SQL" and "Link to entities", with someone saying that linq to entities would allow for more advanced scenarios, like possibly creating a stored-proc-only query model. Do you know if these technologies are now one in the same?</p>
+<p>Thanks,</p>
+<p>Roger</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524166">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:40 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Josh,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; How will the Enterprise Library be used with LINQ to SQL? Or does this new technology remove that layer of abstraction?</p>
+<p>I'm pretty sure there will be an update of the Enterprise Library to take advantage of all the new .NET 3.5 features (including new ones like LINQ). &nbsp;I don't know the exact ETA for it - but I believe the PAG team is working on this now.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524172">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:41 AM
+                            by
+                            <a title="Ryan Ternier" rel="nofollow" href="http://www.bicnet.org/">Ryan Ternier</a>
+                            
+	                    </div>
+	                    <p>Scott, all these things look amazing, I have a question though.</p>
+<p>Performance wise you really don't gain anything by using LINQ (website -&gt; DB), as compared with writing efficient SQL and a DataAccess &nbsp;code.</p>
+<p>What do you say are the biggest benefits of LINQ? Basically, why do you think people should/would choose to use LINQ, and what business/performance/product gains are received when moving to LINQ?</p>
+<p>Thanks.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524174">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:41 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi SirMike,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Let's say that we have some optional parameters with default values different than NULL. Linq generated methods pass NULL's that override default values, so the procedure doesn't work correctly. &nbsp;Second problem is that mappings are bad when columns in a SPROC's select are written as [Field] (with square brackets). &nbsp;The third problem I encountered is that when a procedure has a return value different than zero. In this case Linq takes this return value as recordset.</p>
+<p>Can you send me email with a description of these issues? &nbsp;I can then loop you in with the LINQ to SQL team to have them investigate.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524180">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:42 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi paints,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; then I rebuilded my program by vs2008 beta2 target to .net framework3.0 too,Now the program cann't run at the vista machine with .net framework3.0 , &nbsp;What can i do to update .Net Framework3.0 to sp1 in other machine? or must i install the .net framework3.5?</p>
+<p>Can you provide more details about your WPF application to me in email (scottgu@microsoft.com). &nbsp;I can then have someone investigate why you are seeing a multi-targeting issue.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524192">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:44 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Jan Bannister,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Can LINQ for SQL return/handle multiple tables? So if a SPROC returns 2 tables how would iterate across them both?</p>
+<p>Yes - LINQ to SQL can support this as well. &nbsp;Basically you'd use the same approach that I demonstrated with the IMultipleResult sample above. &nbsp;If your SPROC returned two results sequentially then you'd just call GetResult&lt;T&gt; twice in order to retrieve the sequences.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524206">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:47 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Dave,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Is there a way to generate the database schema from objects using code? Most demos that I have seen create the context class from databases that already exist. &nbsp;NHibernate allows you to create the objects and xml mapping files before creating the database. &nbsp;Once you are happy with your object structure you can call NHibernate.Tool.hbm2ddl to create the database. &nbsp;This creates all the tables with the appropriate relationships.</p>
+<p>Yes - the option to create schema based on the object model (as opposed to creating the object model based on the schema) is also supported with LINQ to SQL. &nbsp;The DataContext class has a "CreateDatabase()" method that you can programmatically call to create the database schema for an application based on your LINQ to SQL object model. &nbsp;Just set the connection-string of the DataContext to point to your database, call CreateDatabase() and you should be set.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524235">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:52 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Hakan,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Im wondering if Linq can support dynamic sql where the 'where' clause is build using multiple optional filters like so inside a stored procedure,</p>
+<p>if filter1 exists @sql_where = @sql_where + '.....'</p>
+<p>if filter2 exists @sql_where = @sql_where + '.....'</p>
+<p>and so on. &nbsp;Basically I am hoping there is a way to build a conditional/nested linq statement. &nbsp;Maybe you can shed some light on this, Article is very well written and easy to understand as usual, great job</p>
+<p>I don't believe LINQ to SQL can directly call SPROCs that dynamically build SQL on the fly - except maybe by calling the low-level ExecuteCommand() method that the DataContext exposes that allows you to override the SQL executed.</p>
+<p>You can, though, definitely handle dynamic query scenarios using dynamic SQL using LINQ query expressions you write (which might be what you are asking for above). &nbsp;I have it on my list of things to cover in a blog post in the future.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524259">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 10:56 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Roger,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; So, I'm wondering if there is a way to use the object-mapping and stored proc features of LINQ, but to turn off the ability to run ad-hoc SQL? &nbsp;I've been investigating this since the last beta but haven't found a way. I also haven't seen any way to specify a default select command, in the same way you can specify default update/insert/delete statements.</p>
+<p>Starting in Beta2 there is a feature that allows you to specify a LoadXYZ method on your DataContext that can allow you to specify the default query support for a select command on an entity. &nbsp;You can also add these method onto your individual entities so that you can substitute SPROCs for cases where you traverse an association via code (for example: by calling Product.Category.CategoryName). &nbsp;</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; I also remember hearing some talk of a difference between "Linq to SQL" and "Link to entities", with someone saying that linq to entities would allow for more advanced scenarios, like possibly creating a stored-proc-only query model. Do you know if these technologies are now one in the same?</p>
+<p>LINQ to SQL and LINQ to Entities are still two different ORM implementations, but will share a common LINQ query syntax. &nbsp;I'm likely going to create a similar LINQ to Entities blog series like this one in a few months once LINQ to Entities is a little further along. &nbsp;I actually haven't played yet with its SPROC support - so am not 100% sure how their SPROC only mode works.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524328">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 11:10 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Ryan,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; What do you say are the biggest benefits of LINQ? Basically, why do you think people should/would choose to use LINQ, and what business/performance/product gains are received when moving to LINQ?</p>
+<p>I think the biggest benefit of LINQ to SQL is that it provides a good way to cleanly structure your data model in an object oriented way. &nbsp;The ability to define data model classes that can be independent of the underlying database schema gives you much more agility as you build your application (since you can change the underlying column names without having to update your code). &nbsp;And the ability to cleanly integrate model-level validation and business logic rules helps avoid you writing duplicate logic in multiple places.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524511">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 11:25 AM
+                            by
+                            Howard
+                            
+	                    </div>
+	                    <p>Just like to say I had been waiting for LINQ to SQL quite eagerly since DLINQ previews last year, but now it's here I'm not sure about it.</p>
+<p>It makes for great demos where all the SQL is hidden away and all that. I looked into how I could add application level security into the datacontext - so that the datacontext knows how to restrict queries based on the user. For example i want to restrict the current user on northwind to customerID='ALFKI' (and related tables, e.g. orders), and if that user tried to modify a url e.g. CustomerID=AROUT he'd get no data.</p>
+<p>The upshot of discussion on MSDN forums is that there is no extensibility to the datacontext class that might be usable in this way. So the conclusion I am reaching with Beta2 is that LINQ to SQL is a nice feature for your excellent demos Scott, but unusable for a serious application.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524720">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 11:49 AM
+                            by
+                            <a title="Quoo" href="http://weblogs.asp.net/user/Profile.aspx?UserID=4791">Quoo</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>These posts are awesome, that you so much for the time and effort you put into this stuff; it makes picking things up at a trot so much easier. </p>
+<p>I was wondering if you had thought of providing selections of your blogs as PDF docs for download, so that we could have, for example, this LINQ series of posts all together in one place in chronological order. </p>
+<p>Just a thought, I will most probably be using something like Loop (<a rel="nofollow" target="_new" href="http://www.drawloop.com/Loop.aspx">www.drawloop.com/Loop.aspx</a>) to do it anyway :P</p>
+<p>ROCK ON </p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3524762">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 11:55 AM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Hi Scott;</p>
+<p>I understand this thread is about SProcs, but I have questions unrelated to SProcs (if you don't mind).</p>
+<p>I'm diving into Linq docs and learning stuff as we go along and have a few questions:</p>
+<p>a) As a DataContext (DC)become a container for my tables, will there be any event handling in the designer to handle events (i.e. OnNewRecord, OnUpdateRecord, BeforeDeleteRecord) that relate to each tables in the DC?</p>
+<p>b) When it comes to performance and connection time, does it matter the how many tables exist in a DC? </p>
+<p>c) Is it better to have less DCs with more tables in them or is it better to have more DCs with less tables in them?</p>
+<p>Thanks!</p>
+<p>..Ben</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3525005">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 12:23 PM
+                            by
+                            <a title="Koistya `Navin" rel="nofollow" href="http://navin.biz/">Koistya `Navin</a>
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>Tell me please, is there a way to use SqlDependency with SPROCs &amp; LINQ scenarios?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3525139">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 12:43 PM
+                            by
+                            <a title="Vikram" rel="nofollow" href="http://www.vikramlakhotia.com/">Vikram</a>
+                            
+	                    </div>
+	                    <p>I am really enjoying the series on the LINQ. :)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3526704">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 2:35 PM
+                            by
+                            Martin Robins
+                            
+	                    </div>
+	                    <p>Slightly off topic (although still LINQ to SQL related); is there a way to use LINQ to retrieve hierarchical data?</p>
+<p>For example, if I have a table that references back to itself through multiple levels (such as would normally be displayed in a treeview), how could I retrieve this using a LINQ query that would get to all levels?</p>
+<p>I am guessing that the answer would lie in datashaping; I can do it using a recursive query in SQL2005, but alas I have no idea where to start on this one within LINQ!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3526901">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 2:54 PM
+                            by
+                            Chris Moseley
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Great post again, I'm really inpressed by the SPROC support in Linq to Sql</p>
+<p>I'm looking forward to your posts on Linq To Entities, especially to find out what the actual differences are between the two ORMs. Linq To Sql seems to have grown up a lot since it's original conception. I'm wondering if Linq To Entities will have anything more to offer (other than not being MS Sql only).</p>
+<p>Chris.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528015">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:11 PM
+                            by
+                            <a title="Danny Tuppeny" rel="nofollow" href="http://blog.dantup.me.uk/">Danny Tuppeny</a>
+                            
+	                    </div>
+	                    <p>I have the same question as Martin Robins. In SQL 2005 we had support for a kind of hierarchical query. Is there somethign in Link that'll let us pull out a whole tree efficiently? eg. without selecting every record and without running a query for every row to get its children, but result in a tree?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528135">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:24 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Quoo,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; I was wondering if you had thought of providing selections of your blogs as PDF docs for download, so that we could have, for example, this LINQ series of posts all together in one place in chronological order. </p>
+<p>I've actually been thinking about doing something like this. &nbsp;After I make more progress over the next few weeks with a few more posts I'll look into enabling this.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528149">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:28 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Ben,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a) As a DataContext (DC)become a container for my tables, will there be any event handling in the designer to handle events (i.e. OnNewRecord, OnUpdateRecord, BeforeDeleteRecord) that relate to each tables in the DC?</p>
+<p>I'd recommend looking at my part 4 segment on updating. &nbsp;It shows how to handle a bunch of partial methods that enable events both before and after a column is updated, and before additions/edits/deletes are made.</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; b) When it comes to performance and connection time, does it matter the how many tables exist in a DC? </p>
+<p>I don't think the number of tables makes any difference from a performance perspective.</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; c) Is it better to have less DCs with more tables in them or is it better to have more DCs with less tables in them?</p>
+<p>I think you want to group tables based on whether they are related - that is the high order bit to optimize for. &nbsp;If you have a single database with tables that have associations between them, you probably want a single DC. &nbsp;If you have multiple databases then you'd want multiple DataContexts.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528160">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:33 PM
+                            by
+                            <a title="Arnaud Weil" rel="nofollow" href="http://dreamdotnet.blogspot.com/">Arnaud Weil</a>
+                            
+	                    </div>
+	                    <p>A great explanation!</p>
+<p>Looking forward to seeing how the data modification statements (update/delete/insert) are handled with LINQ!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528165">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:34 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Koistya,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; Tell me please, is there a way to use SqlDependency with SPROCs &amp; LINQ scenarios?</p>
+<p>I need to investigate this more in the weeks ahead and figure out how to enable this.</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3528180">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 5:37 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Martin,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; For example, if I have a table that references back to itself through multiple levels (such as would normally be displayed in a treeview), how could I retrieve this using a LINQ query that would get to all levels?</p>
+<p>You can have entities that have relationships with themselves (for example: Employee that references its manager and reports). &nbsp;One of the things I need to put together a sample of is one that shows how best to retrieve this hiearchical data (without doing a separate query for each employee).</p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3529005">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 7:47 PM
+                            by
+                            <a title="Roger Jennings" rel="nofollow" href="http://oakleafblog.blogspot.com/">Roger Jennings</a>
+                            
+	                    </div>
+	                    <p>Hi, Scott,</p>
+<p>Great post (as usual). I'm running into a wall trying to substitute stored procedures for dynamic T-SQL in a DataContext that serves as the data source for a LinqDataSource control, which would enable editing of a bound GridView or DetailsView. ISingleResult&lt;EntityClass&gt; implements IEnumerable&lt;EntityClass&gt; but not Table&lt;EntityClass&gt;, which is required for the EntityClass to be visible in the Data Source Wizard's second dialog. Is there a solution (other than moving to the ObjectDataSource) that isn't a hack?</p>
+<p>See the bottom of <a rel="nofollow" target="_new" href="http://oakleafblog.blogspot.com/2007/08/linq-updates-for-8152007.html">oakleafblog.blogspot.com/.../linq-updates-for-8152007.html</a> for more detail.</p>
+<p>Thanks in advance,</p>
+<p>--rj</p>
+<p>--rj</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3529079">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 7:58 PM
+                            by
+                            Ben Hayat
+                            
+	                    </div>
+	                    <p>Scott;</p>
+<p>Your blogs and answering questions, is the best I've seen so far. Your blogs are like drug, You get hooked on it. Can't wait to see the same thing with Silverlight.</p>
+<p>Thank you very much for your efforts!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3529134">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 8:08 PM
+                            by
+                            Moosdau
+                            
+	                    </div>
+	                    <p>Hi Scott:</p>
+<p>I have a problem :</p>
+<p>e.g.:</p>
+<p>var res=db.Tables.Single(p=&gt;p.columnName==0);</p>
+<p>if the record match the query condition exist, it works well, but if the record doesn't exist, it will throw an exception, but when I query something, I don't know if the record exist, and I don't think exception is a resonable way.</p>
+<p>so how to know whether the record exist or not? </p>
+<p>Thanks!!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3529366">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 8:29 PM
+                            by
+                            <a title="Steven Nagy" rel="nofollow" href="http://blog.snagy.name/">Steven Nagy</a>
+                            
+	                    </div>
+	                    <p>Hi Scott, you may have been asked this before, but can you use LINQ with Cubes, and if so, what kinds of things can you do? Can you replace MDX? (maybe there should be a CLINQ?)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3529989">#</a>
+	                        <span>
+	                            LinqToSql: Ranch Dressing for your Database Pizza &amp;laquo; Super Whammadyne
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, August 16, 2007 9:48 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://spook.wekeroad.com/2007/08/17/linqtosql-ranch-dressing-for-your-database-pizza/">LinqToSql: Ranch Dressing for your Database Pizza « Super Whammadyne</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LinqToSql: Ranch Dressing for your Database Pizza &amp;laquo; Super Whammadyne</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3530998">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 1:10 AM
+                            by
+                            How I can get StoreProcedure's ReturnValue?
+                            
+	                    </div>
+	                    <p>How I can get StoreProcedure's ReturnValue?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531079">#</a>
+	                        <span>
+	                            Izindaba #5
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 1:28 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://dotnet.org.za/cjlotz/archive/2007/08/17/izindaba-5.aspx">From the software development trenches</a>
+                            
+	                    </div>
+	                    <p>Time for another weekly roundup of news that focuses on .NET and general development related content</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531308">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:05 AM
+                            by
+                            <a title="Majid Shahabfar" rel="nofollow" href="http://www.persiadevelopers.com/">Majid Shahabfar</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Is there any benchmark which has compared the performance of using LINQ queries expressions and LINQ SPROC?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531315">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:05 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Roger,</p>
+<p>&gt;&gt;&gt;&gt;&gt; Great post (as usual). I'm running into a wall trying to substitute stored procedures for dynamic T-SQL in a DataContext that serves as the data source for a LinqDataSource control, which would enable editing of a bound GridView or DetailsView. ISingleResult&lt;EntityClass&gt; implements IEnumerable&lt;EntityClass&gt; but not Table&lt;EntityClass&gt;, which is required for the EntityClass to be visible in the Data Source Wizard's second dialog. Is there a solution (other than moving to the ObjectDataSource) that isn't a hack?</p>
+<p>Any chance you could send me an email (scottgu@microsoft.com) with a quick sample that demonstrates what you are trying to-do here? &nbsp;If the object you are trying to edit is a Table on the DataContext, then I think you can handle this scenario by handling the Selecting event on the LinqDataSource. &nbsp;Alternatively, the cleanest way might be to use the ObjecytDataSource.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531324">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:07 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Moosdau,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; var res=db.Products.Single(p=&gt;p.columnName==0);</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; if the record match the query condition exist, it works well, but if the record doesn't exist, it will throw an exception, but when I query something, I don't know if the record exist, and I don't think exception is a resonable way. so how to know whether the record exist or not? </p>
+<p>You can handle this by using the "FirstOrDefault" operator instead of Single:</p>
+<p> &nbsp; &nbsp;var res=db.Products.FirstOrDefault(p=&gt;p.columnName==0);</p>
+<p>If no product matches the query then it will return null. &nbsp;You can then check for this to detect whether the record exists or not.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531329">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:09 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Majid,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; Hi Scott, Is there any benchmark which has compared the performance of using LINQ queries expressions and LINQ SPROC? </p>
+<p>I haven't seen a specific benchmark on this yet. &nbsp;Rico has a good series on LINQ to SQL performance, though, that you might want to check out here: <a rel="nofollow" target="_new" href="http://blogs.msdn.com/ricom/archive/2007/07/16/dlinq-linq-to-sql-performance-part-5.aspx">blogs.msdn.com/.../dlinq-linq-to-sql-performance-part-5.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531351">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:12 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>&gt;&gt;&gt;&gt;&gt;&gt; How I can get StoreProcedure's ReturnValue? </p>
+<p>If you have a SPROC like this:</p>
+<p> &nbsp; CREATE PROCEDURE GetCustomerOrderCount(@CustomerID nchar(5))</p>
+<p> &nbsp; AS</p>
+<p> &nbsp; Declare @count int</p>
+<p> &nbsp; SELECT @count = COUNT(*) FROM ORDERS WHERE CustomerID = @CustomerID</p>
+<p> &nbsp; RETURN @count</p>
+<p>Then you could invoke it and return the value like so:</p>
+<p> &nbsp; int value = DataContext.GetCustomerOrderCount("ALKAI");</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3531472">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 2:45 AM
+                            by
+                            Chris
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Is it possible to provide an example of how LINQ would work with a query which returns multiple tables (from joins). As often data is a lot more than just a single table.</p>
+<p>eg.</p>
+<p>SELECT C.*, O.*, OI.*</p>
+<p>FROM Customer C</p>
+<p>INNER JOIN Order O on O.CustomerID = C.CustomerID</p>
+<p>INNER JOIN OrderItem OI on OI.OrderID = O.OrderID</p>
+<p>Thanks.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3533254">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 7:19 AM
+                            by
+                            <a title="Paul" rel="nofollow" href="http://coderaptor.wordpress.com/">Paul</a>
+                            
+	                    </div>
+	                    <p>Scott, </p>
+<p>As always, great post as part of a great series.</p>
+<p>My question is about the timing of the data load. &nbsp;With a regular LINQ to SQL expression, the expression tree is built in the app, then when you iterate or call ToList&lt;T&gt;() or the like is when the SQL script is actually fired in the db, right? &nbsp;I assume then, that the same is the case for a sproc call, so you create an object that maps to the expression calling the sproc, and then when you evaluate that object through iteration or other inspection is when the sproc actually fires.</p>
+<p>My question, then, assuming I'm correct so far, is what happens if that object you've assigned your sproc results to is used in another LINQ expression, e.g.:</p>
+<p>var products = db.GetAllProducts();</p>
+<p>var chai = from p in products where p.ProductName == "Chai" select p;</p>
+<p>Intuitively, the logical answer seems to be that since Sprocs (in the db) do not return table-valued objects, that the sproc has to execute and send its result to the app, and then the app would evaluate it in the second expression much like if it were a Linq to Objects expression. Is that correct? &nbsp;I blogged a bit about my thoughts on it if that's the case, as well as my approach to the sproc vs. dynamic query question (my answer is Views for selects, sprocs for CUD), but I wanted to see if my intuition is correct or not.</p>
+<p>Thanks,</p>
+<p>Paul</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3534836">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 11:08 AM
+                            by
+                            <a title="Juan Mar&amp;#237;a" rel="nofollow" href="http://thinkingindotnet.wordpress.com/">Juan María</a>
+                            
+	                    </div>
+	                    <p>Hi Scott, thanks for this post:</p>
+<p>You all can read this post in spanish here:</p>
+<p><a rel="nofollow" target="_new" href="http://thinkingindotnet.wordpress.com/2007/08/17/linq-to-sql-parte-6-obtener-datos-con-procedimientos-almacenados/">thinkingindotnet.wordpress.com/.../linq-to-sql-parte-6-obtener-datos-con-procedimientos-almacenados</a></p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3535154">#</a>
+	                        <span>
+	                            Enterprise Application Reality &amp;laquo; Libor.SOUCEK(&amp;#8221;WEBLog&amp;#8221;)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 12:08 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://lsblog.wordpress.com/2007/08/17/enterprise-application-reality/">Enterprise Application Reality « Libor.SOUCEK(”WEBLog”)</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;Enterprise Application Reality &amp;laquo; Libor.SOUCEK(&amp;#8221;WEBLog&amp;#8221;)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3535773">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 1:05 PM
+                            by
+                            Michael
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Is it possible to create managed CLR stored procedures in C# using LINQ, rather than writing the stored procedures in SQL? Sometimes, I'd like the code to execute on the database, but still would like to use LINQ to write the code.</p>
+<p>Thanks!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3536057">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 1:43 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Michael,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; Is it possible to create managed CLR stored procedures in C# using LINQ, rather than writing the stored procedures in SQL? Sometimes, I'd like the code to execute on the database, but still would like to use LINQ to write the code.</p>
+<p>Yes - you can created SPROCs using managed code now - which would also then allow you to use LINQ to SQL to invoke them. &nbsp;VS 2005 has the support for creating managed SPROCS too.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3536065">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 1:45 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Chris,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; Is it possible to provide an example of how LINQ would work with a query which returns multiple tables (from joins). As often data is a lot more than just a single table.</p>
+<p>LINQ definitely supports joins across multiple tables. &nbsp;Anders has a good set of samples here that you might want to check out to see the syntax: <a rel="nofollow" target="_new" href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=578686&SiteID=1">forums.microsoft.com/.../ShowPost.aspx</a></p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3536866">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 3:31 PM
+                            by
+                            Rick
+                            
+	                    </div>
+	                    <p>Great post!</p>
+<p>What are the plans for handling updates to the Result object returned from a SP where the Result is from an underlying join? Are there Insert, Update, Delete methods on the Result object that can be pointed back to SPs that can handle this?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3538060">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 17, 2007 6:54 PM
+                            by
+                            <a title="tuano007" href="http://weblogs.asp.net/user/Profile.aspx?UserID=4835">tuano007</a>
+                            
+	                    </div>
+	                    <p>Hi Scott, love this series.</p>
+<p>The data objects created are not marked [Serializable], so binary formatting (and thus use with SQL server session state) is impossible on the objects this returns. &nbsp;Even if I manually change the generated cs file, the EntitySets are sealed and not serializable. &nbsp;Is there a workaround or will they be fully binary-formattable in the release version?</p>
+<p>Until then, looks like we might have to just save to the non-session database?</p>
+<p>Thanks!</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3544207">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, August 18, 2007 5:48 AM
+                            by
+                            <a title="Vikram" rel="nofollow" href="http://www.vikramlakhotia.com/">Vikram</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Where is the connection string stored when we use LINQ to SQL. How can we change the connection string.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3549104">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, August 18, 2007 7:35 PM
+                            by
+                            Scott
+                            
+	                    </div>
+	                    <p>Scott,</p>
+<p>this has been a great series. &nbsp;Just one thing seems to be missing. &nbsp;How do we dispose of the DataContext class that we create for the SQL database? &nbsp;For example, the NorthwindDataContext class is an IDisposable object, but if I actually call Dispose on it then I get ObjectDisposed exceptions when I access the data that came from that NorthwindDataContext.</p>
+<p>Doesn't that leave huge amounts of resources open if I've made many calls to my database?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3551597">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 12:38 AM
+                            by
+                            <a title="Mehfuz Hossain" rel="nofollow" href="http://www.mehfuz.com/">Mehfuz Hossain</a>
+                            
+	                    </div>
+	                    <p>Cool! Now tell me, i see that you can drop a particular sp on a particular class in the designer, but what if someone drops a SP on to a wrong class, let's say someone drops the a CusOrderHistory on to the Order class instead of Product in the designer. shouldn't there be any validation , that will use some sort of &nbsp;reflection to validate design-time.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3551820">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 1:11 AM
+                            by
+                            <a title="Omar" rel="nofollow" href="http://msmvps.com/blogs/omar">Omar</a>
+                            
+	                    </div>
+	                    <p>If an SP executes a dynamic query and returns rows from a table, can I explicitly map the result of the SP to an object?</p>
+<p>for example,</p>
+<p>CREATE PROCEDURE Something</p>
+<p>AS</p>
+<p>EXEC 'SELECT ID, Name FROM Product'</p>
+<p>GO</p>
+<p>Moreover, if an SP returns fields from different tables by inner joining them in a dynamic SQL, how can I map it to proper object?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3555823">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 10:31 AM
+                            by
+                            <a title="Matt Brooks" rel="nofollow" href="http://www.threeld.net/">Matt Brooks</a>
+                            
+	                    </div>
+	                    <p>Hi Omar,</p>
+<p>LINQ to SQL seems to use the SET FMTONLY ON option at design time in order to determine what a stored procedure is capable of returning. This seems to work with dynamic SQL as per my example below:</p>
+<p>create proc sptest</p>
+<p>as</p>
+<p>begin</p>
+<p>	exec('select 1 as One, 2 as Two')</p>
+<p>	exec sp_executesql N'select 1 as One, 2 as Two'</p>
+<p>end</p>
+<p>go</p>
+<p>set fmtonly on</p>
+<p>exec sptest</p>
+<p>set fmtonly off</p>
+<p>Regarding your second question, I would guess that as long as the designer can match column names and data types in the result set to fields in your object then you should be able to apply the mapping. </p>
+<p>Thanks,</p>
+<p>Matt</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3559568">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 4:53 PM
+                            by
+                            <a title="Paul" rel="nofollow" href="http://coderaptor.wordpress.com/">Paul</a>
+                            
+	                    </div>
+	                    <p>Mehfuz &amp; Omar&gt; &nbsp;By default, your sprocs return types will be something custom based on the fields it returns, regardless of the underlying data source. &nbsp;If you want them to be able to reference another existing object, you can add an association. &nbsp;In the case where you accidentally try and drop a sproc on the 'wrong' object, one that it cannot properly cast the results to, you'll get an error from the designer that the schemas don't match.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3561484">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 8:48 PM
+                            by
+                            Fduch
+                            
+	                    </div>
+	                    <p>Sorry for offtopic question.</p>
+<p>I recently installed Beta2 and finally started playing with lambdas in VB. Please tell me why these same line of code comile to very different IL and return different results in VB and C#. Can we be sure that this would be fixed before release?</p>
+<p>C#</p>
+<p>delegate TReturn SelfApplicable0&lt;TReturn&gt;(SelfApplicable0&lt;TReturn&gt; self);</p>
+<p>SelfApplicable0&lt;Func&lt;Func&lt;Func&lt;int, int&gt;, Func&lt;int, int&gt;&gt;, Func&lt;int, int&gt;&gt;&gt; YC = y =&gt; f =&gt; x =&gt; f(y(y)(f))(x);</p>
+<p>VB</p>
+<p>Delegate Function SelfApplicable0(Of TReturn)(ByVal self As SelfApplicable0(Of TReturn)) As TReturn</p>
+<p>Dim YC As SelfApplicable0(Of Func(Of Func(Of Func(Of Integer, Integer), Func(Of Integer, Integer)), Func(Of Integer, Integer))) = Function(y) Function(f) Function(x) f(y(y)(f))(x)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3561846">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, August 19, 2007 10:03 PM
+                            by
+                            Dion
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>Could you please show us an example where you have a stored Procedure similar to the following, how to extract the value returned.</p>
+<p>create Procedure sp_Customers</p>
+<p>	@country nvarchar(30)</p>
+<p>as</p>
+<p>	set nocount on</p>
+<p>	select * from Customers</p>
+<p>	where country = @country</p>
+<p>	return 1</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562809">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:45 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Vikram,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; Where is the connection string stored when we use LINQ to SQL. How can we change the connection string.</p>
+<p>By default the LINQ to SQL designer stores and retrieves the connection-string from the application's web.config file. &nbsp;If you want to programmatically override this, you can pass a connection-string as an argument to the constructor of the Datacontext object.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562812">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:47 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Rick,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; What are the plans for handling updates to the Result object returned from a SP where the Result is from an underlying join? Are there Insert, Update, Delete methods on the Result object that can be pointed back to SPs that can handle this?</p>
+<p>You can create a new Data Model object whose values are populated as the result of an underlying Join. &nbsp;You could then use SPROCs for the update/insert/delete scenario to re-shred the values into separate tables.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562814">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:49 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Scott,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; this has been a great series. &nbsp;Just one thing seems to be missing. &nbsp;How do we dispose of the DataContext class that we create for the SQL database? &nbsp;For example, the NorthwindDataContext class is an IDisposable object, but if I actually call Dispose on it then I get ObjectDisposed exceptions when I access the data that came from that NorthwindDataContext. &nbsp;Doesn't that leave huge amounts of resources open if I've made many calls to my database?</p>
+<p>The Datacontext object actually doesn't hold open any connections to the database - so you don't have to explictly dispose of it. &nbsp;Instead, it retrieves new connections from the connection pool only when it needs them, and then returns them as soon as it is done.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562819">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:50 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Mehfuz,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; Cool! Now tell me, i see that you can drop a particular sp on a particular class in the designer, but what if someone drops a SP on to a wrong class, let's say someone drops the a CusOrderHistory on to the Order class instead of Product in the designer. shouldn't there be any validation , that will use some sort of &nbsp;reflection to validate design-time.</p>
+<p>If you try and drop a SP on a data model class whose shape doesn't match the output of the SPROC, then the designer will automatically raise a "schema doesn't match" error.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562822">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:51 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Omar,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt; If an SP executes a dynamic query and returns rows from a table, can I explicitly map the result of the SP to an object? &nbsp;Moreover, if an SP returns fields from different tables by inner joining them in a dynamic SQL, how can I map it to proper object?</p>
+<p>Yes - you can map the return of an SP to a different object - even one composed from a JOIN from multiple tables.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3562839">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, August 20, 2007 1:56 AM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Howard,</p>
+<p>&gt;&gt;&gt;&gt;&gt; It makes for great demos where all the SQL is hidden away and all that. I looked into how I could add application level security into the datacontext - so that the datacontext knows how to restrict queries based on the user. For example i want to restrict the current user on northwind to customerID='ALFKI' (and related tables, e.g. orders), and if that user tried to modify a url e.g. CustomerID=AROUT he'd get no data.</p>
+<p>The DataContext class allows you to customize default Load() methods for each entity you define in your data model. &nbsp;This provides the ability for you to insert custom security logic to implement a security policy check should you want.</p>
+<p>Note that an even better approach, though, would be to encapsulate the DataContext class with your own containing facade:</p>
+<p>public class ProductManager {</p>
+<p> &nbsp; private NorthwindDataContext = new NorthwindDataContext();</p>
+<p> &nbsp; public List&lt;Product&gt; GetProductsBySomeQuery(string param) {</p>
+<p> &nbsp; &nbsp; &nbsp; // implement security check here and then return result</p>
+<p> &nbsp; }</p>
+<p>}</p>
+<p>This pattern allows you to fully secure access from anyone trying to retrieve the data.</p>
+<p>Hope this helps,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3732395">#</a>
+	                        <span>
+	                            Using WCF, JSON, LINQ, and AJAX: Passing Complex Types to WCF Services with JSON Encoding
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, September 04, 2007 12:01 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.msdn.com/kaevans/archive/2007/09/04/using-wcf-json-linq-and-ajax-passing-complex-types-to-wcf-services-with-json-encoding.aspx">Kirk Allen Evans' Blog</a>
+                            
+	                    </div>
+	                    <p>In my previous post, I showed how to use the DataContractSerializer with the classes generated by the</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3769576">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, September 06, 2007 5:33 PM
+                            by
+                            Matt
+                            
+	                    </div>
+	                    <p>Hi,</p>
+<p>Calling stored procedures works well to load up basic entities. &nbsp;However... </p>
+<p>I don't know if anyone else has tried, but calling stored procedures for types that use InheritanceMapping doesn't work. &nbsp;"Object not set to an instance of an object" (or whatever). &nbsp;I'm attempting to fake a wide table for InheritanceMapping by using joins in the stored procedure. If anyone has managed to get this to work I'd be interested in hearing what modifications were needed. &nbsp;My current workaround is to use a view instead of a table or stored procedure.</p>
+<p>Thanks,</p>
+<p>Matt.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="commentowner">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3797386">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, September 08, 2007 3:42 PM
+                            by
+                            <a title="ScottGu" href="http://weblogs.asp.net/user/Profile.aspx?UserID=2530">ScottGu</a>
+                            
+	                    </div>
+	                    <p>Hi Matt,</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; I don't know if anyone else has tried, but calling stored procedures for types that use InheritanceMapping doesn't work. &nbsp;"Object not set to an instance of an object" (or whatever). &nbsp;I'm attempting to fake a wide table for InheritanceMapping by using joins in the stored procedure. If anyone has managed to get this to work I'd be interested in hearing what modifications were needed. &nbsp;My current workaround is to use a view instead of a table or stored procedure.</p>
+<p>I haven't tried this yet with single table inheritance. &nbsp;Have you tried posting a question in the LINQ forum on this: <a rel="nofollow" target="_new" href="http://forums.microsoft.com/msdn/showforum.aspx?forumid=123&siteid=1">forums.microsoft.com/.../showforum.aspx</a></p>
+<p>Thanks,</p>
+<p>Scott</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3813173">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, September 10, 2007 4:40 AM
+                            by
+                            <a title="Kevin Farrio" rel="nofollow" href="http://farrio.cnblogs.com/">Kevin Farrio</a>
+                            
+	                    </div>
+	                    <p>I use IMultiResult to get two results from two tables in one sp and bind them to two dgvs. I found if I use var categories = result.GetResult&lt;Category&gt;(), and then dataGridView1.DataSource = categories, there'll be an exception. But if I use .ToList() after the method GetResult&lt;Category&gt;(), it successful.</p>
+<p>Why? I know that the LINQ to SQL is lazy-execute but I think if I use .DataSource = categories, it'll be executed.</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#3881084">#</a>
+	                        <span>
+	                            re: LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, September 15, 2007 5:00 AM
+                            by
+                            Marcel
+                            
+	                    </div>
+	                    <p>Hi,</p>
+<p>I try to use this in VB. I have a dbml Countries. In this dbml I have a store procedure. The RAW XML look like this:</p>
+<p> &nbsp;&lt;Function Name="dbo.SC_GetDataFromCountries" Method="SC_GetDataFromCountries"&gt;</p>
+<p> &nbsp; &nbsp;&lt;Parameter Name="country" Type="System.String" DbType="NVarChar(50)" /&gt;</p>
+<p> &nbsp; &nbsp;&lt;ElementType Name="SC_GetDataFromCountriesResult"&gt;</p>
+<p> &nbsp; &nbsp; &nbsp;&lt;Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" /&gt;</p>
+<p> &nbsp; &nbsp; &nbsp;&lt;Column Name="city" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" /&gt;</p>
+<p> &nbsp; &nbsp; &nbsp;&lt;Column Name="region" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" /&gt;</p>
+<p> &nbsp; &nbsp; &nbsp;&lt;Column Name="address" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" /&gt;</p>
+<p> &nbsp; &nbsp; &nbsp;&lt;Column Name="zipcode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" /&gt;</p>
+<p> &nbsp; &nbsp;&lt;/ElementType&gt;</p>
+<p> &nbsp;&lt;/Function&gt;</p>
+<p>When I use:</p>
+<p>Dim db = New CountriesDataContext</p>
+<p>dim data db.SC_GetDataFromCountries("2")</p>
+<p>The function is not recognized. Also the intellisense is not showing the function? When I drop a table it is no problem and I can easly make the query?</p>
+<p>Is this a bug or do I something wrong?</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5444219">#</a>
+	                        <span>
+	                            LINQ to SQL: stored procedure tips
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, December 12, 2007 11:08 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.ugidotnet.org/lmauri/archive/2007/12/12/90245.aspx">Il blog di Luca Mauri</a>
+                            
+	                    </div>
+	                    <p>LINQ to SQL: stored procedure tips</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5451702">#</a>
+	                        <span>
+	                            LINQ to SQL - stored procs &amp;laquo; MMCR&amp;#8217;s Weblog
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, December 13, 2007 4:08 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://mmcrblog.wordpress.com/2007/12/13/linq-to-sql-stored-procs/">LINQ to SQL - stored procs « MMCR’s Weblog</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ to SQL - stored procs &amp;laquo; MMCR&amp;#8217;s Weblog</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5484884">#</a>
+	                        <span>
+	                             LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, December 21, 2007 4:45 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.dotnetkicks.com/linq/LINQ_to_SQL_Part_6_Retrieving_Data_Using_Stored_Procedures">DotNetKicks.com</a>
+                            
+	                    </div>
+	                    <p>You've been kicked (a good thing) - Trackback from DotNetKicks.com</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5489324">#</a>
+	                        <span>
+	                            kraiger22 &amp;raquo; LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, December 22, 2007 6:01 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://kraiger22.adoption23.info/1969/12/31/linq-to-sql-part-6-retrieving-data-using-stored-procedures/">kraiger22 » LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;kraiger22 &amp;raquo; LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5489417">#</a>
+	                        <span>
+	                            kontraktor &amp;raquo; kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data Using Stored &amp;#8230;
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, December 22, 2007 6:44 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://kontraktor.adoption23.info/1969/12/31/kraiger22-%c2%bb-linq-to-sql-part-6-retrieving-data-using-stored/">kontraktor » kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data Using Stored …</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;kontraktor &amp;raquo; kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data Using Stored &amp;#8230;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5491021">#</a>
+	                        <span>
+	                            kraiger22 &amp;raquo; kontraktor ?? kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data &amp;#8230;
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Sunday, December 23, 2007 3:19 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://kraiger22.adoption23.info/1969/12/31/kontraktor-%c2%bb-kraiger22-linq-to-sql-part-6-retrieving-data/">kraiger22 » kontraktor ?? kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data …</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;kraiger22 &amp;raquo; kontraktor ?? kraiger22 ?? LINQ to SQL (Part 6 - Retrieving Data &amp;#8230;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5668026">#</a>
+	                        <span>
+	                            LINQ using stored procedures without implicitly typed variables
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, January 28, 2008 7:43 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/nathanyorke/archive/2008/01/28/linq-using-stored-procedures-without-implicitly-typed-variables.aspx">Nathan Yorke</a>
+                            
+	                    </div>
+	                    <p>Problem: &amp;#160; You want (need to because of the stubborn dba!) to use stored procedures in your next</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5678079">#</a>
+	                        <span>
+	                            LINQ using stored procedures without implicitly typed variables
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, January 30, 2008 4:40 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/nathanyorke/archive/2008/01/30/linq-using-stored-procedures-without-implicitly-typed-variables.aspx">Nathan Yorke</a>
+                            
+	                    </div>
+	                    <p>Problem: You want (need to because of the stubborn dba!) to use stored procedures in your next project</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5774410">#</a>
+	                        <span>
+	                            The Linq FirstOrDefault() Method and Null Resultsets &amp;laquo; The Pursuit of a Life
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, February 13, 2008 12:05 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://xidey.wordpress.com/2008/02/12/the-linq-firstordefault-method-and-null-resultsets/">The Linq FirstOrDefault() Method and Null Resultsets « The Pursuit of a Life</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;The Linq FirstOrDefault() Method and Null Resultsets &amp;laquo; The Pursuit of a Life</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5784024">#</a>
+	                        <span>
+	                            VSone - Tag 1 - WPF, Sync Framwork, LINQ to SQL, ASP.NET, Parallel Extensions | Code-Inside Blog
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, February 14, 2008 5:14 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://code-inside.de/blog/2008/02/14/vsone-tag-1-wpf-sync-framwork-linq-to-sql-aspnet-parallel-extensions/">VSone - Tag 1 - WPF, Sync Framwork, LINQ to SQL, ASP.NET, Parallel Extensions | Code-Inside Blog</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;VSone - Tag 1 - WPF, Sync Framwork, LINQ to SQL, ASP.NET, Parallel Extensions | Code-Inside Blog</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5812737">#</a>
+	                        <span>
+	                            &amp;nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&amp;nbsp;by&amp;nbsp;Aneef.Net
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Monday, February 18, 2008 3:43 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://www.aneef.net/2008/02/18/visual-studio-2008-c-30-linq-aspnet-35-getting-started/">&nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&nbsp;by&nbsp;Aneef.Net</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;&amp;nbsp; Visual Studio 2008, C# 3.0, LINQ, ASP.Net 3.5 Getting Started&amp;nbsp;by&amp;nbsp;Aneef.Net</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#5835911">#</a>
+	                        <span>
+	                            Why Use LINQ To SQL (Part 2 - Security)
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, February 21, 2008 11:23 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://dotnet.org.za/hiltong/archive/2008/02/21/why-use-linq-to-sql-part-2-security.aspx">Hilton Giesenow's Jumbled Mind</a>
+                            
+	                    </div>
+	                    <p>A short while ago I posted about the fact that I&amp;#39;m currently working on a real-world enterprise project</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6191172">#</a>
+	                        <span>
+	                            LINQ, Stored Procedures and Multiple Recordsets | two geeks&amp;#8230;
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 15, 2008 2:23 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://twogeeks.mindchronicles.com/?p=13">LINQ, Stored Procedures and Multiple Recordsets | two geeks…</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;LINQ, Stored Procedures and Multiple Recordsets | two geeks&amp;#8230;</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6191423">#</a>
+	                        <span>
+	                            ruSpiegel.net - ?????????????? ?????????????? ??????????????  &amp;raquo; ?????????? ??????????   &amp;raquo; ?????????????????????????? LINQ to SQL - ?????????? IX (?????????????????????????? ???????????????????????????????? LINQ ?????????????????? ?? ???
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, May 15, 2008 4:01 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://ruspiegel.net/?p=443">ruSpiegel.net - ?????????????? ?????????????? ??????????????  » ?????????? ??????????   » ?????????????????????????? LINQ to SQL - ?????????? IX (?????????????????????????? ???????????????????????????????? LINQ ?????????????????? ?? ???????????????? ???????????????????? asp:LinqDatasource)</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;ruSpiegel.net - ?????????????? ?????????????? ?????????????? &nbsp;&amp;raquo; ?????????? ?????????? &nbsp; &amp;raquo; ?????????????????????????? LINQ to SQL - ?????????? IX (?????????????????????????? ???????????????????????????????? LINQ ?????????????????? ?? ???????????????? ???????????????????? asp:LinqDatasource)</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6470220">#</a>
+	                        <span>
+	                            LINQ - Cuestiones de performance - II
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Saturday, August 02, 2008 3:54 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://geeks.ms/blogs/jersson/archive/2008/08/02/linq-cuestiones-de-performance-ii.aspx">Jersson on Geeks·ms</a>
+                            
+	                    </div>
+	                    <p>Bien, para terminar con esta serie de posts (2/2), partiremos de algo mencionado en la sección consideraciones</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6553341">#</a>
+	                        <span>
+	                            log.itto.be  &amp;raquo; Blog Archive   &amp;raquo; links for 2008-08-22
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Friday, August 22, 2008 5:04 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://log.itto.be/2008/08/22/links-for-2008-08-22/">log.itto.be  » Blog Archive   » links for 2008-08-22</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;log.itto.be &nbsp;&amp;raquo; Blog Archive &nbsp; &amp;raquo; links for 2008-08-22</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6722098">#</a>
+	                        <span>
+	                            Recuperare dati utilizzando stored procedure con LINQ
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, November 05, 2008 4:00 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://blogs.ugidotnet.org/marcom/archive/2008/11/05/94529.aspx">Around and About .NET World</a>
+                            
+	                    </div>
+	                    <p>Recuperare dati utilizzando stored procedure con LINQ</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6722148">#</a>
+	                        <span>
+	                            Recuperare dati utilizzando stored procedure con LINQ
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Wednesday, November 05, 2008 4:27 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://dotnettoscana.org/blogs/marco/archive/2008/11/05/recuperare-dati-utilizzando-stored-procedure-con-linq.aspx">Around and About .NET World</a>
+                            
+	                    </div>
+	                    <p>In questo post è disponibile un dettagliato esempio che spiega come si può utilizzare LINQ-to-SQL per</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#6939206">#</a>
+	                        <span>
+	                            problem with system stored procedure in Linq - bytes
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Thursday, March 05, 2009 1:46 PM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://bytes.com/topic/asp-net/answers/865343-problem-system-stored-procedure-linq#post3470210">problem with system stored procedure in Linq - bytes</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;problem with system stored procedure in Linq - bytes</p>
+
+        	            
+	                </div>
+	            
+	                <div class="comment">
+	                    <h4>
+	                        <a href="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx#7219945">#</a>
+	                        <span>
+	                            problem with system stored procedure in Linq - ASP.NET  answers
+	                        </span>
+	                    </h4>
+	                    <div class="commentssubhead">
+	                        
+                                            
+                            Tuesday, September 29, 2009 9:27 AM
+                            by
+                            <a title="TrackBack" rel="nofollow" href="http://bytes.com/topic/asp-net/answers/865343-problem-system-stored-procedure-linq#post3514955">problem with system stored procedure in Linq - ASP.NET  answers</a>
+                            
+	                    </div>
+	                    <p>Pingback from &nbsp;problem with system stored procedure in Linq - ASP.NET &nbsp;answers</p>
+
+        	            
+	                </div>
+	            
+                    </div>
+                
+            
+            
+            
+                
+        
+        
+                </div></div>
+
+            </div>
+            <div id="contentfooter">
+                
+				    <div> <span><a href="http://www.microsoft.com/info/cpyright.mspx">Terms of Use</a></span></div>
+					
+				
+            </div>       
+        </div>
+    </div>
+    <script type="text/javascript" src="./LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures) - ScottGu's Blog_files/omniture_all.js"></script>
+            <noscript>&lt;a href="http://www.omniture.com" title="Web Analytics"&gt;&lt;img
+                src="http://msstonojsaspnet.112.2O7.net/b/ss/msstonojsaspnet/1/H.20.2--NS/0"
+                height="1" width="1" border="0" alt="" /&gt;&lt;/a&gt;</noscript>
+    
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx"
+dc:identifier="http://weblogs.asp.net/scottgu/archive/2007/08/16/linq-to-sql-part-6-retrieving-data-using-stored-procedures.aspx"
+dc:title="LINQ to SQL (Part 6 - Retrieving Data Using Stored Procedures)"
+trackback:ping="http://weblogs.asp.net/scottgu/trackback.ashx?PostID=3522052" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('/utility/loading.htm',['Modal'],['ModalTitle'],['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalMask'],100);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_Main_WeblogPostRating1=new PostRating('ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1','ctl00_Main_WeblogPostRating1_Value', 5, 'http://i1.asp.net/wan/default/images/common/', false, 'CommonRateControl','CommonRateControlActive','CommonRateControlReadOnly',['Terrible','Poor','Fair','Average','Good','Excellent'],true,true);
+// ]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+WebForm_InitCallback();//]]>
+</script>
+<script type="text/javascript">
+            // <![CDATA[
+            var ctl00_Main_WeblogPostRating1_ajax={"SaveRating":function(rating,successFunction,failureFunction){WebForm_DoCallback('ctl00$Main$WeblogPostRating1',rating,successFunction,rating,failureFunction,false)}};
+            // ]]>
+            </script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_Main_ctl06_ctl01 = new Telligent_InlineEditorPanel('ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01','ctl00_Main_ctl06_ctl01_State','ctl00_Main_ctl06_ctl00',false,null,null,null);
+// ]]>
+</script></form>
+
+
+</body></html>

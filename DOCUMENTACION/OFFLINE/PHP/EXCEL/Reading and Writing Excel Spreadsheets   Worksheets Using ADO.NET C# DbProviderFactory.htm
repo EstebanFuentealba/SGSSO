@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0061)http://davidhayden.com/blog/dave/archive/2006/05/26/2973.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Reading and Writing Excel Spreadsheets / Worksheets Using ADO.NET C# DbProviderFactory</title>
+		<meta content=".Text" name="GENERATOR">
+		<link id="MainStyle" type="text/css" rel="stylesheet" href="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/style.css">
+		<link id="SecondaryCss" type="text/css" rel="stylesheet" href="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/blue.css">
+		<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://davidhayden.com/blog/dave/rss.aspx">
+	</head>
+	<body>
+		<form name="Form1" method="post" action="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory.htm" id="Form1">
+<input type="hidden" name="__VIEWSTATE" value="">
+			
+<table width="760" border="0" align="center" cellpadding="0" cellspacing="0">
+<tbody><tr><td>
+<div id="poster">
+</div>
+<div id="navtop">
+	<ul>
+		<li><a title="David Hayden" href="http://www.davidhayden.com/default.aspx">Home</a></li>
+		<li><a title="ASP.NET Web Development News" href="http://www.davidhayden.com/news.aspx">News</a></li>
+		<li><a title=".NET Articles" href="http://www.davidhayden.com/articles.aspx">Articles</a></li>
+		<li><a title="Green Tea" href="http://www.davidhayden.com/greentea.aspx">Green Tea</a></li>
+		<li><a title=".NET Developer Presentations" href="http://www.davidhayden.com/presentations.aspx">Presentations</a></li>
+		<li><a title="Florida .NET C# SQL Server Developer" href="http://www.davidhayden.com/contact.aspx">Contact</a></li>				
+		<li><a title=".NET Developer Tutorials and Samples" href="http://www.davidhayden.com/archive.aspx">Archive</a></li>				
+		<li><a title="Florida .NET Developer Blog" href="http://www.davidhayden.com/blog/dave/">Blog</a></li>
+		<li><a title="Florida ASP.NET Web Development Events" href="http://www.davidhayden.com/events.aspx">Events</a></li>		
+	</ul>
+</div>
+<div class="none">
+	<a href="http://davidhayden.com/blog/dave/archive/2006/05/26/2973.aspx#content_start">Skip Repetitive Navigational Links</a>
+</div>
+</td></tr><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF"><tbody><tr>
+<!-- <div id="layout">
+	<div id="body">
+
+		<div id="columnleft"> -->
+			<td valign="top" width="540">
+					
+<script type="text/javascript" async="" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/ga.js"></script><script type="text/javascript"><!--
+google_ad_client = "pub-5540381525225370";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+google_ad_channel ="";
+google_color_border = "336699";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_url = "008000";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><iframe allowtransparency="true" frameborder="0" height="60" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="468" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+<script type="text/javascript"><!--
+google_ad_client = "pub-5540381525225370";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+google_ad_channel ="";
+google_color_border = "336699";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_url = "008000";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><ins id="aswift_1_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><iframe allowtransparency="true" frameborder="0" height="60" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="468" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+	<div class="post">
+		<h2>
+			<a id="viewpost.ascx_TitleUrl" href="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory.htm">Reading and Writing Excel Spreadsheets / Worksheets Using ADO.NET C# DbProviderFactory</a>
+		</h2>
+		<h1><font face="Verdana">Reading and Writing Excel Spreadsheets Using ADO.NET C# DbProviderFactory</font></h1>
+<p><font face="Verdana" size="2">by <a href="http://www.davidhayden.com/">David Hayden</a> ( <a href="http://www.davidhayden.com/">Florida ASP.NET C# Developer</a> )</font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p><font face="Verdana" size="2">It has been an absolute exhausting work week. My eyes, wrists, and back are sore from too many hours of coding. Thankfully I get to relax much of the Memorial Day Weekend :) I hope you all enjoy the weekend, too.</font></p>
+<p><font face="Verdana" size="2">This week a client sent me an <strong>Excel Spreadsheet</strong> that needed to populate several tables in a <a href="http://davidhayden.com/blog/dave/category/14.aspx?Show=All">SQL Server</a> Database. To know me knows I hate data entry of any kind and there was no chance I was entering the Excel data&nbsp;in manually.</font></p>
+<p><font face="Verdana" size="2">Thankfully, we don't have to. You can use the <strong>OleDb Managed Data Provider</strong> in the .NET Framework to read an Excel Spreadsheet using <a href="http://davidhayden.com/blog/dave/category/26.aspx?Show=All">ADO.NET</a> and <a href="http://davidhayden.com/blog/dave/category/41.aspx?Show=All">C#</a> just like you would with a database.</font></p>
+<p><font face="Verdana" size="2">Shown below is a simple spreadsheet that lists a few cities ( Bradenton, Sarasota, and Tampa ) in Florida. Notice I have renamed the worksheet to <strong>Cities</strong> as opposed to the default of <strong>Sheet1</strong>. Also notice that the first row contains headers of the columns. These changes will impact the way we access the information as you will see in a moment.</font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p align="center"><font face="Verdana" size="2"><img alt="David Hayden - Excel and ADO.NET" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/ExcelExample.jpg"></font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<h2><font face="Verdana">Excel Connection String for ADO.NET</font></h2>
+<p><font face="Verdana" size="2">You will first need a connection string to connect to the Excel Workbook, which would be the following:</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #0000ff">string</span><span style="COLOR: #000000"> connectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">@"</span><span style="COLOR: #008080">Provider=Microsoft.Jet.OLEDB.4.0;<br>    Data Source=Book1.xls;Extended Properties=<br>    ""Excel 8.0;HDR=YES;""</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;</span></pre>
+<p>&nbsp;</p>
+<p><font face="Verdana" size="2">This says the spreadsheet is located in the current directory and called Book1.xls, and the first row is a header row containing the names of the columns.</font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<h2><font face="Verdana">Read Excel Spreadsheet using ADO.NET and DbDataReader</font></h2>
+<p><font face="Verdana" size="2">Once you have the connection string all normal ADO.NET coding applies. Here is some sample code that reads each row of the excel worksheet using <strong>DbDataReader</strong>. You don't have to use the <a href="http://davidhayden.com/blog/dave/archive/2006/04/04/2900.aspx">DbProviderFactory Classes</a>. I thought I would show it just for kicks.</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #0000ff">string</span><span style="COLOR: #000000"> connectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">@"</span><span style="COLOR: #008080">Provider=Microsoft.Jet.<br>    OLEDB.4.0;Data Source=Book1.xls;Extended<br>    Properties=""Excel 8.0;HDR=YES;""</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+DbProviderFactory factory </span><span style="COLOR: #000000">=<br>  </span><span style="COLOR: #000000">DbProviderFactories.GetFactory(</span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">System.Data.OleDb</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">);
+
+</span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbConnection connection </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateConnection())
+{
+    connection.ConnectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connectionString;
+
+    </span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbCommand command </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connection.CreateCommand())
+    {
+        </span><span style="COLOR: #008000">//</span><span style="COLOR: #008000"> Cities$ comes from the name of the worksheet</span><span style="COLOR: #008000">
+</span><span style="COLOR: #000000">        command.CommandText </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">SELECT ID,City,State<br>                                      FROM [Cities$]</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+        connection.Open();
+
+        </span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbDataReader dr </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> command.ExecuteReader())
+        {
+            </span><span style="COLOR: #0000ff">while</span><span style="COLOR: #000000"> (dr.Read())
+            {
+                Debug.WriteLine(dr[</span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">ID</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">].ToString());
+            }
+        }
+    }
+}</span></pre>
+<p>&nbsp;</p>
+<h2><font face="Verdana">Read Excel Spreadsheet using ADO.NET and DataSet</font></h2>
+<p><font face="Verdana" size="2">Here is another example of reading an Excel spreadsheet using ADO.NET and a DataSet.</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #0000ff">string</span><span style="COLOR: #000000"> connectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">@"</span><span style="COLOR: #008080">Provider=Microsoft.Jet.<br>    OLEDB.4.0;Data Source=Book1.xls;Extended<br>    Properties=""Excel 8.0;HDR=YES;""</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+DbProviderFactory factory </span><span style="COLOR: #000000">=<br>   </span><span style="COLOR: #000000">DbProviderFactories.GetFactory(</span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">System.Data.OleDb</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">);
+
+DbDataAdapter adapter </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateDataAdapter();
+
+DbCommand selectCommand </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateCommand();
+selectCommand.CommandText </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">SELECT ID,City,State<br>                                     FROM [Cities$]</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+DbConnection connection </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateConnection();
+connection.ConnectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connectionString;
+
+selectCommand.Connection </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connection;
+
+adapter.SelectCommand </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> selectCommand;
+
+DataSet cities </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #0000ff">new</span><span style="COLOR: #000000"> DataSet();
+
+adapter.Fill(cities);
+
+gridEX1.SetDataBinding(cities.Tables[</span><span style="COLOR: #ff0000">0</span><span style="COLOR: #000000">], </span><span style="COLOR: #000000">""</span><span style="COLOR: #000000">);
+gridEX1.RetrieveStructure();</span></pre>
+<p>&nbsp;</p>
+<p><font face="Verdana" size="2">I was binding to the Janus GridEx Control, which is why you see gridEX1 above. You could easily replace those 2 lines with</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #000000">dataGridView1.DataSource </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> cities.Tables[</span><span style="COLOR: #ff0000">0</span><span style="COLOR: #000000">].DefaultView;</span></pre>
+<p>&nbsp;</p>
+<h2><font face="Verdana">Inserting a Row into Excel Using ADO.NET</font></h2>
+<p><font face="Verdana" size="2">Here I will add a 4th city, Tampa, to the list of cities in Florida. This inserts it right into the Excel Worksheet as you would expect.</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #0000ff">string</span><span style="COLOR: #000000"> connectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">@"</span><span style="COLOR: #008080">Provider=Microsoft.Jet.<br>   OLEDB.4.0;Data Source=Book1.xls;Extended<br>   Properties=""Excel 8.0;HDR=YES;""</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+DbProviderFactory factory </span><span style="COLOR: #000000">=<br>   </span><span style="COLOR: #000000">DbProviderFactories.GetFactory(</span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">System.Data.OleDb</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">);
+
+</span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbConnection connection </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateConnection())
+{
+    connection.ConnectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connectionString;
+
+    </span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbCommand command </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connection.CreateCommand())
+    {
+        command.CommandText </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">INSERT INTO [Cities$]<br>         (ID, City, State) VALUES(4,\"Tampa\",\"Florida\")</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+        connection.Open();
+
+        command.ExecuteNonQuery();
+    }
+}</span></pre>
+<p>&nbsp;</p>
+<h2><font face="Verdana">Updating Excel Using ADO.NET</font></h2>
+<p><font face="Verdana" size="2">Let's modify the name of the first city from Bradenton to Venice in the Excel Spreadsheet using ADO.NET:</font></p>
+<p>&nbsp;</p><pre><span style="COLOR: #0000ff">string</span><span style="COLOR: #000000"> connectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">@"</span><span style="COLOR: #008080">Provider=Microsoft.Jet.<br>   OLEDB.4.0;Data Source=Book1.xls;Extended<br>   Properties=""Excel 8.0;HDR=YES;""</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+DbProviderFactory factory </span><span style="COLOR: #000000">=<br>   </span><span style="COLOR: #000000">DbProviderFactories.GetFactory(</span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">System.Data.OleDb</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">);
+
+</span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbConnection connection </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> factory.CreateConnection())
+{
+    connection.ConnectionString </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connectionString;
+
+    </span><span style="COLOR: #0000ff">using</span><span style="COLOR: #000000"> (DbCommand command </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> connection.CreateCommand())
+    {
+        command.CommandText </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">"</span><span style="COLOR: #008080">Update [Cities$] Set City =<br>                                \"Venice\" WHERE ID = 1</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">;
+
+        connection.Open();
+
+        command.ExecuteNonQuery();
+    }
+}</span></pre>
+<p>&nbsp;</p>
+<h2><font face="Verdana">Conclusion</font></h2>
+<p><font face="Verdana" size="2">It is just too cool that we can use <strong>ADO.NET</strong> and the <strong>OleDb Managed Data Provider</strong> in the .NET Framework to insert, update, and delete information in an <strong>Excel Spreadsheet</strong> like it was a database. View my other <a href="http://davidhayden.com/blog/dave/category/26.aspx?Show=All">ADO.NET Tutorials</a>.</font></p>
+<p><font face="Verdana" size="2">Have a great Memorial Day weekend!</font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p><font face="Verdana" size="2">Source: <a href="http://www.davidhayden.com/">David Hayden</a> ( <a href="http://www.davidhayden.com/">Florida ASP.NET C# Developer</a> )</font></p>
+<p><font face="Verdana" size="2">Filed: <a href="http://davidhayden.com/blog/dave/category/26.aspx?Show=All">ADO.NET 2.0</a>, <a href="http://davidhayden.com/blog/dave/category/41.aspx?Show=All">C#</a></font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+		<p class="postfoot">
+			posted on Friday, May 26, 2006 4:26 PM
+		</p>
+	</div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-5540381525225370";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+google_ad_channel ="";
+google_color_border = "336699";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_url = "008000";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><ins id="aswift_2_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px"><iframe allowtransparency="true" frameborder="0" height="60" hspace="0" marginwidth="0" marginheight="0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){i+=&#39;.call&#39;;setTimeout(h,0)}else if(h.match){i+=&#39;.nav&#39;;w.location.replace(h)}s.log&amp;&amp;s.log.push(i)}" scrolling="no" vspace="0" width="468" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+	<link rel="pingback" href="http://davidhayden.com/blog/dave/Services/Pingback.aspx">
+	
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://davidhayden.com/blog/dave/archive/2006/05/26/2973.aspx"
+dc:identifier="http://davidhayden.com/blog/dave/archive/2006/05/26/2973.aspx"
+dc:title="Reading and Writing Excel Spreadsheets / Worksheets Using ADO.NET C# DbProviderFactory"
+trackback:ping="http://davidhayden.com/blog/dave/services/trackbacks/2973.aspx" />
+</rdf:RDF>
+-->
+
+	
+				</td>
+		<!-- </div>
+		<div id="columnright"> -->
+			<td valign="top" width="220">
+				
+				
+				
+				
+<h3>Main</h3>
+<ul>
+	<li class="drhcategory"><a id="MyStuff1_Syndication" class="drhCategory2" href="http://feeds.feedburner.com/DavidHayden">Syndication</a><a id="MyStuff1_XMLLink" href="http://feeds.feedburner.com/DavidHayden"><img src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/xml.gif" alt="" border="0"></a>
+	</li><li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/">Sarasota Web Design</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/">Orchard CMS Developer</a></li>
+</ul>
+<p><a href="https://plus.google.com/u/0/117098459138946036709/posts"><img src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/david-hayden-google-plus.png" alt="David Hayden Google +" border="0"></a></p>
+<p><a href="http://twitter.com/david_hayden"><img src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/david-hayden-twitter.png" alt="David Hayden Twitter" border="0"></a></p>
+<h3>Health &amp; Fitness</h3>
+<ul>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/04/24/AbRocketHonestReviewAbCrunchesSitupsFitnessEquipment.aspx">Ab Rocket Review</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/12/29/AbWheelReview.aspx">Ab Wheel Review</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/03/08/BowflexDumbbellsSaleAmazonRebateSelectTechReview.aspx">Bowflex Dumbbells Review</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/08/02/IronGymWorkoutBarReview.aspx">Iron Gym Extreme Review</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/12/13/PerfectPushup.aspx">Perfect Pushup Review</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2010/12/12/ProForm890EEllipticalConsole.aspx">Proform 890E Elliptical</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2009/12/05/WeightLossHealthyDietsExercisePortionControl.aspx">Weight Loss - Healthy Diets</a></li>
+</ul>
+<p style="text-align:center"><a href="http://davidhayden.com/blog/dave/archive/2011/07/30/CoffeeScriptAcceleratedJavaScriptDevelopmentBookReview.aspx"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/coffeescript-accelerated-javascript-development-book-review.jpg"></a></p>
+<p style="text-align:center"><a href="http://www.amazon.com/gp/product/1430234040/ref=as_li_tf_il?ie=UTF8&tag=davidhacom-20&linkCode=as2&camp=217145&creative=399377&creativeASIN=1430234040"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/pro-aspnet-mvc-3-framework.jpg"></a><img src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/ir" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+<p style="text-align:center"><a href="http://davidhayden.com/blog/dave/archive/2011/01/18/JavaScriptPatternsBookReview.aspx"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/javascript-patterns.jpg" alt="JavaScript Patterns Book Review"></a></p>
+<p style="text-align:center"><a href="http://davidhayden.com/blog/dave/archive/2011/01/09/Html5CSS3BookReview.aspx"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/html5-css3-develop-with-tomorrows-standards-today.jpg" alt="HTML 5 and CSS3 - Develop with Tomorrow&#39;s Standards Today"></a></p>
+<p style="text-align:center"><a href="http://davidhayden.com/blog/dave/archive/2010/12/17/ProfessionalASPNETDesignPatternsBookReview.aspx"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/professional-aspnet-design-patterns.jpg" alt="Professional ASP.NET Design Patterns Book Review"></a></p>
+<p style="text-align:center"><a href="http://davidhayden.com/blog/dave/archive/2010/04/18/BeginningMacProgramming.aspx"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/beginning-mac-programming.jpg" alt="Beginning Mac Programming Book Review"></a></p>
+<p style="text-align:center"><a href="http://www.amazon.com/gp/product/1935182471?ie=UTF8&tag=davidhacom-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1935182471"><img border="0" src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/csharp-in-depth-second-edition.jpg" alt="C# in Depth Book Review"></a><img src="./Reading and Writing Excel Spreadsheets   Worksheets Using ADO.NET C# DbProviderFactory_files/ir(1)" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+<h3>ASP.NET MVC</h3>
+<ul>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2011/09/15/ASPNETMVC4DeveloperPreview.aspx">ASP.NET MVC 4 Developer Preview Released</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://tampadev.org/News/Details/aspnet-mvc-4-roadmap">ASP.NET MVC 4 Roadmap</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2011/01/05/ASPNETMVC3TutorialsIndex.aspx">ASP.NET MVC 3 Tutorials</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/archive/2011/02/19/ASPNETMVC3VideosScreencasts.aspx">ASP.NET MVC 3 Videos</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://www.pnpguidance.net/Post/FreeAspNetMvc3Training.aspx">ASP.NET MVC 3 Training</a></li>
+</ul>
+<h3>Orchard CMS</h3>
+<ul>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/blog/microsoft-webmatrix-2-for-small-website-development">Microsoft WebMatrix 2 for Small Website Development</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-cms-navigation-admin-menu-and-localnav">Orchard CMS Navigation - Admin Menu and LocalNav</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/blog/custom-orchard-themes-converting-existing-web-design-and-html-templates">Custom Orchard Themes - Converting Existing Web Design and HTML Templates</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/blog/coffeescript-development">CoffeeScript Development - Sarasota JavaScript Developer</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/blog/javascript-enlightenment-book-review">JavaScript Enlightenment Book Review - JavaScript for ASP.NET Web Developers</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/blog/jquery-and-javascript-development-using-firefox-scratchpad">jQuery and JavaScript Development using Firefox Scratchpad</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/Blog/gamification-by-design-implementing-game-mechanics-in-web-and-mobile-apps">Gamification by Design - Implementing Game Mechanics in Web and Mobile Apps</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/javascript-web-applications-book-review">JavaScript Web Applications Book Review - backbone.js spine.js</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/Blog/orchard-website-performance-settings">Orchard Website Performance Settings - Configuring the Orchard Warmup Module</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/Blog/search-engine-optimization-and-orchard-cms-semantic-web">Search Engine Optimization and Orchard CMS - Semantic HTML</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/Blog/orchard-cms-and-sql-server-ce-free-website-database">Orchard CMS and SQL Server CE - Free Website Database</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/firefox-scratchpad-for-javascript-development">Firefox Scratchpad for JavaScript Development</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.davidhayden.me/Blog/new-orchard-theme-and-website">New Orchard Theme and Website - Orchard CMS Web Developer</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/html5-and-css3-support-in-visual-studio-2010">HTML5 and CSS3 Support in Visual Studio 2010</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://sarasota.me/blog/jquery-intellisense-in-microsoft-expression-web-4">jQuery Intellisense in Microsoft Expression Web 4</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://sarasota.me/blog/web-design-using-expression-web-4-snippets">Web Design Using Expression Web 4 - Snippets</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/expression-web-4-sp2-thumbnails-for-images-in-folder-list">Expression Web 4 SP2 - Thumbnails for Images in Folder List</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/coffeescript-and-orchard-cms-module-development">CoffeeScript and Orchard CMS Module Development</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/creating-a-google-plus-1-part-and-custom-module-in-orchard-cms-part-1">Creating a Google +1 Part and Custom Module in Orchard CMS - Part 1</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/adding-google-1-and-twitter-social-networking-links-to-orchard-cms">Adding Google +1 and Twitter Social Networking Links to Orchard CMS</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/upgraded-website-to-orchard-1.2">Upgraded Website to Orchard 1.2</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-1.2-performance-settings-warmup-module-goes-native">Orchard 1.2 Performance Settings - Warmup Module Goes Native</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-1.2-released-bug-fixes-and-improved-performance">Orchard 1.2 Released - Bug Fixes and Improved Performance</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/delete-content-types-in-orchard-cms-with-custom-module">Delete Content Types in Orchard CMS with Custom Module</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/add-widget-layer-to-orchard-cms">Add Widget Layer to Orchard CMS - Usability Workflow Improvement</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/custom-orchard-module-that-plays-html5-video-with-flash-fallback">Custom Orchard Module that Plays HTML5 Video with Flash Fallback</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/create-new-orchard-website-using-webmatrix-orchard-web-development">Create New Orchard Website Using WebMatrix - Orchard Web Development</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/delete-blog-in-orchard-cms-orchard-tips-and-tricks">Delete Blog in Orchard CMS - Orchard Tips and Tricks</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/customizing-orchard-themes-using-shape-tracing-and-url-alternates-in-designer-tools">Customizing Orchard Themes using Shape Tracing and Url Alternates in Designer Tools</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-cms-released-by-microsoft">Orchard Installation</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/configuring-orchard-cms">Orchard Configuration</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/running-orchard-cms-website-after-installation-theme-machine">Running Orchard CMS</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-cms-administration">Orchard CMS Administration</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/create-new-page-in-orchard-cms">Creating New Page in Orchard</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/widgets-in-orchard-cms">Orchard Widgets</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-modules">Orchard Modules</a></li>
+<li class="drhcategory"><a class="drhCategory2" href="http://www.sarasota.me/blog/orchard-themes">Orchard Themes</a></li>
+</ul>
+<h3>Categories</h3>
+<ul>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/26.aspx?Show=All">ADO.NET 2.0</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/54.aspx?Show=All">ADO.NET 3.0</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/68.aspx?Show=All">ADO.NET Data Services</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/63.aspx?Show=All">ADO.NET Entity Framework</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/34.aspx?Show=All">Agile &amp; Iterative Development</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/42.aspx?Show=All">Agile Software Development</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/33.aspx?Show=All">Applying UML and Design Patterns</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/9.aspx?Show=All">ASP.NET</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/25.aspx?Show=All">ASP.NET 2.0</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/67.aspx?Show=All">ASP.NET 3.5</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/69.aspx?Show=All">ASP.NET Dynamic Data</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/21.aspx?Show=All">ASP.NET Security</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/12.aspx?Show=All">C#</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/41.aspx?Show=All">C# 2.0</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/58.aspx?Show=All">C# 3.0</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/15.aspx?Show=All">Code Generation</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/22.aspx?Show=All">Design Patterns C#</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/59.aspx?Show=All">LINQ to SQL - DLINQ</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/24.aspx?Show=All">O/R Mappers</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/14.aspx?Show=All">SQL Server</a></li>
+	<li class="drhcategory"><a class="drhCategory2" href="http://davidhayden.com/blog/dave/category/51.aspx?Show=All">SQL Server Management Objects ( SMO )</a></li>
+</ul>
+				
+
+				
+				
+			</td>
+		<!-- </div>
+	</div>
+</div> -->
+</tr>
+</tbody></table></td></tr><tr><td>
+<div id="bottomposter">
+</div>
+<div id="footer">
+		<p>©2011 DavidHayden.com</p>
+</div>
+</td></tr></tbody></table>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21098779-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></form>
+	
+</body></html>

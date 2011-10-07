@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="WCF_ENAP.Global" Language="C#" %>

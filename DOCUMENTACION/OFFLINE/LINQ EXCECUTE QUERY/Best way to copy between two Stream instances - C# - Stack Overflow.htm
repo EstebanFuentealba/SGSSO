@@ -1,0 +1,1327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0089)http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Best way to copy between two Stream instances - C# - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico">
+    <link rel="apple-touch-icon" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <script type="text/javascript" async="" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/ga.js"></script><script type="text/javascript" async="" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/adzerk1_2_4_43,adzerk2_2_17_45,adzerk3_2_4_44"></script><script type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/jquery.min.js"></script>
+    <script type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/stub.js"></script>
+    <link rel="stylesheet" type="text/css" href="./Best way to copy between two Stream instances - C# - Stack Overflow_files/all.css">
+    
+    <link rel="canonical" href="./Best way to copy between two Stream instances - C# - Stack Overflow_files/Best way to copy between two Stream instances - C# - Stack Overflow.htm">
+    <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;Best way to copy between two Stream instances - C#&#39;" href="http://stackoverflow.com/feeds/question/230128">
+    <meta name="title" content="Best way to copy between two Stream instances - C# - Stack Overflow">
+    <link rel="image_src" href="http://sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <script type="text/javascript">
+        
+        StackExchange.ready(function () {
+
+            StackExchange.question.init({showAnswerHelp:true,totalCommentCount:0,shownCommentCount:0,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:230128});
+
+            styleCode();
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        StackExchange.init({"stackAuthUrl":"http://stackauth.com","serverTime":1317981112,"styleCode":true,"newTagEditor":true,"enableUserHovercards":true,"enableTabCompletion":true,"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers"},"user":{"isAnonymous":true,"fkey":"69d84c180fe560ef1a6a543c5eb7435b","inboxUnviewedCount":-1}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.js":"0324556b7bf7","js/moderator.js":"a2b72d2dcd13","js/full-anon.js":"20589614f36a","js/full.js":"1fb00cd5e44b","js/wmd.js":"f92e5d20262f","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/mobile.js":"97644ef9b7d4","js/help.js":"afb99d79b91b","js/tageditor.js":"1d9dda61b487","js/tageditornew.js":"3a5a5c0e8473","js/inline-tag-editing.js":"955bc2b8e433","js/mathjax-editing.js":"807037d18f3f"});
+    </script>
+
+<script async="" type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/full-anon.js"></script><script async="" type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/prettify-full.js"></script><link href="./Best way to copy between two Stream instances - C# - Stack Overflow_files/sidebar.min.css" type="text/css" rel="stylesheet"></head>
+<body class="question-page" style="margin-top: 2.5em; ">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+    <div id="notify-container"><div id="notify--1" style=""><span class="notify-close"><a title="dismiss this notification">×</a></span><span class="notify-text">Welcome to Q&amp;A for professional and enthusiast programmers — check out the <a onclick="StackExchange.notify.closeFirstTime(); return false;" href="http://stackoverflow.com/faq">FAQ</a>!</span></div></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+    <div class="container">
+        <div id="header">
+            <div id="portalLink">
+                <a class="genu" onclick="StackExchange.ready(function(){genuwine.click();});return false;">Stack Exchange</a>
+            </div>
+            <div id="topbar">
+                <div id="hlinks">
+                    <span id="hlinks-user">
+                  
+                  </span>
+                  <span id="hlinks-nav">
+                  <a href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f230128%2fbest-way-to-copy-between-two-stream-instances-c">log in</a>
+ <span class="lsep">|</span>
+<a href="http://careers.stackoverflow.com/">careers</a>
+ <span class="lsep">|</span>
+
+                  </span>
+                  <span id="hlinks-custom">
+                  <a href="http://chat.stackoverflow.com/">chat</a>
+ <span class="lsep">|</span>
+<a href="http://meta.stackoverflow.com/">meta</a>
+ <span class="lsep">|</span>
+<a href="http://stackoverflow.com/about">about</a>
+ <span class="lsep">|</span>
+<a href="http://stackoverflow.com/faq">faq</a>
+                  </span>
+                </div>
+                <div id="hsearch">
+                    <form id="search" action="http://stackoverflow.com/search" method="get" autocomplete="off">
+                    <div>
+                        <input autocomplete="off" name="q" class="textbox" placeholder="search" tabindex="1" type="text" maxlength="140" size="28" value="">
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">Stack Overflow</a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                        <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                        <li><a id="nav-badges" href="http://stackoverflow.com/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="http://stackoverflow.com/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <div id="content">
+            
+
+
+
+<div id="question-header">
+    <h1><a href="./Best way to copy between two Stream instances - C# - Stack Overflow_files/Best way to copy between two Stream instances - C# - Stack Overflow.htm" class="question-hyperlink">Best way to copy between two Stream instances - C#</a></h1>
+</div>
+<div id="mainbar">
+
+
+<div id="question">
+
+    <div class="everyonelovesstackoverflow" id="adzerk1"><a href="http://engine.adzerk.net/redirect/0/5922/2444/8277/6ad5ab8440e74b86bcbe0adc50ebe336/43/1178/8808/634535779132463210?keywords=c%23%2cstream%2ccopying" rel="nofollow" target="_blank" title=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/bee37138e0414d6f99d68ae55955c4fa.png" title="" alt="" border="0" height="90" width="728"></a></div>
+
+    
+    <table>
+    <tbody><tr>
+    <td class="votecell">
+        
+<div class="vote">
+    <input type="hidden" value="230128">
+    <a class="vote-up-off" title="This question shows research effort; it is useful and clear (click again to undo)">up vote</a>
+    <span class="vote-count-post">86</span>
+    <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful (click again to undo)">down vote</a>
+
+    <a class="star-off" href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c#" title="This is a favorite question (click again to undo)">favorite</a>
+    <div class="favoritecount"><b>36</b></div>    
+
+    <script type="text/javascript">
+        StackExchange.ready(function() {
+            var shareUrl = "http%3a%2f%2fstackoverflow.com%2fq%2f230128";
+            var shareMsg = "Best+way+to+copy+between+two+Stream+instances+-+C%23";
+            StackExchange.share.facebook($("#fb-share-230128"), shareUrl, shareMsg);
+            StackExchange.share.twitter($("#twitter-share-230128"), shareUrl, shareMsg);
+        });
+    </script>
+    <a id="fb-share-230128" class="fb-share" title="share link to this question on Facebook">share [fb]</a>
+    <a id="twitter-share-230128" class="twitter-share" title="share link to this question on Twitter">share [tw]</a>    
+
+</div>
+
+    </td>
+
+<td class="postcell">
+<div>          
+    <div class="post-text">
+        <p>What is the best way to copy the contents of one stream to another? Is there a standard utility method for this?</p>
+
+    </div>            
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a> <a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a> <a href="http://stackoverflow.com/questions/tagged/copying" class="post-tag" title="show questions tagged &#39;copying&#39;" rel="tag">copying</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/q/230128" title="short permalink to this question" id="link-post-230128">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/230128/edit">improve this question</a></div>
+    </td>
+                        
+
+    <td class="post-signature owner">
+    <div class="user-info"><div class="user-action-time">asked <span title="2008-10-23 15:16:13Z" class="relativetime">Oct 23 '08 at 15:16</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/341413/anton"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/226d4510245ec383307f191600ec731c" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/341413/anton">Anton</a><br><span class="reputation-score" title="reputation score">658</span><span title="2 gold badges"><span class="badge1"></span><span class="badgecount">2</span></span><span title="11 silver badges"><span class="badge2"></span><span class="badgecount">11</span></span><span title="23 bronze badges"><span class="badge3"></span><span class="badgecount">23</span></span></div></div>
+        <br class="cbt">
+        <div class="accept-rate cool" title="this user has accepted an answer for 5 of 7 eligible questions">71% accept rate</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+    </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-230128" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful" style="color: rgb(136, 136, 136); ">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>    
+</div>
+
+
+
+<div id="answers">
+
+    <a name="tab-top"></a>
+    <div id="answers-header">
+        <div class="subheader answers-subheader">
+            <h2>9 Answers</h2>
+            <div id="tabs">
+                <a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+<a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+<a class="youarehere" href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+
+            </div>
+        </div>    
+    </div>    
+
+
+  
+    <a name="230141"></a>
+    <div id="answer-230141" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="230141">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post" style="font-size:200%;">127</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+<span class="vote-accepted-on" title="The question owner accepted this as the best answer Jan 1 &#39;01 at 0:00">accepted</span>
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>Feel free to edit this community post to fix bugs or implement improvements.</p>
+
+<pre class="lang-cs prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> input</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> output</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">32768</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> read</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">((</span><span class="pln">read </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">))</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; output</span><span class="pun">.</span><span class="typ">Write</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> read</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p><strong>N.B. From .NET 4.0, there's a Stream.CopyTo method:</strong></p>
+
+<pre class="lang-cs prettyprint"><code><span class="pln">input</span><span class="pun">.</span><span class="typ">CopyTo</span><span class="pun">(</span><span class="pln">output</span><span class="pun">);</span><span class="pln"><br></span></code></pre>
+
+<p>And you have to set the position to <code>0</code> afterwards.</p>
+
+<pre class="lang-cs prettyprint"><code><span class="pln">input</span><span class="pun">.</span><span class="typ">Position</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> output</span><span class="pun">.</span><span class="typ">Position</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/230141#230141" title="permalink to this answer" id="link-post-230141">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/230141/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/230141/revisions" title="show all edits to this post"><span title="2011-06-24 23:03:35Z" class="relativetime">Jun 24 at 23:03</span></a></div><div class="user-gravatar32"></div><div class="user-details"><br></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-details"><span class="community-wiki" title="This post is community owned as of Oct 23 &#39;08 at 15:19. Votes do not generate reputation, and it can be edited by users with 100 rep">community wiki</span></div><br><div class="user-details"><a id="history-230141" href="http://stackoverflow.com/posts/230141/revisions" title="show revision history for this post">5 revs, 4 users 72%<br>Nick</a></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-230141" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-96165" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="warm">14</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">It looks correct to me. I usually use the "while ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)" idiom, but this is certainly okay :)</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2008-10-23 15:21:54Z">Oct 23 '08 at 15:21</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-380229" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">This makes me want an IOUtils clone for .Net. Thanks anyway. +1</span> –&nbsp;<a href="http://stackoverflow.com/users/7034/henning" title="5165 reputation" class="comment-user">Henning</a> <span class="comment-date"><span title="2009-02-20 08:58:53Z">Feb 20 '09 at 8:58</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-1560483" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="hot">23</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">Note that this is not the fastest way to do it. In the provided code snippet, you have to wait for the Write to complete before a new block is read. When doing the Read and Write asynchronously this waiting will disappear. In some situation this will make the copy twice as fast. However it will make the code a lot more complicated so if speed is not an issue, keep it simple and use this simple loop.
+
+This question on StackOverflow has some code that illustrates the async Read/Write: <a href="http://stackoverflow.com/questions/1540658/net-asynchronous-stream-read-write" title="net asynchronous stream read write">stackoverflow.com/questions/1540658/…</a>
+
+Regards,
+
+Sebastiaan</span> –&nbsp;<a href="http://stackoverflow.com/users/135702/sebastiaan-megens" title="1588 reputation" class="comment-user">Sebastiaan Megens</a> <span class="comment-date"><span title="2009-11-06 07:10:02Z">Nov 6 '09 at 7:10</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-5089905" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">Is 32,768 the recommended byte size? I've seen smaller amounts before, such as  4,096.</span> –&nbsp;<a href="http://stackoverflow.com/users/115652/josh" title="673 reputation" class="comment-user">Josh</a> <span class="comment-date"><span title="2011-01-07 16:02:34Z">Jan 7 at 16:02</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-5090007" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">@Josh 32,768 is a copy with 32 KB chunks.  4096 uses 4 KB chunks.  It'll be slightly slower but use less memory.</span> –&nbsp;<a href="http://stackoverflow.com/users/1490/nick" title="4519 reputation" class="comment-user">Nick</a> <span class="comment-date"><span title="2011-01-07 16:11:10Z">Jan 7 at 16:11</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    <a id="comments-link-230141" class="comments-link" title="expand to show all comments on this post">show <b>3</b> more comments</a>
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+    <div class="everyonelovesstackoverflow" id="adzerk3"><a href="http://engine.adzerk.net/redirect/0/5924/2444/8277/59df4bdf56f04a998040d6a0b24f441a/44/1178/8810/634535779132463210?keywords=c%23%2cstream%2ccopying" rel="nofollow" target="_blank" title=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/0a96cc99c1784d6abe3cae6b8c8bf013.png" title="" alt="" border="0" height="90" width="728"></a></div>
+
+    
+  
+    <a name="1253049"></a>
+    <div id="answer-1253049" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="1253049">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">19</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>I use the following extension methods. They have optimized overloads for when one stream is a MemoryStream.</p>
+
+<pre class="lang-cs prettyprint"><code><span class="pln">&nbsp; &nbsp; </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyTo</span><span class="pun">(</span><span class="kwd">this</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> dest</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> size </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">CanSeek</span><span class="pun">)</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> </span><span class="typ">Math</span><span class="pun">.</span><span class="typ">Min</span><span class="pun">((</span><span class="kwd">int</span><span class="pun">)(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">Length</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> src</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">),</span><span class="pln"> </span><span class="lit">0x2000</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0x2000</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="pln">size</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> n</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">do</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; n </span><span class="pun">=</span><span class="pln"> src</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dest</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> n</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">n </span><span class="pun">!=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br><br>&nbsp; &nbsp; </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyTo</span><span class="pun">(</span><span class="kwd">this</span><span class="pln"> </span><span class="typ">MemoryStream</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> dest</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; dest</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">GetBuffer</span><span class="pun">(),</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">src</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">,</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">Length</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> src</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">));</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br><br>&nbsp; &nbsp; </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyTo</span><span class="pun">(</span><span class="kwd">this</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> </span><span class="typ">MemoryStream</span><span class="pln"> dest</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">CanSeek</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> pos </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">dest</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> length </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)(</span><span class="pln">src</span><span class="pun">.</span><span class="typ">Length</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> src</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> pos</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dest</span><span class="pun">.</span><span class="typ">SetLength</span><span class="pun">(</span><span class="pln">length</span><span class="pun">);</span><span class="pln"> <br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">while</span><span class="pun">(</span><span class="pln">pos </span><span class="pun">&lt;</span><span class="pln"> length</span><span class="pun">)</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pos </span><span class="pun">+=</span><span class="pln"> src</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">dest</span><span class="pun">.</span><span class="typ">GetBuffer</span><span class="pun">(),</span><span class="pln"> pos</span><span class="pun">,</span><span class="pln"> length </span><span class="pun">-</span><span class="pln"> pos</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">else</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; src</span><span class="pun">.</span><span class="typ">CopyTo</span><span class="pun">((</span><span class="typ">Stream</span><span class="pun">)</span><span class="pln">dest</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/1253049#1253049" title="permalink to this answer" id="link-post-1253049">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/1253049/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2009-08-10 03:54:43Z" class="relativetime">Aug 10 '09 at 3:54</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/152580/eloff"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/34b114b30616ba935061582133cceeb8" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/152580/eloff">Eloff</a><br><span class="reputation-score" title="reputation score">2,182</span><span title="9 silver badges"><span class="badge2"></span><span class="badgecount">9</span></span><span title="24 bronze badges"><span class="badge3"></span><span class="badgecount">24</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-1253049" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="3089903"></a>
+    <div id="answer-3089903" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="3089903">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">9</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>MemoryStream has .WriteTo(outstream);</p>
+
+<p>and .NET 4.0 has .CopyTo on normal stream object.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/3089903#3089903" title="permalink to this answer" id="link-post-3089903">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/3089903/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2010-06-22 02:41:36Z" class="relativetime">Jun 22 '10 at 2:41</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/368954/joshua"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/6191ed3cea25b217ce20f20d3ede0f40" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/368954/joshua">Joshua</a><br><span class="reputation-score" title="reputation score">281</span><span title="2 silver badges"><span class="badge2"></span><span class="badgecount">2</span></span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-3089903" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="1253015"></a>
+    <div id="answer-1253015" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="1253015">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">2</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>There is actually, a less heavy-handed way of doing a stream copy. Take note however, that this implies that you can store the entire file in memory. Don't try and use this if you are working with files that go into the hundreds of megabytes or more, without caution.</p>
+
+<pre class="lang-cs prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> input</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> output</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; using </span><span class="pun">(</span><span class="typ">StreamReader</span><span class="pln"> reader </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">StreamReader</span><span class="pun">(</span><span class="pln">input</span><span class="pun">))</span><span class="pln"><br>&nbsp; using </span><span class="pun">(</span><span class="typ">StreamWriter</span><span class="pln"> writer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">StreamWriter</span><span class="pun">(</span><span class="pln">output</span><span class="pun">))</span><span class="pln"><br>&nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; writer</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">reader</span><span class="pun">.</span><span class="typ">ReadToEnd</span><span class="pun">());</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p><em>NOTE: There may also be some issues concerning binary data and character encodings.</em></p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/1253015#1253015" title="permalink to this answer" id="link-post-1253015">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/1253015/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/1253015/revisions" title="show all edits to this post"><span title="2009-11-06 06:52:04Z" class="relativetime">Nov 6 '09 at 6:52</span></a></div><div class="user-gravatar32"></div><div class="user-details"><br></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-details"><span class="community-wiki" title="This post is community owned as of Aug 10 &#39;09 at 3:38. Votes do not generate reputation, and it can be edited by users with 100 rep">community wiki</span></div><br><div class="user-details"><a id="history-1253015" href="http://stackoverflow.com/posts/1253015/revisions" title="show revision history for this post">3 revs, 2 users 80%<br>SmokingRope</a></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-1253015" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-1577932" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">2</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">The default constructor for StreamWriter creates a UTF8 stream without a BOM (<a href="http://msdn.microsoft.com/en-us/library/fysy0a4b.aspx" rel="nofollow">msdn.microsoft.com/en-us/library/fysy0a4b.aspx</a>) so there's no danger of encoding problems. 
+Binary data almost certainly shouldn't be copied this way.</span> –&nbsp;<a href="http://stackoverflow.com/users/26479/david-kemp" title="4528 reputation" class="comment-user">David Kemp</a> <span class="comment-date"><span title="2009-11-09 16:27:26Z">Nov 9 '09 at 16:27</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="230190"></a>
+    <div id="answer-230190" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="230190">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">1</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>The basic questions that differentiate implementations of "CopyStream" are:</p>
+
+<ul>
+<li>size of the reading buffer</li>
+<li>size of the writes</li>
+<li>Can we use more than one thread (writing while we are reading).</li>
+</ul>
+
+<p>The answers to these questions result in vastly different implementations of CopyStream and are dependent on what kind of streams you have and what you are trying to optimize.  The "best" implementation would even need to know what specific hardware the streams were reading and writing to.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/230190#230190" title="permalink to this answer" id="link-post-230190">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/230190/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover"><div class="user-action-time">answered <span title="2008-10-23 15:29:53Z" class="relativetime">Oct 23 '08 at 15:29</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/4592/fryguybob"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/5d8d81116011a01424b4dbe952846c25" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/4592/fryguybob">fryguybob</a><br><span class="reputation-score" title="reputation score">1,677</span><span title="8 silver badges"><span class="badge2"></span><span class="badgecount">8</span></span><span title="24 bronze badges"><span class="badge3"></span><span class="badgecount">24</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-230190" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-2496354" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">... or the best implementation could have overloads to allow you to specify the buffer size, write size, and whether threads are allowed?</span> –&nbsp;<a href="http://stackoverflow.com/users/15639/markj" title="13188 reputation" class="comment-user">MarkJ</a> <span class="comment-date"><span title="2010-03-23 16:40:57Z">Mar 23 '10 at 16:40</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="230175"></a>
+    <div id="answer-230175" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="230175">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">0</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>Unfortunately, there is no really simple solution. You can try something like that:</p>
+
+<pre class="lang-cs prettyprint"><code><span class="typ">Stream</span><span class="pln"> s1</span><span class="pun">,</span><span class="pln"> s2</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">4096</span><span class="pun">];</span><span class="pln"><br></span><span class="kwd">int</span><span class="pln"> bytesRead </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">bytesRead </span><span class="pun">=</span><span class="pln"> s1</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">)</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> s2</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> bytesRead</span><span class="pun">);</span><span class="pln"><br>s1</span><span class="pun">.</span><span class="typ">Close</span><span class="pun">();</span><span class="pln"> s2</span><span class="pun">.</span><span class="typ">Close</span><span class="pun">();</span><span class="pln"><br></span></code></pre>
+
+<p>But the problem with that that different implementation of the Stream class might behave differently if there is nothing to read. A stream reading a file from a local harddrive will probably block until the read operaition has read enough data from the disk to fill the buffer and only return less data if it reaches the end of file. On the other hand, a stream reading from the network might return less data even though there are more data left to be received.</p>
+
+<p>Always check the documentation of the specific stream class you are using before using a generic solution.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/230175#230175" title="permalink to this answer" id="link-post-230175">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/230175/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover"><div class="user-action-time">answered <span title="2008-10-23 15:26:28Z" class="relativetime">Oct 23 '08 at 15:26</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/8954/drjokepu"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/973c6e2cf1ae9f6615dd883eb14597b1" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/8954/drjokepu">DrJokepu</a><br><span class="reputation-score" title="reputation score 23880">23.9k</span><span title="9 gold badges"><span class="badge1"></span><span class="badgecount">9</span></span><span title="64 silver badges"><span class="badge2"></span><span class="badgecount">64</span></span><span title="101 bronze badges"><span class="badge3"></span><span class="badgecount">101</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-230175" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-96197" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">1</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">The generic solution will work here - Nick's answer is a fine one. The buffer size is an arbitrary choice of course, but 32K sounds reasonable. I think Nick's solution is right not to close the streams though - leave that to the owner.</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2008-10-23 15:31:25Z">Oct 23 '08 at 15:31</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="230625"></a>
+    <div id="answer-230625" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="230625">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">0</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>There may be a way to do this more efficiently, depending on what kind of stream you're working with.  If you can convert one or both of your streams to a MemoryStream, you can use the GetBuffer method to work directly with a byte array representing your data.  This lets you use methods like Array.CopyTo, which abstract away all the issues raised by fryguybob.  You can just trust .NET to know the optimal way to copy the data.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/230625#230625" title="permalink to this answer" id="link-post-230625">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/230625/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2008-10-23 17:24:29Z" class="relativetime">Oct 23 '08 at 17:24</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/26286/coderer"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/5f28ab052c1a7d0bb5476a190272449e" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/26286/coderer">Coderer</a><br><span class="reputation-score" title="reputation score">2,114</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="11 silver badges"><span class="badge2"></span><span class="badgecount">11</span></span><span title="29 bronze badges"><span class="badge3"></span><span class="badgecount">29</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-230625" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="671270"></a>
+    <div id="answer-671270" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="671270">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">0</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>if you want a procdure to copy a stream to other the one that nick posted is fine but it is missing the position reset, it should be</p>
+
+<pre class="lang-cs prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> input</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> output</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">32768</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">long</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> &nbsp; &nbsp;<br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> read </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Read</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">read </span><span class="pun">&lt;=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; output</span><span class="pun">.</span><span class="typ">Write</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> read</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; input</span><span class="pun">.</span><span class="typ">Position</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pun">;</span><span class="com">// or you make Position = 0 to set it at the start</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p>but if it is in runtime not using a procedure you shpuld use memory stream</p>
+
+<pre class="lang-cs prettyprint"><code><span class="typ">Stream</span><span class="pln"> output </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">MemoryStream</span><span class="pun">();</span><span class="pln"><br></span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">32768</span><span class="pun">];</span><span class="pln"> </span><span class="com">// or you specify the size you want of your buffer</span><span class="pln"><br></span><span class="kwd">long</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> &nbsp; &nbsp;<br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> read </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Read</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">read </span><span class="pun">&lt;=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">return</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; output</span><span class="pun">.</span><span class="typ">Write</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> read</span><span class="pun">);</span><span class="pln"><br>&nbsp;</span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; input</span><span class="pun">.</span><span class="typ">Position</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pun">;</span><span class="com">// or you make Position = 0 to set it at the start</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/671270#671270" title="permalink to this answer" id="link-post-671270">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/671270/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2009-03-22 16:44:40Z" class="relativetime">Mar 22 '09 at 16:44</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/81106/kronass"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/eace318f797a838bb1e12d2fe02159e7" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/81106/kronass">Kronass</a><br><span class="reputation-score" title="reputation score">926</span><span title="2 silver badges"><span class="badge2"></span><span class="badgecount">2</span></span><span title="12 bronze badges"><span class="badge3"></span><span class="badgecount">12</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-671270" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-4250385" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">2</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">You shouldn't change the position of the input stream, because not all streams allow random access. In a network stream, for example, you cannot change position, only read and/or write.</span> –&nbsp;<a href="http://stackoverflow.com/users/46642/r-martinho-fernandes" title="22424 reputation" class="comment-user">R. Martinho Fernandes</a> <span class="comment-date"><span title="2010-10-20 00:50:25Z">Oct 20 '10 at 0:50</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="6398039"></a>
+    <div id="answer-6398039" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="6398039">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">0</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><pre class="lang-cs prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> input</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> output</span><span class="pun">)</span><span class="pln"> <br></span><span class="pun">{</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">32768</span><span class="pun">];</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="kwd">long</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Position</span><span class="pun">;</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> read </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Read</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">read </span><span class="pun">&lt;=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">break</span><span class="pun">;</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; output</span><span class="pun">.</span><span class="typ">Write</span><span class="pln"> </span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> read</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp; &nbsp; input</span><span class="pun">.</span><span class="typ">Position</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">TempPos</span><span class="pun">;</span><span class="com">// or you make Position = 0 to set it at the start </span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p>Use break instead of the return. The retrun prevents the input.Position = TempPos from being executed.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c/6398039#6398039" title="permalink to this answer" id="link-post-6398039">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/6398039/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/6398039/revisions" title="show all edits to this post"><span title="2011-06-21 17:28:53Z" class="relativetime">Jun 21 at 17:28</span></a></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/71200/kenneth-cochran"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/0a9d0aadd049fa597a20fe4274e8d1b9" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/71200/kenneth-cochran">Kenneth Cochran</a><br><span class="reputation-score" title="reputation score">4,612</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="35 bronze badges"><span class="badge3"></span><span class="badgecount">35</span></span></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2011-06-18 18:29:53Z" class="relativetime">Jun 18 at 18:29</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/804763/conor"><div class=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/7455c5bdfe14fd9b9dc251a207f0c29d" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/804763/conor">Conor</a><br><span class="reputation-score" title="reputation score">1</span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-6398039" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+    <a name="new-answer"></a>
+    <form id="post-form" action="http://stackoverflow.com/questions/230128/answer/submit" method="post" class="post-form">
+        <h2 class="space">Your Answer</h2>
+       
+
+<script type="text/javascript">
+    StackExchange.ready(function() {
+    
+        initTagRenderer("".split(" "), "".split(" "));
+
+              
+            prepareEditor({
+                
+                heartbeatType: 'answer',
+                bindNavPrevention: true,
+                postfix: "",
+                onDemand: true                ,immediatelyShowMarkdownHelp:true
+            });
+            
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">  
+
+    
+    <div class="wmd-container">
+        <div id="wmd-button-bar" class="wmd-button-bar"><ul id="wmd-button-row" class="wmd-button-row"><li id="wmd-bold-button" class="wmd-button" style="left: 0px; "><span style="background-position: 0px -20px; "></span></li><li id="wmd-italic-button" class="wmd-button" style="left: 25px; "><span style="background-position: -20px -20px; "></span></li><li id="wmd-spacer1" class="wmd-spacer" style="left: 50px; "><span style="background-position: -40px -20px; "></span></li><li id="wmd-link-button" class="wmd-button" style="left: 75px; "><span style="background-position: -40px -20px; "></span></li><li id="wmd-quote-button" class="wmd-button" style="left: 100px; "><span style="background-position: -60px -20px; "></span></li><li id="wmd-code-button" class="wmd-button" style="left: 125px; "><span style="background-position: -80px -20px; "></span></li><li id="wmd-image-button" class="wmd-button" style="left: 150px; "><span style="background-position: -100px -20px; "></span></li><li id="wmd-spacer2" class="wmd-spacer" style="left: 175px; "><span style="background-position: -120px -20px; "></span></li><li id="wmd-olist-button" class="wmd-button" style="left: 200px; "><span style="background-position: -120px -20px; "></span></li><li id="wmd-ulist-button" class="wmd-button" style="left: 225px; "><span style="background-position: -140px -20px; "></span></li><li id="wmd-heading-button" class="wmd-button" style="left: 250px; "><span style="background-position: -160px -20px; "></span></li><li id="wmd-hr-button" class="wmd-button" style="left: 275px; "><span style="background-position: -180px -20px; "></span></li><li id="wmd-spacer3" class="wmd-spacer" style="left: 300px; "><span style="background-position: -200px -20px; "></span></li><li id="wmd-undo-button" class="wmd-button" style="left: 325px; "><span style="background-position: -200px -20px; "></span></li><li id="wmd-redo-button" class="wmd-button" style="left: 350px; "><span style="background-position: -220px -20px; "></span></li></ul></div>
+        <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101"></textarea>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="69d84c180fe560ef1a6a543c5eb7435b">
+        <input id="author" name="author" type="text">
+    </div>
+</div>   
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+        <td class="vm open-id-login">
+            <a id="login-link" style="font-size: 200%; margin-left: 30px;" href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f230128%2fbest-way-to-copy-between-two-stream-instances-c">log in</a>
+            <script type="text/javascript">
+                StackExchange.ready(function () {
+                    StackExchange.helpers.onClickDraftSave('#login-link');
+                });
+            </script>
+        </td>
+
+    
+        <td class="orcell">
+            <div class="orword">or</div>
+            <div class="orline"></div>
+        </td>
+        <td class="vm">
+            <div>
+                <label for="display-name">Name</label>
+                <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+            </div>
+            <div>
+                <label for="m-address">Email</label>
+                <input id="m-address" name="m-address" type="text" size="40" maxlength="100" value="" tabindex="106">
+                <span class="edit-field-overlay">required, but never shown</span>
+            </div>
+            <div>
+                <label for="home-page">Home Page</label>
+                <input id="home-page" name="home-page" type="text" size="40" maxlength="200" value="" tabindex="107">
+            </div>
+        </td>
+    
+        </tr>
+        </tbody></table>
+    </div>
+               
+        <div class="form-submit cbt"><input id="submit-button" type="submit" value="Post Your Answer" tabindex="110"></div>
+    </form>
+
+
+        <h2 class="bottom-notice">
+                Not the answer you're looking for? 
+            Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a> <a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a> <a href="http://stackoverflow.com/questions/tagged/copying" class="post-tag" title="show questions tagged &#39;copying&#39;" rel="tag">copying</a> 
+                or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.
+        </h2>
+</div>
+</div>
+<div id="sidebar">
+
+
+
+    <div class="module newuser newuser-greeting" style="">
+        <h4>Hello World!</h4>
+        <div>
+            <p>This is a collaboratively edited question and answer site for <b>professional and enthusiast programmers</b>. It's 100% free, no registration required.</p>
+            <p class="ar"><a href="http://stackoverflow.com/about">about »</a>&nbsp;&nbsp;&nbsp;<a href="http://stackoverflow.com/faq">faq »</a></p>
+        </div>
+    </div>
+    <div class="module">
+        <p class="label-key">tagged</p>
+        <div class="tagged"><a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a>&nbsp;<span class="item-multiplier">×&nbsp;223020</span><br>
+<a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a>&nbsp;<span class="item-multiplier">×&nbsp;1874</span><br>
+<a href="http://stackoverflow.com/questions/tagged/copying" class="post-tag" title="show questions tagged &#39;copying&#39;" rel="tag">copying</a>&nbsp;<span class="item-multiplier">×&nbsp;59</span><br>
+</div>
+        <table id="qinfo">
+            <tbody><tr>
+                <td><p class="label-key">asked</p></td>
+                <td style="padding-left:10px"><p class="label-key" title="2008-10-23 15:16:13Z"><b>2 years ago</b></p></td>
+            </tr>
+            <tr>
+                <td><p class="label-key">viewed</p></td>
+
+                <td style="padding-left:10px"><p class="label-key"><b>36,143 times</b></p></td>
+            </tr>
+            <tr>
+                <td><p class="label-key">active</p></td>
+                <td style="padding-left:10px"><p class="label-key"><b><a href="http://stackoverflow.com/questions/230128/best-way-to-copy-between-two-stream-instances-c?lastactivity" class="lastactivity-link" title="2011-06-24 23:03:35Z">3 months ago</a></b></p></td>
+            </tr>
+        </tbody></table>
+    </div>
+    
+        <script type="text/javascript">
+            var scriptSrc = "http://engine2.adzerk.net/z/8277/adzerk1_2_4_43,adzerk2_2_17_45,adzerk3_2_4_44?keywords=c%23,stream,copying";
+            if (document.referrer) {
+                if (/\?/.test(scriptSrc))
+                    scriptSrc += "&";
+                else
+                    scriptSrc += "?";
+                scriptSrc += "xReferrer=" + document.referrer;
+            }
+            var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = scriptSrc; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);
+        </script>
+    
+    <div class="everyonelovesstackoverflow" id="adzerk2"><a href="http://engine.adzerk.net/redirect/0/2333/2444/8277/0fc4661b94054e9bbb86fcad9dee87c6/45/1178/2064/634535779132463210?keywords=c%23%2cstream%2ccopying" rel="nofollow" target="_blank" title=""><img src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/2333.jpg" title="" alt="" border="0" height="250" width="220"></a></div>
+
+    
+    <div>
+        <script type="text/javascript">
+            var careers_adurl="http://careers.stackoverflow.com/ad/js",careers_cssurl="http://cdn.sstatic.net/careers/ads/sidebar.min.css?33d2c7",careers_leaderboardcssurl="http://cdn.sstatic.net/careers/ads/ninja.min.css?33cf39",careers_companycssurl="http://cdn.sstatic.net/careers/ads/company";(function(){var b="min-height:220px;margin:15px 0",c=$("<div>").addClass("hireme").attr("style",b),a=$("<div>").html(c);document.write(a.html());$.ajax({url:"http://cdn.sstatic.net/careers/ads/adloader.min.js?33d2c7",dataType:"script",cache:true})})();
+        </script><div class="hireme" style="min-height:220px;margin:15px 0"> <a href="http://careers.stackoverflow.com/jobs?a=12" class="all" target="_blank"></a> <ul class="jobs"> <li> <a href="http://careers.stackoverflow.com/jobs/13770/senior-product-manager-developers-with-product-skimlinks?a=ggGrvFe" target="_blank" title="Senior Product Manager - developers with product experience also encouraged at Skimlinks. Click to learn more."> Senior Product Manager - developers with product experience…<br> <span class="company">Skimlinks</span> <span class="location">London, England</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/12786/android-developer-fuzz-productions?a=f6BsRNu" target="_blank" title="Android Developer at Fuzz Productions, LLC. Click to learn more."> Android Developer<br> <span class="company">Fuzz Productions</span> <span class="location">New York, NY</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/13852/senior-web-developer-annalect?a=gmGRejS" target="_blank" title="Senior Web Developer at Annalect. Click to learn more."> Senior Web Developer<br> <span class="company">Annalect</span> <span class="location">New York, NY</span> </a> </li> </ul> <img alt="" class="impression" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/ggGrvFe-f6BsRNu-gmGRejS-12" style="display:none"></div>
+    </div>
+
+        <div style="margin-bottom: 10px;">
+        
+<style type="text/css">
+#newsletter-ad {
+    width: 190px;
+    height: 250px;
+    overflow: hidden;
+    background: url('http://sstatic.net/stackoverflow/img//newsletter-ad.png');
+    padding: 0 15px 0 15px;
+}
+#newsletter-ad-header {
+    margin-top: 60px;
+}
+#newsletter-ad ul {
+    margin: 1em 0 1em 1.5em;
+}
+#newsletter-ad ul li {
+    margin-bottom: 5px;
+}
+#newsletter-signup-container {
+    text-align: center;
+}
+#newsletter-preview-container {
+    margin-top: 10px;
+    text-align: center;
+}
+#newsletter-email-input {
+    width: 200px;
+}
+</style>
+
+<script>
+    StackExchange.ready(function () {
+        StackExchange.newsletterAd.init();
+    });
+</script>
+
+<div id="newsletter-ad">
+    <p id="newsletter-ad-header">Get the <strong>weekly newsletter!</strong></p>
+    <ul>
+        <li>Top questions and answers</li>
+        <li>Important announcements</li>
+        <li>Unanswered questions</li>
+    </ul>
+    <div id="newsletter-signup-container"><input id="newsletter-signup" type="button" value="Sign up for the newsletter"></div>
+    <p id="newsletter-preview-container">see an <a href="http://stackexchange.com/newsletters/newsletter?site=stackoverflow.com" id="newsletter-preview">example newsletter</a></p>
+</div>
+
+    </div>
+  
+
+    <div class="module">
+    <h4 id="h-linked">Linked</h4>
+    <div class="linked">
+    <div class="spacer">
+<a href="http://stackoverflow.com/questions/1540658/net-asynchronous-stream-read-write" class="question-hyperlink">.NET Asynchronous stream read/write</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1246899/file-copy-vs-manual-filestream-write-for-copying-file" class="question-hyperlink">File.Copy vs. Manual FileStream.Write For Copying File</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2791981/how-to-use-wkhtmltopdf-exe-in-asp-net" class="question-hyperlink">How to use wkhtmltopdf.exe in ASP.net</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3241483/should-variable-declarations-always-be-placed-outside-of-a-loop" class="question-hyperlink">Should variable declarations always be placed outside of a loop?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2490423/is-it-possible-to-clone-a-net-stream" class="question-hyperlink">Is it Possible to Clone a .NET Stream?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3212707/how-to-get-a-memorystream-from-a-stream-in-net" class="question-hyperlink">How to get a MemoryStream from a Stream in .NET?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1933742/how-is-the-stream-copytostream-method-implemented-in-net-4" class="question-hyperlink">How is the Stream.CopyTo(Stream) method implemented in .NET 4?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1594111/how-to-convert-video-to-byte-array-in-c-c-sharp" class="question-hyperlink">How to convert Video to byte Array in C# ( c sharp )?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3386749/loading-a-file-to-a-bitmap-but-leaving-the-original-file-intact" class="question-hyperlink">Loading a file to a Bitmap but leaving the original file intact</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5654298/filestream-read-write-methods-limitation" class="question-hyperlink">FileStream Read/Write method's limitation</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5828315/write-pdf-stream-to-response-stream" class="question-hyperlink">Write PDF stream to response stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3254183/cant-write-to-file-using-binarywriter" class="question-hyperlink">Can't write to file using binarywriter</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6227373/how-to-open-a-file-in-memory" class="question-hyperlink">How to open a file in memory?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2790750/c-asp-net-use-stream-from-webrequest-as-response" class="question-hyperlink">C# asp.net use Stream from WebRequest as Response</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3196226/ftpwebrequest-download-file-incorrect-size" class="question-hyperlink">FtpWebRequest Download File Incorrect Size</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6216367/copying-from-one-stream-to-another" class="question-hyperlink">Copying from one stream to another?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/7291693/c-prepending-bytes-to-the-beginning-of-a-file" class="question-hyperlink">C# prepending bytes to the beginning of a file?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5730863/how-to-use-stream-copyto-on-framework-3-5" class="question-hyperlink">How To Use Stream.Copyto On Framework 3.5?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1532429/how-can-i-write-an-xml-on-my-hard-drive-to-getrequeststream" class="question-hyperlink">How can I write an XML on my hard drive to GetRequestStream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3427185/using-filestream-classes-to-copy-files-why-does-output-not-match-input" class="question-hyperlink">Using FileStream classes to copy files, why does output not match input?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4888802/interconnect-streams" class="question-hyperlink">Interconnect streams</a>
+</div>
+<div class="spacer more">
+<a href="http://stackoverflow.com/search?q=url%3a%22http%3a%2f%2fstackoverflow.com%2fquestions%2f230128%2f*%22">see more linked questions…</a></div>
+
+    </div>
+    </div>
+    <div class="module">
+    <h4 id="h-related">Related</h4>
+    <div class="related">
+    <div class="spacer">
+<a href="http://stackoverflow.com/questions/510971/c-memcpy-equivalent" class="question-hyperlink">C# memcpy equivalent</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/574396/best-way-to-save-a-stream-to-a-file-in-asp-net-3-5" class="question-hyperlink">Best way to save a Stream to a file in asp.net 3.5?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/679031/copy-array-of-objects-to-array-of-different-type" class="question-hyperlink">Copy array of objects to array of different type</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/701730/copy-the-symbolic-link-in-solaris" class="question-hyperlink">copy the symbolic link in Solaris</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1041267/net-streams-passing-streams-between-objects-best-practices-c" class="question-hyperlink">.NET streams, passing streams between objects, best practices (C#)</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1094921/dos-copy-the-first-file-in-a-directory" class="question-hyperlink">DOS COPY the first file in a directory</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1389799/how-to-create-target-directory-structure-for-copy-files-in-classic-asp" class="question-hyperlink">How to create target directory structure for copy files in classic ASP?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1609430/copying-delegates" class="question-hyperlink">Copying delegates</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1758742/copy-a-file-from-file-to-folder-file" class="question-hyperlink">Copy a file from /file to /folder/file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1972602/is-it-unethical-to-copy-javascript-or-html-from-another-website" class="question-hyperlink">Is it unethical to copy JavaScript or HTML from another website?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2322442/simulcast-a-net-stream" class="question-hyperlink">Simulcast a .NET Stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2658221/how-to-copy-subversion-repository-as-a-new-directory-to-existing-repository" class="question-hyperlink">How to copy subversion repository as a new directory to existing repository?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2739839/how-to-copy-a-file-using-paperclip" class="question-hyperlink">How to copy a file using Paperclip</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2871462/fake-output-stream-type" class="question-hyperlink">Fake output stream type</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3106960/convert-to-stream-from-a-url" class="question-hyperlink">Convert to Stream from a Url</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3209646/does-putting-data-into-stdvector-in-c-create-a-copy-of-the-data" class="question-hyperlink">Does putting data into std::vector in C++ create a copy of the data?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3687664/save-stream-to-the-file" class="question-hyperlink">Save stream to the file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4109114/jquery-copying-content-between-divs" class="question-hyperlink">jQuery copying content between DIVs</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4744126/properly-copying-data-around-in-c" class="question-hyperlink">Properly copying data around in C#</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5082604/copying-data-from-one-oracle-database-to-another-oracle-database-using-c" class="question-hyperlink">Copying data from one oracle database to another oracle database using C#</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5130483/why-is-it-so-hard-to-record-hulus-stream" class="question-hyperlink">Why is it so hard to record Hulu's stream?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5970793/find-the-last-item-but-n-in-a-stream-w-o-storing-n-items" class="question-hyperlink">find the last item but N in a stream w/o storing n items</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6261956/how-to-embed-an-image-stream-to-mailmessage" class="question-hyperlink">How to embed an Image Stream to MailMessage</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6598248/mysql-copy-a-user" class="question-hyperlink">MySQL copy a user</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6651011/how-to-copy-a-ksh-associative-array" class="question-hyperlink">How to copy a ksh associative array?</a>
+</div>
+
+    </div>
+    </div>
+</div>
+
+<div id="feed-link">
+    <div id="feed-link-text"><a href="http://stackoverflow.com/feeds/question/230128" title="feed of this question and its answers"><span class="feed-icon"></span>question feed</a></div>
+</div>
+<script type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/e809"></script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/230128/ivc/e809" class="dno" alt=""&gt;&lt;/div&gt;
+</noscript>
+<div style="display:none" id="prettify-lang">lang-cs</div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <a href="http://stackoverflow.com/about">about</a> |
+                <a href="http://stackoverflow.com/faq">faq</a> |
+                <a href="http://blog.stackexchange.com/">blog</a> |
+                    <a href="http://chat.stackoverflow.com/">chat</a> |
+                <a href="http://data.stackexchange.com/">data</a> |
+                <a href="http://blog.stackoverflow.com/category/podcasts/">podcast</a> |
+                <a href="http://shop.stackexchange.com/">shop</a> |
+                <a href="http://stackexchange.com/legal">legal</a> |
+                <a href="http://engine.adzerk.net/redirect/0/2776/2751/0/4de3c60f719c4dfcb1a57531c7050090/0">advertising info</a> |
+
+                <a onclick="StackExchange.switchMobile(&#39;on&#39;, &#39;/questions/230128/best-way-to-copy-between-two-stream-instances-c&#39;)">mobile</a> |
+
+                <b><a href="mailto:team@stackoverflow.com">contact us</a></b>
+                  | <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                <div id="footer-sites">
+                    
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://stackoverflow.com/">stackoverflow.com</a>&nbsp; 
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://stackapps.com/">api/apps</a>&nbsp; 
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://careers.stackoverflow.com/">careers</a>&nbsp; 
+                        <span style="color:#E8272C;font-size:140%">■</span>&nbsp;<a href="http://serverfault.com/">serverfault.com</a>&nbsp; 
+                        <span style="color:#00AFEF;font-size:140%">■</span>&nbsp;<a href="http://superuser.com/">superuser.com</a>&nbsp; 
+                        <span style="color:#969696;font-size:140%">■</span>&nbsp;<a href="http://meta.stackoverflow.com/">meta</a>&nbsp; 
+                        <span style="color:#46937D;font-size:140%">■</span>&nbsp;<a href="http://area51.stackexchange.com/">area&nbsp;51</a>&nbsp; 
+                        <span style="color:#C0D0DC;font-size:140%">■</span>&nbsp;<a href="http://webapps.stackexchange.com/">webapps</a>&nbsp; 
+                        <span style="color:#000000;font-size:140%">■</span>&nbsp;<a href="http://gaming.stackexchange.com/">gaming</a>&nbsp; 
+                        <span style="color:#dd4814;font-size:140%">■</span>&nbsp;<a href="http://askubuntu.com/">ubuntu</a>&nbsp; 
+                        <span style="color:#9ce4fe;font-size:140%">■</span>&nbsp;<a href="http://webmasters.stackexchange.com/">webmasters</a>&nbsp; 
+                        <span style="color:#cf4d3f;font-size:140%">■</span>&nbsp;<a href="http://cooking.stackexchange.com/">cooking</a>&nbsp; 
+                        <span style="color:#f4f28d;font-size:140%">■</span>&nbsp;<a href="http://gamedev.stackexchange.com/">game development</a>&nbsp; 
+                        <span style="color:#0f3559;font-size:140%">■</span>&nbsp;<a href="http://math.stackexchange.com/">math</a>&nbsp; 
+                        <span style="color:#f2f2f2;font-size:140%">■</span>&nbsp;<a href="http://photo.stackexchange.com/">photography</a>&nbsp; 
+                        <span style="color:#037187;font-size:140%">■</span>&nbsp;<a href="http://stats.stackexchange.com/">stats</a>&nbsp; 
+                        <span style="color:#f1e7cc;font-size:140%">■</span>&nbsp;<a href="http://tex.stackexchange.com/">tex</a>&nbsp; 
+                        <span style="color:#e1cdae;font-size:140%">■</span>&nbsp;<a href="http://english.stackexchange.com/">english</a>&nbsp; 
+                        <span style="color:#a2d9f6;font-size:140%">■</span>&nbsp;<a href="http://cstheory.stackexchange.com/">theoretical cs</a>&nbsp; 
+                        <span style="color:#1b3e6c;font-size:140%">■</span>&nbsp;<a href="http://programmers.stackexchange.com/">programmers</a>&nbsp; 
+                        <span style="color:#293a5d;font-size:140%">■</span>&nbsp;<a href="http://unix.stackexchange.com/">unix</a>&nbsp;
+                        <span style="color:#bec0cb;font-size:140%">■</span>&nbsp;<a href="http://apple.stackexchange.com/">apple</a>&nbsp;
+                        <span style="color:#939185;font-size:140%">■</span>&nbsp;<a href="http://wordpress.stackexchange.com/">wordpress</a>&nbsp;
+                        <span style="color:#b5cda4;font-size:140%">■</span>&nbsp;<a href="http://physics.stackexchange.com/">physics</a>&nbsp;
+                        <span style="color:#4176ab;font-size:140%">■</span>&nbsp;<a href="http://diy.stackexchange.com/">home&nbsp;improvement</a>&nbsp;
+                        <span style="color:#d1d8d7;font-size:140%">■</span>&nbsp;<a href="http://gis.stackexchange.com/">gis</a>&nbsp;
+                        <span style="color:#e5e2d3;font-size:140%">■</span>&nbsp;<a href="http://electronics.stackexchange.com/">electronics</a>&nbsp;
+                        <span style="color:#a4c639;font-size:140%">■</span>&nbsp;<a href="http://android.stackexchange.com/">android</a>&nbsp;
+                        <span style="color:#2e4e60;font-size:140%">■</span>&nbsp;<a href="http://security.stackexchange.com/">security</a>&nbsp;
+                        <span style="color:#45bcb5;font-size:140%">■</span>&nbsp;<a href="http://bicycles.stackexchange.com/">bicycles</a>&nbsp;
+                        <span style="color:#00adee;font-size:140%">■</span>&nbsp;<a href="http://dba.stackexchange.com/">dba</a>&nbsp;
+                        <span style="color:#2edaf0;font-size:140%">■</span>&nbsp;<a href="http://drupal.stackexchange.com/">drupal</a>&nbsp;
+                        <span style="color:#213951;font-size:140%">■</span>&nbsp;<a href="http://sharepoint.stackexchange.com/">sharepoint</a>&nbsp;
+                </div>
+            </div>
+            <div id="footer-flair">
+                <a class="peer1" href="http://www.peer1.com/stackoverflow"></a>  
+	            <a href="http://creativecommons.org/licenses/by-sa/3.0/" class="cc-wiki-link"></a>
+                <div id="svnrev">rev 2011.10.7.1</div>
+            </div>
+            <div id="copyright">
+                site design / logo © 2011 stack exchange inc; 
+                user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            
+
+        </div>
+    </div>
+    
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Stack Overflow works best with JavaScript enabled&lt;img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+    
+    <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-5620270-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src='http://www.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();_qoptions={qacct:"p-c1rF4kxgLUzNc"};</script>
+    <script type="text/javascript" src="./Best way to copy between two Stream instances - C# - Stack Overflow_files/quant.js"></script>
+    
+
+
+</body></html>

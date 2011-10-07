@@ -1,0 +1,1038 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0074)http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>c# - How do I save a stream to a file? - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico">
+    <link rel="apple-touch-icon" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <script type="text/javascript" async="" src="./c# - How do I save a stream to a file  - Stack Overflow_files/ga.js"></script><script type="text/javascript" async="" src="./c# - How do I save a stream to a file  - Stack Overflow_files/adzerk1_2_4_43,adzerk2_2_17_45,adzerk3_2_4_44"></script><script type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/jquery.min.js"></script>
+    <script type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/stub.js"></script>
+    <link rel="stylesheet" type="text/css" href="./c# - How do I save a stream to a file  - Stack Overflow_files/all.css">
+    
+    <link rel="canonical" href="./c# - How do I save a stream to a file  - Stack Overflow_files/c# - How do I save a stream to a file  - Stack Overflow.htm">
+    <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;How do I save a stream to a file?&#39;" href="http://stackoverflow.com/feeds/question/411592">
+    <meta name="title" content="c# - How do I save a stream to a file? - Stack Overflow">
+    <link rel="image_src" href="http://sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <script type="text/javascript">
+        
+        StackExchange.ready(function () {
+
+            StackExchange.question.init({showAnswerHelp:true,totalCommentCount:1,shownCommentCount:1,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:411592});
+
+            styleCode();
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        StackExchange.init({"stackAuthUrl":"http://stackauth.com","serverTime":1317981145,"styleCode":true,"newTagEditor":true,"enableUserHovercards":true,"enableTabCompletion":true,"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers"},"user":{"isAnonymous":true,"fkey":"69d84c180fe560ef1a6a543c5eb7435b","inboxUnviewedCount":-1}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.js":"0324556b7bf7","js/moderator.js":"a2b72d2dcd13","js/full-anon.js":"20589614f36a","js/full.js":"1fb00cd5e44b","js/wmd.js":"f92e5d20262f","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/mobile.js":"97644ef9b7d4","js/help.js":"afb99d79b91b","js/tageditor.js":"1d9dda61b487","js/tageditornew.js":"3a5a5c0e8473","js/inline-tag-editing.js":"955bc2b8e433","js/mathjax-editing.js":"807037d18f3f"});
+    </script>
+
+<script async="" type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/full-anon.js"></script><script async="" type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/prettify-full.js"></script><link href="./c# - How do I save a stream to a file  - Stack Overflow_files/sidebar.min.css" type="text/css" rel="stylesheet"></head>
+<body class="question-page" style="margin-top: 2.5em; ">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+    <div id="notify-container"><div id="notify--1" style=""><span class="notify-close"><a title="dismiss this notification">×</a></span><span class="notify-text">Welcome to Q&amp;A for professional and enthusiast programmers — check out the <a onclick="StackExchange.notify.closeFirstTime(); return false;" href="http://stackoverflow.com/faq">FAQ</a>!</span></div></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+    <div class="container">
+        <div id="header">
+            <div id="portalLink">
+                <a class="genu" onclick="StackExchange.ready(function(){genuwine.click();});return false;">Stack Exchange</a>
+            </div>
+            <div id="topbar">
+                <div id="hlinks">
+                    <span id="hlinks-user">
+                  
+                  </span>
+                  <span id="hlinks-nav">
+                  <a href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f411592%2fhow-do-i-save-a-stream-to-a-file">log in</a>
+ <span class="lsep">|</span>
+<a href="http://careers.stackoverflow.com/">careers</a>
+ <span class="lsep">|</span>
+
+                  </span>
+                  <span id="hlinks-custom">
+                  <a href="http://chat.stackoverflow.com/">chat</a>
+ <span class="lsep">|</span>
+<a href="http://meta.stackoverflow.com/">meta</a>
+ <span class="lsep">|</span>
+<a href="http://stackoverflow.com/about">about</a>
+ <span class="lsep">|</span>
+<a href="http://stackoverflow.com/faq">faq</a>
+                  </span>
+                </div>
+                <div id="hsearch">
+                    <form id="search" action="http://stackoverflow.com/search" method="get" autocomplete="off">
+                    <div>
+                        <input autocomplete="off" name="q" class="textbox" placeholder="search" tabindex="1" type="text" maxlength="140" size="28" value="">
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">Stack Overflow</a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                        <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                        <li><a id="nav-badges" href="http://stackoverflow.com/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="http://stackoverflow.com/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <div id="content">
+            
+
+
+
+<div id="question-header">
+    <h1><a href="./c# - How do I save a stream to a file  - Stack Overflow_files/c# - How do I save a stream to a file  - Stack Overflow.htm" class="question-hyperlink">How do I save a stream to a file?</a></h1>
+</div>
+<div id="mainbar">
+
+
+<div id="question">
+
+    <div class="everyonelovesstackoverflow" id="adzerk1"><a href="http://engine.adzerk.net/redirect/0/3304/5055/8277/8bed77bede6e48a5a02179f588d8bdeb/43/1178/6172/634535779458354866?keywords=c%23%2c.net%2csql-server%2cstream" rel="nofollow" target="_blank" title=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/3304.gif" title="" alt="" border="0" height="90" width="728"></a></div>
+
+    
+    <table>
+    <tbody><tr>
+    <td class="votecell">
+        
+<div class="vote">
+    <input type="hidden" value="411592">
+    <a class="vote-up-off" title="This question shows research effort; it is useful and clear (click again to undo)">up vote</a>
+    <span class="vote-count-post">46</span>
+    <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful (click again to undo)">down vote</a>
+
+    <a class="star-off" href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file#" title="This is a favorite question (click again to undo)">favorite</a>
+    <div class="favoritecount"><b>19</b></div>    
+
+    <script type="text/javascript">
+        StackExchange.ready(function() {
+            var shareUrl = "http%3a%2f%2fstackoverflow.com%2fq%2f411592";
+            var shareMsg = "How+do+I+save+a+stream+to+a+file%3f";
+            StackExchange.share.facebook($("#fb-share-411592"), shareUrl, shareMsg);
+            StackExchange.share.twitter($("#twitter-share-411592"), shareUrl, shareMsg);
+        });
+    </script>
+    <a id="fb-share-411592" class="fb-share" title="share link to this question on Facebook">share [fb]</a>
+    <a id="twitter-share-411592" class="twitter-share" title="share link to this question on Twitter">share [tw]</a>    
+
+</div>
+
+    </td>
+
+<td class="postcell">
+<div>          
+    <div class="post-text">
+        <p>I have a <code>StreamReader</code> object that I initialized with a stream, now I want to save this stream to disk (the stream may be a <code>.gif</code> or <code>.jpg</code> or <code>.pdf</code>).</p>
+
+<p>Existing Code:</p>
+
+<pre class="default prettyprint"><code><span class="typ">StreamReader</span><span class="pln"> sr </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">StreamReader</span><span class="pun">(</span><span class="pln">myOtherObject</span><span class="pun">.</span><span class="typ">InputStream</span><span class="pun">);</span><span class="pln"><br></span></code></pre>
+
+<ol>
+<li>I need to save this to disk (I have the filename).</li>
+<li>In the future I may want to store this to SQL Server.</li>
+</ol>
+
+<p>I have the encoding type also, which I will need if I store it to SQL Server, correct?</p>
+
+    </div>            
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a> <a href="http://stackoverflow.com/questions/tagged/.net" class="post-tag" title="show questions tagged &#39;.net&#39;" rel="tag">.net</a> <a href="http://stackoverflow.com/questions/tagged/sql-server" class="post-tag" title="show questions tagged &#39;sql-server&#39;" rel="tag">sql-server</a> <a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/q/411592" title="short permalink to this question" id="link-post-411592">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/411592/edit">improve this question</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/411592/revisions" title="show all edits to this post"><span title="2010-10-19 19:27:45Z" class="relativetime">Oct 19 '10 at 19:27</span></a></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/16587/george-stocker"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/9ed3482ccbb461fbf8796b251caf8f4d" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/16587/george-stocker">George Stocker</a><br><span class="reputation-score" title="reputation score 19890">19.9k</span><span title="7 gold badges"><span class="badge1"></span><span class="badgecount">7</span></span><span title="52 silver badges"><span class="badge2"></span><span class="badgecount">52</span></span><span title="106 bronze badges"><span class="badge3"></span><span class="badgecount">106</span></span></div></div>    </td>
+                        
+
+    <td class="post-signature owner">
+    <div class="user-info"><div class="user-action-time">asked <span title="2009-01-04 20:04:39Z" class="relativetime">Jan 4 '09 at 20:04</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/50700/loadman"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/c267d86aea9f7c44f3918dee645f774f" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/50700/loadman">Loadman</a><br><span class="reputation-score" title="reputation score">296</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="2 silver badges"><span class="badge2"></span><span class="badgecount">2</span></span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span></div></div>
+        <br class="cbt">
+        <div class="accept-rate supernova" title="this user has accepted an answer for 0 of 6 eligible questions">0% accept rate</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+    </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-411592" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-4992092" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">any all code with final solution ?</span> –&nbsp;<a href="http://stackoverflow.com/users/206730/kiquenet" title="517 reputation" class="comment-user">Kiquenet</a> <span class="comment-date"><span title="2010-12-29 10:49:45Z">Dec 29 '10 at 10:49</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful" style="color: rgb(136, 136, 136); ">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>    
+</div>
+
+
+
+<div id="answers">
+
+    <a name="tab-top"></a>
+    <div id="answers-header">
+        <div class="subheader answers-subheader">
+            <h2>5 Answers</h2>
+            <div id="tabs">
+                <a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+<a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+<a class="youarehere" href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+
+            </div>
+        </div>    
+    </div>    
+
+
+  
+    <a name="411605"></a>
+    <div id="answer-411605" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="411605">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">76</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>You <em>must not</em> use <code>StreamReader</code> for binary files (like gifs or jpgs). <code>StreamReader</code> is for <em>text</em> data. You will almost <em>certainly</em> lose data if you use it for arbitrary binary data. (If you use Encoding.GetEncoding(28591) you will probably be okay, but what's the point?)</p>
+
+<p>Why do you need to use a <code>StreamReader</code> at all? Why not just keep the binary data <em>as</em> binary data and write it back to disk (or SQL) as binary data?</p>
+
+<p>EDIT: As this seems to be something people want to see... if you <em>do</em> just want to copy one stream to another (e.g. to a file) use something like this:</p>
+
+<pre class="default prettyprint"><code><span class="com">/// &lt;summary&gt;</span><span class="pln"><br></span><span class="com">/// Copies the contents of input to output. Doesn't close either stream.</span><span class="pln"><br></span><span class="com">/// &lt;/summary&gt;</span><span class="pln"><br></span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> input</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> output</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> buffer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="lit">8</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="lit">1024</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">int</span><span class="pln"> len</span><span class="pun">;</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> </span><span class="pun">(</span><span class="pln">len </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> buffer</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">))</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; output</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">buffer</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> len</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> &nbsp; &nbsp;<br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p>To use it to dump a stream to a file, for example:</p>
+
+<pre class="default prettyprint"><code><span class="kwd">using</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> file </span><span class="pun">=</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="typ">OpenWrite</span><span class="pun">(</span><span class="pln">filename</span><span class="pun">))</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="typ">CopyStream</span><span class="pun">(</span><span class="pln">input</span><span class="pun">,</span><span class="pln"> file</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file/411605#411605" title="permalink to this answer" id="link-post-411605">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/411605/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/411605/revisions" title="show all edits to this post"><span title="2009-01-04 20:20:24Z" class="relativetime">Jan 4 '09 at 20:20</span></a></div><div class="user-gravatar32"></div><div class="user-details"><br></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover"><div class="user-action-time">answered <span title="2009-01-04 20:08:51Z" class="relativetime">Jan 4 '09 at 20:08</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/22656/jon-skeet"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/6d8ebb117e8d83d74ea95fbdd0f87e13" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/22656/jon-skeet">Jon Skeet</a><br><span class="reputation-score" title="reputation score 355518">356k</span><span title="86 gold badges"><span class="badge1"></span><span class="badgecount">86</span></span><span title="1446 silver badges"><span class="badge2"></span><span class="badgecount">1446</span></span><span title="2612 bronze badges"><span class="badge3"></span><span class="badgecount">2612</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-411605" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-236512" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">John, the API I am using returns a Stream object of an attachment (pop3 component) so I want to have the option of saving to file or sqlserver.  So if I call myAPI.SomeStream how would I store that do disk?? (thanks)</span> –&nbsp;<a href="http://stackoverflow.com/users/50700/loadman" title="296 reputation" class="comment-user owner">Loadman</a> <span class="comment-date"><span title="2009-01-04 21:54:32Z">Jan 4 '09 at 21:54</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-4769881" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">1</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">This seems like such a common case I'm surprised its not in .NET.  I see people creating byte arrays the size of the entire file, which can cause problems for big files.</span> –&nbsp;<a href="http://stackoverflow.com/users/1470/tilendor" title="2410 reputation" class="comment-user">Tilendor</a> <span class="comment-date"><span title="2010-12-07 17:00:27Z">Dec 7 '10 at 17:00</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-4770124" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="warm">10</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">@Tilendor: It's present as an extension method in .NET 4. (CopyTo)</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2010-12-07 17:17:08Z">Dec 7 '10 at 17:17</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-5302806" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">4</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">I don't think it is an extension method, but it's new in Stream class.</span> –&nbsp;<a href="http://stackoverflow.com/users/177591/kugel" title="2570 reputation" class="comment-user">Kugel</a> <span class="comment-date"><span title="2011-01-24 21:43:14Z">Jan 24 at 21:43</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-5303042" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">1</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">@Kugel: You're right, sorry. <i>I</i> had it as an extension method in a utility library, but now that it's in Stream itself, my extension method doesn't get called.</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2011-01-24 22:02:08Z">Jan 24 at 22:02</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+    <div class="everyonelovesstackoverflow" id="adzerk3"><a href="http://engine.adzerk.net/redirect/0/3305/5055/8277/bb5096b82fba4e43ae080c9b4006ff2a/44/1178/6173/634535779458511114?keywords=c%23%2c.net%2csql-server%2cstream" rel="nofollow" target="_blank" title=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/3305.gif" title="" alt="" border="0" height="90" width="728"></a></div>
+
+    
+  
+    <a name="5515894"></a>
+    <div id="answer-5515894" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="5515894">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">20</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>As highlighted by Tilendor in Jon Skeet answer, streams have a CopyTo method since .Net 4.</p>
+
+<pre class="default prettyprint"><code><span class="kwd">var</span><span class="pln"> fileStream </span><span class="pun">=</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="str">"C:\\Path\\To\\File"</span><span class="pun">);</span><span class="pln"><br>myOtherObject</span><span class="pun">.</span><span class="typ">InputStream</span><span class="pun">.</span><span class="typ">CopyTo</span><span class="pun">(</span><span class="pln">fileStream</span><span class="pun">);</span><span class="pln"><br>fileStream</span><span class="pun">.</span><span class="typ">Close</span><span class="pun">();</span><span class="pln"><br></span></code></pre>
+
+<p>Or with the using syntax:</p>
+
+<pre class="default prettyprint"><code><span class="kwd">using</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> fileStream </span><span class="pun">=</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="str">"C:\\Path\\To\\File"</span><span class="pun">))</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; myOtherObject</span><span class="pun">.</span><span class="typ">InputStream</span><span class="pun">.</span><span class="typ">CopyTo</span><span class="pun">(</span><span class="pln">fileStream</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file/5515894#5515894" title="permalink to this answer" id="link-post-5515894">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/5515894/edit">improve this answer</a></div>
+    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2011-04-01 16:01:34Z" class="relativetime">Apr 1 at 16:01</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/242786/antoine-leclair"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/022180a0bd0cafea80552dcce4ceeae2" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/242786/antoine-leclair">Antoine Leclair</a><br><span class="reputation-score" title="reputation score">1,081</span><span title="2 silver badges"><span class="badge2"></span><span class="badgecount">2</span></span><span title="7 bronze badges"><span class="badge3"></span><span class="badgecount">7</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-5515894" class="comments dno">
+        <table>
+        <tbody>
+        
+            <tr><td></td><td></td></tr>
+        
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="2702403"></a>
+    <div id="answer-2702403" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="2702403">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">6</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>Why not use a FileStream object?</p>
+
+<pre class="default prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">SaveStreamToFile</span><span class="pun">(</span><span class="kwd">string</span><span class="pln"> fileFullPath</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> stream</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">stream</span><span class="pun">.</span><span class="typ">Length</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pun">;</span><span class="pln"><br><br>&nbsp; &nbsp; </span><span class="com">// Create a FileStream object to write a stream to a file</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">using</span><span class="pln"> </span><span class="pun">(</span><span class="typ">FileStream</span><span class="pln"> fileStream </span><span class="pun">=</span><span class="pln"> </span><span class="typ">System</span><span class="pun">.</span><span class="pln">IO</span><span class="pun">.</span><span class="typ">File</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="pln">fileFullPath</span><span class="pun">,</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">stream</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">))</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// Fill the bytes[] array with the stream data</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">byte</span><span class="pun">[]</span><span class="pln"> bytesInStream </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">byte</span><span class="pun">[</span><span class="pln">stream</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">];</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; stream</span><span class="pun">.</span><span class="typ">Read</span><span class="pun">(</span><span class="pln">bytesInStream</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln">bytesInStream</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// Use FileStream object to write to the specified file</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; fileStream</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">bytesInStream</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> bytesInStream</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; &nbsp;</span><span class="pun">}</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file/2702403#2702403" title="permalink to this answer" id="link-post-2702403">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/2702403/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/2702403/revisions" title="show all edits to this post"><span title="2010-10-14 11:27:39Z" class="relativetime">Oct 14 '10 at 11:27</span></a></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/28004/balexandre"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/24523bd2464ad941089147b6ab6056ea" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/28004/balexandre">balexandre</a><br><span class="reputation-score" title="reputation score 14942">14.9k</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="24 silver badges"><span class="badge2"></span><span class="badgecount">24</span></span><span title="72 bronze badges"><span class="badge3"></span><span class="badgecount">72</span></span></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2010-04-23 22:49:05Z" class="relativetime">Apr 23 '10 at 22:49</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/324660/adrian"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/90f18f7ae773640da2c5d13bd33978a4" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/324660/adrian">Adrian</a><br><span class="reputation-score" title="reputation score">77</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="1 bronze badge"><span class="badge3"></span><span class="badgecount">1</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-2702403" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-7690835" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">4</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">what if the input stream is 1GB long - this code would try to allocate 1GB buffer :)</span> –&nbsp;<a href="http://stackoverflow.com/users/77160/buthrakaur" title="486 reputation" class="comment-user">Buthrakaur</a> <span class="comment-date"><span title="2011-06-30 07:56:27Z">Jun 30 at 7:56</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="6612247"></a>
+    <div id="answer-6612247" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="6612247">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">1</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><pre class="default prettyprint"><code><span class="com">//If you don't have .Net 4.0 &nbsp;:)</span><span class="pln"><br><br></span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">SaveStreamToFile</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> stream</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> filename</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"> &nbsp;<br>&nbsp; &nbsp;</span><span class="kwd">using</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> destination </span><span class="pun">=</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="pln">filename</span><span class="pun">))</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; </span><span class="typ">Write</span><span class="pun">(</span><span class="pln">stream</span><span class="pun">,</span><span class="pln"> destination</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="com">//Typically I implement this Write method as a Stream extension method. </span><span class="pln"><br></span><span class="com">//The framework handles buffering.</span><span class="pln"><br><br></span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Write</span><span class="pun">(</span><span class="typ">Stream</span><span class="pln"> </span><span class="kwd">from</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> to</span><span class="pun">)</span><span class="pln"><br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp;</span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> a </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">from</span><span class="pun">.</span><span class="typ">ReadByte</span><span class="pun">();</span><span class="pln"> a </span><span class="pun">!=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> a </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">from</span><span class="pun">.</span><span class="typ">ReadByte</span><span class="pun">())</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; to</span><span class="pun">.</span><span class="typ">WriteByte</span><span class="pun">(</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">byte</span><span class="pun">)</span><span class="pln"> a </span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="com">/*<br>Note, StreamReader is an IEnumerable&lt;Char&gt; while Stream is an IEnumbable&lt;byte&gt;.<br>The distinction is significant such as in multiple byte character encodings <br>like Unicode used in .Net where Char is one or more bytes (byte[n]). Also, the<br>resulting translation from IEnumerable&lt;byte&gt; to IEnumerable&lt;Char&gt; can loose bytes<br>or insert them (for example, "\n" vs. "\r\n") depending on the StreamReader instance<br>CurrentEncoding.<br>*/</span><span class="pln"><br></span></code></pre>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file/6612247#6612247" title="permalink to this answer" id="link-post-6612247">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/6612247/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/6612247/revisions" title="show all edits to this post"><span title="2011-07-07 14:48:37Z" class="relativetime">Jul 7 at 14:48</span></a></div><div class="user-gravatar32"></div><div class="user-details"><br></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2011-07-07 14:30:01Z" class="relativetime">Jul 7 at 14:30</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/833736/george"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/34f5fd6ee400ab531f50e37dbf7bb672" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/833736/george">George</a><br><span class="reputation-score" title="reputation score">11</span><span title="2 bronze badges"><span class="badge3"></span><span class="badgecount">2</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-6612247" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-8364322" class="comment">
+        <td class="comment-actions"><table><tbody><tr>
+<td class="comment-score">
+<span title="number of &#39;great comment&#39; votes received" class="cool">1</span>
+</td>
+<td>
+&nbsp;
+</td></tr>
+</tbody></table></td>
+        <td class="comment-text"><div><span class="comment-copy">Copying a stream byte-by-byte (using ReadByte/WriteByte) will be much slower than copying buffer-by-buffer (using Read(byte[], int, int)/Write(byte[], int,int)).</span> –&nbsp;<a href="http://stackoverflow.com/users/472698/kevin" title="521 reputation" class="comment-user">Kevin</a> <span class="comment-date"><span title="2011-08-10 03:10:47Z">Aug 10 at 3:10</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+
+  
+    <a name="411611"></a>
+    <div id="answer-411611" class="answer">
+        <table>
+        <tbody><tr>
+        <td class="votecell">
+            
+<div class="vote">
+    <input type="hidden" value="411611">
+    <a class="vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+    <span class="vote-count-post">-2</span>
+    <a class="vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+
+</div>
+
+        </td>
+
+
+<td class="answercell">
+    <div class="post-text"><p>I'm just best guessing here because I've never tried to push a stream to file, but I'm guessing that you can use a similar process as other data:</p>
+
+<pre class="default prettyprint"><code><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">SaveFile</span><span class="pun">(</span><span class="kwd">string</span><span class="pln"> fileName</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Stream</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> <br></span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">using</span><span class="pln"> </span><span class="pun">(</span><span class="typ">BinaryWriter</span><span class="pln"> writer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">BinaryWriter</span><span class="pun">(</span><span class="pln">fileName</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; writer</span><span class="pun">.</span><span class="typ">Write</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> &nbsp; &nbsp; &nbsp;<br></span><span class="pun">}</span><span class="pln"><br></span></code></pre>
+
+<p>Assuming the StreamWriter can handle a stream (can't imagine why it wouldn't be able to) then that's all you need.</p>
+
+<p><strong>EDIT - It turns out that StreamWriter handles text only and I'm not as smart as I thought.</strong></p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="post-menu"><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file/411611#411611" title="permalink to this answer" id="link-post-411611">link</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/411611/edit">improve this answer</a></div>
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info"><div class="user-action-time">edited <a href="http://stackoverflow.com/posts/411611/revisions" title="show all edits to this post"><span title="2009-01-04 20:28:32Z" class="relativetime">Jan 4 '09 at 20:28</span></a></div><div class="user-gravatar32"></div><div class="user-details"><br></div></div>    </td>
+            
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info"><div class="user-action-time">answered <span title="2009-01-04 20:12:55Z" class="relativetime">Jan 4 '09 at 20:12</span></div><div class="user-gravatar32"><a href="http://stackoverflow.com/users/48832/thabaddawg"><div class=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/4555ef6ba0e2bb889d9528d101472729" alt=""></div></a></div><div class="user-details"><a href="http://stackoverflow.com/users/48832/thabaddawg">thaBadDawg</a><br><span class="reputation-score" title="reputation score">2,130</span><span title="7 silver badges"><span class="badge2"></span><span class="badgecount">7</span></span><span title="23 bronze badges"><span class="badge3"></span><span class="badgecount">23</span></span></div></div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+
+<tr>
+<td class="votecell"></td>
+<td>
+    <div id="comments-411611" class="comments">
+        <table>
+        <tbody>
+                    
+    <tr id="comment-236387" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">StreamWriter can't handle a stream, because it's designed for <i>text</i> data, not binary data. If the above code were valid, however, it should use a "using" statement anyway to close the writer in case of exceptions.</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2009-01-04 20:14:34Z">Jan 4 '09 at 20:14</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-236392" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">Switched it over to the binary writer because as soon as read your comment I was reminded about how smart I really am :p</span> –&nbsp;<a href="http://stackoverflow.com/users/48832/thabaddawg" title="2130 reputation" class="comment-user">thaBadDawg</a> <span class="comment-date"><span title="2009-01-04 20:16:08Z">Jan 4 '09 at 20:16</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-236401" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">BinaryWriter.Write(Stream) doesn't exist either - but there's no real reason to use BinaryWriter here. I've updated my answer with a simple stream copier.</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2009-01-04 20:21:04Z">Jan 4 '09 at 20:21</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-236402" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">@Jon: I could never understand why the framework doesn't contain a Pump static method to copy one stream to another.  As soon as you do anything with streams that quickly becomes a function you need to write.  Have I said this before?</span> –&nbsp;<a href="http://stackoverflow.com/users/17516/anthonywjones" title="76195 reputation" class="comment-user">AnthonyWJones</a> <span class="comment-date"><span title="2009-01-04 20:21:47Z">Jan 4 '09 at 20:21</span></span></div></td>
+    </tr>
+            
+    <tr id="comment-236405" class="comment">
+        <td></td>
+        <td class="comment-text"><div><span class="comment-copy">Anthony: I'm not sure you've said it before, but it's been part of MiscUtil for quite a long time :) (That has more sophisticated overloads as well, to allow the buffer size to be specified etc.) MemoryStream has a WriteTo method though - handy and not well known IMO.</span> –&nbsp;<a href="http://stackoverflow.com/users/22656/jon-skeet" title="355518 reputation" class="comment-user">Jon Skeet</a> <span class="comment-date"><span title="2009-01-04 20:24:43Z">Jan 4 '09 at 20:24</span></span></div></td>
+    </tr>
+
+        </tbody>
+    
+        </table>
+    </div>
+    
+    
+    <div class="was-this-helpful">
+        feedback
+    </div>
+    
+</td>
+</tr>    </tbody></table>
+</div>
+    <a name="new-answer"></a>
+    <form id="post-form" action="http://stackoverflow.com/questions/411592/answer/submit" method="post" class="post-form">
+        <h2 class="space">Your Answer</h2>
+       
+
+<script type="text/javascript">
+    StackExchange.ready(function() {
+    
+        initTagRenderer("".split(" "), "".split(" "));
+
+              
+            prepareEditor({
+                
+                heartbeatType: 'answer',
+                bindNavPrevention: true,
+                postfix: "",
+                onDemand: true                ,immediatelyShowMarkdownHelp:true
+            });
+            
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">  
+
+    
+    <div class="wmd-container">
+        <div id="wmd-button-bar" class="wmd-button-bar"><ul id="wmd-button-row" class="wmd-button-row"><li id="wmd-bold-button" class="wmd-button" style="left: 0px; "><span style="background-position: 0px -20px; "></span></li><li id="wmd-italic-button" class="wmd-button" style="left: 25px; "><span style="background-position: -20px -20px; "></span></li><li id="wmd-spacer1" class="wmd-spacer" style="left: 50px; "><span style="background-position: -40px -20px; "></span></li><li id="wmd-link-button" class="wmd-button" style="left: 75px; "><span style="background-position: -40px -20px; "></span></li><li id="wmd-quote-button" class="wmd-button" style="left: 100px; "><span style="background-position: -60px -20px; "></span></li><li id="wmd-code-button" class="wmd-button" style="left: 125px; "><span style="background-position: -80px -20px; "></span></li><li id="wmd-image-button" class="wmd-button" style="left: 150px; "><span style="background-position: -100px -20px; "></span></li><li id="wmd-spacer2" class="wmd-spacer" style="left: 175px; "><span style="background-position: -120px -20px; "></span></li><li id="wmd-olist-button" class="wmd-button" style="left: 200px; "><span style="background-position: -120px -20px; "></span></li><li id="wmd-ulist-button" class="wmd-button" style="left: 225px; "><span style="background-position: -140px -20px; "></span></li><li id="wmd-heading-button" class="wmd-button" style="left: 250px; "><span style="background-position: -160px -20px; "></span></li><li id="wmd-hr-button" class="wmd-button" style="left: 275px; "><span style="background-position: -180px -20px; "></span></li><li id="wmd-spacer3" class="wmd-spacer" style="left: 300px; "><span style="background-position: -200px -20px; "></span></li><li id="wmd-undo-button" class="wmd-button" style="left: 325px; "><span style="background-position: -200px -20px; "></span></li><li id="wmd-redo-button" class="wmd-button" style="left: 350px; "><span style="background-position: -220px -20px; "></span></li></ul></div>
+        <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101"></textarea>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="69d84c180fe560ef1a6a543c5eb7435b">
+        <input id="author" name="author" type="text">
+    </div>
+</div>   
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+        <td class="vm open-id-login">
+            <a id="login-link" style="font-size: 200%; margin-left: 30px;" href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f411592%2fhow-do-i-save-a-stream-to-a-file">log in</a>
+            <script type="text/javascript">
+                StackExchange.ready(function () {
+                    StackExchange.helpers.onClickDraftSave('#login-link');
+                });
+            </script>
+        </td>
+
+    
+        <td class="orcell">
+            <div class="orword">or</div>
+            <div class="orline"></div>
+        </td>
+        <td class="vm">
+            <div>
+                <label for="display-name">Name</label>
+                <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+            </div>
+            <div>
+                <label for="m-address">Email</label>
+                <input id="m-address" name="m-address" type="text" size="40" maxlength="100" value="" tabindex="106">
+                <span class="edit-field-overlay">required, but never shown</span>
+            </div>
+            <div>
+                <label for="home-page">Home Page</label>
+                <input id="home-page" name="home-page" type="text" size="40" maxlength="200" value="" tabindex="107">
+            </div>
+        </td>
+    
+        </tr>
+        </tbody></table>
+    </div>
+               
+        <div class="form-submit cbt"><input id="submit-button" type="submit" value="Post Your Answer" tabindex="110"></div>
+    </form>
+
+
+        <h2 class="bottom-notice">
+                Not the answer you're looking for? 
+            Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a> <a href="http://stackoverflow.com/questions/tagged/.net" class="post-tag" title="show questions tagged &#39;.net&#39;" rel="tag">.net</a> <a href="http://stackoverflow.com/questions/tagged/sql-server" class="post-tag" title="show questions tagged &#39;sql-server&#39;" rel="tag">sql-server</a> <a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a> 
+                or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.
+        </h2>
+</div>
+</div>
+<div id="sidebar">
+
+
+
+    <div class="module newuser newuser-greeting" style="">
+        <h4>Hello World!</h4>
+        <div>
+            <p>This is a collaboratively edited question and answer site for <b>professional and enthusiast programmers</b>. It's 100% free, no registration required.</p>
+            <p class="ar"><a href="http://stackoverflow.com/about">about »</a>&nbsp;&nbsp;&nbsp;<a href="http://stackoverflow.com/faq">faq »</a></p>
+        </div>
+    </div>
+    <div class="module">
+        <p class="label-key">tagged</p>
+        <div class="tagged"><a href="http://stackoverflow.com/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a>&nbsp;<span class="item-multiplier">×&nbsp;223020</span><br>
+<a href="http://stackoverflow.com/questions/tagged/.net" class="post-tag" title="show questions tagged &#39;.net&#39;" rel="tag">.net</a>&nbsp;<span class="item-multiplier">×&nbsp;93716</span><br>
+<a href="http://stackoverflow.com/questions/tagged/sql-server" class="post-tag" title="show questions tagged &#39;sql-server&#39;" rel="tag">sql-server</a>&nbsp;<span class="item-multiplier">×&nbsp;34718</span><br>
+<a href="http://stackoverflow.com/questions/tagged/stream" class="post-tag" title="show questions tagged &#39;stream&#39;" rel="tag">stream</a>&nbsp;<span class="item-multiplier">×&nbsp;1874</span><br>
+</div>
+        <table id="qinfo">
+            <tbody><tr>
+                <td><p class="label-key">asked</p></td>
+                <td style="padding-left:10px"><p class="label-key" title="2009-01-04 20:04:39Z"><b>2 years ago</b></p></td>
+            </tr>
+            <tr>
+                <td><p class="label-key">viewed</p></td>
+
+                <td style="padding-left:10px"><p class="label-key"><b>34,734 times</b></p></td>
+            </tr>
+            <tr>
+                <td><p class="label-key">active</p></td>
+                <td style="padding-left:10px"><p class="label-key"><b><a href="http://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file?lastactivity" class="lastactivity-link" title="2011-07-07 14:48:37Z">3 months ago</a></b></p></td>
+            </tr>
+        </tbody></table>
+    </div>
+    
+        <script type="text/javascript">
+            var scriptSrc = "http://engine2.adzerk.net/z/8277/adzerk1_2_4_43,adzerk2_2_17_45,adzerk3_2_4_44?keywords=c%23,.net,sql-server,stream";
+            if (document.referrer) {
+                if (/\?/.test(scriptSrc))
+                    scriptSrc += "&";
+                else
+                    scriptSrc += "?";
+                scriptSrc += "xReferrer=" + document.referrer;
+            }
+            var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = scriptSrc; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);
+        </script>
+    
+    <div class="everyonelovesstackoverflow" id="adzerk2"><a href="http://engine.adzerk.net/redirect/0/3306/5055/8277/fc416cea03cb41039425b7a6f9d7218c/45/1178/6174/634535779458354866?keywords=c%23%2c.net%2csql-server%2cstream" rel="nofollow" target="_blank" title=""><img src="./c# - How do I save a stream to a file  - Stack Overflow_files/3306.gif" title="" alt="" border="0" height="250" width="220"></a></div>
+
+    
+    <div>
+        <script type="text/javascript">
+            var careers_adurl="http://careers.stackoverflow.com/ad/js",careers_cssurl="http://cdn.sstatic.net/careers/ads/sidebar.min.css?33d2c7",careers_leaderboardcssurl="http://cdn.sstatic.net/careers/ads/ninja.min.css?33cf39",careers_companycssurl="http://cdn.sstatic.net/careers/ads/company";(function(){var b="min-height:220px;margin:15px 0",c=$("<div>").addClass("hireme").attr("style",b),a=$("<div>").html(c);document.write(a.html());$.ajax({url:"http://cdn.sstatic.net/careers/ads/adloader.min.js?33d2c7",dataType:"script",cache:true})})();
+        </script><div class="hireme" style="min-height:220px;margin:15px 0"> <a href="http://careers.stackoverflow.com/jobs?a=12" class="all" target="_blank"></a> <ul class="jobs"> <li> <a href="http://careers.stackoverflow.com/jobs/13837/production-systems-administrator-groupon?a=glBSpAA" target="_blank" title="Production Systems Administrator at Groupon. Click to learn more."> Production Systems Administrator<br> <span class="company">Groupon</span> <span class="location">Palo Alto, CA; Chicago, IL</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/13694/mostly-java-mostly-web-application-developer-backstop-solutions-group?a=gb8qbYY" target="_blank" title="(mostly) Java (mostly) Web Application Developer at Backstop Solutions Group. Click to learn more."> (mostly) Java (mostly) Web Application Developer<br> <span class="company">Backstop Solutions Group</span> <span class="location">Chicago, IL</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/13842/quality-assurance-analyst-automation-morningstar?a=glYAjZK" target="_blank" title="Quality Assurance Analyst, Automation - Individual Software at Morningstar, Inc.. Click to learn more."> Quality Assurance Analyst, Automation - Individual Software<br> <span class="company">Morningstar</span> <span class="location">Chicago, IL</span> </a> </li> </ul> <img alt="" class="impression" src="./c# - How do I save a stream to a file  - Stack Overflow_files/glBSpAA-gb8qbYY-glYAjZK-12" style="display:none"></div>
+    </div>
+
+    
+<div class="module" id="chat-feature">
+
+
+
+<h4><a href="http://chat.stackoverflow.com/" id="h-chat-link">Visit Chat</a></h4>
+
+
+<div class="related" id="ad502-rooms"></div>
+
+<script type="text/javascript">
+// <!--
+    
+    StackExchange.ready(
+    function () {
+        var options = {
+            chatUrl: 'http://chat.stackoverflow.com',
+            reloadUrl: '/api/recent-chat',
+            preloadData: null,tagBased:true
+        };
+
+        StackExchange.chatAd.init(options);
+    });
+// -->
+</script>
+
+
+
+</div>  
+
+    <div class="module">
+    <h4 id="h-linked">Linked</h4>
+    <div class="linked">
+    <div class="spacer">
+<a href="http://stackoverflow.com/questions/5423031/uploading-file-from-flex-to-wcf-rest-stream-issues-how-to-decode-multipart-form" class="question-hyperlink">Uploading file from Flex to WCF REST Stream issues (how to decode multipart form post in REST WS)</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5002834/saving-a-file-from-stream-to-disk-using-c" class="question-hyperlink">saving a file (from stream) to disk using c#</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4217967/extract-exe-resource-and-run-it-in-visual-basic" class="question-hyperlink">Extract exe resource and run it (in Visual Basic)</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6198435/create-pdf-document-from-system-io-stream-object" class="question-hyperlink">Create pdf document from System.IO.Stream object?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2780970/how-can-i-convert-my-stream-image-data-back-into-a-file" class="question-hyperlink">How can I convert my Stream (image data) back into a file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4263411/how-to-get-image-directly" class="question-hyperlink">How to get image directly?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6555265/access-textfiles-located-in-resources" class="question-hyperlink">access textfiles located in resources</a>
+</div>
+
+    </div>
+    </div>
+    <div class="module">
+    <h4 id="h-related">Related</h4>
+    <div class="related">
+    <div class="spacer">
+<a href="http://stackoverflow.com/questions/129305/how-to-write-the-content-of-one-stream-into-another-stream-in-net" class="question-hyperlink">How to write the content of one stream into another stream in .net?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/574396/best-way-to-save-a-stream-to-a-file-in-asp-net-3-5" class="question-hyperlink">Best way to save a Stream to a file in asp.net 3.5?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/821046/duplicating-a-stream" class="question-hyperlink">Duplicating a stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/950513/how-to-copy-one-stream-to-a-byte-array-with-the-smallest-c-code" class="question-hyperlink">How to copy one Stream to a byte array with the smallest C# code?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1055872/how-can-i-split-copy-a-stream-in-net" class="question-hyperlink">How can I split (copy) a Stream in .NET?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1084813/why-a-binarywriter-closes-the-outer-stream-on-disposal-and-how-to-prevent-that" class="question-hyperlink">Why a BinaryWriter closes the outer Stream on disposal, and how to prevent that? (.NET C#)</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1321578/redirect-writes-to-a-file-to-a-stream-c" class="question-hyperlink">Redirect writes to a file to a stream C#</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1584785/problem-with-using-and-stream" class="question-hyperlink">Problem with using and Stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1653469/how-can-i-upload-a-file-and-save-it-to-a-stream-for-further-preview-using-c" class="question-hyperlink">How can I upload a file and save it to a Stream for further preview using C#?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1711421/lazy-stream-for-c-net" class="question-hyperlink">Lazy stream for C# / .NET</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1724800/stream-read-problem" class="question-hyperlink">Stream Read Problem</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/1760390/c-stream-design-question" class="question-hyperlink">C# Stream Design Question</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2459762/can-i-use-a-stream-to-insert-or-update-a-row-in-sql-server-c" class="question-hyperlink">Can I use a stream to INSERT or UPDATE a row in SQL Server (C#)?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/2933995/something-about-stream" class="question-hyperlink">Something about Stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3686118/passing-a-stream-object-to-a-function-where-the-stream-can-be-the-console-or-a-fi" class="question-hyperlink">Passing a stream object to a function where the stream can be the console or a file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3687664/save-stream-to-the-file" class="question-hyperlink">Save stream to the file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/3739064/who-should-be-responsible-for-closing-a-stream" class="question-hyperlink">Who should be responsible for closing a stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/4736155/how-do-i-convert-byte-to-stream-in-c" class="question-hyperlink">How do I convert byte[] to stream in C#?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/5070908/continuous-stream-on-iis-server-will-it-crash-and-how-can-i-best-execute-this-c" class="question-hyperlink">continuous stream on IIS server - will it crash and how can i best execute this code?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6533831/how-can-i-know-that-the-stream-is-end" class="question-hyperlink">How can i know that the Stream is end?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6941847/stream-across-the-network-with-c" class="question-hyperlink">Stream across the Network with C#</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/6956192/use-wcf-service-to-read-and-then-save-a-file" class="question-hyperlink">Use Wcf Service to read and then save a file</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/7042156/reading-from-closed-stream" class="question-hyperlink">Reading from closed stream</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/7228175/how-can-you-know-if-a-stream-is-closed" class="question-hyperlink">How can you know if a stream is closed?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/questions/7514101/how-do-i-read-exactly-n-bytes-from-a-stream" class="question-hyperlink">How do I read exactly n bytes from a stream?</a>
+</div>
+
+    </div>
+    </div>
+</div>
+
+<div id="feed-link">
+    <div id="feed-link-text"><a href="http://stackoverflow.com/feeds/question/411592" title="feed of this question and its answers"><span class="feed-icon"></span>question feed</a></div>
+</div>
+<script type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/e809"></script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/411592/ivc/e809" class="dno" alt=""&gt;&lt;/div&gt;
+</noscript>
+<div style="display:none" id="prettify-lang">default</div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <a href="http://stackoverflow.com/about">about</a> |
+                <a href="http://stackoverflow.com/faq">faq</a> |
+                <a href="http://blog.stackexchange.com/">blog</a> |
+                    <a href="http://chat.stackoverflow.com/">chat</a> |
+                <a href="http://data.stackexchange.com/">data</a> |
+                <a href="http://blog.stackoverflow.com/category/podcasts/">podcast</a> |
+                <a href="http://shop.stackexchange.com/">shop</a> |
+                <a href="http://stackexchange.com/legal">legal</a> |
+                <a href="http://engine.adzerk.net/redirect/0/2776/2751/0/4de3c60f719c4dfcb1a57531c7050090/0">advertising info</a> |
+
+                <a onclick="StackExchange.switchMobile(&#39;on&#39;, &#39;/questions/411592/how-do-i-save-a-stream-to-a-file&#39;)">mobile</a> |
+
+                <b><a href="mailto:team@stackoverflow.com">contact us</a></b>
+                  | <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                <div id="footer-sites">
+                    
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://stackoverflow.com/">stackoverflow.com</a>&nbsp; 
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://stackapps.com/">api/apps</a>&nbsp; 
+                        <span style="color:#FE7A15;font-size:140%">■</span>&nbsp;<a href="http://careers.stackoverflow.com/">careers</a>&nbsp; 
+                        <span style="color:#E8272C;font-size:140%">■</span>&nbsp;<a href="http://serverfault.com/">serverfault.com</a>&nbsp; 
+                        <span style="color:#00AFEF;font-size:140%">■</span>&nbsp;<a href="http://superuser.com/">superuser.com</a>&nbsp; 
+                        <span style="color:#969696;font-size:140%">■</span>&nbsp;<a href="http://meta.stackoverflow.com/">meta</a>&nbsp; 
+                        <span style="color:#46937D;font-size:140%">■</span>&nbsp;<a href="http://area51.stackexchange.com/">area&nbsp;51</a>&nbsp; 
+                        <span style="color:#C0D0DC;font-size:140%">■</span>&nbsp;<a href="http://webapps.stackexchange.com/">webapps</a>&nbsp; 
+                        <span style="color:#000000;font-size:140%">■</span>&nbsp;<a href="http://gaming.stackexchange.com/">gaming</a>&nbsp; 
+                        <span style="color:#dd4814;font-size:140%">■</span>&nbsp;<a href="http://askubuntu.com/">ubuntu</a>&nbsp; 
+                        <span style="color:#9ce4fe;font-size:140%">■</span>&nbsp;<a href="http://webmasters.stackexchange.com/">webmasters</a>&nbsp; 
+                        <span style="color:#cf4d3f;font-size:140%">■</span>&nbsp;<a href="http://cooking.stackexchange.com/">cooking</a>&nbsp; 
+                        <span style="color:#f4f28d;font-size:140%">■</span>&nbsp;<a href="http://gamedev.stackexchange.com/">game development</a>&nbsp; 
+                        <span style="color:#0f3559;font-size:140%">■</span>&nbsp;<a href="http://math.stackexchange.com/">math</a>&nbsp; 
+                        <span style="color:#f2f2f2;font-size:140%">■</span>&nbsp;<a href="http://photo.stackexchange.com/">photography</a>&nbsp; 
+                        <span style="color:#037187;font-size:140%">■</span>&nbsp;<a href="http://stats.stackexchange.com/">stats</a>&nbsp; 
+                        <span style="color:#f1e7cc;font-size:140%">■</span>&nbsp;<a href="http://tex.stackexchange.com/">tex</a>&nbsp; 
+                        <span style="color:#e1cdae;font-size:140%">■</span>&nbsp;<a href="http://english.stackexchange.com/">english</a>&nbsp; 
+                        <span style="color:#a2d9f6;font-size:140%">■</span>&nbsp;<a href="http://cstheory.stackexchange.com/">theoretical cs</a>&nbsp; 
+                        <span style="color:#1b3e6c;font-size:140%">■</span>&nbsp;<a href="http://programmers.stackexchange.com/">programmers</a>&nbsp; 
+                        <span style="color:#293a5d;font-size:140%">■</span>&nbsp;<a href="http://unix.stackexchange.com/">unix</a>&nbsp;
+                        <span style="color:#bec0cb;font-size:140%">■</span>&nbsp;<a href="http://apple.stackexchange.com/">apple</a>&nbsp;
+                        <span style="color:#939185;font-size:140%">■</span>&nbsp;<a href="http://wordpress.stackexchange.com/">wordpress</a>&nbsp;
+                        <span style="color:#b5cda4;font-size:140%">■</span>&nbsp;<a href="http://physics.stackexchange.com/">physics</a>&nbsp;
+                        <span style="color:#4176ab;font-size:140%">■</span>&nbsp;<a href="http://diy.stackexchange.com/">home&nbsp;improvement</a>&nbsp;
+                        <span style="color:#d1d8d7;font-size:140%">■</span>&nbsp;<a href="http://gis.stackexchange.com/">gis</a>&nbsp;
+                        <span style="color:#e5e2d3;font-size:140%">■</span>&nbsp;<a href="http://electronics.stackexchange.com/">electronics</a>&nbsp;
+                        <span style="color:#a4c639;font-size:140%">■</span>&nbsp;<a href="http://android.stackexchange.com/">android</a>&nbsp;
+                        <span style="color:#2e4e60;font-size:140%">■</span>&nbsp;<a href="http://security.stackexchange.com/">security</a>&nbsp;
+                        <span style="color:#45bcb5;font-size:140%">■</span>&nbsp;<a href="http://bicycles.stackexchange.com/">bicycles</a>&nbsp;
+                        <span style="color:#00adee;font-size:140%">■</span>&nbsp;<a href="http://dba.stackexchange.com/">dba</a>&nbsp;
+                        <span style="color:#2edaf0;font-size:140%">■</span>&nbsp;<a href="http://drupal.stackexchange.com/">drupal</a>&nbsp;
+                        <span style="color:#213951;font-size:140%">■</span>&nbsp;<a href="http://sharepoint.stackexchange.com/">sharepoint</a>&nbsp;
+                </div>
+            </div>
+            <div id="footer-flair">
+                <a class="peer1" href="http://www.peer1.com/stackoverflow"></a>  
+	            <a href="http://creativecommons.org/licenses/by-sa/3.0/" class="cc-wiki-link"></a>
+                <div id="svnrev">rev 2011.10.7.1</div>
+            </div>
+            <div id="copyright">
+                site design / logo © 2011 stack exchange inc; 
+                user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            
+
+        </div>
+    </div>
+    
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Stack Overflow works best with JavaScript enabled&lt;img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+    
+    <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-5620270-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src='http://www.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();_qoptions={qacct:"p-c1rF4kxgLUzNc"};</script>
+    <script type="text/javascript" src="./c# - How do I save a stream to a file  - Stack Overflow_files/quant.js"></script>
+    
+
+
+</body></html>

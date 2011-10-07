@@ -1,0 +1,18 @@
+
+
+var ACPuzzleOptions;
+var ACPuzzleInfo = {
+    ckey:	    'bpqhubiTBn5RtIWcuy0crKBqz0hjOdzQ',
+    apiserver:	    '//api.solvemedia.com',
+    mediaserver:    '//api.solvemedia.com',
+    lang:           'en',
+    size:           'standard',
+    theme:          'white',
+    type:	    'img',
+    onload:	    function(){ ACPuzzle.script_init() }
+};
+
+document.write('<' + 'scr' + 'ipt type="text/javascript" s' + 'rc="' +
+	ACPuzzleInfo.apiserver + '/papi/_puzzle.js"><' + '/scr' + 'ipt' + '>');
+
+

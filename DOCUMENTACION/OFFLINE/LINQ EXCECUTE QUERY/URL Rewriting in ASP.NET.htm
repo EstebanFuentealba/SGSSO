@@ -1,0 +1,1330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0053)http://msdn.microsoft.com/en-us/library/ms972974.aspx -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="ctl00_Head1" xmlns="http://www.w3.org/1999/xhtml"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>
+	
+  URL Rewriting in ASP.NET
+
+</title><meta name="DCS.dcsuri" content="/en-us/library/ms972974(d=lightweight,l=en-us,v=MSDN.10).aspx"><meta name="NormalizedUrl" content="http://msdn.microsoft.com/en-us/library/ms972974(d=lightweight,l=en-us,v=MSDN.10).aspx"><meta name="VotingContextUrl" content="http://msdn.microsoft.com/en-us/library/ms972974(l=en-us,v=MSDN.10).aspx"><meta name="MN" content="A581FDC3-2:27:10 AM"><meta name="Search.ShortId" content="ms972974"><meta name="Ms.Locale" content="en-us"><link href="./URL Rewriting in ASP.NET_files/2ff7dde78ff1c11903524a6a2fcdf65c.css" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/xhtml"><link rel="canonical" href="./URL Rewriting in ASP.NET_files/URL Rewriting in ASP.NET.htm" xmlns="http://www.w3.org/1999/xhtml"><link rel="alternate" media="print" href="http://msdn.microsoft.com/en-us/library/ms972974(d=printer).aspx" xmlns="http://www.w3.org/1999/xhtml"><link rel="stylesheet" type="text/css" href="./URL Rewriting in ASP.NET_files/a15fcf392bf954133123e209735029c3.css" media="print" title="printonly" xmlns="http://www.w3.org/1999/xhtml"></head>
+<body>
+
+   
+    <div class="MetricsContainer">
+    
+    <div class="WebtrendsContainer">
+      
+
+<script type="text/javascript" async="" src="./URL Rewriting in ASP.NET_files/ms2.js"></script><script type="text/javascript" language="javascript">
+//<![CDATA[
+  var literalNormalizedUrl = '/en-us/library/ms972974(d=lightweight,l=en-us,v=MSDN.10).aspx';
+  var wt_nvr_ru = 'WT_NVR_RU';
+  var wt_fpcdom = '.microsoft.com';
+  var wt_domlist = 'msdn.microsoft.com';
+  var wt_pathlist = '';
+  var wt_paramlist = 'DCSext.mtps_devcenter';
+  var wt_siteid = 'MSDN';
+  var gDomain = 'm.webtrends.com';
+  var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m';
+  var gFpc = 'WT_FPC';
+  if (document.cookie.indexOf(gFpc + "=") == -1) {
+    document.write("<scr" + "ipt type='text/javascript' src='" + "http" + (window.location.protocol.indexOf('https:') == 0 ? 's' : '') + "://" + gDomain + "/" + gDcsId + "/wtid.js" + "'><\\/scr" + "ipt>");
+  }
+  var detectedLocale = 'en-us';
+  var wtsp = 'msdnlib_dotnet';
+  var gTrackEvents = '0';
+/*]]>*/
+</script>
+<noscript>&lt;div&gt;&lt;img alt="DCSIMG" id="Img1" width="1" height="1" src="http://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No" /&gt;&lt;/div&gt;</noscript>
+
+
+    </div>
+    
+    <div class="OmnitureContainer">
+      
+
+
+
+<script type="text/javascript">
+  var omni_guid = '7a17dc76-34ce-4fd2-a8f4-db4ec65b4958'; 
+</script>
+
+
+
+<noscript>
+    &lt;a href="http://www.omniture.com" title="Web Analytics"&gt;
+        &lt;img src="//msstonojsmsdn.112.2o7.net/b/ss/msstonojsmsdn/1/H.20.2--NS/0" height="1" width="1" border="0" alt="" /&gt;&lt;/a&gt;
+</noscript>
+
+
+    </div>
+    
+  
+</div>
+  <script language="javascript" type="text/javascript" src="./URL Rewriting in ASP.NET_files/broker.js"></script>
+
+
+  <div class="header">
+    
+
+<table border="0" cellpadding="0" cellspacing="0" class="headerBar cl_lightweight_topnav_slice">
+		<tbody><tr>
+			<td class="leftSection cl_lightweight_header_leftSection_wave leftSectionImageClusterOverride">
+        <div class="tabContainer">
+          <a href="http://msdn.microsoft.com/en-us/default.aspx" title="Home" class=" headerTab">Home</a>
+          <a href="http://msdn.microsoft.com/en-us/library/default.aspx" title="Library" class="headerTabSelected cl_lightweight_selected_tab_repeatX ">Library</a>
+          <a href="http://msdn.microsoft.com/en-us/bb188199.aspx" title="Learn" class=" headerTab">Learn</a>
+          <a href="http://msdn.microsoft.com/en-us/aa570309.aspx" title="Downloads" class=" headerTab">Downloads</a>
+          <a href="http://msdn.microsoft.com/en-us/hh361695.aspx" title="Support" class=" headerTab">Support</a>
+          <a href="http://msdn.microsoft.com/en-us/aa497440.aspx" title="Community" class=" headerTab">Community</a>
+          
+        </div>
+      </td>
+			<td class="rightSection cl_lightweight_header_rightSection_wave rightSectionImageClusterOverride">
+        <div class="tabContainer">
+            
+            <a href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=11&ct=1317893230&rver=6.0.5276.0&wp=MCLBI&wlcxt=msdn%24msdn%24msdn&wreply=http:%2F%2Fmsdn.microsoft.com%2Fen-us%2Flibrary%2Fms972974.aspx&lc=1033&cb=&id=254354" title="Sign in" rel="nofollow">Sign in </a>
+            <span class="pipe">|</span>
+            <a href="http://msdn.microsoft.com/en-us/library/preferences/locale/?returnurl=%252fen-us%252flibrary%252fms972974.aspx" title="España - Español" rel="nofollow">España - Español </a>
+            <span class="pipe">|</span>
+            <a class="dispinline clip15x15" href="http://msdn.microsoft.com/en-us/library/preferences/experience/?returnurl=%252fen-us%252flibrary%252fms972974.aspx" title="Preferences" rel="nofollow"><img class="head_gear" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" alt=""></a>
+            <span class="pipe">|</span>
+            <a id="exportPrintLink" class="dispinline clip30x15 moveToDown" href="http://msdn.microsoft.com/en-us/library/ms972974(d=printer).aspx" title="Print/Export"><img class="head_print_noarrow" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" alt=""></a>
+            
+            <div id="exportPrintLinkArrowDiv" class="exportPrintLinkArrow">
+            <a id="exportPrintLinkArrow" class="dispinline clip30x15 moveToDown" href="javascript:void(0);" title="Print/Export"><img class="head_print_arrow" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" alt=""></a>
+            </div>
+            
+        </div>
+			</td>
+	</tr>
+</tbody></table>
+
+  </div>
+    
+  <div class="contentPlaceHolder">
+    
+    
+  <div class="navigation" id="Navigation" style="width:280px;padding-bottom:96px;">
+    <div class="searchcontainer">
+      
+<form id="SearchForm" action="http://social.msdn.microsoft.com/Search/en-us" method="get" style="margin: 0; padding: 0;" onsubmit="return checkSearchBox()">
+<div class="searchBoxContainer" style="">
+  <table class="searchBox" cellpadding="0" cellspacing="0" border="0">
+    <tbody><tr>
+      <td class="searchTextBoxTd">
+        <input id="SearchInput" type="text" maxlength="200" class="searchTextBox" name="query">
+      </td>
+      <td class="searchButtonTd">
+          <input type="image" src="./URL Rewriting in ASP.NET_files/0d0542f5f45cf9fc7273abd11cf5c0ee.gif" style="position: relative;" title="Search ">
+      </td>
+    </tr>
+  </tbody></table>
+</div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    if (!MTPS) var MTPS = {};
+    if (!MTPS.Watermarks) MTPS.Watermarks = {};
+    MTPS.Watermarks.SearchInput = {
+        "control": "SearchInput",
+        "defaultValue": "Search MSDN with Bing",
+        "defaultCSS": "searchTextBox",
+        "focusCSS": "searchTextBoxTrue"
+    };
+    function checkSearchBox() {
+        if (document.getElementById("SearchInput").value == MTPS.Watermarks.SearchInput.defaultValue) {
+            document.getElementById("SearchInput").value = "";
+        }
+    }
+ //]]>
+</script>
+
+
+    </div>
+    <div class="navcontainer">
+      
+<div class="nav">
+    
+    <div id="tocnav">
+        
+        <div class="toclevel0 ancestry">
+            
+            <div class="clip5x9 nav_root">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_bullet" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/ms123401.aspx" id="ms310241_MSDN.10_en-us" title="MSDN Library">MSDN Library</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_arrow" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/ff361664(v=VS.110).aspx" id="aa139615_MSDN.10_en-us" title=".NET Development">.NET Development</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_arrow" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/dd560515.aspx" id="dd560515_MSDN.10_en-us" title="Articles and Overviews">Articles and Overviews</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_arrow" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/aa286485.aspx" id="dd560524_MSDN.10_en-us" title="Web Applications (ASP.NET)">Web Applications (ASP.NET)</a>
+            </div>
+            
+            <div class="clip5x9 nav_arrows">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_arrow" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/aa137125.aspx" id="aa137125_MSDN.10_en-us" title="ASP.NET">ASP.NET</a>
+            </div>
+            
+            <div class="clip13x9 nav_arrows">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div class="nav_div_currentroot">
+                <a href="http://msdn.microsoft.com/en-us/library/aa531210.aspx" id="aa531210_MSDN.10_en-us" title="Extending ASP.NET">Extending ASP.NET</a>
+            </div>
+            
+        </div>
+        
+        <div class="toclevel1 children" style="border-bottom: 1px solid #bbbbbb;">
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/ms972967.aspx" title="Adding Cross-Site Scripting Protection to ASP.NET 1.0">Adding Cross-Site Scripting Protection to ASP.NET 1.0</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/aa479310.aspx" title="Building a ContentRotator ASP.NET Server Control">Building a ContentRotator ASP.NET Server Control</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/aa479048.aspx" title="Building Custom Providers for ASP.NET 2.0 Membership">Building Custom Providers for ASP.NET 2.0 Membership</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/ms972953.aspx" title="Serving Dynamic Content with HTTP Handlers">Serving Dynamic Content with HTTP Handlers</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div class="toclevel1 current">
+                <a href="./URL Rewriting in ASP.NET_files/URL Rewriting in ASP.NET.htm" title="URL Rewriting in ASP.NET">URL Rewriting in ASP.NET</a>
+            </div>
+            
+            <div class="clip13x9 nav_dots_current">
+                <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_nav_dots" alt="">
+            </div>
+            
+            <div>
+                <a href="http://msdn.microsoft.com/en-us/library/aa479332.aspx" title="Using HTTP Modules and Handlers to Create Pluggable ASP.NET Components">Using HTTP Modules and Handlers to Create Pluggable ASP.NET Components</a>
+            </div>
+            
+        </div>
+        
+    </div>
+    <img src="./URL Rewriting in ASP.NET_files/030c41d9079671d09a62d8e2c1db6973.gif" alt="Separator" class="communityContentNavigationSeparator cl_lt_cc_line_top">
+    
+</div>
+
+<script type="text/javascript"> 
+  //<![CDATA[
+  if (!MTPS) var MTPS = {};
+  MTPS.TopicNodes= {
+  
+            "_last": ''
+    };
+  //]]>
+</script>
+
+    </div>
+    
+  </div>
+  <div id="tocResizeContainer" style="visibility: visible; ">
+  <a href="javascript:void(0)" class="tocResize" id="TocResize" style="left:280px">
+    <img id="ResizeImageIncrease" class="cl_nav_resize_open" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" title="Expand" alt="Expand">
+      <img id="ResizeImageReset" class="cl_nav_resize_close" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" style="display:none" title="Minimize" alt="Minimize">
+  </a>
+  </div>
+  <div class="content">
+    <img class="TOC_Fade_Top cl_lw_toc_fade_top" src="./URL Rewriting in ASP.NET_files/030c41d9079671d09a62d8e2c1db6973.gif" alt="">
+    
+
+<div class="clip117x31 logo">
+  <a href="http://msdn.microsoft.com/en-us/default.aspx">
+    <img src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="msdn_body_logo" alt="MSDN" title="MSDN">
+  </a>
+</div>
+
+    <div class="topicContainer" style="">
+      
+<div class="topic" xmlns="http://www.w3.org/1999/xhtml">
+  <h1 class="title">URL Rewriting in ASP.NET</h1>
+  
+  <a id="urlrewriting">
+    
+  </a>
+
+
+<div id="nstext">&nbsp;
+<p>Scott Mitchell<br>
+4GuysFromRolla.com</p>
+
+<p>March 2004</p>
+
+<p>Applies to:<br>
+&nbsp;&nbsp;&nbsp;Microsoft® ASP.NET</p>
+
+<p><strong>Summary:</strong> Examines how to perform dynamic URL rewriting with Microsoft ASP.NET. URL rewriting is the process of intercepting an incoming Web request and automatically redirecting it to a different URL. Discusses the various techniques for implementing URL rewriting, and examines real-world scenarios of URL rewriting. (31 printed pages)</p>
+
+<p><a href="http://download.microsoft.com/download/0/4/6/0463611e-a3f9-490d-a08c-877a83b797cf/MSDNURLRewriting.msi" target="_top">Download the source code for this article</a>.</p>
+
+
+<h4 class="dtH1">Contents</h4>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic1">Introduction</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic2">Common Uses of URL Rewriting</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic3">What Happens When a Request Reaches IIS</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic4">Implementing URL Rewriting </a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic5">Building a URL Rewriting Engine</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic6">Performing Simple URL Rewriting with the URL Rewriting Engine</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic7">Creating Truly "Hackable" URLs</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic8">Conclusion</a><br>
+<a href="http://msdn.microsoft.com/en-us/library/ms972974.aspx#urlrewriting_topic10">Related Books</a></p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic1"></a>Introduction</h2>
+
+<p>Take a moment to look at some of the URLs on your website. Do you find URLs like http://yoursite.com/info/dispEmployeeInfo.aspx?EmpID=459-099&amp;type=summary? Or maybe you have a bunch of Web pages that were moved from one directory or website to another, resulting in broken links for visitors who have bookmarked the old URLs. In this article we'll look at using <em>URL rewriting</em> to shorten those ugly URLs to meaningful, memorable ones, by replacing http://yoursite.com/info/dispEmployeeInfo.aspx?EmpID=459-099&amp;type=summary with something like http://yoursite.com/people/sales/chuck.smith. We'll also see how URL rewriting can be used to create an intelligent 404 error.</p>
+
+<p>URL rewriting is the process of intercepting an incoming Web request and redirecting the request to a different resource. When performing URL rewriting, typically the URL being requested is checked and, based on its value, the request is redirected to a different URL. For example, in the case where a website restructuring caused all of the Web pages in the /people/ directory to be moved to a /info/employees/ directory, you would want to use URL rewriting to check if a Web request was intended for a file in the /people/ directory. If the request was for a file in the /people/ directory, you'd want to automatically redirect the request to the same file, but in the /info/employees/ directory instead.</p>
+
+<p>With classic ASP, the only way to utilize URL rewriting was to write an ISAPI filter or to buy a third-party product that offered URL rewriting capabilities. With Microsoft® ASP.NET, however, you can easily create your own URL rewriting software in a number of ways. In this article we'll examine the techniques available to ASP.NET developers for implementing URL rewriting, and then turn to some real-world uses of URL rewriting. Before we delve into the technological specifics of URL rewriting, let's first take a look at some everyday scenarios where URL rewriting can be employed.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic2"></a>Common Uses of URL Rewriting</h2>
+
+<p>Creating data-driven ASP.NET websites often results in a single Web page that displays a subset of the database's data based on querystring parameters. For example, in designing an e-commerce site, one of your tasks would be to allow users to browse through the products for sale. To facilitate this, you might create a page called displayCategory.aspx that would display the products for a given category. The category's products to view would be specified by a querystring parameter. That is, if the user wanted to browse the Widgets for sale, and all Widgets had a had a CategoryID of 5, the user would visit: http://yousite.com/displayCategory.aspx?CategoryID=5.</p>
+
+<p>There are two downsides to creating a website with such URLs. First, from the end user's perspective, the URL http://yousite.com/displayCategory.aspx?CategoryID=5 is a mess. Usability expert <a href="http://useit.com/">Jakob Neilsen</a> <a href="http://www.useit.com/alertbox/990321.html">recommends</a> that URLs be chosen so that they:
+
+</p><ul>
+	<li>Are short.</li>
+
+	<li>Are easy to type.</li>
+
+	<li>Visualize the site structure.</li>
+
+	<li>"Hackable," allowing the user to navigate through the site by hacking off parts of the URL.</li>
+</ul>
+
+<p>I would add to that list that URLs should also be easy to remember. The URL http://yousite.com/displayCategory.aspx?CategoryID=5 meets none of Neilsen's criteria, nor is it easy to remember. Asking users to type in querystring values makes a URL hard to type and makes the URL "hackable" only by experienced Web developers who have an understanding of the purpose of querystring parameters and their name/value pair structure. </p>
+
+<p>A better approach is to allow for a sensible, memorable URL, such as http://yoursite.com/products/Widgets. By just looking at the URL you can infer what will be displayed—information about Widgets. The URL is easy to remember and share, too. I can tell my colleague, "Check out yoursite.com/products/Widgets," and she'll likely be able to bring up the page without needing to ask me again what the URL was. (Try doing that with, say, an Amazon.com page!) The URL also appears, and should behave, "hackable." That is, if the user hacks of the end of the URL, and types in http://yoursite.com/products, they should see a listing of <em>all</em> products, or at least a listing of all categories of products they can view.</p>
+
+<p><strong>Note&nbsp;&nbsp;&nbsp;</strong>For a prime example of a "hackable" URL, consider the URLs generated by many blog engines. To view the posts for January 28, 2004, one visits a URL like http://someblog.com/2004/01/28. If the URL is hacked down to http://someblog.com/2004/01, the user will see all posts for January 2004. Cutting it down further to http://someblog.com/2004 will display all posts for the year 2004.</p>
+
+<p>In addition to simplifying URLs, URL rewriting is also often used to handle website restructuring that would otherwise result in numerous broken links and outdated bookmarks.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic3"></a>What Happens When a Request Reaches IIS</h2>
+
+<p>Before we examine exactly how to implement URL rewriting, it's important that we have an understanding of how incoming requests are handled by Microsoft® Internet Information Services (IIS). When a request arrives at an IIS Web server, IIS examines the requested file's extension to determine how handle the request. Requests can be handled natively by IIS—as are HTML pages, images, and other static content—or IIS can route the request to an ISAPI extension. (An ISAPI extension is an unmanaged, compiled class that handles an incoming Web request. Its task is to generate the content for the requested resource.)</p>
+
+<p>For example, if a request comes in for a Web page named Info.asp, IIS will route the message to the asp.dll ISAPI extension. This ISAPI extension will then load the requested ASP page, execute it, and return its rendered HTML to IIS, which will then send it back to the requesting client. For ASP.NET pages, IIS routes the message to the aspnet_isapi.dll ISAPI extension. The aspnet_isapi.dll ISAPI extension then hands off processing to the managed ASP.NET worker process, which processes the request, returning the ASP.NET Web page's rendered HTML.</p>
+
+<p>You can customize IIS to specify what extensions are mapped to what ISAPI extensions. Figure 1 shows the Application Configuration dialog box from the Internet Information Services Administrative Tool. Note that the ASP.NET-related extensions—.aspx, .ascx, .config, .asmx, .rem, .cs, .vb, and others—are all mapped to the aspnet_isapi.dll ISAPI extension.</p>
+
+<p class="fig"><img id="urlrewriting_fig01" alt="ms972974.urlrewriting_fig01(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC76858.gif" title="ms972974.urlrewriting_fig01(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 1. Configured mappings for file extensions</strong></p>
+
+<p>A thorough discussion of how IIS manages incoming requests is a bit beyond the scope of this article. A great, in-depth discussion, though, can be found in Michele Leroux Bustamante's article <a href="http://www.theserverside.net/articles/showarticle.tss?id=IIS_ASP">Inside IIS and ASP.NET</a>. It's important to understand that the ASP.NET engine gets its hands only on incoming Web requests whose extensions are explicitly mapped to the aspnet_isapi.dll in IIS.</p>
+
+<h3 class="dtH1">Examining Requests with ISAPI Filters</h3>
+
+<p>In addition to mapping the incoming Web request's file extension to the appropriate ISAPI extension, IIS also performs a number of other tasks. For example, IIS attempts to authenticate the user making the request and determine if the authenticated user has authorization to access the requested file. During the lifetime of handling a request, IIS passes through several states. At each state, IIS raises an event that can be programmatically handled using ISAPI filters.</p>
+
+<p>Like ISAPI extensions, ISAPI filters are blocks of unmanaged code installed on the Web server. ISAPI extensions are designed to generate the response for a request to a particular file type. ISAPI filters, on the other hand, contain code to respond to events raised by IIS. ISAPI filters can intercept and even modify the incoming and outgoing data. ISAPI filters have numerous applications, including:
+
+</p><ul>
+	<li>Authentication and authorization.</li>
+
+	<li>Logging and monitoring.</li>
+
+	<li>HTTP compression.</li>
+
+	<li>URL rewriting.</li>
+</ul>
+
+<p>While ISAPI filters can be used to perform URL rewriting, this article examines implementing URL rewriting using ASP.NET. However, we will discuss the tradeoffs between implementing URL rewriting as an ISAPI filter versus using techniques available in ASP.NET.</p>
+
+<h3 class="dtH1">What Happens When a Request Enters the ASP.NET Engine</h3>
+
+<p>Prior to ASP.NET, URL rewriting on IIS Web servers needed to be implemented using an ISAPI filter. URL rewriting is possible with ASP.NET because the ASP.NET engine is strikingly similar to IIS. The similarities arise because the ASP.NET engine:
+
+</p><ol>
+	<li>Raises events as it processes a request.</li>
+
+	<li>Allows an arbitrary number of <em>HTTP modules</em> handle the events that are raised, akin to IIS's ISAPI filters.</li>
+
+	<li>Delegates rendering the requested resource to an <em>HTTP handler</em>, which is akin to IIS's ISAPI extensions.</li>
+</ol>
+
+<p>Like IIS, during the lifetime of a request the ASP.NET engine fires events signaling its change from one state of processing to another. The <strong>BeginRequest</strong> event, for example, is fired when the ASP.NET engine first responds to a request. The <strong>AuthenticateRequest</strong> event fires next, which occurs when the identity of the user has been established. (There are numerous other events—<strong>AuthorizeRequest</strong>, <strong>ResolveRequestCache</strong>, and <strong>EndRequest</strong>, among others. These events are events of the <strong>System.Web.HttpApplication</strong> class; for more information consult the <a href="http://msdn.microsoft.com/en-us/library/system.web.httpapplication.aspx">HttpApplication Class Overview</a> technical documentation.)</p>
+
+<p>As we discussed in the previous section, ISAPI filters can be created to respond to the events raised by IIS. In a similar vein, ASP.NET provides <em>HTTP modules</em> that can respond to the events raised by the ASP.NET engine. An ASP.NET Web application can be configured to have multiple HTTP modules. For each request processed by the ASP.NET engine, each configured HTTP module is initialized and allowed to wire up event handlers to the events raised during the processing of the request. Realize that there are a number of built-in HTTP modules utilized on each an every request. One of the built-in HTTP modules is the <strong>FormsAuthenticationModule</strong>, which first checks to see if forms authentication is being used and, if so, whether the user is authenticated or not. If not, the user is automatically redirected to the specified logon page.</p>
+
+<p>Recall that with IIS, an incoming request is eventually directed to an ISAPI extension, whose job it is to return the data for the particular request. For example, when a request for a classic ASP Web page arrives, IIS hands off the request to the asp.dll ISAPI extension, whose task it is to return the HTML markup for the requested ASP page. The ASP.NET engine utilizes a similar approach. After initializing the HTTP modules, the ASP.NET engine's next task is to determine what <em>HTTP handler</em> should process the request. </p>
+
+<p>All requests that pass through the ASP.NET engine eventually arrive at an HTTP handler or an HTTP handler factory (an HTTP handler factory simply returns an instance of an HTTP handler that is then used to process the request). The final HTTP handler renders the requested resource, returning the response. This response is sent back to IIS, which then returns it to the user that made the request.</p>
+
+<p>ASP.NET includes a number of built-in HTTP handlers. The <strong>PageHandlerFactory</strong>, for example, is used to render ASP.NET Web pages. The <strong>WebServiceHandlerFactory</strong> is used to render the response SOAP envelopes for ASP.NET Web services. The <strong>TraceHandler</strong> renders the HTML markup for requests to <strong>trace.axd</strong>.</p>
+
+<p>Figure 2 illustrates how a request for an ASP.NET resource is handled. First, IIS receives the request and dispatches it to aspnet_isapi.dll. Next, the ASP.NET engine initializes the configured HTTP modules. Finally, the proper HTTP handler is invoked and the requested resource is rendered, returning the generated markup back to IIS and back to the requesting client.</p>
+
+<p class="fig"><img id="urlrewriting_fig02" alt="ms972974.urlrewriting_fig02(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC166956.gif" title="ms972974.urlrewriting_fig02(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 2. Request processing by IIS and ASP.NET</strong></p>
+
+<h3 class="dtH1">Creating and Registering Custom HTTP Modules and HTTP Handlers</h3>
+
+<p>Creating custom HTTP modules and HTTP handlers are relatively simple tasks, which involve created a managed class that implements the correct interface. HTTP modules must implement the <strong>System.Web.IHttpModule</strong> interface, while HTTP handlers and HTTP handler factories must implement the <strong>System.Web.IHttpHandler</strong> interface and <strong>System.Web.IHttpHandlerFactory</strong> interface, respectively. The specifics of creating HTTP handlers and HTTP modules is beyond the scope of this article. For a good background, read Mansoor Ahmed Siddiqui's article, <a href="http://www.15seconds.com/issue/020417.htm">HTTP Handlers and HTTP Modules in ASP.NET</a>.</p>
+
+<p>Once a custom HTTP module or HTTP handler has been created, it must be registered with the Web application. Registering HTTP modules and HTTP handlers for an entire Web server requires only a simple addition to the machine.config file; registering an HTTP module or HTTP handler for a specific Web application involves adding a few lines of XML to the application's Web.config file.</p>
+
+<p>Specifically, to add an HTTP module to a Web application, add the following lines in the Web.config's configuration/system.web section:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_f1fabbcd-16e9-474d-805f-4504a2cbef5c');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_f1fabbcd-16e9-474d-805f-4504a2cbef5c" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;httpModules&gt;
+   &lt;add type="type" name="name" /&gt;
+&lt;/httpModules&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>The <em>type</em> value provides the assembly and class name of the HTTP module, whereas the <em>name</em> value provides a friendly name by which the HTTP module can be referred to in the Global.asax file.</p>
+
+<p>HTTP handlers and HTTP handler factories are configured by the &lt;httpHandlers&gt; tag in the Web.config's configuration/system.web section, like so:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_ed2a23d8-61f4-424d-a5eb-f45c5267bfa4');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_ed2a23d8-61f4-424d-a5eb-f45c5267bfa4" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;httpHandlers&gt;
+   &lt;add verb="verb" path="path" type="type" /&gt;
+&lt;/httpHandlers&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>Recall that for each incoming request, the ASP.NET engine determines what HTTP handler should be used to render the request. This decision is made based on the incoming requests verb and path. The verb specifies what type of HTTP request was made—GET or POST—whereas the path specifies the location and filename of the file requested. So, if we wanted to have an HTTP handler handle all requests—either GET or POST—for files with the .scott extension, we'd add the following to the Web.config file:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_801eef66-5b7c-4235-b0ed-d0efb6761d6e');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_801eef66-5b7c-4235-b0ed-d0efb6761d6e" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;httpHandlers&gt;
+   &lt;add verb="*" path="*.scott" type="type" /&gt;
+&lt;/httpHandlers&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>where <em>type</em> was the type of our HTTP handler.</p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>When registering HTTP handlers, it is important to ensure that the extensions used by the HTTP handler are mapped in IIS to the ASP.NET engine. That is, in our .scott example, if the .scott extension is not mapped in IIS to the aspnet_isapi.dll ISAPI extension, a request for the file foo.scott will result in IIS attempting to return the contents of the file foo.scott. In order for the HTTP handler to process this request, the .scott extension must be mapped to the ASP.NET engine. The ASP.NET engine, then, will route the request correctly to the appropriate HTTP handler.</div></blockquote>
+
+<p>For more information on registering HTTP modules and HTTP handlers, be sure to consult the <a href="http://msdn.microsoft.com/en-us/library/9b9dh535.aspx">&lt;httpModules&gt; element documentation</a> along with the <a href="http://msdn.microsoft.com/en-us/library/aa903367.aspx">&lt;httpHandlers&gt; element documentation</a>.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic4"></a>Implementing URL Rewriting </h2>
+
+<p>URL rewriting can be implemented either with ISAPI filters at the IIS Web server level, or with either HTTP modules or HTTP handlers at the ASP.NET level. This article focuses on implementing URL rewriting with ASP.NET, so we won't be delving into the specifics of implementing URL rewriting with ISAPI filters. There are, however, numerous third-party ISAPI filters available for URL rewriting, such as:
+
+</p><ul>
+	<li><a href="http://www.isapirewrite.com/">ISAPI Rewrite</a></li>
+
+	<li><a href="http://www.qwerksoft.com/products/iisrewrite/">IIS Rewrite</a></li>
+
+	<li><a href="http://port80software.com/products/pagexchanger/">PageXChanger</a></li>
+
+	<li>And many others!</li>
+</ul>
+
+<p>Implementing URL rewriting at the ASP.NET level is possible through the <strong>System.Web.HttpContext</strong> class's <strong>RewritePath()</strong> method. The <strong>HttpContext</strong> class contains HTTP-specific information about a specific HTTP request. With each request received by the ASP.NET engine, an <strong>HttpContext</strong> instance is created for that request. This class has properties like: <strong>Request</strong> and <strong>Response</strong>, which provide access to the incoming request and outgoing response; <strong>Application</strong> and <strong>Session</strong>, which provide access to application and session variables; <strong>User</strong>, which provides information about the authenticated user; and other related properties. </p>
+
+<p>With the Microsoft® .NET Framework Version 1.0, the <strong>RewritePath()</strong> method accepts a single string, the new path to use. Internally, the <strong>HttpContext</strong> class's <strong>RewritePath(string)</strong> method updates the <strong>Request</strong> object's <strong>Path</strong> and <strong>QueryString</strong> properties. In addition to <strong>RewritePath(string)</strong>, the .NET Framework Version 1.1 includes another form of the <strong>RewritePath()</strong> method, one that accepts three string input parameters. This alternate overloaded form not only sets the <strong>Request</strong> object's <strong>Path</strong> and <strong>QueryString</strong> properties, but also sets internal member variables that are used to compute the <strong>Request</strong> object's values for its <strong>PhysicalPath</strong>, <strong>PathInfo</strong>, and <strong>FilePath</strong> properties.</p>
+
+<p>To implement URL rewriting in ASP.NET, then, we need to create an HTTP module or HTTP handler that:
+
+</p><ol>
+	<li>Checks the requested path to determine if the URL needs to be rewritten.</li>
+
+	<li>Rewrites the path, if needed, by calling the <strong>RewritePath()</strong> method.</li>
+</ol>
+
+<p>For example, imagine that our website had information each employee, accessible through /info/employee.aspx?empID=employeeID. To make the URLs more "hackable," we might decide to have employee pages accessible by: /people/EmployeeName.aspx. Here is a case where we'd want to use URL rewriting. That is, when the page /people/ScottMitchell.aspx was requested, we'd want to rewrite the URL so that the page /info/employee.aspx?empID=1001 was used instead.</p>
+
+<h3 class="dtH1">URL Rewriting with HTTP Modules</h3>
+
+<p>When performing URL rewriting at the ASP.NET level you can use either an HTTP module or an HTTP handler to perform the rewriting. When using an HTTP module, you must decide at what point during the request's lifecycle to check to see if the URL needs to be rewritten. At first glance, this may seem to be an arbitrary choice, but the decision can impact your application in both significant and subtle ways. The choice of where to perform the rewrite matters because the built-in ASP.NET HTTP modules use the <strong>Request</strong> object's properties to perform their duties. (Recall that rewriting the path alters the <strong>Request</strong> object's property values.) These germane built-in HTTP modules and the events they tie into are listed below:</p>
+<div class="tablediv"><table class="dtTABLE">
+
+<tbody><tr><td><strong>HTTP Module</strong></td><td><strong>Event</strong></td><td><strong>Description</strong></td></tr>
+
+<tr><td><strong>FormsAuthenticationModule</strong></td><td><strong>AuthenticateRequest</strong></td><td>Determines if the user is authenticated using forms authentication. If not, the user is automatically redirected to the specified logon page.</td></tr>
+
+<tr><td><strong>FileAuthorizationMoudle</strong></td><td><strong>AuthorizeRequest</strong></td><td>When using Windows authentication, this HTTP module checks to ensure that the Microsoft® Windows® account has adequate rights for the resource requested.</td></tr>
+
+<tr><td><strong>UrlAuthorizationModule</strong></td><td><strong>AuthorizeRequest</strong></td><td>Checks to make sure the requestor can access the specified URL. URL authorization is specified through the &lt;authorization&gt; and &lt;location&gt; elements in the Web.config file.</td></tr>
+</tbody></table></div>
+
+<p>Recall that the <strong>BeginRequest</strong> event fires before <strong>AuthenticateRequest</strong>, which fires before <strong>AuthorizeRequest</strong>. </p>
+
+<p>One safe place that URL rewriting can be performed is in the <strong>BeginRequest</strong> event. That means that if the URL needs to be rewritten, it will have done so by the time any of the built-in HTTP modules run. The downside to this approach arises when using forms authentication. If you've used forms authentication before, you know that when the user visits a restricted resource, they are automatically redirected to a specified login page. After successfully logging in, the user is sent back to the page they attempted to access in the first place. </p>
+
+<p>If URL rewriting is performed in the <strong>BeginRequest</strong> or <strong>AuthenticateRequest </strong>events, the login page will, when submitted, redirect the user to the rewritten page. That is, imagine that a user types into their browser window, /people/ScottMitchell.aspx, which is rewritten to /info/employee.aspx?empID=1001. If the Web application is configured to use forms authentication, when the user first visits /people/ScottMitchell.aspx, first the URL will be rewritten to /info/employee.aspx?empID=1001; next, the <strong>FormsAuthenticationModule</strong> will run, redirecting the user to the login page, if needed. The URL the user will be sent to upon successfully logging in, however, will be /info/employee.aspx?empID=1001, since that was the URL of the request when the <strong>FormsAuthenticationModule</strong> ran.</p>
+
+<p>Similarly, when performing rewriting in the <strong>BeginRequest</strong> or <strong>AuthenticateRequest</strong> events, the <strong>UrlAuthorizationModule</strong> sees the rewritten URL. That means that if you use &lt;location&gt; elements in your Web.config file to specify authorization for specific URLs, you will have to refer to the rewritten URL.</p>
+
+<p>To fix these subtleties, you might decide to perform the URL rewriting in the <strong>AuthorizeRequest</strong> event. While this approach fixes the URL authorization and forms authentication anomalies, it introduces a new wrinkle: file authorization no longer works. When using Windows authentication, the <strong>FileAuthorizationModule</strong> checks to make sure that the authenticated user has the appropriate access rights to access the specific ASP.NET page.</p>
+
+<p>Imagine if a set of users does not have Windows-level file access to C:\Inetput\wwwroot\info\employee.aspx; if such users attempt to visit /info/employee.aspx?empID=1001, then they will get an authorization error. However, if we move the URL rewriting to the <strong>AuthenticateRequest</strong> event, when the <strong>FileAuthorizationModule</strong> checks the security settings, it still thinks the file being requested is /people/ScottMitchell.aspx, since the URL has yet to be rewritten. Therefore, the file authorization check will pass, allowing this user to view the content of the rewritten URL, /info/employee.aspx?empID=1001.</p>
+
+<p>So, when should URL rewriting be performed in an HTTP module? It depends on what type of authentication you're employing. If you're not using any authentication, then it doesn't matter if URL rewriting happens in <strong>BeginRequest</strong>, <strong>AuthenticateRequest</strong>, or <strong>AuthorizeRequest</strong>. If you are using forms authentication and are not using Windows authentication, place the URL rewriting in the <strong>AuthorizeRequest</strong> event handler. Finally, if you are using Windows authentication, schedule the URL rewriting during the <strong>BeginRequest</strong> or <strong>AuthenticateRequest</strong> events.</p>
+
+<h3 class="dtH1">URL Rewriting in HTTP Handlers</h3>
+
+<p>URL rewriting can also be performed by an HTTP handler or HTTP handler factory. Recall that an HTTP handler is a class responsible for generating the content for a specific type of request; an HTTP handler factory is a class responsible for returning an instance of an HTTP handler that can generate the content for a specific type of request.</p>
+
+<p>In this article we'll look at creating a URL rewriting HTTP handler factory for ASP.NET Web pages. HTTP handler factories must implement the <strong>IHttpHandlerFactory</strong> interface, which includes a <strong>GetHandler()</strong> method. After initializing the appropriate HTTP modules, the ASP.NET engine determines what HTTP handler or HTTP handler factory to invoke for the given request. If an HTTP handler factory is to be invoked, the ASP.NET engine calls that HTTP handler factory's <strong>GetHandler()</strong> method passing in the <strong>HttpContext</strong> for the Web request, along with some other information. The HTTP handler factory, then, must return an object that implements <strong>IHttpHandler</strong> that can handle the request.</p>
+
+<p>To perform URL rewriting through an HTTP handler, we can create an HTTP handler factory whose <strong>GetHandler()</strong> method checks the requested path to determine if it needs to be rewritten. If it does, it can call the passed-in <strong>HttpContext</strong> object's <strong>RewritePath()</strong> method, as discussed earlier. Finally, the HTTP handler factory can return the HTTP handler returned by the <strong>System.Web.UI.PageParser</strong> class's <strong>GetCompiledPageInstance()</strong> method. (This is the same technique by which the built-in ASP.NET Web page HTTP handler factory, <strong>PageHandlerFactory</strong>, works.)</p>
+
+<p>Since all of the HTTP modules will have been initialized prior to the custom HTTP handler factory being instantiated, using an HTTP handler factory presents the same challenges when placing the URL rewriting in the latter stages of the events—namely, file authorization will not work. So, if you rely on Windows authentication and file authorization, you will want to use the HTTP module approach for URL rewriting.</p>
+
+<p>Over the next section we'll look at building a reusable URL rewriting engine. Following our examination of the URL rewriting engine—which is available in this article's code download—we'll spend the remaining two sections examining real-world uses of URL rewriting. First we'll look at how to use the URL rewriting engine and look at a simple URL rewriting example. Following that, we'll utilize the power of the rewriting engine's regular expression capabilities to provide truly "hackable" URLs.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic5"></a>Building a URL Rewriting Engine</h2>
+
+<p>To help illustrate how to implement URL rewriting in an ASP.NET Web application, I created a URL rewriting engine. This rewriting engine provides the following functionality:
+
+</p><ul>
+	<li>The ASP.NET page developer utilizing the URL rewriting engine can specify the rewriting rules in the Web.config file.</li>
+
+	<li>The rewriting rules can use regular expressions to allow for powerful rewriting rules.</li>
+
+	<li>URL rewriting can be easily configured to use an HTTP module or an HTTP handler.</li>
+</ul>
+
+<p>In this article we will examine URL rewriting with just the HTTP module. To see how HTTP handlers can be used to perform URL rewriting, consult the code available for download with this article.</p>
+
+<h3 class="dtH1">Specifying Configuration Information for the URL Rewriting Engine</h3>
+
+<p>Let's examine the structure of the rewrite rules in the Web.config file. First, you'll need to indicate in the Web.config file if you want perform URL rewriting with the HTTP module or the HTTP handler. In the download, the Web.config file contains two entries that have been commented out:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_d978942c-5264-4bad-b387-3537edf161ec');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_d978942c-5264-4bad-b387-3537edf161ec" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;!--
+&lt;httpModules&gt;
+   &lt;add type="URLRewriter.ModuleRewriter, URLRewriter" 
+        name="ModuleRewriter" /&gt;
+&lt;/httpModules&gt;
+--&gt;
+
+&lt;!--
+&lt;httpHandlers&gt;
+   &lt;add verb="*" path="*.aspx" 
+        type="URLRewriter.RewriterFactoryHandler, URLRewriter" /&gt;
+&lt;/httpHandlers&gt;
+--&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>Comment out the &lt;httpModules&gt; entry to use the HTTP module for rewriting; comment out the &lt;httpHandlers&gt; entry instead to use the HTTP handler for rewriting.</p>
+
+<p>In addition to specifying whether the HTTP module or HTTP handler is used for rewriting, the Web.config file contains the rewriting rules. A rewriting rule is composed of two strings: the pattern to look for in the requested URL, and the string to replace the pattern with, if found. This information is expressed in the Web.config file using the following syntax:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_ea52b6da-1cfa-4c5d-8742-0606dc22f4a5');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_ea52b6da-1cfa-4c5d-8742-0606dc22f4a5" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;RewriterConfig&gt;
+   &lt;Rules&gt;
+   &lt;RewriterRule&gt;
+      &lt;LookFor&gt;pattern to look for&lt;/LookFor&gt;
+      &lt;SendTo&gt;string to replace pattern with&lt;/SendTo&gt;
+   &lt;/RewriterRule&gt;
+   &lt;RewriterRule&gt;
+      &lt;LookFor&gt;pattern to look for&lt;/LookFor&gt;
+      &lt;SendTo&gt;string to replace pattern with&lt;/SendTo&gt;
+   &lt;/RewriterRule&gt;
+   ...
+   &lt;/Rules&gt;
+&lt;/RewriterConfig&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>Each rewrite rule is expressed by a <strong>&lt;RewriterRule&gt;</strong> element. The pattern to search for is specified by the <strong>&lt;LookFor&gt;</strong> element, while the string to replace the found pattern with is entered in the <strong>&lt;SentTo&gt;</strong> element. These rewrite rules are evaluated from top to bottom. If a match is found, the URL is rewritten and the search through the rewriting rules terminates.</p>
+
+<p>When specifying patterns in the <strong>&lt;LookFor&gt;</strong> element, realize that regular expressions are used to perform the matching and string replacement. (In a bit we'll look at a real-world example that illustrates how to search for a pattern using regular expressions.) Since the pattern is a regular expression, be sure to escape any characters that are reserved characters in regular expressions. (Some of the regular expression reserved characters include: ., ?, ^, $, and others. These can be escaped by being preceded with a backslash, like \. to match a literal period.)</p>
+
+<h3 class="dtH1">URL Rewriting with an HTTP Module</h3>
+
+<p>Creating an HTTP module is as simple as creating a class that implements the <strong>IHttpModule</strong> interface. The <strong>IHttpModule</strong> interface defines two methods:
+
+</p><ul>
+	<li><strong>Init(HttpApplication)</strong>. This method fires when the HTTP module is initialized. In this method you'll wire up event handlers to the appropriate <strong>HttpApplication</strong> events.</li>
+
+	<li><strong>Dispose()</strong>. This method is invoked when the request has completed and been sent back to IIS. Any final cleanup should be performed here.</li>
+</ul>
+
+<p>To facilitate creating an HTTP module for URL rewriting, I started by creating an abstract base class, <strong>BaseModuleRewriter</strong>. This class implements <strong>IHttpModule</strong>. In the <strong>Init()</strong> event, it wires up the <strong>HttpApplication</strong>'s <strong>AuthorizeRequest</strong> event to the <strong>BaseModuleRewriter_AuthorizeRequest</strong> method. The <strong>BaseModuleRewriter_AuthorizeRequest</strong> method calls the class's <strong>Rewrite()</strong> method passing in the requested <strong>Path</strong> along with the <strong>HttpApplication</strong> object that was passed into the <strong>Init()</strong> method. The <strong>Rewrite()</strong> method is abstract, meaning that in the <strong>BaseModuleRewriter</strong> class, the <strong>Rewrite()</strong> method has no method body; rather, the class being derived from <strong>BaseModuleRewriter</strong> <em>must</em> override this method and provide a method body.</p>
+
+<p>With this base class in place, all we have to do now is to create a class derived from <strong>BaseModuleRewriter</strong> that overrides <strong>Rewrite()</strong> and performs the URL rewriting logic there. The code for <strong>BaseModuleRewriter</strong> is shown below.</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_40216c14-900a-4f87-96ef-fd29b964a97b');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_40216c14-900a-4f87-96ef-fd29b964a97b" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>public abstract class BaseModuleRewriter : IHttpModule
+{
+   public virtual void Init(HttpApplication app)
+   {
+      // WARNING!  This does not work with Windows authentication!
+      // If you are using Windows authentication, 
+      // change to app.BeginRequest
+      app.AuthorizeRequest += new 
+         EventHandler(this.BaseModuleRewriter_AuthorizeRequest);
+   }
+
+   public virtual void Dispose() {}
+
+   protected virtual void BaseModuleRewriter_AuthorizeRequest(
+     object sender, EventArgs e)
+   {
+      HttpApplication app = (HttpApplication) sender;
+      Rewrite(app.Request.Path, app);
+   }
+
+   protected abstract void Rewrite(string requestedPath, 
+     HttpApplication app);
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>Notice that the <strong>BaseModuleRewriter</strong> class performs URL rewriting in the <strong>AuthorizeRequest</strong> event. Recall that if you use Windows authentication with file authorization, you will need to change this so that URL rewriting is performed in either the <strong>BeginRequest</strong> or <strong>AuthenticateRequest</strong> events.</p>
+
+<p>The <strong>ModuleRewriter</strong> class extends the <strong>BaseModuleRewriter</strong> class and is responsible for performing the actual URL rewriting. <strong>ModuleRewriter</strong> contains a single overridden method—<strong>Rewrite()</strong>—which is shown below:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_f15cb044-797e-482e-b874-42d63b4b88ae');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_f15cb044-797e-482e-b874-42d63b4b88ae" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>protected override void Rewrite(string requestedPath, 
+   System.Web.HttpApplication app)
+{
+   // get the configuration rules
+   RewriterRuleCollection rules = 
+     RewriterConfiguration.GetConfig().Rules;
+
+   // iterate through each rule...
+   for(int i = 0; i &lt; rules.Count; i++)
+   {
+      // get the pattern to look for, and 
+      // Resolve the Url (convert ~ into the appropriate directory)
+      string lookFor = "^" + 
+        RewriterUtils.ResolveUrl(app.Context.Request.ApplicationPath, 
+        rules[i].LookFor) + "$";
+
+      // Create a regex (note that IgnoreCase is set...)
+      Regex re = new Regex(lookFor, RegexOptions.IgnoreCase);
+
+      // See if a match is found
+      if (re.IsMatch(requestedPath))
+      {
+         // match found - do any replacement needed
+         string sendToUrl = 
+RewriterUtils.ResolveUrl(app.Context.Request.ApplicationPath, 
+            re.Replace(requestedPath, rules[i].SendTo));
+
+         // Rewrite the URL
+         RewriterUtils.RewriteUrl(app.Context, sendToUrl);
+         break;      // exit the for loop
+      }
+   }
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>The <strong>Rewrite()</strong> method starts with getting the set of rewriting rules from the Web.config file. It then iterates through the rewrite rules one at a time, and for each rule, it grabs its <strong>LookFor</strong> property and uses a regular expression to determine if a match is found in the requested URL.</p>
+
+<p>If a match is found, a regular expression replace is performed on the requested path with the value of the <strong>SendTo</strong> property. This replaced URL is then passed into the <strong>RewriterUtils.RewriteUrl()</strong> method. <strong>RewriterUtils</strong> is a helper class that provides a couple of static methods used by both the URL rewriting HTTP module and HTTP handler. The <strong>RewriterUrl()</strong> method simply calls the <strong>HttpContext</strong> object's <strong>RewriteUrl()</strong> method.</p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>You may have noticed that when performing the regular expression match and replacement, a call to <strong>RewriterUtils.ResolveUrl()</strong> is made. This helper method simply replaces any instances of <strong>~</strong> in the string with the value of the application's path.</div></blockquote>
+
+<p>The entire code for the URL rewriting engine is available for download with this article. We've examined the most germane pieces, but there are other components as well, such as classes for deserializing the XML-formatted rewriting rules in the Web.config file into an object, as well as the HTTP handler factory for URL rewriting. The remaining three sections of this article examine real-world uses of URL rewriting.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic6"></a>Performing Simple URL Rewriting with the URL Rewriting Engine</h2>
+
+<p>To demonstrate the URL rewriting engine in action, let's build an ASP.NET Web application that utilizes simple URL rewriting. Imagine that we work for a company that sells assorted products online. These products are broken down into the following categories:</p>
+<div class="tablediv"><table class="dtTABLE">
+
+<tbody><tr><td><strong>Category ID</strong></td><td><strong>Category Name</strong></td></tr>
+
+<tr><td><strong>1</strong></td><td>Beverages</td></tr>
+
+<tr><td><strong>2</strong></td><td>Condiments</td></tr>
+
+<tr><td><strong>3</strong></td><td>Confections</td></tr>
+
+<tr><td><strong>4</strong></td><td>Dairy Products</td></tr>
+
+<tr><td>...</td><td>...</td></tr>
+</tbody></table></div>
+
+<p>Assume we already have created an ASP.NET Web page called ListProductsByCategory.aspx that accepts a Category ID value in the querystring and displays all of the products belonging to that category. So, users who wanted to view our Beverages for sale would visit ListProductsByCategory.aspx?CategoryID=1, while users who wanted to view our Dairy Products would visit ListProductsByCategory.aspx?CategoryID=4. Also assume we have a page called ListCategories.aspx, which lists the categories of products for sale.</p>
+
+<p>Clearly this is a case for URL rewriting, as the URLs a user is presented with do not carry any significance for the user, nor do they provide any "hackability." Rather, let's employ URL rewriting so that when a user visits /Products/Beverages.aspx, their URL will be rewritten to ListProductsByCategory.aspx?CategoryID=1. We can accomplish this with the following URL rewriting rule in the Web.config file:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_10946f72-63a2-4338-913b-40c999d17231');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_10946f72-63a2-4338-913b-40c999d17231" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;RewriterConfig&gt;
+   &lt;Rules&gt;
+      &lt;!-- Rules for Product Lister --&gt;
+      &lt;RewriterRule&gt;
+         &lt;LookFor&gt;~/Products/Beverages\.aspx&lt;/LookFor&gt;
+         &lt;SendTo&gt;~/ListProductsByCategory.aspx?CategoryID=1&lt;/SendTo&gt;
+      &lt;/RewriterRule&gt;
+      &lt;RewriterRule&gt;
+   &lt;/Rules&gt;
+&lt;/RewriterConfig&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>As you can see, this rule searches to see if the path requested by the user was /Products/Beverages.aspx. If it was, it rewrites the URL as /ListProductsByCategory.aspx?CategoryID=1.</p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>Notice that the <strong>&lt;LookFor&gt;</strong> element escapes the period in Beverages.aspx. This is because the <strong>&lt;LookFor&gt;</strong> value is used in a regular expression pattern, and period is a special character in regular expressions meaning "match any character," meaning a URL of /Products/BeveragesQaspx, for example, would match. By escaping the period (using \.) we are indicating that we want to match a literal period, and not any old character.</div></blockquote>
+
+<p>With this rule in place, when a user visits /Products/Beverages.aspx, they will be shown the beverages for sale. Figure 3 shows a screenshot of a browser visiting /Products/Beverages.aspx. Notice that in the browser's Address bar the URL reads /Products/Beverages.aspx, but the user is actually seeing the contents of ListProductsByCategory.aspx?CategoryID=1. (In fact, there doesn't even exist a /Products/Beverages.aspx file on the Web server at all!)</p>
+
+<p class="fig"><img id="urlrewriting_fig03" alt="ms972974.urlrewriting_fig03(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC169584.gif" title="ms972974.urlrewriting_fig03(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 3. Requesting category after rewriting URL</strong></p>
+
+<p>Similar to /Products/Beverages.aspx, we'd next add rewriting rules for the other product categories. This simply involves adding additional <strong>&lt;RewriterRule&gt;</strong> elements within the <strong>&lt;Rules&gt;</strong> element in the Web.config file. Consult the Web.config file in the download for the complete set of rewriting rules for the demo.</p>
+
+<p>To make the URL more "hackable," it would be nice if a user could simply hack off the Beverages.aspx from /Products/Beverages.aspx and be shown a listing of the product categories. At first glance, this may appear a trivial task—just add a rewriting rule that maps /Products/ to /ListCategories.aspx. However, there is a fine subtlety—you must first create a /Products/ directory and add an empty Default.aspx file in the /Products/ directory.</p>
+
+<p>To understand why these extra steps need to be performed, recall that the URL rewriting engine is at the ASP.NET level. That is, if the ASP.NET engine is never given the opportunity to process the request, there's no way the URL rewriting engine can inspect the incoming URL. Furthermore, remember that IIS hands off incoming requests to the ASP.NET engine only if the requested file has an appropriate extension. So if a user visits /Products/, IIS doesn't see any file extension, so it checks the directory to see if there exists a file with one of the default filenames. (Default.aspx, Default.htm, Default.asp, and so on. These default filenames are defined in the Documents tab of the Web Server Properties dialog box in the IIS Administration dialog box.) Of course, if the /Products/ directory doesn't exist, IIS will return an HTTP 404 error. </p>
+
+<p>So, we need to create the /Products/ directory. Additionally, we need to create a single file in this directory, Default.aspx. This way, when a user visits /Products/, IIS will inspect the directory, see that there exists a file named Default.aspx, and then hand off processing to the ASP.NET engine. Our URL rewriter, then, will get a crack at rewriting the URL.</p>
+
+<p>After creating the directory and Default.aspx file, go ahead and add the following rewriting rule to the <strong>&lt;Rules&gt;</strong> element:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_5ce68fb5-ddef-4437-87c3-693257df5dd8');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_5ce68fb5-ddef-4437-87c3-693257df5dd8" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;RewriterRule&gt;
+   &lt;LookFor&gt;~/Products/Default\.aspx&lt;/LookFor&gt;
+   &lt;SendTo&gt;~/ListCategories.aspx&lt;/SendTo&gt;
+&lt;/RewriterRule&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>With this rule in place, when a user visits /Products/ or /Products/Default.aspx, they will see the listing of product categories, shown in Figure 4.</p>
+
+<p class="fig"><img id="urlrewriting_fig04" alt="ms972974.urlrewriting_fig04(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC134836.gif" title="ms972974.urlrewriting_fig04(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 4. Adding "hackability" to the URL</strong></p>
+
+<h3 class="dtH1">Handling Postbacks</h3>
+
+<p>If the URLs you are rewriting contain a server-side Web Form and perform postbacks, when the form posts back, the underlying URL will be used. That is, if our user enters into their browser, /Products/Beverages.aspx, they will still see in their browser's Address bar, /Products/Beverages.aspx, but they will be shown the content for ListProductsByCategory.aspx?CategoryID=1. If ListProductsByCategory.aspx performs a postback, the user will be posted back to ListProductsByCategory.aspx?CategoryID=1, not /Products/Beverages.aspx. This won't break anything, but it can be disconcerting from the user's perspective to see the URL change suddenly upon clicking a button.</p>
+
+<p>The reason this behavior happens is because when the Web Form is rendered, it explicitly sets its action attribute to the value of the file path in the <strong>Request</strong> object. Of course, by the time the Web Form is rendered, the URL has been rewritten from /Products/Beverages.aspx to ListProductsByCategory.aspx?CategoryID=1, meaning the <strong>Request</strong> object is reporting that the user is visiting ListProductsByCategory.aspx?CategoryID=1. This problem can be fixed by having the server-side form simply not render an action attribute. (Browsers, by default, will postback if the form doesn't contain an action attribute.)</p>
+
+<p>Unfortunately, the Web Form does not allow you to explicitly specify an action attribute, nor does it allow you to set some property to disable the rendering of the action attribute. Rather, we'll have to extend the <strong>System.Web.HtmlControls.HtmlForm</strong> class ourselves, overriding the <strong>RenderAttribute()</strong> method and explicitly indicating that it not render the action attribute.</p>
+
+<p>Thanks to the power of inheritance, we can gain all of the functionality of the <strong>HtmlForm</strong> class and only have to add a scant few lines of code to achieve the desired behavior. The complete code for the custom class is shown below:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_2d6b9fb2-e553-4a60-be5d-47cf437b044f');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_2d6b9fb2-e553-4a60-be5d-47cf437b044f" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>namespace ActionlessForm {
+  public class Form : System.Web.UI.HtmlControls.HtmlForm
+  {
+     protected override void RenderAttributes(HtmlTextWriter writer)
+     {
+        writer.WriteAttribute("name", this.Name);
+        base.Attributes.Remove("name");
+
+        writer.WriteAttribute("method", this.Method);
+        base.Attributes.Remove("method");
+
+        this.Attributes.Render(writer);
+
+        base.Attributes.Remove("action");
+
+        if (base.ID != null)
+           writer.WriteAttribute("id", base.ClientID);
+     }
+  }
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>The code for the overridden <strong>RenderAttributes()</strong> method simply contains the exact code from the <strong>HtmlForm</strong> class's <strong>RenderAttributes()</strong> method, but without setting the action attribute. (I used Lutz Roeder's <a href="http://www.aisto.com/roeder/DotNet/">Reflector</a> to view the source code of the <strong>HtmlForm</strong> class.)</p>
+
+<p>Once you have created this class and compiled it, to use it in an ASP.NET Web application, start by adding it to the Web application's References folder. Then, to use it in place of the <strong>HtmlForm</strong> class, simply add the following to the top of your ASP.NET Web page:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_dcb1f1c3-7964-49a3-881b-c4e816529cb2');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_dcb1f1c3-7964-49a3-881b-c4e816529cb2" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;%@ Register TagPrefix="skm" Namespace="ActionlessForm" 
+   Assembly="ActionlessForm" %&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>Then, where you have <code class="ce">&lt;form runat="server"&gt;</code>, replace that with:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_24265b47-f9a6-4cca-8ed1-62e08abbd070');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_24265b47-f9a6-4cca-8ed1-62e08abbd070" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;skm:Form id="Form1" method="post" runat="server"&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>and replace the closing <code class="ce">&lt;/form&gt;</code> tag with:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_57918671-276d-4413-a04a-85650a41ec8c');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_57918671-276d-4413-a04a-85650a41ec8c" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;/skm:Form&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>You can see this custom Web Form class in action in ListProductsByCategory.aspx, which is included in this article's download. Also included in the download is a Visual Studio .NET project for the action-less Web Form.</p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>If the URL you are rewriting to does not perform a postback, there's no need to use this custom Web Form class.</div></blockquote>
+
+<h2 class="dtH1"><a id="urlrewriting_topic7"></a>Creating Truly "Hackable" URLs</h2>
+
+<p>The simple URL rewriting demonstrated in the previous section showed how easily the URL rewriting engine can be configured with new rewriting rules. The true power of the rewriting rules, though, shines when using regular expressions, as we'll see in this section.</p>
+
+<p>Blogs are becoming more and more popular these days, and it seems <em>everyone</em> has their own blog. If you are not familiar with blogs, they are often-updated personal pages that typically serve as an online journal. Most bloggers simply write about their day-to-day happenings, others focus on blogging about a specific theme, such as movie reviews, a sports team, or a computer technology.</p>
+
+<p>Depending on the author, blogs are updated anywhere from several times a day to once every week or two. Typically the blog homepage shows the most recent 10 entries, but virtually all blogging software provides an archive through which visitors can read older postings. Blogs are a great application for "hackable" URLs. Imagine while searching through the archives of a blog you found yourself at the URL /2004/02/14.aspx. Would you be terribly surprised if you found yourself reading the posts made on February 14th, 2004? Furthermore, you might want to view all posts for February 2004, in which case you might try hacking the URL to /2004/02/. To view all 2004 posts, you might try visiting /2004/.</p>
+
+<p>When maintaining a blog, it would be nice to provide this level of URL "hackability" to your visitors. While many blog engines provide this functionality, let's look at how it can be accomplished using URL rewriting. </p>
+
+<p>First, we need a single ASP.NET Web page that will show blog entries by day, month, or year. Assume we have such a page, ShowBlogContent.aspx, that takes in querystring parameters year, month, and day. To view the posts for February 14th, 2004, we could visit ShowBlogContent.aspx?year=2004&amp;month=2&amp;day=14. To view all posts for February 2004, we'd visit ShowBlogContent.aspx?year=2004&amp;month=2. Finally, to see all posts for the year 2004, we'd navigate to ShowBlogContent.aspx?year=2004. (The code for ShowBlogContent.aspx can be found in this article's download.)</p>
+
+<p>So, if a user visits /2004/02/14.aspx, we need to rewrite the URL to ShowBlogContent.aspx?year=2004&amp;month=2&amp;day=14. All three cases—when the URL specifies a year, month, and day; when the URL specifies just the year and month; and when the URL specifies only the yea—can be handled with three rewrite rules:</p>
+
+
+
+<div class="codeSnippetContainer" xmlns="">
+  <script type="text/javascript" src="./URL Rewriting in ASP.NET_files/CodeSnippet.js"></script>
+  <link href="./URL Rewriting in ASP.NET_files/CodeSnippet.css" rel="stylesheet" type="text/css">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" title="Copy to clipboard." href="javascript:CodeSnippet_CopyCode('CodeSnippetContainerCode_d70004ce-01eb-4c0b-9920-feef4441185c');">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_d70004ce-01eb-4c0b-9920-feef4441185c" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>&lt;RewriterConfig&gt;
+   &lt;Rules&gt;
+      &lt;!-- Rules for Blog Content Displayer --&gt;
+      &lt;RewriterRule&gt;
+         &lt;LookFor&gt;~/(\d{4})/(\d{2})/(\d{2})\.aspx&lt;/LookFor&gt;
+         &lt;SendTo&gt;~/ShowBlogContent.aspx?year=$1&amp;amp;month=$2&amp;amp;day=$3&lt;/SendTo&gt;
+      &lt;/RewriterRule&gt;
+      &lt;RewriterRule&gt;
+         &lt;LookFor&gt;~/(\d{4})/(\d{2})/Default\.aspx&lt;/LookFor&gt;
+         &lt;SendTo&gt;&lt;![CDATA[~/ShowBlogContent.aspx?year=$1&amp;month=$2]]&gt;&lt;/SendTo&gt;
+      &lt;/RewriterRule&gt;
+      &lt;RewriterRule&gt;
+         &lt;LookFor&gt;~/(\d{4})/Default\.aspx&lt;/LookFor&gt;
+         &lt;SendTo&gt;~/ShowBlogContent.aspx?year=$1&lt;/SendTo&gt;
+      &lt;/RewriterRule&gt;
+   &lt;/Rules&gt;
+&lt;/RewriterConfig&gt;
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+
+
+<p>These rewriting rules demonstrate the power of regular expressions. In the first rule, we look for a URL with the pattern (\d{4})/(\d{2})/(\d{2})\.aspx. In plain English, this matches a string that has four digits followed by a forward slash followed by two digits followed by a forward slash, followed by two digits followed by .aspx. The parenthesis around each digit grouping is vital—it allows us to refer to the matched characters inside those parentheses in the corresponding <strong>&lt;SendTo&gt;</strong> property. Specifically, we can refer back to the matched parenthetical groupings using $1, $2, and $3 for the first, second, and third parenthesis grouping, respectively.</p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>Since the Web.config file is XML-formatted, characters like &amp;, &lt;, and &gt; in the text portion of an element must be escaped. In the first rule's <strong>&lt;SendTo&gt;</strong> element, &amp; is escaped to &amp;amp;. In the second rule's <strong>&lt;SendTo&gt;</strong>, an alternative technique is used—by using a <strong>&lt;![CDATA[...]]&gt;</strong> element, the contents inside do not need to be escaped. Either approach is acceptable and accomplishes the same end.</div></blockquote>
+
+<p>Figures 5, 6, and 7 show the URL rewriting in action. The data is actually being pulled from my blog, <a href="http://scottonwriting.net/">http://ScottOnWriting.NET</a>. In Figure 5, the posts for November 7, 2003 are shown; in Figure 6 all posts for November 2003 are shown; Figure 7 shows all posts for 2003.</p>
+
+<p class="fig"><img id="urlrewriting_fig05" alt="ms972974.urlrewriting_fig05(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC153804.gif" title="ms972974.urlrewriting_fig05(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 5. Posts for November 7, 2003</strong></p>
+
+<p class="fig"><img id="urlrewriting_fig06" alt="ms972974.urlrewriting_fig06(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC32267.gif" title="ms972974.urlrewriting_fig06(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 6. All posts for November 2003</strong></p>
+
+<p class="fig"><img id="urlrewriting_fig07" alt="ms972974.urlrewriting_fig07(en-us,MSDN.10).gif" src="./URL Rewriting in ASP.NET_files/IC32164.gif" title="ms972974.urlrewriting_fig07(en-us,MSDN.10).gif" xmlns=""></p>
+
+<p class="label"></p>
+
+<p class="normal"></p>
+
+<p class="label"><strong>Figure 7. All posts for 2003</strong></p>
+
+<blockquote class="dtBlock"><div>
+<strong>Note&nbsp;&nbsp;&nbsp;</strong>The URL rewriting engine expects a regular expression pattern in the <strong>&lt;LookFor&gt;</strong> elements. If you are unfamiliar with regular expressions, consider reading an earlier article of mine, <a href="http://www.4guysfromrolla.com/webtech/090199-1.shtml">An Introduction to Regular Expressions</a>. Also, a great place to get your hands on commonly used regular expressions, as well as a repository for sharing your own crafted regular expressions, is <a href="http://regexlib.com/">RegExLib.com</a>.</div></blockquote>
+
+<h3 class="dtH1">Building the Requisite Directory Structure</h3>
+
+<p>When a request comes in for /2004/03/19.aspx, IIS notes the .aspx extension and routes the request to the ASP.NET engine. As the request moves through the ASP.NET engine's pipeline, the URL will get rewritten to ShowBlogContent.aspx?year=2004&amp;month=03&amp;day=19 and the visitor will see those blog entries for March 19, 2004. But what happens when the user navigates to /2004/03/? Unless there is a directory /2004/03/, IIS will return a 404 error. Furthermore, there needs to be a Default.aspx page in this directory so that the request is handed off to the ASP.NET engine.</p>
+
+<p>So with this approach, you have to manually create a directory for each year in which there are blog entries, with a Default.aspx page in the directory. Additionally, in each year directory you need to manually create twelve more directories—01, 02, …, 12—each with a Default.aspx file. (Recall that we had to do the same thing—add a /Products/ directory with a Default.aspx file—in the previous demo so that visiting /Products/ correctly displayed ListCategories.aspx.)</p>
+
+<p>Clearly, adding such a directory structure can be a pain. A workaround to this problem is to have all incoming IIS requests map to the ASP.NET engine. This way, even if when visiting the URL /2004/03/, IIS will faithfully hand off the request to the ASP.NET engine even if there does not exist a /2004/03/ directory. Using this approach, however, makes the ASP.NET engine responsible for handling all types of incoming requests to the Web server, including images, CSS files, external JavaScript files, Macromedia Flash files, and so on.</p>
+
+<p>A thorough discussion of handling all file types is far beyond the scope of this article. For an example of an ASP.NET Web application that uses this technique, though, look into <a href="http://www.gotdotnet.com/community/workspaces/default.aspx">.Text</a>, an open-source blog engine. .Text can be configured to have all requests mapped to the ASP.NET engine. It can handle serving all file types by using a custom HTTP handler that knows how to serve up typical static file types (images, CSS files, and so on).</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic8"></a>Conclusion</h2>
+
+<p>In this article we examined how to perform URL rewriting at the ASP.NET-level through the <strong>HttpContext</strong> class's <strong>RewriteUrl()</strong> method. As we saw, <strong>RewriteUrl()</strong> updates the particular <strong>HttpContext's</strong> <strong>Request</strong> property, updating what file and path is being requested. The net effect is that, from the user's perspective, they are visiting a particular URL, but actually a different URL is being requested on the Web server side.</p>
+
+<p>URLs can be rewritten either in an HTTP module or an HTTP handler. In this article we examined using an HTTP module to perform the rewriting, and looked at the consequences of performing the rewriting at different stages in the pipeline.</p>
+
+<p>Of course, with ASP.NET-level rewriting, the URL rewriting can only happen if the request is successfully handed off from IIS to the ASP.NET engine. This naturally occurs when the user requests a page with a .aspx extension. However, if you want the person to be able to enter a URL that might not actually exist, but would rather rewrite to an existing ASP.NET page, you have to either create mock directories and Default.aspx pages, or configure IIS so that all incoming requests are blindly routed to the ASP.NET engine.</p>
+
+<h2 class="dtH1"><a id="urlrewriting_topic10"></a>Related Books</h2>
+
+<p><a href="http://shopping.msn.com/search/detail.aspx?pcId=12237&prodId=734042">ASP.NET: Tips, Tutorials, and Code</a></p>
+
+<p><a href="http://shopping.msn.com/search/detail.aspx?pcId=4650&prodId=1627168">Microsoft ASP.NET Coding Strategies with the Microsoft ASP.NET Team</a></p>
+
+<p><a href="http://shopping.msn.com/search/detail.aspx?pcId=12231&prodId=1528348">Essential ASP.NET with Examples in C#</a></p>
+
+<h4 class="dtH1">Works consulted</h4>
+
+<p>URL rewriting is a topic that has received a lot of attention both for ASP.NET and competing server-side Web technologies. The Apache Web server, for instance, provides a module for URL rewriting called <a href="http://httpd.apache.org/docs/mod/mod_rewrite.html">mod_rewrite</a>. mod_rewrite is a robust rewriting engine, providing rewriting rules based on conditions such as HTTP headers and server variables, as well as rewriting rules that utilize regular expressions. For more information on mod_rewrite, check out <a href="http://www.engelschall.com/pw/apache/rewriteguide/">A User's Guide to URL Rewriting with the Apache Web Server</a>.</p>
+
+<p>There are a number of articles on URL rewriting with ASP.NET. <a href="http://www.15seconds.com/issue/030522.htm">Rewrite.NET - A URL Rewriting Engine for .NET</a> examines creating a URL rewriting engine that mimics mod_rewrite's regular expression rules. <a href="http://www.codeproject.com/aspnet/URLRewriter.asp">URL Rewriting With ASP.NET</a> also gives a good overview of ASP.NET's URL rewriting capabilities. <a href="http://www.interact-sw.co.uk/iangblog/">Ian Griffiths</a> has a <a href="http://www.interact-sw.co.uk/iangblog/2004/01/12/shinyurl">blog entry</a> on some of the caveats associated with URL rewriting with ASP.NET, such as the postback issue discussed in this article. Both <a href="http://weblogs.asp.net/fmarguerie/">Fabrice Marguerie</a> (<a href="http://weblogs.asp.net/fmarguerie/archive/2003/12/24/45712.aspx">read more</a>) and <a href="http://weblogs.asp.net/jasonsalas/">Jason Salas</a> (<a href="http://weblogs.asp.net/jasonsalas/archive/2003/12/14/43404.aspx">read more</a>) have blog entires on using URL rewriting to boost search engine placement.</p>
+
+<p></p><p>&nbsp;</p>
+
+<strong>About the author</strong>
+
+<p>Scott Mitchell, author of five books and founder of 4GuysFromRolla.com, has been working with Microsoft Web technologies for the past five years. Scott works as an independent consultant, trainer, and writer. He can be reached at <a href="mailto:mitchell@4guysfromrolla.com">mitchell@4guysfromrolla.com</a> or through his blog, which can be found at <a href="http://scottonwriting.net/">http://ScottOnWriting.NET</a>.</p>
+
+ 
+</div> 
+
+</div>
+    </div>
+    
+  </div>
+  
+  </div>
+  <div class="footer">
+    
+
+<div id="footer" class="footerContainer cl_footer_slice">
+  <div class="footerLogoContainer">
+    <div class="footerContent">
+    <div class="copyright">
+      © 2011 Microsoft. All rights reserved.</div>
+    <div class="footerLogo cl_footer_logo"></div>
+    <a href="http://msdn.microsoft.com/cc300389.aspx">Terms of Use</a><span class="pipe"> | </span>
+    <a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a><span class="pipe"> | </span>
+    <a href="http://www.microsoft.com/info/privacy.mspx">Privacy Statement</a>
+    <span class="pipe">| </span>
+    <span class="FeedbacklinkDisabled" id="FeedbacklinkDisabled">Feedback</span>
+    <a id="Feedbacklink" title="Feedback" class="FeedbackLink" href="javascript:void(0)">
+      Feedback
+        <span class="FeedbackButton clip20x21" id="FeedbackButton">
+          <img id="feedBackImg" class="cl_footer_feedback_icon" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" alt="Feedback">
+        </span>
+      </a>
+    
+  <div id="FeedbackContainer" class="FeedbackContainer">
+    <form method="post" action="http://msdn.microsoft.com/en-us/library/feedback/add/ms972974.aspx">
+    <div class="FeedbackTitleContainer">
+        <div class="FeedbackTitle">
+            Feedback</div>
+        <div class="FeedbackCancel">
+            <a href="javascript:;" onclick="document.getElementById(&#39;FeedbackContainer&#39;).style.display = &#39;none&#39;;">x</a>
+            </div>
+    </div>
+    <div class="FeedbackData">
+        <div class="FeedbackInfoText">
+            Tell us about your experience...
+        </div>
+        <div class="QuestionText">
+            Did the page load quickly?
+        </div>
+        <div class="AnswerText">
+            
+            <span>
+                Yes<span>
+                    <input id="searchBox" name="searchBox" type="radio" value="1"></span></span>
+            
+            <span>
+                No<span>
+                    <input id="searchBox" name="searchBox" type="radio" value="0"></span></span>
+            
+        </div>
+        <div class="QuestionText">
+            Do you like the page design?
+        </div>
+        <div class="AnswerText">
+            
+            <span>
+                Yes<span>
+                    <input id="tabbedCode" name="tabbedCode" type="radio" value="1"></span></span>
+            
+            <span>
+                No<span>
+                    <input id="tabbedCode" name="tabbedCode" type="radio" value="0"></span></span>
+            
+        </div>
+        <div class="QuestionText">
+            How useful is this topic?
+        </div>
+        <div class="FeedbackGraphicHolder clip269x23">            
+                <img alt="" src="./URL Rewriting in ASP.NET_files/c764fa3d6b8a84bd40aa131355215c98.png" class="cl_online_scale FeedbackSiderGraphic">
+        </div>        
+            <div class="RadioButtonHolder"><div class="RateRadioOne">
+                    <input id="topicUseful" name="topicUseful" title="Really disliked it" type="radio" value="1">
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="Disliked it" type="radio" value="2">
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="OK" type="radio" value="3">
+                </div>
+               <div class="RateRadio">
+                    <input id="topicUseful" name="topicUseful" title="Good" type="radio" value="4">
+                </div>
+               <div class="RateRadioLast">
+                    <input id="topicUseful" name="topicUseful" title="Really Good" type="radio" value="5">
+                </div>
+               
+            </div>            
+        <div class="QuestionText">
+            Tell us more
+        </div>
+        <div class="FeedbackTextAreaContainer">
+            <textarea id="feedbackText" data-maxlength="4000" name="feedbackText" cols="25" rows="5" class="FeedbackTextArea"></textarea>
+            
+            <textarea id="feedbackDescription" name="feedbackDescription" cols="25" rows="10" style="display:none;">Enter description here.</textarea>
+            <input type="hidden" id="feedbackPriority" name="feedbackPriority" value="">
+            <input type="hidden" id="feedbackSourceUrl" name="feedbackSourceUrl" value="">
+            <input type="hidden" id="ClientIP" name="ClientIP" value="">
+            <input type="hidden" id="ClientOS" name="ClientOS" value="">
+            <input type="hidden" id="ClientBrowser" name="ClientBrowser" value="">
+            <input type="hidden" id="ClientTime" name="ClientTime" value="">
+            <input type="hidden" id="ClientTimeZone" name="ClientTimeZone" value="">
+            
+            
+        </div>
+        <div>
+            <input type="submit" value="Send" class="FeedbackSubmit" onclick="document.getElementById(&#39;feedbackDescription&#39;).value=&#39;&#39;;document.getElementById(&#39;feedBackVersion&#39;).value = &#39;-1&#39;;">
+        </div>
+    </div>
+    <input type="hidden" id="returnUrl" name="returnUrl" value="http://msdn.microsoft.com/en-us/library/ms972974.aspx">
+    
+    
+    <input type="hidden" id="feedBackVersion" name="feedBackVersion" value="1">
+    
+  </form> 
+</div>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+ 
+<script type="text/javascript" src="./URL Rewriting in ASP.NET_files/97bf6854a8f5043ccfc9641ede05f54d.js" xmlns="http://www.w3.org/1999/xhtml"></script>
+
+<script src="./URL Rewriting in ASP.NET_files/broker-config.js"></script><div style="display: none; " id="_WEDCSInsertedData"><iframe id="_msnFrame" src="./URL Rewriting in ASP.NET_files/Sync.htm" style="z-index:-1;height:1px;width:1px;display:none;visibility:hidden;" onload="javascript:MscomBeacon();"></iframe></div></body></html>

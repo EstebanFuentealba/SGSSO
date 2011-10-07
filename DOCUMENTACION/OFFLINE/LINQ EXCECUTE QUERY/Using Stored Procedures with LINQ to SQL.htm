@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0084)http://www.mssqltips.com/sqlservertip/1542/using-stored-procedures-with-linq-to-sql/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+
+<link rel="SHORTCUT ICON" href="http://www.mssqltips.com/favicon.ico">
+<title>Using Stored Procedures with LINQ to SQL</title>
+<meta name="description" content="In a recent tip on Querying SQL Server databases using LINQ to SQL, you have described how it can be used to query SQL Server databases. How do I use LINQ to SQL with stored procedures that retrieve database records? ">
+<meta name="keywords" content="">
+<link rel="stylesheet" type="text/css" href="./Using Stored Procedures with LINQ to SQL_files/style.css">
+
+<link rel="canonical" href="./Using Stored Procedures with LINQ to SQL_files/Using Stored Procedures with LINQ to SQL.htm">
+
+<link rel="stylesheet" type="text/css" href="./Using Stored Procedures with LINQ to SQL_files/share-button-css"><script type="text/javascript" async="" src="./Using Stored Procedures with LINQ to SQL_files/ga.js"></script><script type="text/javascript" async="" src="./Using Stored Procedures with LINQ to SQL_files/plusone.js"></script><script src="./Using Stored Procedures with LINQ to SQL_files/restserver.php"></script><script src="./Using Stored Procedures with LINQ to SQL_files/googleapis.client__plusone.js"></script></head>
+
+<body style="text-align: center;" bgcolor="#727272">
+<div style="text-align: left; width: 1150px; margin: 10px auto 0 auto; height: auto;  padding: 4px; border:1px solid; background-color:#F3F3F3;">
+<div style="background-color:white;">
+<table width="100%">
+	<tbody><tr>
+		<td width="210" style="text-align: center;">
+			<a href="http://www.mssqltips.com/">
+			<img border="0" src="./Using Stored Procedures with LINQ to SQL_files/mssqllogo.gif" width="119" height="70"></a><br>
+			<a href="http://www.mssqltips.com/freesqlservertips.asp">join the community</a>
+		</td>
+		<td style="text-align: right;">
+			<a target="new" href="http://www.mssqltips.com/tac.asp?b=1040&l=http://www.idera.com/Products/Free-Tools/SQL-check/?s=BN_MSSQLTips_chk"><img src="./Using Stored Procedures with LINQ to SQL_files/IDERA-SQLCHECK_728X90_S_20110705.GIF" border="0"></a>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+<table width="100%">
+	<tbody><tr>
+		<td>
+			<!-- CSS for Drop Down Tabs Menu #1 -->
+<link rel="stylesheet" type="text/css" href="./Using Stored Procedures with LINQ to SQL_files/ddcolortabs.css">
+
+<script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/dropdowntabs.js">
+
+/***********************************************
+* Drop Down Tabs Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+
+<div id="colortab" class="ddcolortabs">
+<ul>
+<li><a href="http://www.mssqltips.com/"><span>Home</span></a></li>
+<li><a rel="dropmenu1_a"><span>Tips</span></a></li>
+<li><a href="http://www.mssqltips.com/productlist.asp"><span>Tools</span></a></li>
+<li><a href="http://www.mssqltips.com/tutoriallist.asp"><span>Tutorials</span></a></li>
+<li><a href="http://www.mssqltips.com/webcastlist.asp"><span>Webcasts</span></a></li>
+<li><a href="http://www.mssqltips.com/whitepaperlist.asp"><span>Whitepapers</span></a></li>
+<li><a rel="dropmenu1_b" href="http://www.mssqltips.com/questionlist.asp"><span>Questions</span></a></li>
+</ul>
+</div>
+
+
+<!--1st drop down menu -->
+<div id="dropmenu1_a" class="dropmenudiv_a">
+<a href="http://www.mssqltips.com/authorlist.asp">Authors</a>
+<a href="http://www.mssqltips.com/contribute.asp">Contribute</a>
+<a href="http://www.mssqltips.com/todaystip.asp">Today's Tip</a>
+<a href="http://www.mssqltips.com/categorylist.asp">Tips By Category</a>
+<a href="http://www.mssqltips.com/archive.asp">Latest Tips</a>
+<a href="http://www.mssqltips.com/topten.asp">Top 10 Tips</a>
+<a href="http://www.mssqltips.com/feedback.asp">Suggest a Tip</a>
+<a href="http://www.mssqltips.com/SearchByTipId.asp">Search By Tip ID</a>
+</div>
+
+<!--2nd drop down menu -->
+<div id="dropmenu1_b" class="dropmenudiv_a">
+<a href="http://www.mssqltips.com/questionnew.asp">Ask Question</a>
+<a href="http://www.mssqltips.com/questionlist.asp">All Questions</a>
+<a href="http://www.mssqltips.com/questionunansweredlist.asp">Unanswered</a>
+</div>
+
+
+<script type="text/javascript">
+//SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
+tabdropdown.init("colortab", 25)
+</script>
+		</td>
+		<td style="text-align: right;">
+			Subscribe:
+			<a href="http://feeds.feedburner.com/MSSQLTips-LatestSqlServerTips" target="_blank" rel="nofollow" title="RSS">
+			<img height="16" src="./Using Stored Procedures with LINQ to SQL_files/subscribe_rss.png" width="16" border="0"></a>&nbsp;
+			<a href="http://www.mssqltips.com/freesqlservertips.asp" title="Newsletter">
+			<img height="16" src="./Using Stored Procedures with LINQ to SQL_files/subscribe_email.png" width="16" border="0"></a>&nbsp;
+			<a href="http://twitter.com/mssqltips" target="_blank" rel="nofollow" title="Twitter">
+			<img height="16" src="./Using Stored Procedures with LINQ to SQL_files/subscribe_twitter.png" width="16" border="0"></a>&nbsp;
+			<a href="http://www.linkedin.com/groups?gid=2320891" target="_blank" rel="nofollow" title="LinkedIn">
+			<img alt="" height="16" src="./Using Stored Procedures with LINQ to SQL_files/subscribe_LinkedIn.png" style="border-width: 0px" width="16" border="0"></a>
+		</td>
+		<td style="text-align: right;">
+			<!-- SiteSearch Google -->
+			<script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/jsapi"></script>
+			<script type="text/javascript">
+			  google.load('search', '1');
+			  google.setOnLoadCallback(function() {
+			    google.search.CustomSearchControl.attachAutoCompletion(
+			      '004111219998430415686:pjndvj5e2n4',
+			      document.getElementById('q'),
+			      'cse-search-box');
+			  });
+			</script><script src="./Using Stored Procedures with LINQ to SQL_files/saved_resource" type="text/javascript"></script><link href="./Using Stored Procedures with LINQ to SQL_files/default+es.css" type="text/css" rel="stylesheet"><script src="./Using Stored Procedures with LINQ to SQL_files/default+es.I.js" type="text/javascript"></script>
+			<form action="http://www.mssqltips.com/search.asp" id="cse-search-box">
+			  <div>
+			    <input type="hidden" name="cx" value="004111219998430415686:pjndvj5e2n4">
+			    <input type="hidden" name="cof" value="FORID:9">
+			    <input type="hidden" name="ie" value="UTF-8">
+			    <input type="text" name="q" id="q" autocomplete="off" size="31" style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgb(126, 157, 185); border-right-color: rgb(126, 157, 185); border-bottom-color: rgb(126, 157, 185); border-left-color: rgb(126, 157, 185); padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; background-image: url(http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255); background-position: 0% 50%; background-repeat: no-repeat no-repeat; ">
+			    <input type="submit" name="sa" value="Search">
+			  </div>
+			<input name="siteurl" type="hidden" value="www.mssqltips.com/sqlservertip/1542/using-stored-procedures-with-linq-to-sql/"></form>
+			<script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/brand"></script>
+			<!-- SiteSearch Google -->
+		</td>
+	</tr>
+</tbody></table>
+<div class="ddcolortabsline">&nbsp;</div>
+</div>
+
+<br>
+
+	<div align="center">
+		<a target="_blank" href="http://www.mssqltips.com/ss.asp?id=1414&link=http://www.red-gate.com/products/dba/sql-virtual-restore/entrypage/painkillers?utm_source=mssql&utm_medium=email&utm_term=7229&utm_content=medicine&utm_campaign=sqlvirtualrestore"><img src="./Using Stored Procedures with LINQ to SQL_files/RedGate_SQLVR_Painkiller_June2011_990x30.gif" border="0" height="30" width="990"></a>
+	</div>
+
+<br>
+
+<!-- content start -->
+
+
+<table align="center" cellspacing="0" cellpadding="5" border="0" id="table1" width="100%">
+	<tbody><tr valign="top">
+		
+			<td width="810">
+			
+				<div style="background-color:white; border: 1px solid #aaa; padding: 4px; float:left;">
+			
+
+			<h1>Using Stored Procedures with LINQ to SQL</h1>  
+<table>
+	<tbody><tr>
+	<td>
+		By: <a href="http://www.mssqltips.com/sqlserverauthor/18/edwin-sarmiento/" title="author profile for Edwin Sarmiento">Edwin Sarmiento</a> 
+		| <a href="http://www.mssqltips.com/tipcomments.asp?tip=1542" title="read and post comments">Comments (4)</a> 
+		| <a href="http://www.mssqltips.com/tipprint.asp?tip=1542" title="print this tip">Print</a> |
+	
+	</td>
+		<td style="vertical-align:top"><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.mssqltips.com%2Ftip.asp?tip=1542&title=using-stored-procedures-with-linq-to-sql&title=Using%20Stored%20Procedures%20with%20LINQ%20to%20SQL&summary=In%20a%20recent%20tip%20on%20Querying%20SQL%20Server%20databases%20using%20LINQ%20to%20SQL,%20you%20have%20described%20how%20it%20can%20be%20used%20to%20query%20SQL%20Server%20databases.%20How%20do%20I%20use%20LINQ%20to%20SQL%20with%20stored%20procedures%20that%20retrieve%20database%20records?%20&source=MSSQLTips"><img src="./Using Stored Procedures with LINQ to SQL_files/Logo-LinkedIn.gif" height="20" width="20" border="0"></a></td>
+		<td style="vertical-align:top"><a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.mssqltips.com%2Fsqlservertip%2F1542%2Fusing-stored-procedures-with-linq-to-sql%2F&t=Using%20Stored%20Procedures%20with%20LINQ%20to%20SQL&src=sp" style="text-decoration: none; "><span class="fb_share_size_Small "><span class="FBConnectButton FBConnectButton_Small" style="cursor:pointer;"><span class="FBConnectButton_Text">Share</span></span><span class="fb_share_count_nub_right fb_share_no_count"></span><span class="fb_share_count fb_share_no_count fb_share_count_right"><span class="fb_share_count_inner">&nbsp;</span></span></span></a><script src="./Using Stored Procedures with LINQ to SQL_files/FB.Share" type="text/javascript"></script>&nbsp;</td>
+		<td style="vertical-align:top"><iframe src="./Using Stored Procedures with LINQ to SQL_files/tweet_button.htm" allowtransparency="true" frameborder="0" scrolling="no" class="twitter-share-button twitter-count-horizontal" style="width: 110px; height: 20px; " title="Twitter For Websites: Tweet Button"></iframe><script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/widgets.js"></script></td>
+
+		<td style="vertical-align:top"><!-- Place this tag where you want the +1 button to render -->
+<div id="___plusone_0" style="height: 20px; width: 120px; display: inline-block; text-indent: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: transparent; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial; "><iframe allowtransparency="true" frameborder="0" hspace="0" id="I1_1316753447304" marginheight="0" marginwidth="0" name="I1_1316753447304" scrolling="no" src="./Using Stored Procedures with LINQ to SQL_files/fastbutton.htm" style="width: 120px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; height: 20px; position: static; left: 0px; top: 0px; visibility: visible; " tabindex="-1" vspace="0" width="100%" title="+1"></iframe></div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script></td>
+
+	</tr>
+</tbody></table>
+
+
+
+
+<br>
+<div align="center">
+
+
+
+<script language="Javascript"> 
+<!-- 
+function ShowPicture(id,Source) { 
+if (Source=="1"){ 
+if (document.layers) document.layers[''+id+''].visibility = "show" 
+else if (document.all) document.all[''+id+''].style.visibility = "visible" 
+else if (document.getElementById) document.getElementById(''+id+'').style.visibility = "visible" 
+} 
+else 
+if (Source=="0"){ 
+if (document.layers) document.layers[''+id+''].visibility = "hide" 
+else if (document.all) document.all[''+id+''].style.visibility = "hidden" 
+else if (document.getElementById) document.getElementById(''+id+'').style.visibility = "hidden" 
+} 
+} 
+//--> 
+</script> 
+<style type="text/css"> 
+#Style { 
+position:absolute; 
+visibility:hidden; 
+border:solid 1px #CCC; 
+padding:5px; 
+
+} 
+</style> 
+
+
+
+<div style="width: 500px; padding: 4px; background-color: #FFFF99;">
+	<a href="http://www.mssqltips.com/giveaway.asp" title="MSSQLTips is giving away a Kindle e-Reader" style="color: #0000FF" onmouseover="ShowPicture(&#39;Style&#39;,1)" onmouseout="ShowPicture(&#39;Style&#39;,0)">MSSQLTips is giving away a free Kindle e-Reader - click to enter</a>
+</div>
+<div id="Style"><img src="./Using Stored Procedures with LINQ to SQL_files/kindle-giveaway-smalllogo.gif"></div> 
+
+
+
+
+</div>
+<br>
+<center>Related Tips: <a href="http://www.mssqltips.com/sqlservertip/1524/reading-xml-documents-using-linq-to-xml/">1</a> | <a href="http://www.mssqltips.com/sqlservertip/1825/creating-linq-to-sql-object-models-using-sqlmetal/">2</a> | 3 | <a href="http://www.mssqltips.com/sqlservertip/1502/introduction-to-language-integrated-query-linq/">4</a> | <a href="http://www.mssqltips.com/sqlservertip/1534/querying-sql-server-databases-using-linq-to-sql/">5</a> | <a href="http://www.mssqltips.com/sql_server_developer_tips.asp">More</a> | <a href="http://www.mssqltips.com/contribute.asp">Become a paid author</a></center><br><p><u><b>Problem<br></b></u>In a recent tip on <a href="http://www.mssqltips.com/sqlservertip/1534/querying-sql-server-databases-using-linq-to-sql/">Querying SQL Server databases using LINQ to SQL</a>, you have described how it can be used to query SQL Server databases. How do I use LINQ to SQL with stored procedures that retrieve database records? </p>
+<p><u><b>Solution<br></b></u>We use stored procedures to encapsulate business logic on the database server side. This gives us the advantage of modularity, performance, and security to name a few. We can use these stored procedures with LINQ to SQL. LINQ to SQL maps these database-defined abstractions to code-generated client objects, so that you can access them in a strongly typed manner from client code. This gives us the advantage of using Visual Studio's IntelliSense feature to expose them as methods together with the strongly-typed parameters which might be needed to call the stored procedures. </p>
+<p>We'll start with the example project used in the <a href="http://www.mssqltips.com/sqlservertip/1534/querying-sql-server-databases-using-linq-to-sql/">LINQ to SQL tip</a> to write LINQ query expressions that call stored procedures. Open the <strong>Northwind.dbml</strong> file by double-clicking it from the <strong>Solutions Explorer</strong> window. </p>
+<p align="center"><img height="248" src="./Using Stored Procedures with LINQ to SQL_files/1542_1.jpg" width="193" border="1"></p>
+<p align="justify">This will open up the designer surface for you to drag-and-drop the stored procedures from the <strong>Server Explorer</strong> window. I'll use the <strong>SalesByCategory</strong> stored procedure from the <strong>Northwind</strong> database to retrieve a list of sales record based on the <strong>CategoryName</strong> and <strong>Year</strong> passed as parameters. If the stored procedure generates a list of classes based on what is already on the designer surface, you can drag-and-drop the stored procedure from the <strong>Server Explorer</strong> window to the class that will be generated. Let's say the stored procedure retrieves records from the <strong>Products</strong> table, you can drop the stored procedure on the <strong>Products</strong> class in the designer surface. This tells the designer that the resultset of the stored procedure is a list of <strong>Products</strong> classes. Otherwise, you can just drop it anywhere on the designer surface which will then be added to the <strong>DataContext</strong> class as a method. </p>
+<p align="center"><img height="450" src="./Using Stored Procedures with LINQ to SQL_files/1542_22.jpg" width="412" border="1"></p>
+<p>Notice that the data types defined by the parameters accepted by the stored procedure are also strongly-typed. By default, the name of the method will be the same as the name of the stored procedure. If the stored procedure name contain spaces, the designer automatically converts them to the underscore (<strong> _ </strong>) character. </p>
+<p><em><strong>Calling the stored procedure using LINQ </strong></em></p>
+<p>Let's start writing some code inside the <span class="style2"><font color="#0000ff" size="2">static</font> <font color="#0000ff" size="2">void</font><font color="#000000" size="2"> Main(</font><font color="#0000ff" size="2">string</font><font size="2"><font color="#000000">[] args)</font></font></span>. </p>
+<div>
+<table id="table1" cellspacing="0" cellpadding="4" width="600" align="center" border="1">
+<tbody>
+<tr>
+<td>
+<p class="style3"><font color="#008000" size="2">//Obtaining the data source </font><font size="2"><br></font><font color="#0000ff" size="2">var</font><font size="2"> dbNorthwind =<span class="style4">new</span> <span class="style5">NorthwindDataContext</span>() ; <br><br></font><font color="#008000" size="2">// Create the query </font><font size="2"><br></font><font color="#0000ff" size="2">var</font><font size="2"> query = dbNorthwind.SalesByCategory(<span class="style9">"Beverages"</span>,<span class="style9">"1997"</span>); </font><font color="#0000ff" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font size="2"> <br></font><font color="#008000" size="2">// Execute the query </font><font size="2"><br></font><font color="#0000ff" size="2">foreach</font><font size="2"> (</font><font color="#0000ff" size="2">var</font><font size="2"> c </font><font color="#0000ff" size="2">in</font><font size="2"> query) <br>{ <br></font><font color="#2b91af" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console</font><font size="2">.WriteLine(c.ProductName + <span class="style9">","</span> + c.TotalPurchase); <br>} </font></p>
+<p></p>
+<p></p><strong><font color="#008000" size="2">//Pause the application </font><font size="2"><br></font><font color="#2b91af" size="2">Console</font><font size="2">.ReadLine()</font>; </strong><br></td></tr></tbody></table></div>
+<p>Visual Studio's <strong>IntelliSense</strong> feature now exposes the <strong>DataContext</strong> class' new method together with the parameters with their corresponding data types. </p>
+<p align="center"><img height="138" src="./Using Stored Procedures with LINQ to SQL_files/1542_3.jpg" width="532" border="1"></p>
+<p align="center"><img height="61" src="./Using Stored Procedures with LINQ to SQL_files/1542_4.jpg" width="460" border="1"></p>
+<p>Even the results returned by the method are strongly typed </p>
+<p align="center"><img height="129" src="./Using Stored Procedures with LINQ to SQL_files/1542_5.jpg" width="324" border="1"></p>
+<p>Running the application with logging will look like this when you run your project in Visual Studio. You can press <strong>F5 </strong>or click on <strong>Debug - Start Debugging</strong> in Visual Studio. </p>
+<p align="center"><img height="269" src="./Using Stored Procedures with LINQ to SQL_files/1542_6.jpg" width="500" border="1"></p>
+<p align="justify">There is a limitation on calling stored procedures using LINQ to SQL. The designer does not generate code for stored procedures that use dynamic SQL statements to return a result set or those that depend on temporary tables to return a result. This is because LINQ to SQL cannot acquire the metadata for the resultset during design time. But it doesn't mean it is not possible. It just means that you will not be able to use the <strong>IntelliSense</strong> feature to retrieve the strongly-typed resultsets based on the metadata returned by the stored procedure. </p>
+<p align="justify"><u><b>Next Steps</b></u></p>
+<p align="justify">You have seen how LINQ to SQL supports the ability to call SQL Server stored procedures and call them as methods of the DataContext class </p>
+<ul>
+<li>Start using stored procedures with LINQ to SQL. 
+</li><li>Learn more about <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL</a> </li></ul>
+<br>
+Last Update: 7/17/2008<center>Related Tips: <a href="http://www.mssqltips.com/sqlservertip/1524/reading-xml-documents-using-linq-to-xml/">1</a> | <a href="http://www.mssqltips.com/sqlservertip/1825/creating-linq-to-sql-object-models-using-sqlmetal/">2</a> | 3 | <a href="http://www.mssqltips.com/sqlservertip/1502/introduction-to-language-integrated-query-linq/">4</a> | <a href="http://www.mssqltips.com/sqlservertip/1534/querying-sql-server-databases-using-linq-to-sql/">5</a> | <a href="http://www.mssqltips.com/sql_server_developer_tips.asp">More</a> | <a href="http://www.mssqltips.com/contribute.asp">Become a paid author</a></center><br>		</div>		
+		
+			
+				<br>&nbsp;
+				
+				<br>
+			<table cellspacing="3" cellpadding="0" width="100%" border="0" style="border: 1px solid #aaa; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; background-color:white;">
+<tbody><tr>
+	<td style="text-align: center; padding-left: 10px; padding-bottom: 5px; padding-top: 5px; color:#FFFFFF;">
+	<font color="blue"><b>Sponsor Information</b></font>
+	</td>
+</tr>
+<tr>
+<td style="text-align: left; padding-left: 10px; padding-bottom: 5px; padding-top: 5px; color:#FFFFFF;">
+
+<a target="new" href="http://www.mssqltips.com/tac.asp?b=936&l=http://www.idera.com/Products/SQL-Server/SQL-diagnostic-manager/?s=TL_MSSQLTips_dm">"SQL diagnostic manager delivers response in minutes, not hours!"</a><br><br><a target="new" href="http://www.mssqltips.com/tac.asp?b=896&l=http://www.red-gate.com/products/sql-development/sql-source-control/entrypage/5-minutes?utm_source=mssql&utm_medium=textad&utm_term=5111&utm_content=5mins&utm_campaign=sqlsourcecontrol">It takes just 5 minutes to connect your SQL Databases to source control.  Got 5 minutes? Get started now.</a><br><br><a target="new" href="http://www.mssqltips.com/tac.asp?b=742&l=http://www.edgewoodsolutions.com/solutions/sql_server_consulting.asp?mssqltips">We fill in the gaps... SQL Server Training, Development, Performance Tuning, SSIS and more</a><br><br><a target="new" href="http://www.mssqltips.com/tac.asp?b=779&l=http://www.careerqanda.com/jobs.asp?qid=1">Stop here to prepare for your next SQL Server interview!</a><br><br><a href="http://www.mssqltips.com/tac.asp?b=787&l=http://www.mssqltips.com/webcastlist.asp?01182010_4">Learn SQL Server 2008, Performance Tuning, Development, Administration, DR, Replication and more from these web casts</a><br><br>
+</td>
+</tr>
+</tbody></table>
+
+		</td>
+		<td>
+		<div align="center" style="width: 320px;">
+
+	
+
+<script language="Javascript">
+/**
+ * DHTML email validation script. Courtesy of SmartWebby.com (http://www.smartwebby.com/dhtml/)
+ */
+
+function echeck2(str) {
+
+		var at="@"
+		var dot="."
+		var lat=str.indexOf(at)
+		var lstr=str.length
+		var ldot=str.indexOf(dot)
+		if (str.indexOf(at)==-1){
+		   alert("Invalid E-mail")
+		   return false
+		}
+
+		if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+		   alert("Invalid E-mail")
+		   return false
+		}
+
+		if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+		    alert("Invalid E-mail")
+		    return false
+		}
+
+		 if (str.indexOf(at,(lat+1))!=-1){
+		    alert("Invalid E-mail")
+		    return false
+		 }
+
+		 if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+		    alert("Invalid E-mail")
+		    return false
+		 }
+
+		 if (str.indexOf(dot,(lat+2))==-1){
+		    alert("Invalid E-mail")
+		    return false
+		 }
+		
+		 if (str.indexOf(" ")!=-1){
+		    alert("Invalid E-mail")
+		    return false
+		 }
+
+ 		 return true					
+	}
+
+function ValidateEmail(){
+	var emailID=document.optin.ea
+	
+	if ((emailID.value==null)||(emailID.value=="")||(emailID.value=="enter email address")){
+		alert("Please Enter your Email")
+		emailID.focus()
+		return false
+	}
+	if (echeck2(emailID.value)==false){
+		emailID.focus()
+		return false
+	}
+	return true
+ }
+</script>
+<form name="optin" action="http://www.mssqltips.com/NewsletterAddSubscriber.asp" method="post" onsubmit="return ValidateEmail()">
+<table cellspacing="3" cellpadding="0" width="300" border="0" style="border: 1px solid #aaa; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; background-color:white;">
+<tbody><tr>
+
+	<td align="left" valign="top">
+		
+		<div class="tabheader">Learn more about SQL Server</div>
+		<br>
+		<center>
+		<input size="20" name="ea" value="enter email address"><input type="submit" value="Join MSSQLTips" name="email2" class="submit">
+		<input type="hidden" name="URL" value="http://www.mssqltips.com/tip.asp?tip=1542&amp;title=using-stored-procedures-with-linq-to-sql">
+		<input type="hidden" name="ReferralURL" value="http://www.google.cl/url?sa=t&amp;source=web&amp;cd=7&amp;ved=0CGUQFjAG&amp;url=http%3A%2F%2Fwww.mssqltips.com%2Fsqlservertip%2F1542%2Fusing-stored-procedures-with-linq-to-sql%2F&amp;rct=j&amp;q=linq%20excecute%20procedure&amp;ei=EAl8TpOHNYLz0gGhvvHYDw&amp;usg=AFQjCNE6SLfWT7-pmeI_lh8RRduCzfNMsg&amp;sig2=_SqlTsvwZWMIuBafv1TgGw">
+		</center>
+<br>
+<span style="font-size:10px">Receive newsletters, account updates and special offers about SQL Server from MSSQLTips. We respect your 
+<a href="http://www.mssqltips.com/privacy.asp">privacy</a> and you can unsubscribe at any time.</span>
+
+	</td>
+</tr>
+</tbody></table>
+</form>
+
+<br><br>
+
+	<table cellspacing="3" cellpadding="0" width="300" border="0" style="border: 1px solid #aaa; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; background-color:white;">
+<tbody><tr>
+<td style="text-align: left; padding-left: 10px; padding-bottom: 5px; padding-top: 5px; color:#336699; font-family:Verdana; font-size:10px;">
+
+
+
+<a href="http://www.mssqltips.com/p.asp?z=pd&id=10&link=http://www.red-gate.com/products/SQL_Backup/offers/backup_saving_time.htm?utm_source=mssql&utm_medium=productlisting&utm_term=855&utm_content=robust&utm_campaign=sqlbackup" target="_blank">Red Gate Software - SQL Backup</a><br><br>Need to create smaller, more reliable backups?  Ensure your backups are optimized for robustness and speed with Red Gate SQL Backup Pro.  Compress your backups by up to 95% and minimize disruptions to your backups caused by flaky networks with new network resilience.  <br><br><a href="http://www.mssqltips.com/p.asp?z=pd&id=10&link=http://www.red-gate.com/products/SQL_Backup/offers/backup_saving_time.htm?utm_source=mssql&utm_medium=productlisting&utm_term=855&utm_content=robust&utm_campaign=sqlbackup" target="new">Download now!</a>
+
+
+</td>
+</tr>
+</tbody></table>
+
+<br><br><br>
+
+	<div style="background-color:white; border: 1px solid #aaa; width: 160px; padding: 10px;">
+<a target="new" href="http://www.mssqltips.com/tac.asp?b=1039&l=http://www.idera.com/Products/Free-Tools/SQL-check/?s=BN120_MSSQLTips_chk"><img src="./Using Stored Procedures with LINQ to SQL_files/IDERA-SQLCHECK_120X600_S_20110705.GIF" border="0"></a><br><a target="new" href="http://www.mssqltips.com/tac.asp?b=1039&l=http://www.idera.com/Products/Free-Tools/SQL-check/?s=BN120_MSSQLTips_chk"></a>
+</div>
+<br><br><br>
+
+
+	<div align="left" style="width:300px; border: 1px solid #aaa; padding: 4px; background-color:white;">	
+		<div class="tabheader">SQL Server Tips</div>
+		<span class="header">
+
+
+<script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/tabber.js"></script>
+<link rel="stylesheet" href="./Using Stored Procedures with LINQ to SQL_files/tabber.css" type="text/css" media="screen">
+
+<script type="text/javascript">
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+</script><style type="text/css">.tabber{display:none;}</style>
+
+<div class="tabberlive"><ul class="tabbernav"><li class="tabberactive"><a href="javascript:void(null);" title="Latest">Latest</a></li><li class=""><a href="javascript:void(null);" title="Active Comments">Active Comments</a></li><li class=""><a href="javascript:void(null);" title="Related">Related</a></li></ul>
+	<div class="tabbertab " style="background-color:white;" title="">
+	<h2>Latest</h2>
+	
+	<a href="http://www.mssqltips.com/sqlservertip/2502/limit-snapshot-size-when-adding-new-article-to-sql-server-replication/">Limit snapshot size when adding new article to SQL Server replication</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2498/create-a-32-bit-dsn-on-64-bit-machine-for-sql-server/">Create a 32-bit DSN on 64-bit machine for SQL Server</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2495/identify-sql-server-tcp-ip-port-being-used/">Identify SQL Server TCP IP port being used</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2408/sql-server-insert-tutorial/">SQL Server Insert Tutorial</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2501/find-last-restart-of-sql-server/">Find Last Restart of SQL Server</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2496/using-powershell-for-sql-server-database-backups/">Using PowerShell for SQL Server Database Backups</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2460/perfmon-counters-to-identify-sql-server-disk-bottlenecks/">Perfmon Counters to Identify SQL Server Disk Bottlenecks</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2489/performance-analysis-for-sql-server/">Performance Analysis for SQL Server</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2448/sql-server-denali-ssis-enhancements-part-2-of-2/">SQL Server Denali SSIS Enhancements Part 2 of 2</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2493/configuring-sql-server-to-use-multiple-ports/">Configuring SQL Server to Use Multiple Ports</a>
+	
+	</div>
+
+	<div class="tabbertab tabbertabhide" style="background-color:white;" title="">
+	<h2>Active Comments</h2>
+	
+	<a href="http://www.mssqltips.com/sqlservertip/1582/implementing-data-compression-in-sql-server-2008/">Implementing Data Compression in SQL Server 2008</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2498/create-a-32-bit-dsn-on-64-bit-machine-for-sql-server/">Create a 32-bit DSN on 64-bit machine for SQL Server</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2495/identify-sql-server-tcp-ip-port-being-used/">Identify SQL Server TCP IP port being used</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/1784/check-the-last-sql-server-backup-date-using-windows-powershell/">Check the Last SQL Server Backup Date using Windows PowerShell</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2408/sql-server-insert-tutorial/">SQL Server Insert Tutorial</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/1637/script-to-build-a-sql-server-data-dictionary-and-report-with-microsoft-excel/">Script to build a SQL Server Data Dictionary and report with Microsoft Excel</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2445/sql-server-multi-server-administration/">SQL Server Multi Server Administration</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2454/how-to-find-out-how-much-cpu-a-sql-server-process-is-really-using/">How to find out how much CPU a SQL Server process is really using</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2386/initialize-sql-server-replication-using-a-database-backup/">Initialize SQL Server replication using a database backup</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/2501/find-last-restart-of-sql-server/">Find Last Restart of SQL Server</a>
+	
+	</div>
+
+	
+
+	<div class="tabbertab tabbertabhide" style="background-color:white;" title="">
+	<h2>Related</h2>
+	
+	<a href="http://www.mssqltips.com/sqlservertip/1825/creating-linq-to-sql-object-models-using-sqlmetal/">Creating LINQ to SQL Object Models using SqlMetal</a>
+	<hr>
+	<a href="./Using Stored Procedures with LINQ to SQL_files/Using Stored Procedures with LINQ to SQL.htm">Using Stored Procedures with LINQ to SQL</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/1534/querying-sql-server-databases-using-linq-to-sql/">Querying SQL Server databases using LINQ to SQL</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/1524/reading-xml-documents-using-linq-to-xml/">Reading XML documents using LINQ to XML</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlservertip/1502/introduction-to-language-integrated-query-(linq)/">Introduction to Language Integrated Query (LINQ)</a>
+	
+	</div>
+
+		
+</div>
+
+</span>
+	</div>
+	<br><br><br>
+
+	<a target="new" href="http://www.mssqltips.com/tac.asp?b=1036&l=http://www.red-gate.com/products/sql-development/sql-source-control/entrypage/5-minutes?utm_source=mssql&utm_medium=rectangle&utm_term=5186&utm_content=5mins&utm_campaign=sqlsourcecontrol"><img src="./Using Stored Procedures with LINQ to SQL_files/RedGate_SQLSourceControl_August2011_300x250.gif" border="0"></a><br><br><br>
+
+	<div align="left" style="width:300px; border: 1px solid #aaa; padding: 4px; background-color:white;">	
+		<div class="tabheader">Community Questions</div>
+		<span class="header">
+
+
+<script type="text/javascript" src="./Using Stored Procedures with LINQ to SQL_files/tabber(1).js"></script>
+<link rel="stylesheet" href="./Using Stored Procedures with LINQ to SQL_files/tabber(2).css" type="text/css" media="screen">
+
+<script type="text/javascript">
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+</script><style type="text/css">.tabber{display:none;}</style>
+
+<div class="tabberlive"><ul class="tabbernav"><li class="tabberactive"><a href="javascript:void(null);" title="Latest">Latest</a></li><li class=""><a href="javascript:void(null);" title="Active Questions">Active Questions</a></li></ul>
+	<div class="tabbertab " style="background-color:white;" title="">
+	<h2>Latest</h2>
+	
+	<a href="http://www.mssqltips.com/sqlserverquestion/7432/keep-executed-ssis-package-in-visual-studio-visible-while-executing-packages-within/">Keep executed SSIS package in Visual Studio visible while executing packages within</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7431/jump-to-the-url-in-ssrs-2005-does-not-work/">Jump to the url in SSRS 2005 does not work</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7430/selecting-orders-with-comparing-date-values-/">selecting order's with comparing date values ,</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7429/sql-express--primary-filegroup-is-full/">SQL Express - PRIMARY filegroup is full</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7428/nested-table/">nested table</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7427/sql-2008-r2-cluster-resources/">SQL 2008 R2 Cluster Resources</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7426/sql-server-2008-r2-sp1-uninstall/">Sql Server 2008 R2 SP1 Uninstall</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7425/backup-in-sql-server/">backup in SQL Server</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7424/password-changes/">Password changes</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7423/installing-active-active-nodes-on-sql-2008-r2-cluster/">Installing Active Active Nodes on SQL 2008 R2 Cluster</a>
+	
+	</div>
+
+	<div class="tabbertab tabbertabhide" style="background-color:white;" title="">
+	<h2>Active Questions</h2>
+	
+	<a href="http://www.mssqltips.com/sqlserverquestion/7429/sql-express--primary-filegroup-is-full/">SQL Express - PRIMARY filegroup is full (5)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7430/selecting-orders-with-comparing-date-values-/">selecting order's with comparing date values , (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7230/find-databases-name-which-is-not-using-any-extended-properties/">Find databases name which is not using any extended properties (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7428/nested-table/">nested table (2)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7413/list-all-user-databases-names-which-does-not-have-customizeduser-defined-extended-property/">List all user databases names which does not have customized/user defined extended property. (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/6989/merge-two-sql-databases/">Merge Two SQL Databases (2)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7425/backup-in-sql-server/">backup in SQL Server (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7420/when-i-am-trying-to-covert-int-datatype-to-datetime-datatype-it-throwing-error-likeconversion-failed-when-converting-date-andor-time-from-character-string/">when i am trying to covert int datatype to datetime datatype it throwing error like"Conversion failed when converting date and/or time from character string"  (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7424/password-changes/">Password changes (1)</a>
+	<hr>
+	<a href="http://www.mssqltips.com/sqlserverquestion/7423/installing-active-active-nodes-on-sql-2008-r2-cluster/">Installing Active Active Nodes on SQL 2008 R2 Cluster (1)</a>
+	
+	</div>
+
+</div>
+
+</span>
+
+	</div>
+	<br><br><br>
+	
+	
+
+	<div align="left" style="width:300px; border: 1px solid #aaa; padding: 4px; background-color:white;">	
+		<div class="tabheader">Announcements</div>
+		<div class="tabberlive"><ul class="tabbernav"><li class="tabberactive"><a href="javascript:void(null);" title="Events">Events</a></li><li class=""><a href="javascript:void(null);" title="Giveaways">Giveaways</a></li><li class=""><a href="javascript:void(null);" title="Contribute">Contribute</a></li></ul>
+	<div class="tabbertab " style="background-color:white;" title="">
+	<h2>Events</h2>
+	<br>
+	<strong>Free Live Webcast</strong><br>
+	<a href="https://www.vconferenceonline.com/event/regeventweb.aspx?id=406" target="_blank&quot;">SQL Server PowerShell Extensions </a> (October 5th)
+
+
+	</div>
+
+	<div class="tabbertab tabbertabhide" style="background-color:white;" title="">
+	<h2>Giveaways</h2>
+	<br>
+	<strong>Giveaways</strong><br>
+	<a href="http://www.mssqltips.com/giveaway.asp">Win a Kindle with SQL Server eBooks</a>
+	<br><br>
+
+	MSSQLTips is giving away a Kindle with SQL Server eBooks.<br><br>
+	The winner will be selected on October 26, 2011.
+	</div>
+
+	<div class="tabbertab tabbertabhide" style="background-color:white;" title="">
+	<h2>Contribute</h2>
+	<br><strong>Contribute and make some money!</strong><br>
+	<a href="http://www.mssqltips.com/contribute.asp">Become a MSSQLTips author</a>
+	<br><br>
+	
+	Share your knowledge about SQL server with the MSSQLTips community. Just about every day you probably learn something
+	new, so share that knowledge.
+	</div>
+
+</div>
+	</div>
+
+</div>
+
+
+
+		</td>
+	</tr><tr>
+</tr></tbody></table>
+<!-- content end -->
+
+<table width="100%" cellspacing="0" cellpadding="4" style="border: 1px solid #aaa; padding: 4px; background-color:#E0E0E0">
+	<tbody><tr>
+		<td>			
+			<center>                        
+			<font color="#000000" size="2">Copyright (c) 2006-2011
+			<a href="http://www.edgewoodsolutions.com/" target="new">Edgewood Solutions, LLC</a> All rights reserved<br>
+			<a color="#000000" href="http://www.mssqltips.com/privacy.asp">privacy</a> |
+			<a color="#000000" href="http://www.mssqltips.com/disclaimer.asp">disclaimer</a> |
+			<a color="#000000" href="http://www.mssqltips.com/copyright.asp">copyright</a> |
+			<a color="#000000" href="http://www.mssqltips.com/advertise.asp">advertise</a> |
+			<a color="#000000" href="http://www.mssqltips.com/contribute.asp">contribute</a> |
+			<a color="#000000" href="http://www.mssqltips.com/feedback.asp">feedback</a> |
+			<a color="#000000" href="http://www.mssqltips.com/giveaway.asp">giveaways</a> |
+			<a color="#000000" href="http://www.mssqltips.com/usergroups.asp">user groups</a> |
+			<a color="#000000" href="http://www.mssqltips.com/about.asp">about</a>
+			<br>
+			<font size="1">Some names and products listed are the registered trademarks of their respective owners.</font>
+			</font>
+<br>
+<br>
+			<a href="http://www.careerqanda.com/">CareerQandA.com</a> |
+			<a href="http://www.mssharepointtips.com/">MSSharePointTips.com</a> |
+			<a href="http://www.mssqltips.com/">MSSQLTips.com</a>
+			</center>
+		</td>
+	</tr>
+</tbody></table>
+
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-910745-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+</body></html>
