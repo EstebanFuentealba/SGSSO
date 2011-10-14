@@ -66,7 +66,7 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}")]
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&action={_ACTION}")]
         public JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>> GetCollection(int _page, 
                                                                             int _start, 
                                                                             int _limit, 
@@ -79,7 +79,8 @@ namespace WCF_ENAP
                                                                             int _ID_ACTIVIDAD_GENERAL,
                                                                             string _NOM_ACTIVIDAD_ESPECIFICA, 
                                                                             int _ID_CARGO,
-                                                                            int _CONDICION)
+                                                                            int _CONDICION,
+                                                                            string _ACTION)
         {
             JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>> objJSON = new JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>>();
             try
@@ -87,6 +88,10 @@ namespace WCF_ENAP
                 if (_dir == null)
                 {
                     _dir = "DESC";
+                }
+                if (_ACTION == null)
+                {
+                    _ACTION = "list";
                 }
                 if (_page == 0)
                 {
@@ -97,7 +102,7 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                if (_ID_ORGANIZACION != 0 || _ID_DEPARTAMENTO_ORGANIZACION != 0 || _ID_DIVISION != 0 || _ID_AREA != 0 || _ID_ACTIVIDAD_GENERAL != 0 || _NOM_ACTIVIDAD_ESPECIFICA != null || _ID_CARGO != 0 || _CONDICION != 0)
+                /*if (_ID_ORGANIZACION != 0 || _ID_DEPARTAMENTO_ORGANIZACION != 0 || _ID_DIVISION != 0 || _ID_AREA != 0 || _ID_ACTIVIDAD_GENERAL != 0 || _NOM_ACTIVIDAD_ESPECIFICA != null || _ID_CARGO != 0 || _CONDICION != 0)
                 {
                     var query = bd.sp_search_actividad_evaluada(_ID_ORGANIZACION,
                         _ID_DEPARTAMENTO_ORGANIZACION,
@@ -110,7 +115,7 @@ namespace WCF_ENAP
                         null,
                         null
                         ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
-                    List<TBL_ACTIVIDAD_EVALUADA> results = query.ToList();
+                    List<sp_search_actividad_evaluada> results = query.ToList();
 
                     objJSON.items = results;
                     objJSON.totalCount = bd.TBL_ACTIVIDAD_EVALUADA.Count<TBL_ACTIVIDAD_EVALUADA>();
@@ -118,14 +123,14 @@ namespace WCF_ENAP
                 }
                 else
                 {
-
+                */
                     var query = bd.TBL_ACTIVIDAD_EVALUADA.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                     List<TBL_ACTIVIDAD_EVALUADA> results = query.ToList();
 
                     objJSON.items = results;
                     objJSON.totalCount = bd.TBL_ACTIVIDAD_EVALUADA.Count<TBL_ACTIVIDAD_EVALUADA>();
                     objJSON.success = true;
-                }
+                //}
             }
             catch (Exception ex) {
                 objJSON.success = false;
@@ -383,5 +388,54 @@ namespace WCF_ENAP
 			}
 			return "ID_ACTIVIDAD_EVALUADA";
 		}
+        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}")]
+        public JSONCollection<List<sp_search_actividad_evaluadaResult>> Search(int _page,
+                                                                            int _start,
+                                                                            int _limit,
+                                                                            string _sort,
+                                                                            string _dir,
+                                                                            int _ID_ORGANIZACION,
+                                                                            int _ID_DEPARTAMENTO_ORGANIZACION,
+                                                                            int _ID_DIVISION,
+                                                                            int _ID_AREA,
+                                                                            int _ID_ACTIVIDAD_GENERAL,
+                                                                            string _NOM_ACTIVIDAD_ESPECIFICA,
+                                                                            int _ID_CARGO,
+                                                                            int _CONDICION)
+        {
+            JSONCollection<List<sp_search_actividad_evaluadaResult>> objJSON = new JSONCollection<List<sp_search_actividad_evaluadaResult>>();
+
+                if (_dir == null)
+                {
+                    _dir = "DESC";
+                }
+                if (_page == 0)
+                {
+                    _page = 1;
+                }
+                if (_limit == 0)
+                {
+                    _limit = 10;
+                }
+                _start = (_page * _limit) - _limit;
+                 var query = bd.sp_search_actividad_evaluada(_ID_ORGANIZACION,
+                        _ID_DEPARTAMENTO_ORGANIZACION,
+                        _ID_DIVISION,
+                        _ID_AREA,
+                        _ID_ACTIVIDAD_GENERAL,
+                        _NOM_ACTIVIDAD_ESPECIFICA,
+                        _ID_CARGO,
+                        _CONDICION,
+                        null,
+                        null
+                        ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                 List<sp_search_actividad_evaluadaResult> results = query.ToList < sp_search_actividad_evaluadaResult>();
+
+                    objJSON.items = results;
+                    objJSON.totalCount = bd.TBL_ACTIVIDAD_EVALUADA.Count<TBL_ACTIVIDAD_EVALUADA>();
+                    objJSON.success = true;
+                
+            return objJSON;
+        }
 	}
 }

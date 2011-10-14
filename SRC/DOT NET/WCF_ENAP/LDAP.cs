@@ -10,8 +10,9 @@ namespace WCF_ENAP
 {
     public class LDAP
     {
-        public static AuthenticationTypes AT = AuthenticationTypes.Secure;
 
+        public static AuthenticationTypes AT = AuthenticationTypes.Secure;
+        
         public static string GetProperty(SearchResult srSearchResult, string strPropertyName) {
             string result = string.Empty;
 
@@ -26,6 +27,7 @@ namespace WCF_ENAP
 
             return result;
         }
+
         public static SearchResult IsInActiveDirectory(string userName, string passWord)
         {
             DirectoryEntry directoryEntry = new DirectoryEntry(System.Configuration.ConfigurationManager.ConnectionStrings["ldapConnectionString"].ConnectionString,
@@ -52,9 +54,9 @@ namespace WCF_ENAP
                 //Console.WriteLine(ex.Message);
                 result = ex.Message;
             }
-
             return null;
         }
+        
         public static bool IsGroupMember(string strLDAPPath, string strGroupName, string userName, string passWord)
         {
             DirectoryEntry directoryEntry = new DirectoryEntry(System.Configuration.ConfigurationManager.ConnectionStrings["ldapConnectionString"].ConnectionString,

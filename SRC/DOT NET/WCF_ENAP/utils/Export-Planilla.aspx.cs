@@ -11,7 +11,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace WCF_ENAP.utils
 {
-    public partial class Export_Matriz : System.Web.UI.Page
+    public partial class Export_Planilla : System.Web.UI.Page
     {
         public static int N_ROW = 1;
         public static int ACTIVIDAD_GENERAL = 2;
@@ -40,9 +40,9 @@ namespace WCF_ENAP.utils
                 int idMatriz = int.Parse(Request.Params["ID_MATRIZ"].ToString());
                 bd = new DataClassesEnapDataContext();
 
-                string temp_name = Guid.NewGuid() + "-" + (new Random()).Next(1, 1000) + "-matriz.xls";
+                string temp_name = Guid.NewGuid() + "-" + (new Random()).Next(1, 1000) + "-planilla.xls";
                 string dir_temp_file = @"D:\temporal\" + temp_name;
-                FileStream plantilla = File.OpenRead(@"D:\temporal\Matriz E-020-Plantilla.xls");
+                FileStream plantilla = File.OpenRead(@"D:\temporal\E-020-00 Planilla.xls");
 
                 var fileStream = File.Create(dir_temp_file);
                 plantilla.CopyTo(fileStream);
@@ -66,7 +66,7 @@ namespace WCF_ENAP.utils
                                                             1,
                                                             0);
                 Worksheet workSheet = (Worksheet)workBook.ActiveSheet;
-                int rowStart = 65, rowIndex = rowStart;
+                int rowStart = 58, rowIndex = rowStart;
 
                 var query = bd.sp_get_matriz_by_id(idMatriz);
                 string nombre_actividad_general = "",
@@ -143,26 +143,6 @@ namespace WCF_ENAP.utils
                 }
                 #endregion
 
-                #region Ejemplo Mostrar
-                /*
-                 * Response.Write(matriz.Count + "<br /><ul>");
-                foreach (XLSActividadEvaluada ac in matriz)
-                {
-                    Response.Write("<li>" + ac.Actividad_especifica + "<br /><ul>");
-                    foreach (XLSPeligro op in ac.Peligros)
-                    {
-                        Response.Write("<li>" + op.Nombre_peligro + "<ul>");
-                        foreach (XLSMedidaControl md in op.MedidasControl)
-                        {
-                            Response.Write("<li>" + md.Nombre_medida_control + "</li>");
-                        }
-                        Response.Write("</ul></li>");
-                    }
-                    Response.Write("</ul></li>");
-                }
-                Response.Write("</ul>"); 
-                 * */
-                #endregion
 
                 int indexRow = 0, nexRowIndex = rowIndex + 1;
 
@@ -171,7 +151,7 @@ namespace WCF_ENAP.utils
                 {
                     for (int j = ((nexRowIndex == rowStart + 1) ? 1 : 0); j < ac.Peligros.Count; j++)
                     {
-                        for (int i = 1; i < 21; i++)
+                        for (int i = 1; i < 10; i++)
                         {
                             Range r = ((Range)workSheet.Cells[rowStart, i]);
 
@@ -187,42 +167,29 @@ namespace WCF_ENAP.utils
                 
                 foreach (XLSActividadEvaluada ac in matriz)
                 {
-                    ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.ACTIVIDAD_GENERAL]).Value2 = ac.Actividad_general;
-                    ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.ACTIVIDAD_ESPECIFICA]).Value2 = ac.Actividad_especifica;
-                    ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.ROL]).Value2 = ac.Rol;
-                    ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.CONDICION]).Value2 = ac.Condicion;
+                    ((Range)workSheet.Cells[55, 2]).Value2 = ac.Actividad_general;
+                    ((Range)workSheet.Cells[rowIndex + indexRow, 1]).Value2 = ac.Actividad_especifica;
                     foreach (XLSPeligro op in ac.Peligros)
                     {
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.PELIGRO]).Value2 = op.Nombre_peligro;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.CONSECUENCIA]).Value2 = op.Consecuencia;
-                        //((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.VALORACION_CONSECUENCIA_VALUE]).Value2 = op.Valoracion_consecuencia_value;
-                        //((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.VALORACION_PROBABILIDAD_VALUE]).Value2 = op.Valoracion_probabilidad_value; 
-
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.VALORACION_CONSECUENCIA]).Value2 = op.Valoracion_consecuencia;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.VALORACION_PROBABILIDAD]).Value2 = op.Valoracion_probabilidad;
-                        //((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MAGNITUD_RIESGO]).Value2 = op.Magnitud_riesgo_puro;
+                        ((Range)workSheet.Cells[rowIndex + indexRow, 2]).Value2 = op.Nombre_peligro;
+                        ((Range)workSheet.Cells[rowIndex + indexRow, 3]).Value2 = op.Valoracion_consecuencia;
+                        ((Range)workSheet.Cells[rowIndex + indexRow, 4]).Value2 = op.Valoracion_probabilidad;
                         string medidas_formato = "";
                         foreach (XLSMedidaControl md in op.MedidasControl)
                         {
                             medidas_formato += "●" + md.Nombre_medida_control + "\r\n";
                         }
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDAS]).Value2 = medidas_formato;
-                        //((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_CONSECUENCIA_VALUE]).Value2 = op.Medida_valoracion_consecuencia_value;
-                        //((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_PROBABILIDAD_VALUE]).Value2 = op.Medida_valoracion_probabilidad_value;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_CONSECUENCIA]).Value2 = op.Medida_valoracion_consecuencia;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_PROBABILIDAD]).Value2 = op.Medida_valoracion_probabilidad;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.N_ROW]).Value2 = indexRow + 1;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDAS]).Columns.AutoFit();
+                        ((Range)workSheet.Cells[rowIndex + indexRow, 9]).Value2 = medidas_formato;
                         indexRow++;
                     }
-                    //rowIndex++;
                 }
 
                 
                 #endregion
-                ((Range)workSheet.Cells[59, 9]).Value2 = "Organización: " + nombre_organizacion + ". " + nombre_departamento + ".";
-                ((Range)workSheet.Cells[60, 9]).Value2 = "Sub Proceso (1): " + nombre_division;
-                workSheet.PageSetup.PrintArea = "$A$59:$T$" + (rowIndex + indexRow);
+                ((Range)workSheet.Cells[52, 2]).Value2 = nombre_organizacion ;
+                ((Range)workSheet.Cells[54, 2]).Value2 = nombre_division;
+                
+                workSheet.PageSetup.PrintArea = "$A$50:$T$" + (rowIndex + indexRow);
                 
                 workBook.Save();
                 workBook.Close();
@@ -232,14 +199,13 @@ namespace WCF_ENAP.utils
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.ContentEncoding = System.Text.Encoding.Unicode;
                 Response.ContentType = "application/excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.xls\"");
+                Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.xls\"");
                 Response.WriteFile(dir_temp_file);
                 //File.Delete(dir_temp_file);
                 Response.End();
 
                 
-            }
-            catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
+            }catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
         }
         
     }

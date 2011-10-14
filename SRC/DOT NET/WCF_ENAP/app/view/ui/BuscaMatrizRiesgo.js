@@ -9,7 +9,7 @@
     initComponent: function () {
         var me = this;
         var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
-            groupHeaderTpl: 'Actividad Específica: {name} ({rows.length} Evaluaci{[values.rows.length > 1 ? "ones" : "ón"]})'
+            groupHeaderTpl: '{name} ({rows.length} Evaluaci{[values.rows.length > 1 ? "ones" : "ón"]})'
         });
         me.items = [
 		{
@@ -27,7 +27,7 @@
 			    margin: '5 5 5 5',
 			    bodyPadding: 10,
 			    title: 'Lugar de La Actividad',
-			    
+
 			    items: [
 				{
 				    xtype: 'combobox',
@@ -198,7 +198,7 @@
 						    inputValue: 3
 						}
 					]
-		},
+				},
                 {
                     xtype: 'panel',
                     border: 0,
@@ -248,11 +248,13 @@
 		                    /*TODO*/
 		                }
 		            });
+
 		        }
 		    }]
 		},
     {
         xtype: 'gridpanel',
+        id: 'grid_busqueda_matriz',
         collapsible: true,
         title: 'Listado de Matrices Evaluadas',
         anchor: '100%',
@@ -260,7 +262,7 @@
         autoScroll: true,
         features: [groupingFeature],
         columns: [
-        {
+        /*{
             xtype: 'gridcolumn',
             dataIndex: 'ID_ACTIVIDAD_ESPECIFICA',
             flex: 0.2,
@@ -269,6 +271,12 @@
                 var idx = Ext.data.StoreManager.lookup('dsActividadEspecifica').find('ID_ACTIVIDAD_ESPECIFICA', value.toString());
                 return idx !== -1 ? Ext.data.StoreManager.lookup('dsActividadEspecifica').getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
             }
+        }*/
+        {
+            xtype: 'gridcolumn',
+            dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
+            flex: 0.2,
+            text: 'Actividad Especifica'
         },
 {
     xtype: 'gridcolumn',
@@ -292,13 +300,16 @@
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
             switch (value.toString()) {
                 case '2':
-                    return "<span style='display: block; background-color:yellow;'>M</span>";
+                    //return "<span style='display: block; background-color:yellow;'>M</span>";
+                    return "Medio";
                     break;
                 case '3':
-                    return "<span style='display: block; background-color:red;'>A</span>";
+                    //return "<span style='display: block; background-color:red;'>A</span>";
+                    return "Alto";
                     break;
                 default:
-                    return "<span style='display: block; background-color:green;'>B</span>";
+                    //return "<span style='display: block; background-color:green;'>B</span>";
+                    return "Bajo";
                     break;
             }
         }
@@ -310,13 +321,16 @@
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
-	                return "<span style='display: block; background-color:yellow;'>M</span>";
+	                //return "<span style='display: block; background-color:yellow;'>M</span>";
+	                return "Dañino";
 	                break;
 	            case '3':
-	                return "<span style='display: block; background-color:red;'>A</span>";
+	                //return "<span style='display: block; background-color:red;'>A</span>";
+	                return "Extremadamente Dañino";
 	                break;
 	            default:
-	                return "<span style='display: block; background-color:green;'>B</span>";
+	                //return "<span style='display: block; background-color:green;'>B</span>";
+	                return "Ligeramente Dañino";
 	                break;
 	        }
 	    }
@@ -331,48 +345,51 @@
 	        var indicador_riesgo = parseInt(record.get('VALORACION_CONSECUENCIA')) * parseInt(record.get('VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo < 3) {
 	            /* GREEN */
-	            return "<span style='display: block; background-color:green;'>B</span>";
+	            return "<span style='display: block; background-color:green;'>Bajo</span>";
 	        } else if (indicador_riesgo > 5) {
 	            /* RED */
-	            return "<span style='display: block; background-color:red;'>B</span>";
+	            return "<span style='display: block; background-color:red;'>Alto</span>";
 	        } else {
 	            /* YELLOW */
-	            return "<span style='display: block; background-color:yellow;'>B</span>";
+	            return "<span style='display: block; background-color:yellow;'>Medio</span>";
 	        }
 	    }
 	}
 	]
 },
-/*{
-    xtype: 'gridcolumn',
-    align: 'center',
-    text: 'Medidas de Control',
-    flex: 0.2,
-    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-    }
-},*/
-{
-    xtype: 'gridcolumn',
-    text: 'Re Evaluación del Riesgo',
-    align: 'center',
-    columns: [{
+        /*{
         xtype: 'gridcolumn',
-        dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-        text: 'P',
+        align: 'center',
+        text: 'Medidas de Control',
+        flex: 0.2,
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            switch (value.toString()) {
-                case '2':
-                    return "<span style='display: block; background-color:yellow;'>M</span>";
-                    break;
-                case '3':
-                    return "<span style='display: block; background-color:red;'>A</span>";
-                    break;
-                default:
-                    return "<span style='display: block; background-color:green;'>B</span>";
-                    break;
-            }
         }
-    },
+        },*/
+{
+xtype: 'gridcolumn',
+text: 'Re Evaluación del Riesgo',
+align: 'center',
+columns: [{
+    xtype: 'gridcolumn',
+    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
+    text: 'P',
+    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+        switch (value.toString()) {
+            case '2':
+                //return "<span style='display: block; background-color:yellow;'>M</span>";
+                return "Medio";
+                break;
+            case '3':
+                //return "<span style='display: block; background-color:red;'>A</span>";
+                return "Alto";
+                break;
+            default:
+                //return "<span style='display: block; background-color:green;'>B</span>";
+                return "Bajo";
+                break;
+        }
+    }
+},
 	{
 	    xtype: 'gridcolumn',
 	    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
@@ -380,13 +397,16 @@
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
-	                return "<span style='display: block; background-color:yellow;'>M</span>";
+	                //return "<span style='display: block; background-color:yellow;'>M</span>";
+	                return "Dañino";
 	                break;
 	            case '3':
-	                return "<span style='display: block; background-color:red;'>A</span>";
+	                //return "<span style='display: block; background-color:red;'>A</span>";
+	                return "Extremadamente Dañino";
 	                break;
 	            default:
-	                return "<span style='display: block; background-color:green;'>B</span>";
+	                //return "<span style='display: block; background-color:green;'>B</span>";
+	                return "Ligeramente Dañino";
 	                break;
 	        }
 	    }
@@ -401,13 +421,13 @@
 	        var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo_controlado < 3) {
 	            /* GREEN */
-	            return "<span style='display: block; background-color:green;'>B</span>";
+	            return "<span style='display: block; background-color:green;'>Bajo</span>";
 	        } else if (indicador_riesgo_controlado > 5) {
 	            /* RED */
-	            return "<span style='display: block; background-color:red;'>B</span>";
+	            return "<span style='display: block; background-color:red;'>Alto</span>";
 	        } else {
 	            /* YELLOW */
-	            return "<span style='display: block; background-color:yellow;'>B</span>";
+	            return "<span style='display: block; background-color:yellow;'>Medio</span>";
 	        }
 	    }
 	}
@@ -429,11 +449,11 @@
             dock: 'top',
             anchor: '100%',
             items: [
-                {
+                /*{
                     xtype: 'button',
                     text: 'Agregar Seleccionadas a Nueva Matriz',
                     iconCls: 'add-actividad-evaluada-icon'
-                },
+                },*/
                 {
                     xtype: 'button',
                     text: 'Exportar Seleccionadas',
@@ -444,12 +464,30 @@
                             {
                                 xtype: 'menuitem',
                                 text: 'Planilla de Reconocimiento de Riesgo',
-                                iconCls: 'matriz-icon'
+                                iconCls: 'matriz-icon',
+                                handler: function () {
+                                    var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
+                                    /*
+                                    for (var i = 0; i < data.length; i++) {
+                                    console.log(data[i].get('ID_MATRIZ'));
+                                    }*/
+                                    window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento.');
+                                }
                             },
                             {
                                 xtype: 'menuitem',
                                 text: 'Matriz de Riesgo',
-                                iconCls: 'matriz-icon'
+                                iconCls: 'matriz-icon',
+                                handler: function () {
+                                    var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
+                                    /*
+                                    for (var i = 0; i < data.length; i++) {
+                                    console.log(data[i].get('ID_MATRIZ'));
+                                    }*/
+                                    window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento.');
+                                }
                             }
                         ]
                     }
@@ -458,7 +496,28 @@
         }
     ],
     selModel: Ext.create('Ext.selection.CheckboxModel', {
-        checkOnly: true
+        checkOnly: true,
+        listeners: {
+            selectionchange: function (Model, selected, options) {
+                try {
+                    var id_selected = selected[0].get("ID_MATRIZ");
+
+                    var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
+                    Ext.each(items, function (name, index, item) {
+                        var id_row = items[index].get("ID_MATRIZ");
+                        if (id_selected != id_row) {
+
+                            if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
+                                Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
+                                Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
+                                return;
+                            }
+                        }
+                    });
+                } catch (e) { }
+
+            }
+        }
     })
 }];
         me.callParent(arguments);

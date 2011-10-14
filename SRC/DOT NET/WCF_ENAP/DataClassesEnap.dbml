@@ -107,7 +107,7 @@
     </Type>
   </Table>
   <Table Name="dbo.TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA">
-    <Type Name="TBL_ACTIVIDAD_EVALUADA" Id="ID1">
+    <Type Name="TBL_ACTIVIDAD_EVALUADA">
       <Column Name="ID_ACTIVIDAD_EVALUADA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -552,11 +552,30 @@
     <Parameter Name="CONDICION" Parameter="cONDICION" Type="System.Int32" DbType="Int" />
     <Parameter Name="FECHA_INICIO" Parameter="fECHA_INICIO" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="FECHA_TERMINO" Parameter="fECHA_TERMINO" Type="System.DateTime" DbType="DateTime" />
-    <ElementType IdRef="ID1" />
+    <ElementType Name="sp_search_actividad_evaluadaResult">
+      <Column Name="ID_ACTIVIDAD_EVALUADA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_ACTIVIDAD_ESPECIFICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MEDIDA_VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MEDIDA_VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CONDICION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(336)" CanBeNull="true" />
+    </ElementType>
   </Function>
   <Function Name="dbo.sp_get_matriz_by_id" Method="sp_get_matriz_by_id">
     <Parameter Name="ID_MATRIZ" Parameter="iD_MATRIZ" Type="System.Int32" DbType="Int" />
-    <ElementType Name="sp_get_matriz_by_idResult3">
+    <ElementType Name="sp_get_matriz_by_idResult">
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_GENERAL" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
@@ -564,17 +583,20 @@
       <Column Name="CONDICION" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
       <Column Name="NOM_PELIGRO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="NOMBRE_CONSECUENCIA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="CONSECUENCIA" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="CONSECUENCIA" Type="System.String" DbType="VarChar(21) NOT NULL" CanBeNull="false" />
       <Column Name="PROBABILIDAD" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="MRP" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NOM_MEDIDA_DE_CONTROL" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="MEDIDA_CONSECUENCIA" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="MEDIDA_CONSECUENCIA" Type="System.String" DbType="VarChar(21) NOT NULL" CanBeNull="false" />
       <Column Name="MEDIDA_PROBABILIDAD" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="MRCC" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="MEDIDA_VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MEDIDA_VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_ORGANIZACION" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_DIVISION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
