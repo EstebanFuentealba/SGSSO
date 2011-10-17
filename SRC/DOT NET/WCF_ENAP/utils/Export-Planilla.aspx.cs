@@ -143,7 +143,6 @@ namespace WCF_ENAP.utils
                 }
                 #endregion
 
-
                 int indexRow = 0, nexRowIndex = rowIndex + 1;
 
                 #region Crea Filas Necesarias

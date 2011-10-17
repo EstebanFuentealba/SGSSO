@@ -2327,3 +2327,63 @@ Insert into TBL_MEDIDA_DE_CONTROL (Nom_Medida_de_Control) Values ('Poseer aptitu
 Insert into TBL_MEDIDA_DE_CONTROL (Nom_Medida_de_Control) Values ('Poseer certificación para realizar la tarea.');
 Insert into TBL_MEDIDA_DE_CONTROL (Nom_Medida_de_Control) Values ('Coordinar tarea previamente con la línea de supervisión');
 GO
+
+
+
+/* DATOS DE PERSONA */
+INSERT INTO TBL_DATO_EVENTO VALUES('Choque contra objetos o estructura fija',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Choque por otro vehículo',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con electricidad',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con fuego',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con Objetos Calientes',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con Objetos Cortantes',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con Objetos Punzantes',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contacto con sustancias químicas',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Explosión',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a radiaciones ultravioletas',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a agentes biológicos (bacterias, hongos, etc.)',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a calor',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a frío',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a gases',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a humos metálicos',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a nieblas',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a Polvo',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a presiones anormales',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a radiaciones infrarrojas',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a radiaciones ionizantes',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a rocíos',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a ruido',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a vapores',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Exposición a vibraciones',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Golpeado con objeto o herramienta',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Golpeado contra objetos o equipos',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Golpeado por objeto',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Incendio',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Inmersión',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Intoxicación por alimentos',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobre carga física',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobre tensión mental y psicológica',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobreesfuerzo por movimiento repetitivo',1);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobreesfuerzo por manejo manual de materiales',1);
+
+
+/* DATOS DE PATRIMONIO, PROCESOS, MEDIO AMBIENTE */
+INSERT INTO TBL_DATO_EVENTO VALUES('Incendio',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Derrame',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Fuga',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Filtración',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Pérdida de Energía',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Reactividad Química',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Explosión',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Rotura',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contaminación producto',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Contaminación ambiental',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Emisiones',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Corto circuito',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Atentado',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Volcamiento/Choque',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Evento Natural',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Falla sistema control',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Desgaste o corrosión acelerada',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobre presión en equipo o sistema',2);
+INSERT INTO TBL_DATO_EVENTO VALUES('Sobre temperatura en el equipo sistema',2);

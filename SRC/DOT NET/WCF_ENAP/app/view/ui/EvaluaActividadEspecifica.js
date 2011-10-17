@@ -5,16 +5,17 @@
     title: 'Evaluar Matriz',
     id: 'panel-EvaluaActividadEspecifica',
     initComponent: function () {
-        var me =    this, 
+        var me = this,
                     winMedidas,
-                    winMedida, 
-                    winActividadEspecifica, 
+                    winMedida,
+                    winActividadEspecifica,
                     tempStore,
-                    isLoadedActividadEspecifica=false,
-                    isLoadedPeligro=false;
+                    isLoadedActividadEspecifica = false,
+                    isLoadedPeligro = false;
 
-        var onLoadedAll = function() {
-            if(isLoadedActividadEspecifica && isLoadedPeligro) {
+        var onLoadedAll = function () {
+            console.log(" LOADED");
+            if (isLoadedActividadEspecifica && isLoadedPeligro) {
                 Ext.getCmp('panel-EvaluaActividadEspecifica').add({
                     xtype: 'gridpanel',
                     id: 'grid_actividades_evaluadas',
@@ -29,11 +30,11 @@
 		                flex: 0.2,
 		                text: 'Actividad Especifica',
 		                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                            var store = Ext.data.StoreManager.lookup('dsActividadEspecifica');
-                           var idx = store.find('ID_ACTIVIDAD_ESPECIFICA', value);
-		                   return idx !== -1 ? store.getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
-               
-                        }
+		                    var store = Ext.data.StoreManager.lookup('dsActividadEspecifica');
+		                    var idx = store.find('ID_ACTIVIDAD_ESPECIFICA', value);
+		                    return idx !== -1 ? store.getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
+
+		                }
 		            },
 		            {
 		                xtype: 'gridcolumn',
@@ -108,36 +109,36 @@
 			            }
 			            ]
 		            },
-		            /*{
-		                xtype: 'gridcolumn',
-		                align: 'center',
-		                text: 'Medidas de Control',
-		                flex: 0.2,
-		                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-		                }
-		            },*/
+                    /*{
+                    xtype: 'gridcolumn',
+                    align: 'center',
+                    text: 'Medidas de Control',
+                    flex: 0.2,
+                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                    }
+                    },*/
 		            {
+		            xtype: 'gridcolumn',
+		            text: 'Re Evaluación del Riesgo',
+		            align: 'center',
+		            columns: [{
 		                xtype: 'gridcolumn',
-		                text: 'Re Evaluación del Riesgo',
-		                align: 'center',
-		                columns: [{
-		                    xtype: 'gridcolumn',
-		                    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-		                    text: 'P',
-		                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-		                        switch (value.toString()) {
-		                            case '2':
-		                                return "<span style='display: block; background-color:yellow;'>M</span>";
-		                                break;
-		                            case '3':
-		                                return "<span style='display: block; background-color:red;'>A</span>";
-		                                break;
-		                            default:
-		                                return "<span style='display: block; background-color:green;'>B</span>";
-		                                break;
-		                        }
+		                dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
+		                text: 'P',
+		                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+		                    switch (value.toString()) {
+		                        case '2':
+		                            return "<span style='display: block; background-color:yellow;'>M</span>";
+		                            break;
+		                        case '3':
+		                            return "<span style='display: block; background-color:red;'>A</span>";
+		                            break;
+		                        default:
+		                            return "<span style='display: block; background-color:green;'>B</span>";
+		                            break;
 		                    }
-		                },
+		                }
+		            },
 			            {
 			                xtype: 'gridcolumn',
 			                dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
@@ -177,7 +178,7 @@
 			                }
 			            }
 		            ]
-		            }],
+		        }],
                     dockedItems: [
                         {
                             xtype: 'toolbar',
@@ -196,7 +197,7 @@
                                     xtype: 'button',
                                     text: 'Borrar Actual',
                                     handler: function () {
-                                        
+
                                     }
                                 }
                             ]
@@ -217,8 +218,8 @@
             }
             return colorHex;
         };
-        
-        
+
+
         me.items = [
             {
                 xtype: 'panel',
@@ -406,7 +407,7 @@
                                                 }
                                                 });
                                                 */
-                                                
+
                                             }
                                         }
                                     },
@@ -502,7 +503,7 @@
                                     }
                                 ],
                                 listeners: {
-                                    change: function(field, newValue, oldValue, options ) {
+                                    change: function (field, newValue, oldValue, options) {
                                         Ext.getCmp('cmb_peligro_evalua').setDisabled(false);
                                     }
                                 }
@@ -787,9 +788,9 @@
                                                                         iconCls: 'btn-add',
                                                                         handler: function () {
                                                                             /*
-                                                                                TODO: Ventana para Agregar Medida de Control
+                                                                            TODO: Ventana para Agregar Medida de Control
                                                                             */
-                                                                            if(!winMedida) {
+                                                                            if (!winMedida) {
                                                                                 winMedida = Ext.create('Ext.window.Window', {
                                                                                     width: 673,
                                                                                     closeAction: 'hide',
@@ -800,18 +801,18 @@
                                                                                         margin: '5 5 5 5',
                                                                                         bodyPadding: 10,
                                                                                         title: 'Agrega Medida de Control',
-                                                                                        items: [{"xtype":"textfield","fieldLabel":"Nom Medida De Control","anchor":"100%","name":"NOM_MEDIDA_DE_CONTROL"}],
+                                                                                        items: [{ "xtype": "textfield", "fieldLabel": "Nom Medida De Control", "anchor": "100%", "name": "NOM_MEDIDA_DE_CONTROL"}],
                                                                                         buttons: [{
                                                                                             text: 'Agregar',
                                                                                             handler: function () {
                                                                                                 var new_object,
                                                                                                     errors,
                                                                                                     form;
-                        
+
                                                                                                 form = this.up('form').getForm();
                                                                                                 new_object = Ext.create('WCF_ENAP.model.MedidaDeControl', form.getValues());
                                                                                                 errors = new_object.validate();
-                        
+
                                                                                                 if (errors.isValid() && form.isValid()) {
                                                                                                     this.disable(true);
                                                                                                     Ext.data.StoreManager.lookup('dsMedidaDeControl').insert(0, new_object);
@@ -840,7 +841,7 @@
                                                                         text: 'Guardar',
                                                                         handler: function () {
                                                                             winMedidas.hide();
-                                                                            
+
                                                                             //Ext.getCmp('grid-asigna-medidas').getStore().loadData(Ext.getCmp('grid-medidas-de-control').getSelectionModel())
                                                                         }
                                                                     }
@@ -978,7 +979,7 @@
                             Ext.getCmp('grid-medidas-de-control').getSelectionModel().deselectAll();
                             Ext.getCmp('form_evalua_peligro').getForm().reset();
                             Ext.getCmp('form_re_evaluacion').getForm().reset();
-                            
+
                         } else {
                             form.markInvalid(errors);
                         }
@@ -988,19 +989,26 @@
                 }]
             }]
             }
-            
+
         ];
         me.callParent(arguments);
 
-        var storeActividadEspecifica = Ext.data.StoreManager.lookup('dsActividadEspecifica');
-        storeActividadEspecifica.on('load', function(store, records, options, grid) {
-            isLoadedActividadEspecifica=true;
+        var storeActividadEspecifica = Ext.data.StoreManager.lookup('dsActividadEspecifica'),
+            storePeligro = Ext.data.StoreManager.lookup('dsPeligro'),
+            storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada');
+
+        storeActividadEspecifica.on('load', function (store, records, options, grid) {
+            isLoadedActividadEspecifica = true;
             onLoadedAll();
         });
-        var storePeligro = Ext.data.StoreManager.lookup('dsPeligro');
-        storePeligro.on('load', function(store, records, options, grid) {
-            isLoadedPeligro=true;
+        storePeligro.on('load', function (store, records, options, grid) {
+            isLoadedPeligro = true;
             onLoadedAll();
+        });
+        storeActividadEvaluada.on('add', function (store, records, index, eOpts) {
+            var record = records[0];
+            console.log("AGREGADA");
+            console.log(record);
         });
     }
 });

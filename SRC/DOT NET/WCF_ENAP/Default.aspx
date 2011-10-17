@@ -16,6 +16,187 @@
     <link href="/ux/css/CenterLayout.css" rel="stylesheet" type="text/css" />
     <script src="/ext-4.0.2a/ext-all-debug.js" type="text/javascript"></script>
 	<script src="/ext-4.0.2a/locale/ext-lang-es.js"></script>
+    <!--
+    <script type="text/javascript">
+        Ext.define('Ext.ux.CheckboxGroupData', {
+            extend: 'Ext.form.CheckboxGroup',
+            alias: ['widget.checkboxgroupdata'],
+            initComponent: function () {
+                var me = this;
+                if (!me.store) {
+                    Ext.Error.raise("You must specify a store config");
+                }
+                if (!me.displayField || !me.valueField) {
+                    Ext.Error.raise("You must specify displayField and valueField config");
+                }
+                me.store = Ext.data.StoreManager.lookup(me.store);
+                me.mon(me.store, {
+                    load: Ext.Function.bind(me.onDataLoaded, this)
+                });
+                me.callParent(arguments);
+            },
+            onDataLoaded: function (store, records, successful, operation, options) {
+                var me = this, checks = [];
+                Ext.each(records, function (name, index, record) {
+                    me.add(Ext.create("Ext.form.field.Checkbox", {
+                        boxLabel: records[index].get(me.displayField),
+                        inputValue: records[index].get(me.valueField),
+                        columnWidth: 0.25
+                    }));
+                });
+            }
+        });
+        Ext.define('WCF_ENAP.view.ui.MyTabPanel', {
+            extend: 'Ext.tab.Panel',
+
+            height: 432,
+            width: 781,
+            activeTab: 0,
+
+            initComponent: function () {
+                var me = this;
+                me.items = [
+            {
+                xtype: 'panel',
+                height: 260,
+                width: 472,
+                title: 'Antecedentes',
+                items: [
+                    {
+                        xtype: 'form',
+                        margin: '5 5 5 5',
+                        bodyPadding: 10,
+                        title: 'My Form',
+                        items: [
+                            {
+                                xtype: 'combobox',
+                                fieldLabel: 'Empresa',
+                                displayField: 'NOMBRE_EMPRESA',
+                                store: 'dsEmpresa',
+                                valueField: 'ID_EMPRESA',
+                                name: 'ID_EMPRESA',
+                                anchor: '100%',
+                                editable: false,
+                                typeAhead: true,
+                                forceSelection: true,
+                                triggerAction: 'all',
+                                emptyText: 'Selecciona una Empresa',
+                                queryMode: 'local',
+                                lastQuery: '',
+                                selectOnFocus: true
+                            },
+                            {
+                                xtype: 'checkboxgroup',
+                                fieldLabel: 'Afecta a',
+                                allowBlank: false,
+                                items: [
+                                    {
+                                        xtype: 'checkboxfield',
+                                        boxLabel: 'Persona',
+                                        listeners: {
+                                            change: function (field, newValue, oldValue, options) {
+                                                if (newValue) {
+                                                    Ext.data.StoreManager.lookup('dsDatoEvento').load({
+                                                        params: { 'TIPO': 1 },
+                                                        callback: function (records, operation, success) {
+                                                            /* Muestra  Tab*/
+
+                                                            //Ext.getCmp('tab_nuevo_evento_tipo_evento').show();
+                                                            
+                                                            //this.up("tabpanel").doLayout();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        xtype: 'checkboxfield',
+                                        boxLabel: 'Patrimonio'
+                                    },
+                                    {
+                                        xtype: 'checkboxfield',
+                                        boxLabel: 'Pérdida de Proceso'
+                                    },
+                                    {
+                                        xtype: 'checkboxfield',
+                                        boxLabel: 'Medio Ambiente'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'filefield',
+                                fieldLabel: 'Archivo Adjunto',
+                                anchor: '100%'
+                            },
+                            {
+                                xtype: 'htmleditor',
+                                height: 150,
+                                style: 'background-color: white;',
+                                fieldLabel: 'Descripción detallada',
+                                anchor: '100%'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                xtype: 'form',
+                hidden: true,
+                id: 'tab_nuevo_evento_tipo_evento',
+                title: 'Tipo de Evento',
+                items: [
+                    {
+                        xtype: 'fieldset',
+                        margin: '5 5 5 5',
+                        title: 'Personas',
+                        items: [
+                        {
+                            xtype: 'checkboxgroupdata',
+                            id: 'adad',
+                            store: 'dsDatoEvento',
+                            displayField: 'NOMBRE_TIPO_EVENTO',
+                            valueField: 'ID_TIPO_EVENTO',
+                            layout: {
+                                type: 'column'
+                            },
+                            columns: 4
+                        }
+                        ]
+                    }
+                ]
+            },
+            {
+                xtype: 'panel',
+                title: 'Involucrados'
+            },
+            {
+                xtype: 'panel',
+                title: 'Causas'
+            }
+        ];
+                me.callParent(arguments);
+            }
+        });
+
+
+
+        Ext.Loader.setConfig({ enabled: true });
+        Ext.onReady(function () {
+            Ext.application({
+                name: 'WCF_ENAP',
+                stores: ["dsOrganizacion", "dsDepartamento", "dsEvento", "dsEmpresa","dsDatoEvento"],
+                launch: function () {
+                    Ext.QuickTips.init();
+                    var cmp = Ext.create('WCF_ENAP.view.ui.MyTabPanel', { renderTo: Ext.getBody() });
+                    cmp.show();
+                }
+            });
+        });
+    </script>
+    -->
+
+
     <script type="text/javascript" src="/js/layouts/basic.js"></script> 
     <script type="text/javascript" src="/js/layouts/custom.js"></script> 
     <script type="text/javascript" src="/js/layouts/combination.js"></script> 

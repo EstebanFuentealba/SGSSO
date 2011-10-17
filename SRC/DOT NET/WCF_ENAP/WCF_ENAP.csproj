@@ -63,7 +63,9 @@
     <Content Include="app\model\dsBuscaMatriz.js" />
     <Content Include="app\store\dsBuscaMatriz.js" />
     <Content Include="app\view\Login.js" />
+    <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\Login.js" />
+    <Content Include="app\view\ui\RegistraNuevoEvento.js" />
     <Content Include="ext-4.0.2a\bootstrap.js" />
     <Content Include="ext-4.0.2a\builds\ext-all-sandbox-debug.js" />
     <Content Include="ext-4.0.2a\builds\ext-all-sandbox-dev.js" />
@@ -2704,12 +2706,6 @@
     <Content Include="js\ux\layout\Center.js" />
     <Content Include="js\ux\listado-eventos.js" />
     <Content Include="js\ux\RowExpander.js" />
-    <Content Include="TESTEXTJS\app\store\dsGrupo.js" />
-    <Content Include="TESTEXTJS\app\view\MyWindow.js" />
-    <Content Include="TESTEXTJS\app\view\ui\MyWindow.js" />
-    <Content Include="TESTEXTJS\designer.html" />
-    <Content Include="TESTEXTJS\designer.js" />
-    <Content Include="TESTEXTJS\designer_includeOrder.txt" />
     <Content Include="utils\Export-Planilla.aspx" />
     <Content Include="utils\Export-Matriz.aspx" />
     <Content Include="ux\form\SearchField.js" />
@@ -2930,7 +2926,6 @@
     <None Include="js\tree-data_.json" />
     <None Include="js\ux\GMapPanel.rar" />
     <None Include="js\ux\GMapPanel3.rar" />
-    <None Include="TESTEXTJS\proyecto.xds" />
     <None Include="utils\Matriz E-020-Plantilla.xls" />
   </ItemGroup>
   <ItemGroup>

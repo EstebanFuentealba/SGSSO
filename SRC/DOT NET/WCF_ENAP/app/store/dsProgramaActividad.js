@@ -6,7 +6,6 @@ Ext.define('WCF_ENAP.model.ProgramaActividad', {
 });
 Ext.define('WCF_ENAP.store.dsProgramaActividad', {
     extend: 'Ext.data.Store',
-
     constructor: function(cfg) {
         var me = this;
         cfg = cfg || {};

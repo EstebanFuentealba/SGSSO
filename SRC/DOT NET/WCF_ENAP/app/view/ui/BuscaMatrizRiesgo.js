@@ -1,17 +1,43 @@
-﻿Ext.define('WCF_ENAP.view.ui.BuscaMatrizRiesgo', {
-    extend: 'Ext.panel.Panel',
-    maximizable: true,
-    modal: true,
-    bodyPadding: 10,
-    autoScroll: true,
-    title: 'Busca Matriz de Riesgo',
-    id: 'panel-BuscaMatrizRiesgo',
-    initComponent: function () {
-        var me = this;
-        var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
-            groupHeaderTpl: '{name} ({rows.length} Evaluaci{[values.rows.length > 1 ? "ones" : "ón"]})'
-        });
-        me.items = [
+﻿Ext.define('Probabilidad', {
+    extend: 'Ext.data.Model',
+    fields: [
+        { "name": "ID_PROBABILIDAD", "type": "int" },
+        { "name": "NOMBRE_PROBABILIDAD", "type": "string" }
+    ]
+});
+var dataProbabilidad = [
+    { "ID_PROBABILIDAD": 1, "NOMBRE_PROBABILIDAD": "Bajo" },
+    { "ID_PROBABILIDAD": 2, "NOMBRE_PROBABILIDAD": "Medio" },
+    { "ID_PROBABILIDAD": 3, "NOMBRE_PROBABILIDAD": "Alto" }
+];
+Ext.define('Consecuencia', {
+    extend: 'Ext.data.Model',
+    fields: [
+        { "name": "ID_CONSECUENCIA", "type": "int" },
+        { "name": "NOMBRE_CONSECUENCIA", "type": "string" }
+    ]
+});
+var dataConsecuencia = [
+    { "ID_CONSECUENCIA": 1, "NOMBRE_CONSECUENCIA": "Ligeramente Dañino" },
+    { "ID_CONSECUENCIA": 2, "NOMBRE_CONSECUENCIA": "Dañino" },
+    { "ID_CONSECUENCIA": 3, "NOMBRE_CONSECUENCIA": "Extremadamente Dañino" }
+];
+
+    Ext.define('WCF_ENAP.view.ui.BuscaMatrizRiesgo', {
+        extend: 'Ext.panel.Panel',
+        maximizable: true,
+        modal: true,
+        bodyPadding: 10,
+        autoScroll: true,
+        title: 'Busca Matriz de Riesgo',
+        id: 'panel-BuscaMatrizRiesgo',
+        initComponent: function () {
+
+            var me = this;
+            var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
+                groupHeaderTpl: '{name} ({rows.length} Evaluaci{[values.rows.length > 1 ? "ones" : "ón"]})'
+            });
+            me.items = [
 		{
 		    xtype: 'form',
 		    id: 'form_busca_actividad',
@@ -263,27 +289,28 @@
         features: [groupingFeature],
         columns: [
         /*{
-            xtype: 'gridcolumn',
-            dataIndex: 'ID_ACTIVIDAD_ESPECIFICA',
-            flex: 0.2,
-            text: 'Actividad Especifica',
-            renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                var idx = Ext.data.StoreManager.lookup('dsActividadEspecifica').find('ID_ACTIVIDAD_ESPECIFICA', value.toString());
-                return idx !== -1 ? Ext.data.StoreManager.lookup('dsActividadEspecifica').getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
-            }
+        xtype: 'gridcolumn',
+        dataIndex: 'ID_ACTIVIDAD_ESPECIFICA',
+        flex: 0.2,
+        text: 'Actividad Especifica',
+        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+        var idx = Ext.data.StoreManager.lookup('dsActividadEspecifica').find('ID_ACTIVIDAD_ESPECIFICA', value.toString());
+        return idx !== -1 ? Ext.data.StoreManager.lookup('dsActividadEspecifica').getAt(idx).get('NOM_ACTIVIDAD_ESPECIFICA') : '';
+        }
         }*/
         {
-            xtype: 'gridcolumn',
-            dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
-            flex: 0.2,
-            text: 'Actividad Especifica'
-        },
+        xtype: 'gridcolumn',
+        dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
+        flex: 0.2,
+        text: 'Actividad Especifica'
+    },
 {
     xtype: 'gridcolumn',
     dataIndex: 'ID_PELIGRO',
     flex: 0.3,
     text: 'Peligro',
     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+        console.log(value);
         var idx = Ext.data.StoreManager.lookup('dsPeligro').find('ID_PELIGRO', value.toString());
         return idx !== -1 ? Ext.data.StoreManager.lookup('dsPeligro').getAt(idx).get('NOM_PELIGRO') : '';
     }
@@ -297,6 +324,17 @@
         xtype: 'gridcolumn',
         dataIndex: 'VALORACION_PROBABILIDAD',
         text: 'P',
+        "field": {
+            xtype: "combo",
+            displayField: "NOMBRE_PROBABILIDAD",
+            valueField: "ID_PROBABILIDAD",
+            anchor: "100%",
+            queryMode: 'local',
+            store: Ext.create('Ext.data.Store', {
+                model: 'Probabilidad',
+                data: dataProbabilidad
+            })
+        },
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
             switch (value.toString()) {
                 case '2':
@@ -318,6 +356,17 @@
 	    xtype: 'gridcolumn',
 	    dataIndex: 'VALORACION_CONSECUENCIA',
 	    text: 'C',
+	    "field": {
+	        "xtype": "combo",
+	        "displayField": "NOMBRE_CONSECUENCIA",
+	        "valueField": "ID_CONSECUENCIA",
+	        "anchor": "100%",
+	        queryMode: 'local',
+	        "store": Ext.create('Ext.data.Store', {
+	            model: 'Consecuencia',
+	            data: dataConsecuencia
+	        })
+	    },
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
@@ -345,26 +394,26 @@
 	        var indicador_riesgo = parseInt(record.get('VALORACION_CONSECUENCIA')) * parseInt(record.get('VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo < 3) {
 	            /* GREEN */
-	            return "<span style='display: block; background-color:green;'>Bajo</span>";
+	            return "<span style='display: block; background-color:green;'><center><b>Bajo</b></center></span>";
 	        } else if (indicador_riesgo > 5) {
 	            /* RED */
-	            return "<span style='display: block; background-color:red;'>Alto</span>";
+	            return "<span style='display: block; background-color:red;'><center><b>Alto</b></center></span>";
 	        } else {
 	            /* YELLOW */
-	            return "<span style='display: block; background-color:yellow;'>Medio</span>";
+	            return "<span style='display: block; background-color:yellow;'><center><b>Medio</b></center></span>";
 	        }
 	    }
 	}
 	]
 },
-        /*{
-        xtype: 'gridcolumn',
-        align: 'center',
-        text: 'Medidas de Control',
-        flex: 0.2,
-        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-        }
-        },*/
+    /*{
+    xtype: 'gridcolumn',
+    align: 'center',
+    text: 'Medidas de Control',
+    flex: 0.2,
+    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+    }
+    },*/
 {
 xtype: 'gridcolumn',
 text: 'Re Evaluación del Riesgo',
@@ -373,6 +422,17 @@ columns: [{
     xtype: 'gridcolumn',
     dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
     text: 'P',
+    "field": {
+        "xtype": "combo",
+        "displayField": "NOMBRE_PROBABILIDAD",
+        "valueField": "ID_PROBABILIDAD",
+        "anchor": "100%",
+        queryMode: 'local',
+        "store": Ext.create('Ext.data.Store', {
+            model: 'Probabilidad',
+            data: dataProbabilidad
+        })
+    },
     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
         switch (value.toString()) {
             case '2':
@@ -394,6 +454,17 @@ columns: [{
 	    xtype: 'gridcolumn',
 	    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
 	    text: 'C',
+	    "field": {
+	        "xtype": "combo",
+	        "displayField": "NOMBRE_CONSECUENCIA",
+	        "valueField": "ID_CONSECUENCIA",
+	        "anchor": "100%",
+	        queryMode: 'local',
+	        "store": Ext.create('Ext.data.Store', {
+	            model: 'Consecuencia',
+	            data: dataConsecuencia
+	        })
+	    },
 	    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 	        switch (value.toString()) {
 	            case '2':
@@ -421,23 +492,23 @@ columns: [{
 	        var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
 	        if (indicador_riesgo_controlado < 3) {
 	            /* GREEN */
-	            return "<span style='display: block; background-color:green;'>Bajo</span>";
+	            return "<span style='display: block; background-color:green;'><center><b>Bajo</b></center></span>";
 	        } else if (indicador_riesgo_controlado > 5) {
 	            /* RED */
-	            return "<span style='display: block; background-color:red;'>Alto</span>";
+	            return "<span style='display: block; background-color:red;'><center><b>Alto</b></center></span>";
 	        } else {
 	            /* YELLOW */
-	            return "<span style='display: block; background-color:yellow;'>Medio</span>";
+	            return "<span style='display: block; background-color:yellow;'><center><b>Medio</b></center></span>";
 	        }
 	    }
 	}
 ]
 }
     ],
-        viewConfig: {
+    viewConfig: {
 
-    },
-    dockedItems: [
+},
+dockedItems: [
         {
             xtype: 'pagingtoolbar',
             displayInfo: true,
@@ -449,30 +520,35 @@ columns: [{
             dock: 'top',
             anchor: '100%',
             items: [
-                /*{
-                    xtype: 'button',
-                    text: 'Agregar Seleccionadas a Nueva Matriz',
-                    iconCls: 'add-actividad-evaluada-icon'
-                },*/
+            /*{
+            xtype: 'button',
+            text: 'Agregar Seleccionadas a Nueva Matriz',
+            iconCls: 'add-actividad-evaluada-icon'
+            },*/
                 {
-                    xtype: 'button',
-                    text: 'Exportar Seleccionadas',
-                    iconCls: 'excel-icon',
-                    menu: {
-                        xtype: 'menu',
-                        items: [
+                xtype: 'button',
+                text: 'Exportar Seleccionadas',
+                iconCls: 'excel-icon',
+                menu: {
+                    xtype: 'menu',
+                    items: [
                             {
                                 xtype: 'menuitem',
                                 text: 'Planilla de Reconocimiento de Riesgo',
                                 iconCls: 'matriz-icon',
                                 handler: function () {
+                                    /* No he Seleccionado ninguna fila */
+                                    if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getCount() == 0) {
+                                        Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                        return;
+                                    }
                                     var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
                                     /*
                                     for (var i = 0; i < data.length; i++) {
                                     console.log(data[i].get('ID_MATRIZ'));
                                     }*/
                                     window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento.');
+                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                                 }
                             },
                             {
@@ -480,47 +556,54 @@ columns: [{
                                 text: 'Matriz de Riesgo',
                                 iconCls: 'matriz-icon',
                                 handler: function () {
+                                    /* No he Seleccionado ninguna fila */
+                                    if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getCount() == 0) {
+                                        Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                        return;
+                                    }
                                     var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
-                                    /*
-                                    for (var i = 0; i < data.length; i++) {
-                                    console.log(data[i].get('ID_MATRIZ'));
-                                    }*/
                                     window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento.');
+                                    Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                                 }
                             }
                         ]
-                    }
                 }
+            }
             ]
         }
     ],
-    selModel: Ext.create('Ext.selection.CheckboxModel', {
-        checkOnly: true,
-        listeners: {
-            selectionchange: function (Model, selected, options) {
-                try {
-                    var id_selected = selected[0].get("ID_MATRIZ");
-
-                    var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
-                    Ext.each(items, function (name, index, item) {
-                        var id_row = items[index].get("ID_MATRIZ");
-                        if (id_selected != id_row) {
-
-                            if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
-                                Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
-                                Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
-                                return;
-                            }
-                        }
-                    });
-                } catch (e) { }
-
-            }
-        }
+plugins: [
+    Ext.create('Ext.grid.plugin.CellEditing', {
+        clicksToEdit: 1
     })
-}];
-        me.callParent(arguments);
+],
+selModel: Ext.create('Ext.selection.CheckboxModel', {
+    checkOnly: true,
+    listeners: {
+        selectionchange: function (Model, selected, options) {
+            try {
+
+                var id_selected = selected[0].get("ID_MATRIZ");
+
+                var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
+                Ext.each(items, function (name, index, item) {
+                    var id_row = items[index].get("ID_MATRIZ");
+                    if (id_selected != id_row) {
+
+                        if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
+                            Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
+                            Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
+                            return;
+                        }
+                    }
+                });
+            } catch (e) { }
+
+        }
     }
-});
+})
+}];
+            me.callParent(arguments);
+        }
+    });
 									

@@ -26,8 +26,8 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<TBL_DATO_EVENTO>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&TIPO={TIPO}")]
+        public JSONCollection<List<TBL_DATO_EVENTO>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int TIPO)
         {
             JSONCollection<List<TBL_DATO_EVENTO>> objJSON = new JSONCollection<List<TBL_DATO_EVENTO>>();
             try
@@ -45,10 +45,11 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_DATO_EVENTO.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.TBL_DATO_EVENTO.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Where(r => r.TIPO == TIPO).Select(r => r);
                 List<TBL_DATO_EVENTO> results = query.ToList();
+                
                 objJSON.items = results;
-                objJSON.totalCount = bd.TBL_DATO_EVENTO.Count<TBL_DATO_EVENTO>();
+                objJSON.totalCount = query.Count();
                 objJSON.success = true;
             }
             catch (Exception ex) {

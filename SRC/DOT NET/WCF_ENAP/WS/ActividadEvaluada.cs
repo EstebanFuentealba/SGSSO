@@ -300,11 +300,18 @@ namespace WCF_ENAP
 		{
 
             JSONCollection<TBL_ACTIVIDAD_EVALUADA> objJSON = new JSONCollection<TBL_ACTIVIDAD_EVALUADA>();
-            try
-            {
+            try {
                 var objeto = (from variable in bd.TBL_ACTIVIDAD_EVALUADA
                               where variable.ID_ACTIVIDAD_EVALUADA == int.Parse(id)
                               select variable).Single();
+                if (nuevo.ID_AREA == 0)
+                {
+                    nuevo.ID_AREA = null;
+                }
+                if (nuevo.ID_DIVISION == 0)
+                {
+                    nuevo.ID_DIVISION = null;
+                }
                 objeto.ID_ACTIVIDAD_GENERAL = nuevo.ID_ACTIVIDAD_GENERAL;
 				objeto.ID_CARGO = nuevo.ID_CARGO;
 				objeto.ID_DIVISION = nuevo.ID_DIVISION;
