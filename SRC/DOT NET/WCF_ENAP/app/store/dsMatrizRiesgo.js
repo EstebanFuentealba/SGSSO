@@ -30,7 +30,7 @@ Ext.define('WCF_ENAP.store.dsMatrizRiesgo', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             autoSync: true,
             storeId: 'dsMatrizRiesgo',
             pageSize: 10,
@@ -38,7 +38,7 @@ Ext.define('WCF_ENAP.store.dsMatrizRiesgo', {
             model: 'WCF_ENAP.model.MatrizRiesgo',
             proxy: {
                 type: 'rest',
-                url:'/MatrizRiesgo/',
+                url:'/Matriz/',
                 reader: {
                     type: 'json',
                     root: 'items',

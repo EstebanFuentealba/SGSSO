@@ -228,6 +228,98 @@
     }
     </style>
     <script type="text/javascript">
+        Ext.define('Ext.grid.feature.CheckGrouping', {
+            extend: 'Ext.grid.feature.Grouping',
+            requires: 'Ext',
+            alias: 'widget.brigrouping',
+            selectionMode: "MULTI",
+            constructor: function () {
+                this.callParent(arguments);
+                this.groupHeaderTpl = ['<dl style="height:18px; border:0px !important">',
+                    '<dd id="groupcheck{name}" class="x-grid-row-checker x-column-header-text" style="width:18px; float:left;" x-grid-group-hd-text="{text}">&nbsp;</dd>',
+                    '<dd style="float:left; padding:3px 0px 0px 3px;">',
+                    this.groupHeaderTpl,
+                    '</dd>',
+                    '</dl>'
+                ].join('');
+            },
+            onGroupClick: function (view, node, group, e, options) {
+                var me = this;
+
+
+                var checkbox = Ext.get('groupcheck' + group);
+                if (me.inCheckbox(checkbox, e.getXY())) {
+                    me.toggleCheckbox(group, node, view);
+                } else if (me.isLeftofCheckbox(checkbox, e.getXY())) {
+                    me.callParent(arguments);
+                    if (this.selectionMode == "SINGLE") { }
+                }
+
+            },
+
+            inCheckbox: function (checkbox, xy) {
+                var x = xy[0];
+                var y = xy[1];
+                if (x >= checkbox.getLeft() &&
+                    x <= checkbox.getRight() &&
+                    y >= checkbox.getTop() &&
+                    y <= checkbox.getBottom()) {
+                    return true;
+                }
+                return false;
+            },
+            isLeftofCheckbox: function (checkbox, xy) {
+                if (xy[0] < checkbox.getLeft()) {
+                    return true;
+                }
+                return false;
+            },
+            getSelectionModel: function () {
+                return this.view.getSelectionModel();
+            },
+            deSelectAll: function (node) {
+                var me = this;
+                var checkboxs = Ext.select('.x-grid-row-checked');
+                Ext.each(checkboxs.elements, function (name, index, obj) {
+                    var nd = Ext.get(name);
+                    if (node.id != nd.id) {
+                        nd.removeCls('x-grid-row-checked');
+                    }
+                });
+                me.view.getSelectionModel().deselectAll();
+            },
+            toggleCheckbox: function (group, node, view) {
+                var classes = node.classList;
+                var nodeEl = Ext.get(node);
+                var addingCheck;
+
+                if (!classes.contains('x-grid-row-checked')) {
+                    nodeEl.addCls('x-grid-row-checked');
+                    this.deSelectAll(nodeEl);
+                    addingCheck = true;
+                }
+                else {
+                    nodeEl.removeCls('x-grid-row-checked');
+
+                    addingCheck = false;
+                }
+                var sm = view.getSelectionModel();
+                var ds = sm.store;
+
+                var records = ds.queryBy(
+                    function (record, id) {
+                        if (record.data[ds.groupField] == group) {
+                            if (addingCheck) {
+                                sm.select(record, true);
+                            }
+                            else {
+                                sm.deselect(record);
+                            }
+                        }
+                    }, this
+                );
+            }
+        });
         Ext.onReady(function () {
             /*
             UTILIDADES

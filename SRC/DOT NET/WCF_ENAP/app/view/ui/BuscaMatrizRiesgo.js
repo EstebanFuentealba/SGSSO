@@ -34,8 +34,9 @@ var dataConsecuencia = [
         initComponent: function () {
 
             var me = this;
-            var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
-                groupHeaderTpl: '{name} ({rows.length} Evaluaci{[values.rows.length > 1 ? "ones" : "ón"]})'
+            var sm = Ext.create('Ext.selection.CheckboxModel', { checkOnly: true });
+            var groupingFeature = Ext.create('Ext.grid.feature.CheckGrouping', {
+                selectionMode: "SINGLE"
             });
             me.items = [
 		{
@@ -287,6 +288,7 @@ var dataConsecuencia = [
         store: 'dsActividadEvaluada',
         autoScroll: true,
         features: [groupingFeature],
+        selModel: sm,
         columns: [
         /*{
         xtype: 'gridcolumn',
@@ -310,7 +312,6 @@ var dataConsecuencia = [
     flex: 0.3,
     text: 'Peligro',
     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-        console.log(value);
         var idx = Ext.data.StoreManager.lookup('dsPeligro').find('ID_PELIGRO', value.toString());
         return idx !== -1 ? Ext.data.StoreManager.lookup('dsPeligro').getAt(idx).get('NOM_PELIGRO') : '';
     }
@@ -537,18 +538,18 @@ dockedItems: [
                                 text: 'Planilla de Reconocimiento de Riesgo',
                                 iconCls: 'matriz-icon',
                                 handler: function () {
-                                    /* No he Seleccionado ninguna fila */
-                                    if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getCount() == 0) {
+                                    var sm = groupingFeature.getSelectionModel();
+                                    //No he Seleccionado ninguna fila
+                                    if (sm.getCount() == 0) {
                                         Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
                                         return;
                                     }
-                                    var data = Ext.getCmp('grid_busqueda_matriz').getSelectionModel().getSelection();
+                                    var data = sm.getSelection();
+                                    console.log(data[0].get('ID_MATRIZ'));
                                     /*
-                                    for (var i = 0; i < data.length; i++) {
-                                    console.log(data[i].get('ID_MATRIZ'));
-                                    }*/
                                     window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
                                     Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                    */
                                 }
                             },
                             {
@@ -576,32 +577,33 @@ plugins: [
     Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
     })
-],
+]
+/*,
 selModel: Ext.create('Ext.selection.CheckboxModel', {
-    checkOnly: true,
-    listeners: {
-        selectionchange: function (Model, selected, options) {
-            try {
+checkOnly: true,
+listeners: {
+selectionchange: function (Model, selected, options) {
+try {
 
-                var id_selected = selected[0].get("ID_MATRIZ");
+var id_selected = selected[0].get("ID_MATRIZ");
 
-                var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
-                Ext.each(items, function (name, index, item) {
-                    var id_row = items[index].get("ID_MATRIZ");
-                    if (id_selected != id_row) {
+var items = Ext.getCmp('grid_busqueda_matriz').getStore().data.items;
+Ext.each(items, function (name, index, item) {
+var id_row = items[index].get("ID_MATRIZ");
+if (id_selected != id_row) {
 
-                        if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
-                            Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
-                            Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
-                            return;
-                        }
-                    }
-                });
-            } catch (e) { }
+if (Ext.getCmp('grid_busqueda_matriz').getSelectionModel().isSelected(index)) {
+Ext.Msg.alert('ERROR', 'No puedes seleccionar matrices diferentes.');
+Ext.getCmp('grid_busqueda_matriz').getSelectionModel().deselect(index);
+return;
+}
+}
+});
+} catch (e) { }
 
-        }
-    }
-})
+}
+}
+})*/
 }];
             me.callParent(arguments);
         }

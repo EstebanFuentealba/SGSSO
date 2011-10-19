@@ -189,7 +189,8 @@
                                     text: 'Confirmar & Guardar',
                                     iconCls: 'btn-save',
                                     handler: function () {
-                                        Ext.data.StoreManager.lookup('dsActividadEvaluada').insert(0, {});
+                                        //Ext.data.StoreManager.lookup('dsActividadEvaluada').insert(0, {});
+                                        Ext.data.StoreManager.lookup('dsMatrizRiesgo').insert(0, {});
                                         Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
                                     }
                                 },
@@ -197,7 +198,7 @@
                                     xtype: 'button',
                                     text: 'Borrar Actual',
                                     handler: function () {
-
+                                        
                                     }
                                 }
                             ]

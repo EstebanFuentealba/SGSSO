@@ -68,7 +68,8 @@
 						'dsPeligroMedida',
 						'dsMedidaDeControl',
 						'dsTempActividadEvaluada',
-						'dsActividadEvaluada'
+						'dsActividadEvaluada',
+                        'dsMatrizRiesgo'
 					]},
 					
 					{"text":"Busca Matriz de Riesgo","id":"BuscaMatrizRiesgo","leaf":true,iconCls: "buscar-icon","stores":[
@@ -80,7 +81,8 @@
 						'dsDepartamento',
 						'dsActividadGeneral',
 						'dsCargo',
-						'dsActividadEvaluada'
+						'dsActividadEvaluada',
+                        'dsMatrizRiesgo'
 						
 					]}
 				]	
