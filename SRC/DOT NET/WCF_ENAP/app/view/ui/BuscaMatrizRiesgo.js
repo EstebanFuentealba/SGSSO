@@ -266,12 +266,14 @@ var dataConsecuencia = [
 		    }, {
 		        text: 'Buscar',
 		        handler: function () {
-		            var form = Ext.getCmp('form_busca_actividad').getForm();
-
+		            var form = Ext.getCmp('form_busca_actividad').getForm(),
+                        values = form.getValues();
+		            
 		            Ext.data.StoreManager.lookup('dsActividadEvaluada').load({
-		                params: form.getValues(),
+		                params: values,
 		                callback: function (records, operation, success) {
 		                    /*TODO*/
+		                    console.log(records);
 		                }
 		            });
 
@@ -290,11 +292,11 @@ var dataConsecuencia = [
         selModel: sm,
         columns: [
         {
-        xtype: 'gridcolumn',
-        dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
-        flex: 0.2,
-        text: 'Actividad Especifica'
-    },
+            xtype: 'gridcolumn',
+            dataIndex: 'NOM_ACTIVIDAD_ESPECIFICA',
+            flex: 0.2,
+            text: 'Actividad Especifica'
+        },
 {
     xtype: 'gridcolumn',
     dataIndex: 'ID_PELIGRO',
@@ -385,38 +387,38 @@ var dataConsecuencia = [
 	]
 },
 {
-xtype: 'gridcolumn',
-text: 'Re Evaluación del Riesgo',
-align: 'center',
-columns: [{
     xtype: 'gridcolumn',
-    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-    text: 'P',
-    "field": {
-        "xtype": "combo",
-        "displayField": "NOMBRE_PROBABILIDAD",
-        "valueField": "ID_PROBABILIDAD",
-        "anchor": "100%",
-        queryMode: 'local',
-        "store": Ext.create('Ext.data.Store', {
-            model: 'Probabilidad',
-            data: dataProbabilidad
-        })
-    },
-    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-        switch (value.toString()) {
-            case '2':
-                return "Medio";
-                break;
-            case '3':
-                return "Alto";
-                break;
-            default:
-                return "Bajo";
-                break;
+    text: 'Re Evaluación del Riesgo',
+    align: 'center',
+    columns: [{
+        xtype: 'gridcolumn',
+        dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
+        text: 'P',
+        "field": {
+            "xtype": "combo",
+            "displayField": "NOMBRE_PROBABILIDAD",
+            "valueField": "ID_PROBABILIDAD",
+            "anchor": "100%",
+            queryMode: 'local',
+            "store": Ext.create('Ext.data.Store', {
+                model: 'Probabilidad',
+                data: dataProbabilidad
+            })
+        },
+        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+            switch (value.toString()) {
+                case '2':
+                    return "Medio";
+                    break;
+                case '3':
+                    return "Alto";
+                    break;
+                default:
+                    return "Bajo";
+                    break;
+            }
         }
-    }
-},
+    },
 	{
 	    xtype: 'gridcolumn',
 	    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
@@ -463,10 +465,10 @@ columns: [{
 ]
 }
     ],
-    viewConfig: {
+        viewConfig: {
 
-},
-dockedItems: [
+    },
+    dockedItems: [
         {
             xtype: 'pagingtoolbar',
             displayInfo: true,
@@ -479,12 +481,12 @@ dockedItems: [
             anchor: '100%',
             items: [
                 {
-                xtype: 'button',
-                text: 'Exportar Seleccionadas',
-                iconCls: 'excel-icon',
-                menu: {
-                    xtype: 'menu',
-                    items: [
+                    xtype: 'button',
+                    text: 'Exportar Seleccionadas',
+                    iconCls: 'excel-icon',
+                    menu: {
+                        xtype: 'menu',
+                        items: [
                             {
                                 xtype: 'menuitem',
                                 text: 'Planilla de Reconocimiento de Riesgo',
@@ -498,7 +500,7 @@ dockedItems: [
                                     var data = sm.getSelection();
                                     window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
                                     Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
-                                    
+
                                 }
                             },
                             {
@@ -512,17 +514,17 @@ dockedItems: [
                                         return;
                                     }
                                     var data = sm.getSelection();
-                                     window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                    window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
                                     Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                                 }
                             }
                         ]
+                    }
                 }
-            }
             ]
         }
     ],
-plugins: [
+    plugins: [
     Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
     })

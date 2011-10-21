@@ -308,7 +308,7 @@ namespace WCF_ENAP
 			}
 			return "ID_ACTIVIDAD_EVALUADA";
 		}
-        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}")]
+        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}")]
         public JSONCollection<List<sp_search_actividad_evaluadaResult>> Search(int _page,
                                                                             int _start,
                                                                             int _limit,
@@ -321,10 +321,14 @@ namespace WCF_ENAP
                                                                             int _ID_ACTIVIDAD_GENERAL,
                                                                             string _NOM_ACTIVIDAD_ESPECIFICA,
                                                                             int _ID_CARGO,
-                                                                            int _CONDICION)
+                                                                            int _CONDICION,
+                                                                            string _STARTDT,
+                                                                            string _ENDDT)
         {
             JSONCollection<List<sp_search_actividad_evaluadaResult>> objJSON = new JSONCollection<List<sp_search_actividad_evaluadaResult>>();
 
+            DateTime startTime;
+            DateTime endTime;
                 if (_dir == null)
                 {
                     _dir = "DESC";
@@ -337,6 +341,22 @@ namespace WCF_ENAP
                 {
                     _limit = 10;
                 }
+                if (_STARTDT != null)
+                {
+                    startTime = DateTime.Parse(_STARTDT);
+                }
+                else
+                {
+                    startTime = new DateTime(2011, 1, 1);
+                }
+                if (_ENDDT != null)
+                {
+                    endTime = DateTime.Parse(_ENDDT);
+                }
+                else
+                {
+                    endTime = DateTime.Now;
+                }
                 _start = (_page * _limit) - _limit;
                  var query = bd.sp_search_actividad_evaluada(_ID_ORGANIZACION,
                         _ID_DEPARTAMENTO_ORGANIZACION,
@@ -346,8 +366,8 @@ namespace WCF_ENAP
                         _NOM_ACTIVIDAD_ESPECIFICA,
                         _ID_CARGO,
                         _CONDICION,
-                        null,
-                        null
+                        startTime,
+                        endTime
                         ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                  List<sp_search_actividad_evaluadaResult> results = query.ToList < sp_search_actividad_evaluadaResult>();
 

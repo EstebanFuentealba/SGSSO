@@ -200,7 +200,7 @@
     <script type="text/javascript" src="/js/layouts/basic.js"></script> 
     <script type="text/javascript" src="/js/layouts/custom.js"></script> 
     <script type="text/javascript" src="/js/layouts/combination.js"></script> 
-	<script type="text/javascript" src="/js/layouts/layout-browser.js?00"></script>
+	<script type="text/javascript" src="/js/layouts/layout-browser.js?01"></script>
     
     <style type="text/css">
     .evento-icon{background:transparent url(/icons/application_form.png) 0 0 no-repeat !important;}
@@ -228,6 +228,196 @@
     }
     </style>
     <script type="text/javascript">
+        /**
+        * Rewrite of Ext.util.JSON to support .NET dates
+        */
+        var rymoore = {};
+        rymoore.JSON = new (function () {
+            var useHasOwn = {}.hasOwnProperty ? true : false;
+            var pad = function (n) {
+                return n < 10 ? "0" + n : n;
+            };
+            var m = {
+                "\b": '\\b',
+                "\t": '\\t',
+                "\n": '\\n',
+                "\f": '\\f',
+                "\r": '\\r',
+                '"': '\\"',
+                "\\": '\\\\'
+            };
+            var fixDate = function (obj) {
+                // /Date(
+                for (property in obj) {
+                    var type = typeof obj[property];
+                    switch (type) {
+                        case 'string':
+                            if (obj[property].indexOf('/Date(') > -1) {
+                                var ms = obj[property].substring(6);
+                                ms = ms.substring(0, ms.indexOf(')/'));
+                                obj[property] = new Date(parseInt(ms));
+                            }
+                            break;
+                        case 'object':
+                            fixDate(obj[property]);
+                            break;
+                    }
+                }
+            }
+            var encodeString = function (s) {
+                if (/["\\\x00-\x1f]/.test(s)) {
+                    return '"' +
+            s.replace(/([\x00-\x1f\\"])/g, function (a, b) {
+                var c = m[b];
+                if (c) {
+                    return c;
+                }
+                c = b.charCodeAt();
+                return "\\u00" +
+                Math.floor(c / 16).toString(16) +
+                (c % 16).toString(16);
+            }) +
+            '"';
+                }
+                return '"' + s + '"';
+            };
+            var encodeArray = function (o) {
+                var a = ["["], b, i, l = o.length, v;
+                for (i = 0; i < l; i += 1) {
+                    v = o[i];
+                    switch (typeof v) {
+                        case "undefined":
+                        case "function":
+                        case "unknown":
+                            break;
+                        default:
+                            if (b) {
+                                a.push(',');
+                            }
+                            a.push(v === null ? "null" : rymoore.JSON.encode(v));
+                            b = true;
+                    }
+                }
+                a.push("]");
+                return a.join("");
+            };
+            // here is the new EncodeDate function
+            var encodeDate = function (o) {
+                var ret = '"\\/Date(' + o.getTime() + ')\\/"';
+                return ret;
+            };
+            this.encode = function (o) {
+                if (typeof o == "undefined" || o === null) {
+                    return "null";
+                }
+                else {
+                    if (Ext.isArray(o)) {
+                        return encodeArray(o);
+                    }
+                    else {
+                        if (Ext.isDate(o)) {
+                            return encodeDate(o);
+                        }
+                        else {
+
+                            if (typeof o == "string") {
+                                return encodeString(o);
+                            }
+                            else {
+                                if (typeof o == "number") {
+                                    return isFinite(o) ? String(o) : "null";
+                                }
+                                else {
+                                    if (typeof o == "boolean") {
+                                        return String(o);
+                                    }
+                                    else {
+                                        var a = ["{"], b, i, v;
+                                        for (i in o) {
+                                            if (!useHasOwn || o.hasOwnProperty(i)) {
+                                                v = o[i];
+                                                switch (typeof v) {
+                                                    case "undefined":
+                                                    case "function":
+                                                    case "unknown":
+                                                        break;
+                                                    default:
+                                                        if (b) {
+                                                            a.push(',');
+                                                        }
+                                                        a.push(this.encode(i), ":", v === null ? "null" : this.encode(v));
+                                                        b = true;
+                                                }
+
+                                            }
+
+                                        }
+                                        a.push("}");
+                                        return a.join("");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            this.decode = function (json) {
+
+                var obj = json;
+
+                var type = typeof json;
+
+                if (type == 'string') {
+
+                    if (json.indexOf('{') == 0) {
+
+                        //original script returned eval result here
+
+                        obj = eval('(' + json + ')');
+
+                    }
+
+                    else {
+
+                        //original script returned eval result here
+
+                        obj = eval('(\'' + json + '\')');
+
+                    }
+
+                }
+
+
+
+                // new call to fix date objects
+
+                fixDate(obj);
+
+
+
+                return obj;
+
+            };
+            /**
+            * Converts dates within an object to .NET JS encoded date string
+            */
+            this.fixObjectDates = function (obj) {
+                fixDate(obj);
+            }
+            /**
+            * Encodes a date object to to the standard .NET JavaScript encoded date string
+            */
+            this.convertDateToString = function (obj) {
+                return encodeDate(obj);
+            }
+        })();
+        // override the default Ext JSON Serialization/deserialization
+        Ext.JSON.encode = rymoore.JSON.encode;
+        Ext.JSON.decode = rymoore.JSON.decode;
+
+        
+
+
         Ext.define('Ext.grid.feature.CheckGrouping', {
             extend: 'Ext.grid.feature.Grouping',
             requires: 'Ext',
@@ -349,7 +539,6 @@
                 rutText: 'Rut debe ser válido con el formato: <ul><li>(XXXXXXXX-X)</li><li>(XX.XXX.XXX-X)</li><ul>',
                 daterange: function (val, field) {
                     var date = field.parseDate(val);
-
                     if (!date) {
                         return false;
                     }

@@ -13,5 +13,6 @@ TODO
 * [Busca Matriz de Riesgo] 	Agregar evento al descargar todos los datos mostrar tabla (ON DOWNLOAD ALL DATASTORES)
 * [Crear Matriz de Riesgo]	Medidas de Control Extra segun Actividad
 * [Informe E-020-00 Planilla]	~~Modificar Ultima Línea de la plantilla (Datos)~~
-* [ALL] 						Habilitar Fechas en ExtJS <-> WCF .NET
+* [ALL] 						setLoading(true) a componentes al hacer consultas ajax
+* [ALL] 						~~Habilitar Fechas en ExtJS <-> WCF .NET~~
 * [ALL] 						Al quitar usuario del DC remover automaticamente de la base de datos

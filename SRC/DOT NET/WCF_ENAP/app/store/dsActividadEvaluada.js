@@ -40,7 +40,10 @@ Ext.define('WCF_ENAP.model.ActividadEvaluada', {
         { "name": "VALORACION_PROBABILIDAD", "type": "int" },
         { "name": "MEDIDA_VALORACION_CONSECUENCIA", "type": "int" },
         { "name": "MEDIDA_VALORACION_PROBABILIDAD", "type": "int" },
-        { "name": "FECHA_CREACION", "type": "date" },
+        { "name": "FECHA_CREACION", "type": "date", "convert": function (v, record) {
+                return (Ext.JSON.decode({ 'd': v })).d;
+            }
+        },
         { "name": "CONDICION", "type": "int" },
         { "name": "MEDIDAS" }
     ]
