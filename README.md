@@ -13,6 +13,9 @@ TODO
 * [Busca Matriz de Riesgo] 	Agregar evento al descargar todos los datos mostrar tabla (ON DOWNLOAD ALL DATASTORES)
 * [Crear Matriz de Riesgo]	Medidas de Control Extra segun Actividad
 * [Informe E-020-00 Planilla]	~~Modificar Ultima Línea de la plantilla (Datos)~~
+* [Programa Anual]			Agregar sumario Total (Calculo de los 12 meses)
 * [ALL] 						setLoading(true) a componentes al hacer consultas ajax
 * [ALL] 						~~Habilitar Fechas en ExtJS <-> WCF .NET~~
 * [ALL] 						Al quitar usuario del DC remover automaticamente de la base de datos
+* [ALL] 						Paginar procedimientos
+* [ALL] 						Agregar Eventos de dependencia a DataStores EJ: storeA.on('load',function(){ storeB.load(); });

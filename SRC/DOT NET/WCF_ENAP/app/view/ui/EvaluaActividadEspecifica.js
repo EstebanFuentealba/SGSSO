@@ -12,7 +12,19 @@
                     tempStore,
                     isLoadedActividadEspecifica = false,
                     isLoadedPeligro = false;
-
+        var storeActividadEspecifica = Ext.data.StoreManager.lookup('dsActividadEspecifica'),
+            storePeligro = Ext.data.StoreManager.lookup('dsPeligro'),
+            storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada'),
+            storeMatrizRiesgo = Ext.data.StoreManager.lookup('dsMatrizRiesgo');
+        console.log(storeActividadEspecifica.isLoading());
+        storeActividadEspecifica.on('load', function (store, records, options, grid) {
+            isLoadedActividadEspecifica = true;
+            onLoadedAll();
+        });
+        storePeligro.on('load', function (store, records, options, grid) {
+            isLoadedPeligro = true;
+            onLoadedAll();
+        });
         var onLoadedAll = function () {
             console.log(" LOADED");
             if (isLoadedActividadEspecifica && isLoadedPeligro) {
@@ -189,6 +201,7 @@
                                 {
                                     xtype: 'button',
                                     text: 'Borrar Todo',
+                                    iconCls: 'btn-delete',
                                     handler: function () {
 
                                         Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
@@ -382,6 +395,7 @@
                                         columnWidth: 0.94,
                                         fieldLabel: 'Actividad Específica <a class="tooltip" href="#" data-qtip="Es el conjunto de acciones que se llevan a cabo para cumplir con los objetivos de la Actividad General, mediante la utilización de los recursos humanos, materiales, técnicos, y financieros asignados a la actividad con un costo determinado.">[<b>?</b>]</a>',
                                         name: 'ID_ACTIVIDAD_ESPECIFICA',
+                                        id: 'cmb_evalua_actividad_especifica',
                                         labelWidth: 150,
                                         anchor: '100%',
                                         store: 'dsActividadEspecifica',
@@ -729,12 +743,20 @@
                                 {
                                     xtype: 'button',
                                     text: 'Asignar',
+                                    iconCls: 'btn-add',
                                     handler: function () {
                                         if (!winMedidas) {
                                             winMedidas = Ext.create('Ext.window.Window', {
                                                 width: 673,
                                                 closeAction: 'hide',
+                                                maximizable: true,
                                                 title: 'Medidas de Control',
+                                                listeners: {
+                                                    resize: function (win, width, height, options) {
+                                                        Ext.getCmp('grid-medidas-de-control').setHeight(height-40);
+                                                        Ext.getCmp('grid-medidas-de-control').doLayout();
+                                                    }
+                                                },
                                                 modal: true,
                                                 items: [
                                                     {
@@ -758,6 +780,7 @@
 
                                                     },
                                                     selModel: Ext.create('Ext.selection.CheckboxModel', {
+                                                        checkOnly: true,
                                                         allowDeselect: true,
                                                         listeners: {
                                                             selectionchange: function (sm, selections) {
@@ -833,6 +856,7 @@
                                                                     {
                                                                         xtype: 'button',
                                                                         text: 'Guardar',
+                                                                        iconCls: 'btn-save',
                                                                         handler: function () {
                                                                             winMedidas.hide();
 
@@ -857,6 +881,7 @@
                                     xtype: 'button',
                                     disabled: true,
                                     id: 'btn_delete_medida_asignar',
+                                    iconCls: 'btn-delete',
                                     text: 'Eliminar',
                                     handler: function () {
                                         var selection = Ext.getCmp('grid-asigna-medidas').getSelectionModel().getSelection()[0];
@@ -944,6 +969,7 @@
                 }
                 ], buttons: [{
                     text: 'Guardar Evaluación',
+                    iconCls: 'btn-add-save',
                     handler: function () {
 
                         var new_object,
@@ -987,11 +1013,14 @@
         ];
         me.callParent(arguments);
 
-        var storeActividadEspecifica = Ext.data.StoreManager.lookup('dsActividadEspecifica'),
-            storePeligro = Ext.data.StoreManager.lookup('dsPeligro'),
-            storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada'),
-            storeMatrizRiesgo = Ext.data.StoreManager.lookup('dsMatrizRiesgo');
 
+        storeActividadEspecifica.on('write', function (store, operation, options) {
+            var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Create') {
+                //Ext.getCmp('cmb_evalua_actividad_especifica').select(record);
+            }
+        });
         storeMatrizRiesgo.on('write', function (store, operation, options) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
@@ -1006,7 +1035,7 @@
                         {
                             xtype: 'label',
                             height: 14,
-                            margin: '5 5 5 5',
+                            margin: '10 10 10 10',
                             width: 47,
                             text: 'Se guardó la matriz con éxito, ¿ Quieres Descargar un Documento ?'
                         },
@@ -1023,7 +1052,7 @@
                                     xtype: 'button',
                                     margin: '0 0 0 5',
                                     text: 'Planilla de Reconocimiento de Riesgo',
-                                    columnWidth: 0.33,
+                                    columnWidth: 0.5,
                                     iconCls: 'matriz-icon',
                                     handler: function () {
                                         window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + idNuevaMatriz;
@@ -1034,20 +1063,11 @@
                                     xtype: 'button',
                                     margin: '0 0 0 5',
                                     text: 'Matriz de Riesgo',
-                                    columnWidth: 0.33,
+                                    columnWidth: 0.5,
                                     iconCls: 'matriz-icon',
                                     handler: function () {
                                         window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + idNuevaMatriz;
                                         Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    margin: '0 0 0 5',
-                                    text: 'No',
-                                    columnWidth: 0.33,
-                                    handler: function () {
-                                        winOk.close();
                                     }
                                 }
                             ]
@@ -1059,13 +1079,6 @@
                 }
             }
         });
-        storeActividadEspecifica.on('load', function (store, records, options, grid) {
-            isLoadedActividadEspecifica = true;
-            onLoadedAll();
-        });
-        storePeligro.on('load', function (store, records, options, grid) {
-            isLoadedPeligro = true;
-            onLoadedAll();
-        });
+
     }
 });

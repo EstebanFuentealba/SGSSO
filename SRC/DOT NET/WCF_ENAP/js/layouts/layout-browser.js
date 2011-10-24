@@ -91,14 +91,18 @@ Ext.onReady(function () {
                             Ext.getCmp('content-panel').add(cmp);
                             Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
 
+                        } else {
+                            treePanel.getSelectionModel().deselectAll();
                         }
                         Ext.getCmp('content-panel').setLoading(false);
                         cmp.show();
                     }
                 });
             } else {
-                Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
 
+                Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
+                Ext.getCmp('panel-' + record.getId()).show();
+                console.log("EXISTE");
             }
 
         } else {

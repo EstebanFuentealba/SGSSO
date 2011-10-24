@@ -17,7 +17,7 @@
   <Table Name="dbo.TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO">
     <Type Name="TBL_USUARIO_GRUPO">
       <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ID_USUARIO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.String" DbType="VarChar(200) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="GRUPO_ADMIN" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
       <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO" IsForeignKey="true" />
@@ -96,6 +96,45 @@
       <Association Name="TBL_RECURSO_COMPROMETIDO_TBL_ACCION_CORRECTIVA_RECURSO" Member="TBL_RECURSO_COMPROMETIDO" ThisKey="ID_RECURSO_COMPROMETIDO" OtherKey="ID_RECURSO_COMPROMETIDO" Type="TBL_RECURSO_COMPROMETIDO" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.TBL_ACTIVIDAD" Member="TBL_ACTIVIDAD">
+    <Type Name="TBL_ACTIVIDAD">
+      <Column Name="ID_ACTIVIDAD" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_EVIDENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_ACTIVIDAD" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="TIPO_FRECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CANTIDAD_FRECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ENERO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ENERO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FEBRERO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FEBRERO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MARZO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MARZO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ABRIL_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ABRIL_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MAYO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MAYO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JUNIO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JUNIO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JULIO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JULIO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AGOSTO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AGOSTO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEPTIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEPTIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OCTUBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OCTUBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOVIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOVIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DICIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DICIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TURNO" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Association Name="TBL_CARGO_TBL_ACTIVIDAD" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
+      <Association Name="TBL_EVIDENCIA_TBL_ACTIVIDAD" Member="TBL_EVIDENCIA" ThisKey="ID_EVIDENCIA" OtherKey="ID_EVIDENCIA" Type="TBL_EVIDENCIA" IsForeignKey="true" />
+      <Association Name="TBL_PROGRAMA_ANUAL_TBL_ACTIVIDAD" Member="TBL_PROGRAMA_ANUAL" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_PROGRAMA_ANUAL" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.TBL_ACTIVIDAD_ESPECIFICA" Member="TBL_ACTIVIDAD_ESPECIFICA">
     <Type Name="TBL_ACTIVIDAD_ESPECIFICA">
       <Column Name="ID_ACTIVIDAD_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -107,12 +146,12 @@
     <Type Name="TBL_ACTIVIDAD_EVALUADA">
       <Column Name="ID_ACTIVIDAD_EVALUADA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_ACTIVIDAD_ESPECIFICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_AREA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -136,14 +175,6 @@
       <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_GENERAL" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Association Name="TBL_ACTIVIDAD_GENERAL_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_ACTIVIDAD_GENERAL" OtherKey="ID_ACTIVIDAD_GENERAL" Type="TBL_ACTIVIDAD_EVALUADA" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TBL_ACTIVIDAD_RESPONSABLE" Member="TBL_ACTIVIDAD_RESPONSABLE">
-    <Type Name="TBL_ACTIVIDAD_RESPONSABLE">
-      <Column Name="ID_SUB_ACTIVIDAD" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="TBL_CARGO_TBL_ACTIVIDAD_RESPONSABLE" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
-      <Association Name="TBL_SUB_ACTIVIDAD_TBL_ACTIVIDAD_RESPONSABLE" Member="TBL_SUB_ACTIVIDAD" ThisKey="ID_SUB_ACTIVIDAD" OtherKey="ID_SUB_ACTIVIDAD" Type="TBL_SUB_ACTIVIDAD" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_ACTIVIDAD_TRABAJADOR" Member="TBL_ACTIVIDAD_TRABAJADOR">
@@ -175,7 +206,7 @@
     <Type Name="TBL_AREA">
       <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NOMBRE_AREA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_AREA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Association Name="TBL_AREA_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_AREA" OtherKey="ID_AREA" Type="TBL_ACTIVIDAD_EVALUADA" />
       <Association Name="TBL_DIVISION_TBL_AREA" Member="TBL_DIVISION" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_DIVISION" IsForeignKey="true" />
     </Type>
@@ -183,9 +214,9 @@
   <Table Name="dbo.TBL_CARGO" Member="TBL_CARGO">
     <Type Name="TBL_CARGO">
       <Column Name="ID_CARGO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_CARGO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_CARGO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="TBL_CARGO_TBL_ACTIVIDAD" Member="TBL_ACTIVIDAD" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_ACTIVIDAD" />
       <Association Name="TBL_CARGO_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_ACTIVIDAD_EVALUADA" />
-      <Association Name="TBL_CARGO_TBL_ACTIVIDAD_RESPONSABLE" Member="TBL_ACTIVIDAD_RESPONSABLE" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_ACTIVIDAD_RESPONSABLE" />
       <Association Name="TBL_CARGO_TBL_TRABAJADOR" Member="TBL_TRABAJADOR" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_TRABAJADOR" />
     </Type>
   </Table>
@@ -211,7 +242,7 @@
   <Table Name="dbo.TBL_CONSECUENCIA" Member="TBL_CONSECUENCIA">
     <Type Name="TBL_CONSECUENCIA">
       <Column Name="ID_CONSECUENCIA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_CONSECUENCIA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_CONSECUENCIA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Association Name="TBL_CONSECUENCIA_TBL_PELIGRO_CONSECUENCIA" Member="TBL_PELIGRO_CONSECUENCIA" ThisKey="ID_CONSECUENCIA" OtherKey="ID_CONSECUENCIA" Type="TBL_PELIGRO_CONSECUENCIA" />
     </Type>
   </Table>
@@ -238,6 +269,7 @@
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_ACTIVIDAD_EVALUADA" />
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_DIVISION" Member="TBL_DIVISION" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_DIVISION" />
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_EVENTO" Member="TBL_EVENTO" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_EVENTO" />
+      <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_PROGRAMA_ANUAL" Member="TBL_PROGRAMA_ANUAL" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_PROGRAMA_ANUAL" />
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_PUNTO_GEOGRAFICO" Member="TBL_PUNTO_GEOGRAFICO" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_PUNTO_GEOGRAFICO" />
       <Association Name="TBL_DEPARTAMENTO_TBL_DEPARTAMENTO_ORGANIZACION" Member="TBL_DEPARTAMENTO" ThisKey="ID_DEPARTAMENTO" OtherKey="ID_DEPARTAMENTO" Type="TBL_DEPARTAMENTO" IsForeignKey="true" />
       <Association Name="TBL_ORGANIZACION_TBL_DEPARTAMENTO_ORGANIZACION" Member="TBL_ORGANIZACION" ThisKey="ID_ORGANIZACION" OtherKey="ID_ORGANIZACION" Type="TBL_ORGANIZACION" IsForeignKey="true" />
@@ -247,9 +279,10 @@
     <Type Name="TBL_DIVISION">
       <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NOMBRE_DIVISION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="NOMBRE_DIVISION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
       <Association Name="TBL_DIVISION_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_ACTIVIDAD_EVALUADA" />
       <Association Name="TBL_DIVISION_TBL_AREA" Member="TBL_AREA" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_AREA" />
+      <Association Name="TBL_DIVISION_TBL_PROGRAMA_ANUAL" Member="TBL_PROGRAMA_ANUAL" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_PROGRAMA_ANUAL" />
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_DIVISION" Member="TBL_DEPARTAMENTO_ORGANIZACION" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_DEPARTAMENTO_ORGANIZACION" IsForeignKey="true" />
     </Type>
   </Table>
@@ -265,16 +298,6 @@
       <Association Name="TBL_EMPRESA_TBL_EVENTO_EMPRESA" Member="TBL_EVENTO_EMPRESA" ThisKey="ID_EMPRESA" OtherKey="ID_EMPRESA" Type="TBL_EVENTO_EMPRESA" />
       <Association Name="TBL_EMPRESA_TBL_HISTORIAL_EMPRESA" Member="TBL_HISTORIAL_EMPRESA" ThisKey="ID_EMPRESA" OtherKey="ID_EMPRESA" Type="TBL_HISTORIAL_EMPRESA" />
       <Association Name="TBL_EMPRESA_TBL_USUARIO" Member="TBL_USUARIO" ThisKey="ID_EMPRESA" OtherKey="ID_EMPRESA" Type="TBL_USUARIO" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TBL_EVALUACION_MENSUAL" Member="TBL_EVALUACION_MENSUAL">
-    <Type Name="TBL_EVALUACION_MENSUAL">
-      <Column Name="ID_EVALUACION_MENSUAL" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ID_SUB_ACTIVIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PROGRAMADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="REALIZADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FECHA_EVALUACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="TBL_SUB_ACTIVIDAD_TBL_EVALUACION_MENSUAL" Member="TBL_SUB_ACTIVIDAD" ThisKey="ID_SUB_ACTIVIDAD" OtherKey="ID_SUB_ACTIVIDAD" Type="TBL_SUB_ACTIVIDAD" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_EVENTO" Member="TBL_EVENTO">
@@ -334,15 +357,15 @@
     <Type Name="TBL_EVIDENCIA">
       <Column Name="ID_EVIDENCIA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NOMBRE_EVIDENCIA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="TBL_EVIDENCIA_TBL_SUB_ACTIVIDAD" Member="TBL_SUB_ACTIVIDAD" ThisKey="ID_EVIDENCIA" OtherKey="ID_EVIDENCIA" Type="TBL_SUB_ACTIVIDAD" />
+      <Association Name="TBL_EVIDENCIA_TBL_ACTIVIDAD" Member="TBL_ACTIVIDAD" ThisKey="ID_EVIDENCIA" OtherKey="ID_EVIDENCIA" Type="TBL_ACTIVIDAD" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_GRUPO" Member="TBL_GRUPO">
     <Type Name="TBL_GRUPO">
       <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_GRUPO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_GRUPO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="DESCRIPCION_GRUPO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_USUARIO_GRUPO" Cardinality="One" />
+      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_USUARIO_GRUPO" />
       <Association Name="TBL_GRUPO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO_PRIVILEGIO" />
     </Type>
   </Table>
@@ -401,7 +424,7 @@
   <Table Name="dbo.TBL_MODULO" Member="TBL_MODULO">
     <Type Name="TBL_MODULO">
       <Column Name="ID_MODULO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="DESCRIPCION_MODULO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="URL_MODULO" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
@@ -411,14 +434,14 @@
   <Table Name="dbo.TBL_ORGANIZACION" Member="TBL_ORGANIZACION">
     <Type Name="TBL_ORGANIZACION">
       <Column Name="ID_ORGANIZACION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_ORGANIZACION" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ORGANIZACION" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="TBL_ORGANIZACION_TBL_DEPARTAMENTO_ORGANIZACION" Member="TBL_DEPARTAMENTO_ORGANIZACION" ThisKey="ID_ORGANIZACION" OtherKey="ID_ORGANIZACION" Type="TBL_DEPARTAMENTO_ORGANIZACION" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_PARTE_CORPORAL" Member="TBL_PARTE_CORPORAL">
     <Type Name="TBL_PARTE_CORPORAL">
       <Column Name="ID_PARTE_CORPORAL" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_PARTE_CORPORAL" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PARTE_CORPORAL" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="TBL_PARTE_CORPORAL_TBL_PARTE_CORPORAL_TRABAJADOR" Member="TBL_PARTE_CORPORAL_TRABAJADOR" ThisKey="ID_PARTE_CORPORAL" OtherKey="ID_PARTE_CORPORAL" Type="TBL_PARTE_CORPORAL_TRABAJADOR" />
     </Type>
   </Table>
@@ -455,22 +478,18 @@
       <Association Name="TBL_MEDIDA_DE_CONTROL_TBL_PELIGRO_MEDIDA" Member="TBL_MEDIDA_DE_CONTROL" ThisKey="ID_MEDIDAS_DE_CONTROL" OtherKey="ID_MEDIDAS_DE_CONTROL" Type="TBL_MEDIDA_DE_CONTROL" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TBL_PROGRAMA_ACTIVIDAD" Member="TBL_PROGRAMA_ACTIVIDAD">
-    <Type Name="TBL_PROGRAMA_ACTIVIDAD">
-      <Column Name="ID_PROGRAMA_ACTIVIDAD" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NOMBRE_PROGRAMA_ACTIVIDAD" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Association Name="TBL_PROGRAMA_ACTIVIDAD_TBL_SUB_ACTIVIDAD" Member="TBL_SUB_ACTIVIDAD" ThisKey="ID_PROGRAMA_ACTIVIDAD" OtherKey="ID_PROGRAMA_ACTIVIDAD" Type="TBL_SUB_ACTIVIDAD" />
-      <Association Name="TBL_PROGRAMA_ANUAL_TBL_PROGRAMA_ACTIVIDAD" Member="TBL_PROGRAMA_ANUAL" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_PROGRAMA_ANUAL" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.TBL_PROGRAMA_ANUAL" Member="TBL_PROGRAMA_ANUAL">
     <Type Name="TBL_PROGRAMA_ANUAL">
       <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="OBJETIVO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="META" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="TBL_PROGRAMA_ANUAL_TBL_PROGRAMA_ACTIVIDAD" Member="TBL_PROGRAMA_ACTIVIDAD" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_PROGRAMA_ACTIVIDAD" />
+      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Association Name="TBL_PROGRAMA_ANUAL_TBL_ACTIVIDAD" Member="TBL_ACTIVIDAD" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_ACTIVIDAD" />
+      <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_PROGRAMA_ANUAL" Member="TBL_DEPARTAMENTO_ORGANIZACION" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_DEPARTAMENTO_ORGANIZACION" IsForeignKey="true" />
+      <Association Name="TBL_DIVISION_TBL_PROGRAMA_ANUAL" Member="TBL_DIVISION" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_DIVISION" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_PUNTO_GEOGRAFICO" Member="TBL_PUNTO_GEOGRAFICO">
@@ -485,23 +504,9 @@
   <Table Name="dbo.TBL_RECURSO_COMPROMETIDO" Member="TBL_RECURSO_COMPROMETIDO">
     <Type Name="TBL_RECURSO_COMPROMETIDO">
       <Column Name="ID_RECURSO_COMPROMETIDO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="NOMBRE_RECURSO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_RECURSO" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
       <Column Name="DESCRIPCION" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="TBL_RECURSO_COMPROMETIDO_TBL_ACCION_CORRECTIVA_RECURSO" Member="TBL_ACCION_CORRECTIVA_RECURSO" ThisKey="ID_RECURSO_COMPROMETIDO" OtherKey="ID_RECURSO_COMPROMETIDO" Type="TBL_ACCION_CORRECTIVA_RECURSO" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TBL_SUB_ACTIVIDAD" Member="TBL_SUB_ACTIVIDAD">
-    <Type Name="TBL_SUB_ACTIVIDAD">
-      <Column Name="ID_SUB_ACTIVIDAD" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ID_EVIDENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ID_PROGRAMA_ACTIVIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NOMBRE_SUB_ACTIVIDAD" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="TIPO_FRECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CANTIDAD_ACTIVIDADES" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="TBL_SUB_ACTIVIDAD_TBL_ACTIVIDAD_RESPONSABLE" Member="TBL_ACTIVIDAD_RESPONSABLE" ThisKey="ID_SUB_ACTIVIDAD" OtherKey="ID_SUB_ACTIVIDAD" Type="TBL_ACTIVIDAD_RESPONSABLE" />
-      <Association Name="TBL_SUB_ACTIVIDAD_TBL_EVALUACION_MENSUAL" Member="TBL_EVALUACION_MENSUAL" ThisKey="ID_SUB_ACTIVIDAD" OtherKey="ID_SUB_ACTIVIDAD" Type="TBL_EVALUACION_MENSUAL" />
-      <Association Name="TBL_PROGRAMA_ACTIVIDAD_TBL_SUB_ACTIVIDAD" Member="TBL_PROGRAMA_ACTIVIDAD" ThisKey="ID_PROGRAMA_ACTIVIDAD" OtherKey="ID_PROGRAMA_ACTIVIDAD" Type="TBL_PROGRAMA_ACTIVIDAD" IsForeignKey="true" />
-      <Association Name="TBL_EVIDENCIA_TBL_SUB_ACTIVIDAD" Member="TBL_EVIDENCIA" ThisKey="ID_EVIDENCIA" OtherKey="ID_EVIDENCIA" Type="TBL_EVIDENCIA" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_TRABAJADOR" Member="TBL_TRABAJADOR">
@@ -514,6 +519,8 @@
       <Column Name="ANOS_EXPERIENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_TRABAJADOR" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ANOS_EXPERIENCIA_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ANOS_EXPERIENCIA_LABORAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_TRABAJADOR_TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" Member="TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" />
       <Association Name="TBL_TRABAJADOR_TBL_EVENTO_TRABAJADOR" Member="TBL_EVENTO_TRABAJADOR" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_EVENTO_TRABAJADOR" />
       <Association Name="TBL_CARGO_TBL_TRABAJADOR" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
@@ -544,10 +551,10 @@
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_GENERAL" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="NOMBRE_CARGO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_CARGO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="CONDICION" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
       <Column Name="NOM_PELIGRO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="NOMBRE_CONSECUENCIA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NOMBRE_CONSECUENCIA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="CONSECUENCIA" Type="System.String" DbType="VarChar(21) NOT NULL" CanBeNull="false" />
       <Column Name="PROBABILIDAD" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="MRP" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
@@ -559,9 +566,9 @@
       <Column Name="MRCC" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Column Name="MEDIDA_VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MEDIDA_VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NOMBRE_ORGANIZACION" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ORGANIZACION" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="NOMBRE_DIVISION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="NOMBRE_DIVISION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.sp_search_actividad_evaluada" Method="sp_search_actividad_evaluada">
@@ -575,15 +582,16 @@
     <Parameter Name="CONDICION" Parameter="cONDICION" Type="System.Int32" DbType="Int" />
     <Parameter Name="FECHA_INICIO" Parameter="fECHA_INICIO" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="FECHA_TERMINO" Parameter="fECHA_TERMINO" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.String" DbType="VarChar(200)" />
     <ElementType Name="sp_search_actividad_evaluadaResult">
       <Column Name="ID_ACTIVIDAD_EVALUADA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_ACTIVIDAD_ESPECIFICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_AREA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />

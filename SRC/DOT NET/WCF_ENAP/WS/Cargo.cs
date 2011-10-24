@@ -34,7 +34,7 @@ namespace WCF_ENAP
             {
                 if (_dir == null)
                 {
-                    _dir = "DESC";
+                    _dir = "ASC";
                 }
                 if (_page == 0)
                 {
@@ -138,10 +138,14 @@ namespace WCF_ENAP
 			{
 				if (_sort.Equals("NOMBRE_CARGO")){
 					return "NOMBRE_CARGO";
-				}
+                }
+                else if (_sort.Equals("ID_CARGO"))
+                {
+                    return "ID_CARGO";
+                }
 
 			}
-			return "ID_CARGO";
+            return "NOMBRE_CARGO";
 		}
 	}
 }

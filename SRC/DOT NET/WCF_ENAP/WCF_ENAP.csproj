@@ -60,11 +60,20 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx" />
     <Content Include="app\model\dsBuscaMatriz.js" />
+    <Content Include="app\store\dsActividadProgramaAnualPrevencion.js" />
     <Content Include="app\store\dsBuscaMatriz.js" />
+    <Content Include="app\store\dsFrecuencia.js" />
+    <Content Include="app\view\ActividadProgramaAnualPrevencion.js" />
     <Content Include="app\view\Login.js" />
+    <Content Include="app\view\MisEvaluaciones.js" />
+    <Content Include="app\view\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\RegistraNuevoEvento.js" />
+    <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
     <Content Include="app\view\ui\Login.js" />
+    <Content Include="app\view\ui\MisEvaluaciones.js" />
+    <Content Include="app\view\ui\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\ui\RegistraNuevoEvento.js" />
     <Content Include="ext-4.0.2a\bootstrap.js" />
     <Content Include="ext-4.0.2a\builds\ext-all-sandbox-debug.js" />
@@ -2473,7 +2482,6 @@
     <Content Include="app\view\RecursoComprometido.js" />
     <Content Include="app\view\ui\ActividadEvaluada.js" />
     <Content Include="app\view\ui\Archivo.js" />
-    <Content Include="app\view\ui\BuscaMatrizRiesgo.js" />
     <Content Include="app\view\ui\Causa.js" />
     <Content Include="app\view\ui\Consecuencia.js" />
     <Content Include="app\view\ui\DepartamentoOrganizacion.js" />
@@ -2719,8 +2727,16 @@
     </Content>
     <Content Include="Default.aspx" />
     <Content Include="WebForm2.aspx" />
+    <Content Include="WebForm3.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx.cs">
+      <DependentUpon>BuscaMatrizRiesgo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx.designer.cs">
+      <DependentUpon>BuscaMatrizRiesgo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DataClassesEnap.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2771,11 +2787,19 @@
     <Compile Include="WebForm2.aspx.designer.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebForm3.aspx.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm3.aspx.designer.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WS\Accion.cs" />
     <Compile Include="WS\AccionCorrectiva.cs" />
     <Compile Include="WS\ActividadEspecifica.cs" />
     <Compile Include="WS\ActividadEvaluada.cs" />
     <Compile Include="WS\ActividadGeneral.cs" />
+    <Compile Include="WS\ActividadProgramaAnualPrevencion.cs" />
     <Compile Include="WS\ActividadTrabajador.cs" />
     <Compile Include="WS\Archivo.cs" />
     <Compile Include="WS\Area.cs" />
@@ -2789,7 +2813,6 @@
     <Compile Include="WS\e0063.cs" />
     <Compile Include="WS\e0064.cs" />
     <Compile Include="WS\Empresa.cs" />
-    <Compile Include="WS\EvaluacionMensual.cs" />
     <Compile Include="WS\Evento.cs" />
     <Compile Include="WS\EventoEmpresa.cs" />
     <Compile Include="WS\EventoTrabajador.cs" />
@@ -2809,11 +2832,9 @@
     <Compile Include="WS\Organizacion.cs" />
     <Compile Include="WS\ParteCorporal.cs" />
     <Compile Include="WS\Peligro.cs" />
-    <Compile Include="WS\ProgramaActividad.cs" />
     <Compile Include="WS\ProgramaAnual.cs" />
     <Compile Include="WS\PuntoGeografico.cs" />
     <Compile Include="WS\RecursoComprometido.cs" />
-    <Compile Include="WS\SubActividad.cs" />
     <Compile Include="WS\TempActividadEvaluada.cs" />
     <Compile Include="WS\Trabajador.cs" />
     <Compile Include="WS\Usuario.cs" />

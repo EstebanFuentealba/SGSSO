@@ -1,4 +1,18 @@
 if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_GET_MATRIZ_BY_ID')
+          and type = 'P')
+   drop procedure SP_GET_MATRIZ_BY_ID
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_SEARCH_ACTIVIDAD_EVALUADA')
+          and type = 'P')
+   drop procedure SP_SEARCH_ACTIVIDAD_EVALUADA
+go
+
+if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('E006_3') and o.name = 'FK_E006_3_INCORPORA_TBL_EVEN')
 alter table E006_3
@@ -77,6 +91,27 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_ACTIVIDAD') and o.name = 'FK_TBL_ACTI_EXISTE_TBL_EVID')
+alter table TBL_ACTIVIDAD
+   drop constraint FK_TBL_ACTI_EXISTE_TBL_EVID
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_ACTIVIDAD') and o.name = 'FK_TBL_ACTI_REFERENCE_TBL_PROG')
+alter table TBL_ACTIVIDAD
+   drop constraint FK_TBL_ACTI_REFERENCE_TBL_PROG
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_ACTIVIDAD') and o.name = 'FK_TBL_ACTI_REFERENCE_TBL_CARG')
+alter table TBL_ACTIVIDAD
+   drop constraint FK_TBL_ACTI_REFERENCE_TBL_CARG
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('TBL_ACTIVIDAD_EVALUADA') and o.name = 'FK_TBL_ACTI_ASOCIA_TBL_PELI')
 alter table TBL_ACTIVIDAD_EVALUADA
    drop constraint FK_TBL_ACTI_ASOCIA_TBL_PELI
@@ -87,13 +122,6 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_ACTIVIDAD_EVALUADA') and o.name = 'FK_TBL_ACTI_ASOCIADA_TBL_ACTI')
 alter table TBL_ACTIVIDAD_EVALUADA
    drop constraint FK_TBL_ACTI_ASOCIADA_TBL_ACTI
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACTIVIDAD_EVALUADA') and o.name = 'FK_TBL_ACTI_CARGO_ACT_TBL_CARG')
-alter table TBL_ACTIVIDAD_EVALUADA
-   drop constraint FK_TBL_ACTI_CARGO_ACT_TBL_CARG
 go
 
 if exists (select 1
@@ -126,16 +154,9 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACTIVIDAD_RESPONSABLE') and o.name = 'FK_TBL_ACTI_TBL_ACTIV_TBL_CARG')
-alter table TBL_ACTIVIDAD_RESPONSABLE
-   drop constraint FK_TBL_ACTI_TBL_ACTIV_TBL_CARG
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACTIVIDAD_RESPONSABLE') and o.name = 'FK_TBL_ACTI_TBL_ACTIV_TBL_SUB_')
-alter table TBL_ACTIVIDAD_RESPONSABLE
-   drop constraint FK_TBL_ACTI_TBL_ACTIV_TBL_SUB_
+   where r.fkeyid = object_id('TBL_ACTIVIDAD_EVALUADA') and o.name = 'FK_TBL_ACTIVIDAD_EVALUADA_REF_TBL_CARG')
+alter table TBL_ACTIVIDAD_EVALUADA
+   drop constraint FK_TBL_ACTIVIDAD_EVALUADA_REF_TBL_CARG
 go
 
 if exists (select 1
@@ -206,13 +227,6 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_DIVISION') and o.name = 'FK_TBL_DIVI_DEPARTAME_TBL_DEPA')
 alter table TBL_DIVISION
    drop constraint FK_TBL_DIVI_DEPARTAME_TBL_DEPA
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_EVALUACION_MENSUAL') and o.name = 'FK_TBL_EVAL_ENLAZA_TBL_SUB_')
-alter table TBL_EVALUACION_MENSUAL
-   drop constraint FK_TBL_EVAL_ENLAZA_TBL_SUB_
 go
 
 if exists (select 1
@@ -357,9 +371,16 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_PROGRAMA_ACTIVIDAD') and o.name = 'FK_TBL_PROG_CORRESPON_TBL_PROG')
-alter table TBL_PROGRAMA_ACTIVIDAD
-   drop constraint FK_TBL_PROG_CORRESPON_TBL_PROG
+   where r.fkeyid = object_id('TBL_PROGRAMA_ANUAL') and o.name = 'FK_TBL_PROG_REFERENCE_TBL_DEPA')
+alter table TBL_PROGRAMA_ANUAL
+   drop constraint FK_TBL_PROG_REFERENCE_TBL_DEPA
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_PROGRAMA_ANUAL') and o.name = 'FK_TBL_PROG_REFERENCE_TBL_DIVI')
+alter table TBL_PROGRAMA_ANUAL
+   drop constraint FK_TBL_PROG_REFERENCE_TBL_DIVI
 go
 
 if exists (select 1
@@ -371,23 +392,9 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_SUB_ACTIVIDAD') and o.name = 'FK_TBL_SUB__CONTIENE_TBL_PROG')
-alter table TBL_SUB_ACTIVIDAD
-   drop constraint FK_TBL_SUB__CONTIENE_TBL_PROG
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_SUB_ACTIVIDAD') and o.name = 'FK_TBL_SUB__EXISTE_TBL_EVID')
-alter table TBL_SUB_ACTIVIDAD
-   drop constraint FK_TBL_SUB__EXISTE_TBL_EVID
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_TRABAJADOR') and o.name = 'FK_TBL_TRAB_TRABAJADO_TBL_CARG')
+   where r.fkeyid = object_id('TBL_TRABAJADOR') and o.name = 'FK_TBL_TRAB_REFERENCE_TBL_CARG')
 alter table TBL_TRABAJADOR
-   drop constraint FK_TBL_TRAB_TRABAJADO_TBL_CARG
+   drop constraint FK_TBL_TRAB_REFERENCE_TBL_CARG
 go
 
 if exists (select 1
@@ -409,15 +416,6 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_USUARIO_GRUPO') and o.name = 'FK_TBL_USUA_TBL_USUAR_TBL_GRUP')
 alter table TBL_USUARIO_GRUPO
    drop constraint FK_TBL_USUA_TBL_USUAR_TBL_GRUP
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('E006_3')
-            and   name  = 'RELATIONSHIP_39_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index E006_3.RELATIONSHIP_39_FK
 go
 
 if exists (select 1
@@ -463,15 +461,6 @@ if exists (select 1
 go
 
 if exists (select 1
-            from  sysindexes
-           where  id    = object_id('TBL_ACCION_CORRECTIVA')
-            and   name  = 'POSEE_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index TBL_ACCION_CORRECTIVA.POSEE_FK
-go
-
-if exists (select 1
             from  sysobjects
            where  id = object_id('TBL_ACCION_CORRECTIVA')
             and   type = 'U')
@@ -483,6 +472,13 @@ if exists (select 1
            where  id = object_id('TBL_ACCION_CORRECTIVA_RECURSO')
             and   type = 'U')
    drop table TBL_ACCION_CORRECTIVA_RECURSO
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_ACTIVIDAD')
+            and   type = 'U')
+   drop table TBL_ACTIVIDAD
 go
 
 if exists (select 1
@@ -504,13 +500,6 @@ if exists (select 1
            where  id = object_id('TBL_ACTIVIDAD_GENERAL')
             and   type = 'U')
    drop table TBL_ACTIVIDAD_GENERAL
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('TBL_ACTIVIDAD_RESPONSABLE')
-            and   type = 'U')
-   drop table TBL_ACTIVIDAD_RESPONSABLE
 go
 
 if exists (select 1
@@ -563,15 +552,6 @@ if exists (select 1
 go
 
 if exists (select 1
-            from  sysindexes
-           where  id    = object_id('TBL_CONSECUENCIA')
-            and   name  = 'PROVOCA_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index TBL_CONSECUENCIA.PROVOCA_FK
-go
-
-if exists (select 1
             from  sysobjects
            where  id = object_id('TBL_CONSECUENCIA')
             and   type = 'U')
@@ -611,13 +591,6 @@ if exists (select 1
            where  id = object_id('TBL_EMPRESA')
             and   type = 'U')
    drop table TBL_EMPRESA
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('TBL_EVALUACION_MENSUAL')
-            and   type = 'U')
-   drop table TBL_EVALUACION_MENSUAL
 go
 
 if exists (select 1
@@ -663,15 +636,6 @@ if exists (select 1
 go
 
 if exists (select 1
-            from  sysindexes
-           where  id    = object_id('TBL_GRUPO_PRIVILEGIO')
-            and   name  = 'PRIVILEGIO_GRUPO_PRIVILEGIO_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index TBL_GRUPO_PRIVILEGIO.PRIVILEGIO_GRUPO_PRIVILEGIO_FK
-go
-
-if exists (select 1
             from  sysobjects
            where  id = object_id('TBL_GRUPO_PRIVILEGIO')
             and   type = 'U')
@@ -683,15 +647,6 @@ if exists (select 1
            where  id = object_id('TBL_HISTORIAL_EMPRESA')
             and   type = 'U')
    drop table TBL_HISTORIAL_EMPRESA
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('TBL_MATRIZ')
-            and   name  = 'HACE_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index TBL_MATRIZ.HACE_FK
 go
 
 if exists (select 1
@@ -766,13 +721,6 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('TBL_PROGRAMA_ACTIVIDAD')
-            and   type = 'U')
-   drop table TBL_PROGRAMA_ACTIVIDAD
-go
-
-if exists (select 1
-            from  sysobjects
            where  id = object_id('TBL_PROGRAMA_ANUAL')
             and   type = 'U')
    drop table TBL_PROGRAMA_ANUAL
@@ -794,13 +742,6 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('TBL_SUB_ACTIVIDAD')
-            and   type = 'U')
-   drop table TBL_SUB_ACTIVIDAD
-go
-
-if exists (select 1
-            from  sysobjects
            where  id = object_id('TBL_TRABAJADOR')
             and   type = 'U')
    drop table TBL_TRABAJADOR
@@ -811,15 +752,6 @@ if exists (select 1
            where  id = object_id('TBL_USUARIO')
             and   type = 'U')
    drop table TBL_USUARIO
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('TBL_USUARIO_GRUPO')
-            and   name  = 'TBL_USUARIO_GRUPO_FK'
-            and   indid > 0
-            and   indid < 255)
-   drop index TBL_USUARIO_GRUPO.TBL_USUARIO_GRUPO_FK
 go
 
 if exists (select 1
@@ -849,6 +781,22 @@ if exists(select 1 from systypes where name='TIPO_EVENTO')
    execute sp_droptype TIPO_EVENTO
 go
 
+if exists(select 1 from systypes where name='TIPO_FRECUENCIA')
+   execute sp_unbindrule TIPO_FRECUENCIA
+go
+
+if exists(select 1 from systypes where name='TIPO_FRECUENCIA')
+   execute sp_droptype TIPO_FRECUENCIA
+go
+
+if exists(select 1 from systypes where name='TURNO')
+   execute sp_unbindrule TURNO
+go
+
+if exists(select 1 from systypes where name='TURNO')
+   execute sp_droptype TURNO
+go
+
 if exists (select 1 from sysobjects where id=object_id('R_MOMENTO_OCURRIDO') and type='R')
    drop rule  R_MOMENTO_OCURRIDO
 go
@@ -857,12 +805,28 @@ if exists (select 1 from sysobjects where id=object_id('R_TIPO_EVENTO') and type
    drop rule  R_TIPO_EVENTO
 go
 
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_FRECUENCIA') and type='R')
+   drop rule  R_TIPO_FRECUENCIA
+go
+
+if exists (select 1 from sysobjects where id=object_id('R_TURNO') and type='R')
+   drop rule  R_TURNO
+go
+
 create rule R_MOMENTO_OCURRIDO as
       @column between 1 and 3 and @column in (1,2,3)
 go
 
 create rule R_TIPO_EVENTO as
       @column between 1 and 6 and @column in (1,2,3,4,5,6)
+go
+
+create rule R_TIPO_FRECUENCIA as
+      @column between 1 and 7 and @column in (1,2,3,4,5,6,7)
+go
+
+create rule R_TURNO as
+      @column in ('A','B','C','D')
 go
 
 /*==============================================================*/
@@ -890,6 +854,24 @@ execute sp_bindrule R_TIPO_EVENTO, TIPO_EVENTO
 go
 
 /*==============================================================*/
+/* Domain: TIPO_FRECUENCIA                                      */
+/*==============================================================*/
+execute sp_addtype TIPO_FRECUENCIA, 'int'
+go
+
+execute sp_bindrule R_TIPO_FRECUENCIA, TIPO_FRECUENCIA
+go
+
+/*==============================================================*/
+/* Domain: TURNO                                                */
+/*==============================================================*/
+execute sp_addtype TURNO, 'char(1)'
+go
+
+execute sp_bindrule R_TURNO, TURNO
+go
+
+/*==============================================================*/
 /* Table: E006_3                                                */
 /*==============================================================*/
 create table E006_3 (
@@ -901,7 +883,6 @@ create table E006_3 (
    constraint PK_E006_3 primary key nonclustered (ID_INFORME)
 )
 go
-
 
 /*==============================================================*/
 /* Table: E006_4                                                */
@@ -992,12 +973,94 @@ create table TBL_ACCION_CORRECTIVA_RECURSO (
 go
 
 /*==============================================================*/
+/* Table: TBL_ACTIVIDAD                                         */
+/*==============================================================*/
+create table TBL_ACTIVIDAD (
+   ID_ACTIVIDAD         int                  identity,
+   ID_EVIDENCIA         int                  null,
+   ID_PROGRAMA_ANUAL    int                  null,
+   ID_CARGO             int                  null,
+   NOMBRE_ACTIVIDAD     varchar(200)         null,
+   TIPO_FRECUENCIA      int                  null
+      constraint CKC_TIPO_FRECUENCIA_TBL_ACTI check (TIPO_FRECUENCIA is null or (TIPO_FRECUENCIA between 1 and 7 and TIPO_FRECUENCIA in (1,2,3,4,5,6,7))),
+   CANTIDAD_FRECUENCIA  int                  null,
+   ENERO_P              int                  null default 0
+      constraint CKC_ENERO_P_TBL_ACTI check (ENERO_P is null or (ENERO_P between 0 and 100)),
+   ENERO_R              int                  null default 0
+      constraint CKC_ENERO_R_TBL_ACTI check (ENERO_R is null or (ENERO_R between 0 and 100)),
+   FEBRERO_P            int                  null default 0
+      constraint CKC_FEBRERO_P_TBL_ACTI check (FEBRERO_P is null or (FEBRERO_P between 0 and 100)),
+   FEBRERO_R            int                  null default 0
+      constraint CKC_FEBRERO_R_TBL_ACTI check (FEBRERO_R is null or (FEBRERO_R between 0 and 100)),
+   MARZO_P              int                  null default 0
+      constraint CKC_MARZO_P_TBL_ACTI check (MARZO_P is null or (MARZO_P between 0 and 100)),
+   MARZO_R              int                  null default 0
+      constraint CKC_MARZO_R_TBL_ACTI check (MARZO_R is null or (MARZO_R between 0 and 100)),
+   ABRIL_P              int                  null default 0
+      constraint CKC_ABRIL_P_TBL_ACTI check (ABRIL_P is null or (ABRIL_P between 0 and 100)),
+   ABRIL_R              int                  null default 0
+      constraint CKC_ABRIL_R_TBL_ACTI check (ABRIL_R is null or (ABRIL_R between 0 and 100)),
+   MAYO_P               int                  null default 0
+      constraint CKC_MAYO_P_TBL_ACTI check (MAYO_P is null or (MAYO_P between 0 and 100)),
+   MAYO_R               int                  null default 0
+      constraint CKC_MAYO_R_TBL_ACTI check (MAYO_R is null or (MAYO_R between 0 and 100)),
+   JUNIO_P              int                  null default 0
+      constraint CKC_JUNIO_P_TBL_ACTI check (JUNIO_P is null or (JUNIO_P between 0 and 100)),
+   JUNIO_R              int                  null default 0
+      constraint CKC_JUNIO_R_TBL_ACTI check (JUNIO_R is null or (JUNIO_R between 0 and 100)),
+   JULIO_P              int                  null default 0
+      constraint CKC_JULIO_P_TBL_ACTI check (JULIO_P is null or (JULIO_P between 0 and 100)),
+   JULIO_R              int                  null default 0
+      constraint CKC_JULIO_R_TBL_ACTI check (JULIO_R is null or (JULIO_R between 0 and 100)),
+   AGOSTO_P             int                  null default 0
+      constraint CKC_AGOSTO_P_TBL_ACTI check (AGOSTO_P is null or (AGOSTO_P between 0 and 100)),
+   AGOSTO_R             int                  null default 0
+      constraint CKC_AGOSTO_R_TBL_ACTI check (AGOSTO_R is null or (AGOSTO_R between 0 and 100)),
+   SEPTIEMBRE_P         int                  null default 0
+      constraint CKC_SEPTIEMBRE_P_TBL_ACTI check (SEPTIEMBRE_P is null or (SEPTIEMBRE_P between 0 and 100)),
+   SEPTIEMBRE_R         int                  null default 0
+      constraint CKC_SEPTIEMBRE_R_TBL_ACTI check (SEPTIEMBRE_R is null or (SEPTIEMBRE_R between 0 and 100)),
+   OCTUBRE_P            int                  null default 0
+      constraint CKC_OCTUBRE_P_TBL_ACTI check (OCTUBRE_P is null or (OCTUBRE_P between 0 and 100)),
+   OCTUBRE_R            int                  null default 0
+      constraint CKC_OCTUBRE_R_TBL_ACTI check (OCTUBRE_R is null or (OCTUBRE_R between 0 and 100)),
+   NOVIEMBRE_P          int                  null default 0
+      constraint CKC_NOVIEMBRE_P_TBL_ACTI check (NOVIEMBRE_P is null or (NOVIEMBRE_P between 0 and 100)),
+   NOVIEMBRE_R          int                  null default 0
+      constraint CKC_NOVIEMBRE_R_TBL_ACTI check (NOVIEMBRE_R is null or (NOVIEMBRE_R between 0 and 100)),
+   DICIEMBRE_P          int                  null default 0
+      constraint CKC_DICIEMBRE_P_TBL_ACTI check (DICIEMBRE_P is null or (DICIEMBRE_P between 0 and 100)),
+   DICIEMBRE_R          int                  null default 0
+      constraint CKC_DICIEMBRE_R_TBL_ACTI check (DICIEMBRE_R is null or (DICIEMBRE_R between 0 and 100)),
+   TURNO                char(1)              null
+      constraint CKC_TURNO_TBL_ACTI check (TURNO is null or (TURNO in ('A','B','C','D','0'))),
+   constraint PK_TBL_ACTIVIDAD primary key nonclustered (ID_ACTIVIDAD)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Éste campo podra tener los siguientes valores:
+   1=Diario
+   2=Semanal
+   3=Mensual
+   4=Anual
+   5=Semestral
+   6=Trimestral
+   7=Cuando Aplique
+   8=Permanente',
+   'user', @CurrentUser, 'table', 'TBL_ACTIVIDAD', 'column', 'TIPO_FRECUENCIA'
+go
+
+/*==============================================================*/
 /* Table: TBL_ACTIVIDAD_ESPECIFICA                              */
 /*==============================================================*/
 create table TBL_ACTIVIDAD_ESPECIFICA (
    ID_ACTIVIDAD_ESPECIFICA int                  identity,
-   NOM_ACTIVIDAD_ESPECIFICA varchar(200)         NOT null UNIQUE,
-   constraint PK_TBL_ACTIVIDAD_ESPECIFICA primary key nonclustered (ID_ACTIVIDAD_ESPECIFICA)
+   NOM_ACTIVIDAD_ESPECIFICA varchar(200)         not null,
+   constraint PK_TBL_ACTIVIDAD_ESPECIFICA primary key nonclustered (ID_ACTIVIDAD_ESPECIFICA),
+   constraint UK_TBL_ACTIVIDAD_ESPECIFICA unique (NOM_ACTIVIDAD_ESPECIFICA)
 )
 go
 
@@ -1007,12 +1070,12 @@ go
 create table TBL_ACTIVIDAD_EVALUADA (
    ID_ACTIVIDAD_EVALUADA int                  identity,
    ID_ACTIVIDAD_GENERAL int                  null,
-   ID_CARGO             int                  null,
    ID_DIVISION          int                  null,
    ID_ACTIVIDAD_ESPECIFICA int                  null,
    ID_DEPARTAMENTO_ORGANIZACION int                  null,
    ID_PELIGRO           int                  null,
    ID_AREA              int                  null,
+   ID_CARGO             int                  null,
    ESTADO               bit                  null default 0,
    VALORACION_CONSECUENCIA int                  null,
    VALORACION_PROBABILIDAD int                  null,
@@ -1059,18 +1122,9 @@ go
 /*==============================================================*/
 create table TBL_ACTIVIDAD_GENERAL (
    ID_ACTIVIDAD_GENERAL int                  identity,
-   NOM_ACTIVIDAD_GENERAL varchar(200)         NOT null UNIQUE,
-   constraint PK_TBL_ACTIVIDAD_GENERAL primary key nonclustered (ID_ACTIVIDAD_GENERAL)
-)
-go
-
-/*==============================================================*/
-/* Table: TBL_ACTIVIDAD_RESPONSABLE                             */
-/*==============================================================*/
-create table TBL_ACTIVIDAD_RESPONSABLE (
-   ID_SUB_ACTIVIDAD     int                  not null,
-   ID_CARGO             int                  not null,
-   constraint PK_TBL_ACTIVIDAD_RESPONSABLE primary key nonclustered (ID_SUB_ACTIVIDAD, ID_CARGO)
+   NOM_ACTIVIDAD_GENERAL varchar(200)         not null,
+   constraint PK_TBL_ACTIVIDAD_GENERAL primary key nonclustered (ID_ACTIVIDAD_GENERAL),
+   constraint UK_TBL_ACTIVIDAD_GENERAL unique (NOM_ACTIVIDAD_GENERAL)
 )
 go
 
@@ -1113,7 +1167,7 @@ go
 create table TBL_AREA (
    ID_AREA              int                  identity,
    ID_DIVISION          int                  null,
-   NOMBRE_AREA          varchar(200)         null,
+   NOMBRE_AREA          varchar(200)         not null,
    constraint PK_TBL_AREA primary key nonclustered (ID_AREA)
 )
 go
@@ -1123,8 +1177,9 @@ go
 /*==============================================================*/
 create table TBL_CARGO (
    ID_CARGO             int                  identity,
-   NOMBRE_CARGO         varchar(200)         null,
-   constraint PK_TBL_CARGO primary key nonclustered (ID_CARGO)
+   NOMBRE_CARGO         varchar(200)         not null,
+   constraint PK_TBL_CARGO primary key (ID_CARGO),
+   constraint AK_KEY_1_TBL_CARG unique (NOMBRE_CARGO)
 )
 go
 
@@ -1157,8 +1212,9 @@ go
 /*==============================================================*/
 create table TBL_CONSECUENCIA (
    ID_CONSECUENCIA      int                  identity,
-   NOMBRE_CONSECUENCIA  varchar(200)         null,
-   constraint PK_TBL_CONSECUENCIA primary key nonclustered (ID_CONSECUENCIA)
+   NOMBRE_CONSECUENCIA  varchar(200)         not null,
+   constraint PK_TBL_CONSECUENCIA primary key nonclustered (ID_CONSECUENCIA),
+   constraint UK_TBL_CONSECUENCIA unique (NOMBRE_CONSECUENCIA)
 )
 go
 
@@ -1201,7 +1257,7 @@ go
 create table TBL_DIVISION (
    ID_DIVISION          int                  identity,
    ID_DEPARTAMENTO_ORGANIZACION int                  null,
-   NOMBRE_DIVISION      varchar(150)         null,
+   NOMBRE_DIVISION      varchar(150)         not null,
    constraint PK_TBL_DIVISION primary key nonclustered (ID_DIVISION)
 )
 go
@@ -1217,19 +1273,6 @@ create table TBL_EMPRESA (
    EMAIL_EMPRESA        varchar(150)         null,
    NOMBRE_CONTRATO      varchar(250)         null,
    constraint PK_TBL_EMPRESA primary key nonclustered (ID_EMPRESA)
-)
-go
-
-/*==============================================================*/
-/* Table: TBL_EVALUACION_MENSUAL                                */
-/*==============================================================*/
-create table TBL_EVALUACION_MENSUAL (
-   ID_EVALUACION_MENSUAL int                  not null,
-   ID_SUB_ACTIVIDAD     int                  null,
-   PROGRAMADO           int                  null,
-   REALIZADO            int                  null,
-   FECHA_EVALUACION     datetime             null,
-   constraint PK_TBL_EVALUACION_MENSUAL primary key nonclustered (ID_EVALUACION_MENSUAL)
 )
 go
 
@@ -1317,7 +1360,8 @@ go
 create table TBL_EVIDENCIA (
    ID_EVIDENCIA         int                  identity,
    NOMBRE_EVIDENCIA     varchar(200)         null,
-   constraint PK_TBL_EVIDENCIA primary key nonclustered (ID_EVIDENCIA)
+   constraint PK_TBL_EVIDENCIA primary key nonclustered (ID_EVIDENCIA),
+   constraint UK_TBL_EVIDENCIA unique (NOMBRE_EVIDENCIA)
 )
 go
 
@@ -1326,9 +1370,10 @@ go
 /*==============================================================*/
 create table TBL_GRUPO (
    ID_GRUPO             int                  identity,
-   NOMBRE_GRUPO         varchar(50)          not null UNIQUE,
+   NOMBRE_GRUPO         varchar(50)          null,
    DESCRIPCION_GRUPO    text                 null,
-   constraint PK_TBL_GRUPO primary key nonclustered (ID_GRUPO)
+   constraint PK_TBL_GRUPO primary key nonclustered (ID_GRUPO),
+   constraint AK_KEY_2_TBL_GRUP unique (NOMBRE_GRUPO)
 )
 go
 
@@ -1371,7 +1416,6 @@ create table TBL_MATRIZ (
 )
 go
 
-
 /*==============================================================*/
 /* Table: TBL_MATRIZ_ACTIVIDAD                                  */
 /*==============================================================*/
@@ -1388,9 +1432,10 @@ go
 /*==============================================================*/
 create table TBL_MEDIDA_DE_CONTROL (
    ID_MEDIDAS_DE_CONTROL int                  identity,
-   NOM_MEDIDA_DE_CONTROL varchar(255)         NOT null UNIQUE,
+   NOM_MEDIDA_DE_CONTROL varchar(255)         not null,
    ESTADO               bit                  null,
-   constraint PK_TBL_MEDIDA_DE_CONTROL primary key nonclustered (ID_MEDIDAS_DE_CONTROL)
+   constraint PK_TBL_MEDIDA_DE_CONTROL primary key nonclustered (ID_MEDIDAS_DE_CONTROL),
+   constraint AK_KEY_2_TBL_MEDI unique (NOM_MEDIDA_DE_CONTROL)
 )
 go
 
@@ -1399,11 +1444,12 @@ go
 /*==============================================================*/
 create table TBL_MODULO (
    ID_MODULO            int                  identity,
-   NOMBRE_MODULO        varchar(100)         NOT null UNIQUE,
+   NOMBRE_MODULO        varchar(100)         null,
    DESCRIPCION_MODULO   text                 null,
    URL_MODULO           varchar(255)         null,
    ESTADO               bit                  null,
-   constraint PK_TBL_MODULO primary key nonclustered (ID_MODULO)
+   constraint PK_TBL_MODULO primary key nonclustered (ID_MODULO),
+   constraint AK_KEY_2_TBL_MODU unique (NOMBRE_MODULO)
 )
 go
 
@@ -1412,8 +1458,9 @@ go
 /*==============================================================*/
 create table TBL_ORGANIZACION (
    ID_ORGANIZACION      int                  identity,
-   NOMBRE_ORGANIZACION  varchar(100)         NOT null UNIQUE,
-   constraint PK_TBL_ORGANIZACION primary key nonclustered (ID_ORGANIZACION)
+   NOMBRE_ORGANIZACION  varchar(100)         null,
+   constraint PK_TBL_ORGANIZACION primary key nonclustered (ID_ORGANIZACION),
+   constraint UK_TBL_ORGANIZACION unique (NOMBRE_ORGANIZACION)
 )
 go
 
@@ -1422,7 +1469,7 @@ go
 /*==============================================================*/
 create table TBL_PARTE_CORPORAL (
    ID_PARTE_CORPORAL    int                  identity,
-   NOMBRE_PARTE_CORPORAL varchar(100)         NOT null UNIQUE,
+   NOMBRE_PARTE_CORPORAL varchar(100)         null,
    constraint PK_TBL_PARTE_CORPORAL primary key nonclustered (ID_PARTE_CORPORAL)
 )
 go
@@ -1442,8 +1489,9 @@ go
 /*==============================================================*/
 create table TBL_PELIGRO (
    ID_PELIGRO           int                  identity,
-   NOM_PELIGRO          varchar(200)        NOT null UNIQUE,
-   constraint PK_TBL_PELIGRO primary key nonclustered (ID_PELIGRO)
+   NOM_PELIGRO          varchar(200)         not null,
+   constraint PK_TBL_PELIGRO primary key nonclustered (ID_PELIGRO),
+   constraint UK_TBL_PELIGRO unique (NOM_PELIGRO)
 )
 go
 
@@ -1469,24 +1517,16 @@ create table TBL_PELIGRO_MEDIDA (
 go
 
 /*==============================================================*/
-/* Table: TBL_PROGRAMA_ACTIVIDAD                                */
-/*==============================================================*/
-create table TBL_PROGRAMA_ACTIVIDAD (
-   ID_PROGRAMA_ACTIVIDAD int                  identity,
-   ID_PROGRAMA_ANUAL    int                  null,
-   NOMBRE_PROGRAMA_ACTIVIDAD varchar(200)         NOT null UNIQUE,
-   constraint PK_TBL_PROGRAMA_ACTIVIDAD primary key nonclustered (ID_PROGRAMA_ACTIVIDAD)
-)
-go
-
-/*==============================================================*/
 /* Table: TBL_PROGRAMA_ANUAL                                    */
 /*==============================================================*/
 create table TBL_PROGRAMA_ANUAL (
    ID_PROGRAMA_ANUAL    int                  identity,
+   ID_DEPARTAMENTO_ORGANIZACION int                  null,
+   ID_DIVISION          int                  null,
    OBJETIVO             text                 null,
    META                 text                 null,
    FECHA_CREACION       datetime             null,
+   NOMBRE_PROGRAMA      char(10)             null,
    constraint PK_TBL_PROGRAMA_ANUAL primary key nonclustered (ID_PROGRAMA_ANUAL)
 )
 go
@@ -1508,39 +1548,10 @@ go
 /*==============================================================*/
 create table TBL_RECURSO_COMPROMETIDO (
    ID_RECURSO_COMPROMETIDO int                  identity,
-   NOMBRE_RECURSO       varchar(150)         NOT null UNIQUE,
+   NOMBRE_RECURSO       varchar(150)         null,
    DESCRIPCION          text                 null,
    constraint PK_TBL_RECURSO_COMPROMETIDO primary key nonclustered (ID_RECURSO_COMPROMETIDO)
 )
-go
-
-/*==============================================================*/
-/* Table: TBL_SUB_ACTIVIDAD                                     */
-/*==============================================================*/
-create table TBL_SUB_ACTIVIDAD (
-   ID_SUB_ACTIVIDAD     int                  identity,
-   ID_EVIDENCIA         int                  null,
-   ID_PROGRAMA_ACTIVIDAD int                  null,
-   NOMBRE_SUB_ACTIVIDAD varchar(200)         NOT null UNIQUE,
-   TIPO_FRECUENCIA      int                  null,
-   CANTIDAD_ACTIVIDADES varchar(200)         null,
-   constraint PK_TBL_SUB_ACTIVIDAD primary key nonclustered (ID_SUB_ACTIVIDAD)
-)
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'Éste campo podra tener los siguientes valores:
-   1=Diario
-   2=Semanal
-   3=Mensual
-   4=Anual
-   5=Semestral
-   6=Trimestral
-   7=Cuando Aplique
-   8=Permanente',
-   'user', @CurrentUser, 'table', 'TBL_SUB_ACTIVIDAD', 'column', 'TIPO_FRECUENCIA'
 go
 
 /*==============================================================*/
@@ -1555,6 +1566,8 @@ create table TBL_TRABAJADOR (
    ANOS_EXPERIENCIA     int                  null,
    ID_TRABAJADOR        int                  identity,
    ID_CARGO             int                  null,
+   ANOS_EXPERIENCIA_CARGO int                  null,
+   ANOS_EXPERIENCIA_LABORAL int                  null,
    constraint PK_TBL_TRABAJADOR primary key nonclustered (ID_TRABAJADOR)
 )
 go
@@ -1585,7 +1598,7 @@ create table TBL_USUARIO_GRUPO (
    ID_GRUPO             int                  not null,
    ID_USUARIO           varchar(200)         not null,
    GRUPO_ADMIN          bit                  null,
-   constraint PK_TBL_USUARIO_GRUPO primary key nonclustered (ID_GRUPO,ID_USUARIO)
+   constraint PK_TBL_USUARIO_GRUPO primary key nonclustered (ID_GRUPO, ID_USUARIO)
 )
 go
 
@@ -1644,6 +1657,21 @@ alter table TBL_ACCION_CORRECTIVA_RECURSO
       references TBL_RECURSO_COMPROMETIDO (ID_RECURSO_COMPROMETIDO)
 go
 
+alter table TBL_ACTIVIDAD
+   add constraint FK_TBL_ACTI_EXISTE_TBL_EVID foreign key (ID_EVIDENCIA)
+      references TBL_EVIDENCIA (ID_EVIDENCIA)
+go
+
+alter table TBL_ACTIVIDAD
+   add constraint FK_TBL_ACTI_REFERENCE_TBL_PROG foreign key (ID_PROGRAMA_ANUAL)
+      references TBL_PROGRAMA_ANUAL (ID_PROGRAMA_ANUAL)
+go
+
+alter table TBL_ACTIVIDAD
+   add constraint FK_TBL_ACTI_REFERENCE_TBL_CARG foreign key (ID_CARGO)
+      references TBL_CARGO (ID_CARGO)
+go
+
 alter table TBL_ACTIVIDAD_EVALUADA
    add constraint FK_TBL_ACTI_ASOCIA_TBL_PELI foreign key (ID_PELIGRO)
       references TBL_PELIGRO (ID_PELIGRO)
@@ -1652,11 +1680,6 @@ go
 alter table TBL_ACTIVIDAD_EVALUADA
    add constraint FK_TBL_ACTI_ASOCIADA_TBL_ACTI foreign key (ID_ACTIVIDAD_GENERAL)
       references TBL_ACTIVIDAD_GENERAL (ID_ACTIVIDAD_GENERAL)
-go
-
-alter table TBL_ACTIVIDAD_EVALUADA
-   add constraint FK_TBL_ACTI_CARGO_ACT_TBL_CARG foreign key (ID_CARGO)
-      references TBL_CARGO (ID_CARGO)
 go
 
 alter table TBL_ACTIVIDAD_EVALUADA
@@ -1679,14 +1702,9 @@ alter table TBL_ACTIVIDAD_EVALUADA
       references TBL_ACTIVIDAD_ESPECIFICA (ID_ACTIVIDAD_ESPECIFICA)
 go
 
-alter table TBL_ACTIVIDAD_RESPONSABLE
-   add constraint FK_TBL_ACTI_TBL_ACTIV_TBL_CARG foreign key (ID_CARGO)
+alter table TBL_ACTIVIDAD_EVALUADA
+   add constraint FK_TBL_ACTIVIDAD_EVALUADA_REF_TBL_CARG foreign key (ID_CARGO)
       references TBL_CARGO (ID_CARGO)
-go
-
-alter table TBL_ACTIVIDAD_RESPONSABLE
-   add constraint FK_TBL_ACTI_TBL_ACTIV_TBL_SUB_ foreign key (ID_SUB_ACTIVIDAD)
-      references TBL_SUB_ACTIVIDAD (ID_SUB_ACTIVIDAD)
 go
 
 alter table TBL_ACTIVIDAD_TRABAJADOR_REALIZADA
@@ -1737,11 +1755,6 @@ go
 alter table TBL_DIVISION
    add constraint FK_TBL_DIVI_DEPARTAME_TBL_DEPA foreign key (ID_DEPARTAMENTO_ORGANIZACION)
       references TBL_DEPARTAMENTO_ORGANIZACION (ID_DEPARTAMENTO_ORGANIZACION)
-go
-
-alter table TBL_EVALUACION_MENSUAL
-   add constraint FK_TBL_EVAL_ENLAZA_TBL_SUB_ foreign key (ID_SUB_ACTIVIDAD)
-      references TBL_SUB_ACTIVIDAD (ID_SUB_ACTIVIDAD)
 go
 
 alter table TBL_EVENTO
@@ -1844,9 +1857,14 @@ alter table TBL_PELIGRO_MEDIDA
       references TBL_ACTIVIDAD_EVALUADA (ID_ACTIVIDAD_EVALUADA)
 go
 
-alter table TBL_PROGRAMA_ACTIVIDAD
-   add constraint FK_TBL_PROG_CORRESPON_TBL_PROG foreign key (ID_PROGRAMA_ANUAL)
-      references TBL_PROGRAMA_ANUAL (ID_PROGRAMA_ANUAL)
+alter table TBL_PROGRAMA_ANUAL
+   add constraint FK_TBL_PROG_REFERENCE_TBL_DEPA foreign key (ID_DEPARTAMENTO_ORGANIZACION)
+      references TBL_DEPARTAMENTO_ORGANIZACION (ID_DEPARTAMENTO_ORGANIZACION)
+go
+
+alter table TBL_PROGRAMA_ANUAL
+   add constraint FK_TBL_PROG_REFERENCE_TBL_DIVI foreign key (ID_DIVISION)
+      references TBL_DIVISION (ID_DIVISION)
 go
 
 alter table TBL_PUNTO_GEOGRAFICO
@@ -1854,18 +1872,8 @@ alter table TBL_PUNTO_GEOGRAFICO
       references TBL_DEPARTAMENTO_ORGANIZACION (ID_DEPARTAMENTO_ORGANIZACION)
 go
 
-alter table TBL_SUB_ACTIVIDAD
-   add constraint FK_TBL_SUB__CONTIENE_TBL_PROG foreign key (ID_PROGRAMA_ACTIVIDAD)
-      references TBL_PROGRAMA_ACTIVIDAD (ID_PROGRAMA_ACTIVIDAD)
-go
-
-alter table TBL_SUB_ACTIVIDAD
-   add constraint FK_TBL_SUB__EXISTE_TBL_EVID foreign key (ID_EVIDENCIA)
-      references TBL_EVIDENCIA (ID_EVIDENCIA)
-go
-
 alter table TBL_TRABAJADOR
-   add constraint FK_TBL_TRAB_TRABAJADO_TBL_CARG foreign key (ID_CARGO)
+   add constraint FK_TBL_TRAB_REFERENCE_TBL_CARG foreign key (ID_CARGO)
       references TBL_CARGO (ID_CARGO)
 go
 
@@ -1883,6 +1891,145 @@ alter table TBL_USUARIO_GRUPO
    add constraint FK_TBL_USUA_TBL_USUAR_TBL_GRUP foreign key (ID_GRUPO)
       references TBL_GRUPO (ID_GRUPO)
 go
+
+CREATE PROCEDURE sp_get_matriz_by_id
+	@ID_MATRIZ   int = 0
+AS
+	IF @ID_MATRIZ <> 0
+		SELECT 	MZ.ID_MATRIZ,
+				AG.NOM_ACTIVIDAD_GENERAL, 
+				AES.NOM_ACTIVIDAD_ESPECIFICA,
+				CG.NOMBRE_CARGO,
+				CASE WHEN AE.CONDICION=1 THEN 'Rutinaria' WHEN AE.CONDICION=2 THEN 'No Rutinaria' WHEN AE.CONDICION=3 THEN 'En Emergencia' END AS CONDICION,
+				PE.NOM_PELIGRO,
+				C.NOMBRE_CONSECUENCIA,
+				CASE 
+					WHEN AE.VALORACION_CONSECUENCIA=1 THEN
+						'Ligeramente Dañino'
+					WHEN AE.VALORACION_CONSECUENCIA=3 THEN
+						'Extremadamente Dañino'
+					ELSE
+						'Dañino'
+				END AS 'CONSECUENCIA',
+				CASE 
+					WHEN AE.VALORACION_PROBABILIDAD=1 THEN
+						'Baja'
+					WHEN AE.VALORACION_PROBABILIDAD=3 THEN
+						'Alta'
+					ELSE
+						'Media'
+				END AS 'PROBABILIDAD',
+				CASE 
+					WHEN (AE.VALORACION_CONSECUENCIA * AE.VALORACION_PROBABILIDAD)<3 THEN
+						'Baja'
+					WHEN (AE.VALORACION_CONSECUENCIA * AE.VALORACION_PROBABILIDAD)>5 THEN
+						'Alta'
+					ELSE
+						'Media'
+				END AS 'MRP',
+				AE.VALORACION_CONSECUENCIA,
+				AE.VALORACION_PROBABILIDAD,
+				MC.NOM_MEDIDA_DE_CONTROL,
+				CASE 
+					WHEN AE.MEDIDA_VALORACION_CONSECUENCIA=1 THEN
+						'Ligeramente Dañino'
+					WHEN AE.MEDIDA_VALORACION_CONSECUENCIA=3 THEN
+						'Extremadamente Dañino'
+					ELSE
+						'Dañino'
+				END AS 'MEDIDA_CONSECUENCIA',
+				CASE 
+					WHEN AE.MEDIDA_VALORACION_PROBABILIDAD=1 THEN
+						'Baja'
+					WHEN AE.MEDIDA_VALORACION_PROBABILIDAD=3 THEN
+						'Alta'
+					ELSE
+						'Media'
+				END AS 'MEDIDA_PROBABILIDAD',
+				CASE 
+					WHEN (AE.MEDIDA_VALORACION_CONSECUENCIA * AE.MEDIDA_VALORACION_PROBABILIDAD)<3 THEN
+						'Baja'
+					WHEN (AE.MEDIDA_VALORACION_CONSECUENCIA * AE.MEDIDA_VALORACION_PROBABILIDAD)>5 THEN
+						'Alta'
+					ELSE
+						'Media'
+				END AS 'MRCC',
+				AE.MEDIDA_VALORACION_CONSECUENCIA,
+				AE.MEDIDA_VALORACION_PROBABILIDAD,
+				ORG.NOMBRE_ORGANIZACION,
+				DEP.NOMBRE_DEPARTAMENTO,
+				DIV.NOMBRE_DIVISION
+		FROM TBL_MATRIZ MZ 
+				INNER JOIN TBL_MATRIZ_ACTIVIDAD MA ON MZ.ID_MATRIZ = MA.ID_MATRIZ
+				INNER JOIN TBL_ACTIVIDAD_EVALUADA AE ON MA.ID_ACTIVIDAD_EVALUADA = AE.ID_ACTIVIDAD_EVALUADA
+				INNER JOIN TBL_ACTIVIDAD_ESPECIFICA AES ON AE.ID_ACTIVIDAD_ESPECIFICA = AES.ID_ACTIVIDAD_ESPECIFICA
+				INNER JOIN TBL_ACTIVIDAD_GENERAL AG ON AE.ID_ACTIVIDAD_GENERAL = AG.ID_ACTIVIDAD_GENERAL
+				INNER JOIN TBL_CARGO CG ON AE.ID_CARGO = CG.ID_CARGO
+				INNER JOIN TBL_PELIGRO PE ON AE.ID_PELIGRO = PE.ID_PELIGRO
+				INNER JOIN TBL_PELIGRO_MEDIDA PM ON AE.ID_ACTIVIDAD_EVALUADA = PM.ID_ACTIVIDAD_EVALUADA
+				INNER JOIN TBL_MEDIDA_DE_CONTROL MC ON PM.ID_MEDIDAS_DE_CONTROL=MC.ID_MEDIDAS_DE_CONTROL
+				INNER JOIN TBL_PELIGRO_CONSECUENCIA PC ON PE.ID_PELIGRO = PC.ID_PELIGRO
+				INNER JOIN TBL_CONSECUENCIA C ON PC.ID_CONSECUENCIA = C.ID_CONSECUENCIA
+				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON AE.ID_DEPARTAMENTO_ORGANIZACION = DOR.ID_DEPARTAMENTO_ORGANIZACION
+				INNER JOIN TBL_ORGANIZACION ORG ON DOR.ID_ORGANIZACION = ORG.ID_ORGANIZACION
+				INNER JOIN TBL_DEPARTAMENTO DEP ON DOR.ID_DEPARTAMENTO = DEP.ID_DEPARTAMENTO
+				INNER JOIN TBL_DIVISION DIV ON AE.ID_DIVISION = DIV.ID_DIVISION
+		WHERE MZ.ID_MATRIZ = @ID_MATRIZ
+		ORDER BY AE.ID_ACTIVIDAD_EVALUADA, PE.ID_PELIGRO
+GO
+CREATE PROCEDURE sp_search_actividad_evaluada 
+	@ID_ORGANIZACION   int = 0,
+	@ID_DEPARTAMENTO_ORGANIZACION int = 0,
+	@ID_DIVISION int = 0,
+	@ID_AREA int = 0,
+	@ID_ACTIVIDAD_GENERAL int = 0,
+	@NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100) = null,
+	@ID_CARGO int = 0,
+	@CONDICION int = 0,
+	@FECHA_INICIO datetime = null,
+	@FECHA_TERMINO datetime = null,
+	@ID_USUARIO varchar(200) = null
+AS
+DECLARE @sql nvarchar(4000)
+
+	SELECT @sql = 	' SELECT AEV.*, MA.ID_MATRIZ,AE.NOM_ACTIVIDAD_ESPECIFICA,  ''[''+CAST(MA.ID_MATRIZ AS VARCHAR)+''] ''+ DP.NOMBRE_DEPARTAMENTO +'' - ''+AG.NOM_ACTIVIDAD_GENERAL AS NOMBRE_MATRIZ ' +
+					' FROM TBL_MATRIZ_ACTIVIDAD MA ' +
+					' INNER JOIN TBL_MATRIZ MAT '+
+					'	ON MA.ID_MATRIZ = MAT.ID_MATRIZ ' +
+					' INNER JOIN TBL_ACTIVIDAD_EVALUADA AEV '+
+					'	ON MA.ID_ACTIVIDAD_EVALUADA = AEV.ID_ACTIVIDAD_EVALUADA ' +
+					' INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION  DOR ' +
+					'	ON AEV.ID_DEPARTAMENTO_ORGANIZACION = DOR.ID_DEPARTAMENTO_ORGANIZACION ' +
+					' INNER JOIN TBL_ACTIVIDAD_ESPECIFICA AE ON AEV.ID_ACTIVIDAD_ESPECIFICA = AE.ID_ACTIVIDAD_ESPECIFICA ' +
+					' INNER JOIN TBL_DEPARTAMENTO DP ON DOR.ID_DEPARTAMENTO = DP.ID_DEPARTAMENTO ' +
+					' INNER JOIN TBL_ACTIVIDAD_GENERAL AG ON AG.ID_ACTIVIDAD_GENERAL = AEV.ID_ACTIVIDAD_GENERAL ' +
+					' WHERE 1 = 1  '
+	IF @ID_ORGANIZACION <> 0
+	   SELECT @sql = @sql + ' AND DOR.ID_ORGANIZACION = @ID_ORGANIZACION '
+	IF @ID_DEPARTAMENTO_ORGANIZACION <> 0
+	   SELECT @sql = @sql + ' AND DOR.ID_DEPARTAMENTO_ORGANIZACION = @ID_DEPARTAMENTO_ORGANIZACION '
+	IF @ID_DIVISION <> 0
+	   SELECT @sql = @sql + ' AND AEV.ID_DIVISION = @ID_DIVISION ' 
+	IF @ID_AREA <> 0
+	   SELECT @sql = @sql + ' AND AEV.ID_AREA = @ID_AREA '
+	IF @ID_ACTIVIDAD_GENERAL <> 0
+	   SELECT @sql = @sql + ' AND AEV.ID_ACTIVIDAD_GENERAL = @ID_ACTIVIDAD_GENERAL '
+	IF @NOMBRE_ACTIVIDAD_ESPECIFICA IS NOT NULL
+	   SELECT @sql = @sql + ' AND AE.NOM_ACTIVIDAD_ESPECIFICA LIKE ''%''+@NOMBRE_ACTIVIDAD_ESPECIFICA+''%'' '
+	IF @ID_CARGO <> 0
+	   SELECT @sql = @sql + ' AND AEV.ID_CARGO = @ID_CARGO '
+	IF @CONDICION <> 0
+	   SELECT @sql = @sql + ' AND AEV.CONDICION = @CONDICION '
+	IF @FECHA_INICIO IS NOT NULL AND @FECHA_TERMINO IS NOT NULL
+	   SELECT @sql = @sql + ' AND AEV.FECHA_CREACION BETWEEN @FECHA_INICIO AND @FECHA_TERMINO '
+	IF @ID_USUARIO IS NOT NULL
+		SELECT @sql = @sql + ' AND MAT.ID_USUARIO = @ID_USUARIO '
+	SELECT @sql = @sql + ' ORDER BY MA.ID_MATRIZ DESC '
+	EXEC sp_executesql @sql, N'@ID_ORGANIZACION INT, @ID_DEPARTAMENTO_ORGANIZACION INT, @ID_DIVISION INT, @ID_AREA INT, @ID_ACTIVIDAD_GENERAL INT, @NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100), @ID_CARGO INT, @CONDICION INT, @FECHA_INICIO datetime, @FECHA_TERMINO datetime,@ID_USUARIO varchar(200)',
+					   @ID_ORGANIZACION, @ID_DEPARTAMENTO_ORGANIZACION, @ID_DIVISION, @ID_AREA, @ID_ACTIVIDAD_GENERAL, @NOMBRE_ACTIVIDAD_ESPECIFICA, @ID_CARGO, @CONDICION, @FECHA_INICIO, @FECHA_TERMINO, @ID_USUARIO
+GO
+
+
 
 
 
@@ -2062,7 +2209,6 @@ Insert into TBL_AREA (id_division, nombre_area) values(26,'Apoyo Contrato Maestr
 Insert into TBL_AREA (id_division, nombre_area) values(27,'lanificacion Biobío');
 Insert into TBL_AREA (id_division, nombre_area) values(28,'Predictiva Estática Biobío');
 Insert into TBL_AREA (id_division, nombre_area) values(28,'Analisis de Fallos');
-Insert into TBL_AREA (id_division, nombre_area) values(28,'Predictiva Estática Biobío');
 GO
 
 
@@ -2074,23 +2220,16 @@ GO
 	TBL_CONSECUENCIA
 */
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Desmembramiento, traumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Desmembramiento, traumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, politraumatismo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, politraumatismo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, traumatismo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones, enfermedad, compromiso vital');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones, Compromiso Vital');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, politraumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, politraumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, politraumatismo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Shock eléctrico, muerte');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, lesiones a la piel');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, lesiones a la piel');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Cortes, magulladuras');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Cortes, heridas profundas');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Erosiones a la piel, quemaduras, irritación');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Politraumatismo, asfixia, muerte');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, lesiones a la piel');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones a la piel');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones a la piel, deshidratación');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Hipotermia');
@@ -2099,21 +2238,13 @@ Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Irritación, lesiones 
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Irritación a las vías respiratorias altas, intoxicación aguda');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones pulmonares');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones vasculares');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, lesiones a la piel');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, lesiones a la piel');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Irritación a las vías respiratorias altas, intoxicación aguda');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesiones al oído');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Irritación a las vías respiratorias altas, intoxicación aguda');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('trastornos músculo esqueléticos');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, traumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, traumatismo');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Contusiones, heridas, traumatismo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Quemaduras, asfixia, muerte');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesión pulmonar, muerte');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Lesión aguda al sistema digestivo');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Trastorno músculo esquelético');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Trastorno Psíquico');
-Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Trastornos músculo esquelético');
 Insert into TBL_CONSECUENCIA (nombre_consecuencia) values('Trastornos músculo esquelético');
 GO
 
@@ -2132,48 +2263,48 @@ GO
 	TBL_PELIGRO
 */
 
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Atrapamiento entre objetos en movimiento o fijo y movimiento');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Atrapamiento por Objeto fijo o en movimiento');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Atropello');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Caída a diferente Nivel');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Caída al mismo nivel');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Causado por animal o insecto');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Causado por terceras personas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Choque contra elementos móviles');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Choque contra objetos o estructura fija');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Choque por otro vehículo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con electricidad');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con fuego');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con Objetos Calientes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con Objetos Cortantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con Objetos Punzantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Contacto con sustancias químicas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Explosión');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición  a radiaciones ultravioletas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a agentes biológicos (bacterias, hongos, etc.)');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a calor');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a frío');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a gases');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a humos metálicos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a nieblas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a Polvo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a presiones anormales');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a radiaciones infrarrojas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a radiaciones íonizantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a rocíos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a ruido');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a vapores');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Exposición a vibraciones');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Golpeado con objeto o herramienta');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Golpeado contra objetos o equipos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Golpeado por Objeto');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Incendio');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Inmersión');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Intoxicación por alimentos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Sobre carga física');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Sobre tensión mental y psicológica');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Sobreesfuerzo por movimiento repetitivo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('Sobreesfuerzo por manejo manual de materiales');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('1: Atrapamiento entre objetos en movimiento o fijo y movimiento');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('2: Atrapamiento por Objeto fijo o en movimiento');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('3: Atropello');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('4: Caída a diferente Nivel');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('5: Caída al mismo nivel ');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('6: Causado por animal o insecto');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('7: Causado por terceras personas');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('8:  Choque contra elementos móviles');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('9:  Choque contra objetos o estructura fija');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('10: Choque por otro vehículo');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('11: Contacto con electricidad');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('12:  Contacto con fuego');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('13:  Contacto con Objetos Calientes');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('14:  Contacto con Objetos Cortantes');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('15:  Contacto con Objetos Punzantes');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('16:  Contacto con sustancias químicas');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('17:  Explosión');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('18:  Exposición  a radiaciones ultravioletas');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('19:  Exposición a agentes biológicos (bacterias, hongos, etc.)');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('20:  Exposición a calor');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('21:  Exposición a frío');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('22:  Exposición a gases');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('23:  Exposición a humos metálicos');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('24:  Exposición a nieblas');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('25:  Exposición a Polvo');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('26:  Exposición a presiones anormales');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('27:  Exposición a radiaciones infrarrojas');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('28:  Exposición a radiaciones íonizantes');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('29:  Exposición a rocíos');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('30:  Exposición a ruido');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('31:  Exposición a vapores');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('32:  Exposición a vibraciones');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('33:  Golpeado con objeto o herramienta');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('34:  Golpeado contra objetos o equipos');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('35:  Golpeado por Objeto');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('36:  Incendio');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('37:  Inmersión');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('38:  Intoxicación por alimentos');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('39:  Sobre carga física');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('40:  Sobre tensión mental y psicológica');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('41:  Sobreesfuerzo por movimiento repetitivo');
+Insert into TBL_PELIGRO (Nom_Peligro ) values('42:  Sobreesfuerzo por manejo manual de materiales');
 GO
 
 
@@ -2189,40 +2320,41 @@ INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(4,2);
 INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(5,3);
 INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(6,4);
 INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(7,5);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(8,6);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(9,6);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(10,6);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(11,7);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(12,8);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(13,8);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(14,9);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(15,10);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(16,11);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(17,12);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(18,13);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(19,14);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(20,15);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(21,16);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(23,18);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(24,19);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(25,20);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(26,21);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(27,22);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(28,22);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(29,23);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(30,24);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(31,25);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(32,26);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(33,27);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(34,27);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(35,27);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(36,28);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(37,29);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(38,30);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(39,31);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(40,32);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(41,33);
-INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(42,33);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(8,2);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(9,2);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(10,2);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(11,6);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(12,7);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(13,7);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(14,8);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(15,9);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(16,10);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(17,11);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(18,7);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(19,12);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(20,13);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(21,14);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(22,15);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(23,16);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(24,17);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(25,18);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(26,19);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(27,7);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(28,7);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(29,17);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(30,20);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(31,17);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(32,21);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(33,3);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(34,3);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(35,3);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(36,22);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(37,23);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(38,24);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(39,25);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(40,26);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(41,27);
+INSERT INTO TBL_PELIGRO_CONSECUENCIA (ID_PELIGRO,ID_CONSECUENCIA) values(42,27);
 /*
 	TBL_PELIGRO
 
@@ -2281,8 +2413,6 @@ Insert into TBL_CARGO (NOMBRE_CARGO) values('Supervisor');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Ingenieros');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Técnicos');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Secretarias');
-Insert into TBL_CARGO (NOMBRE_CARGO) values('Jede Departamento');
-Insert into TBL_CARGO (NOMBRE_CARGO) values('Jefe de División');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Supervisor de Operaciones');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Operador Jefe');
 Insert into TBL_CARGO (NOMBRE_CARGO) values('Supervisor de terreno');
@@ -2484,154 +2614,4 @@ INSERT INTO TBL_DATO_EVENTO VALUES('Sobre presión en equipo o sistema',2);
 INSERT INTO TBL_DATO_EVENTO VALUES('Sobre temperatura en el equipo sistema',2);
 
 
-GO
-
-/*
-	Busqueda de matriz
-*/
-DROP PROCEDURE sp_get_matriz_by_id;
-DROP PROCEDURE sp_search_actividad_evaluada;
-GO
-CREATE PROCEDURE sp_search_actividad_evaluada 
-	@ID_ORGANIZACION   int = 0,
-	@ID_DEPARTAMENTO_ORGANIZACION int = 0,
-	@ID_DIVISION int = 0,
-	@ID_AREA int = 0,
-	@ID_ACTIVIDAD_GENERAL int = 0,
-	@NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100) = null,
-	@ID_CARGO int = 0,
-	@CONDICION int = 0,
-	@FECHA_INICIO datetime = null,
-	@FECHA_TERMINO datetime = null,
-	@ID_USUARIO varchar(200) = null
-AS
-DECLARE @sql nvarchar(4000)
-
-	SELECT @sql = 	' SELECT AEV.*, MA.ID_MATRIZ,AE.NOM_ACTIVIDAD_ESPECIFICA,  ''[''+CAST(MA.ID_MATRIZ AS VARCHAR)+''] ''+ DP.NOMBRE_DEPARTAMENTO +'' - ''+AG.NOM_ACTIVIDAD_GENERAL AS NOMBRE_MATRIZ ' +
-					' FROM TBL_MATRIZ_ACTIVIDAD MA ' +
-					' INNER JOIN TBL_MATRIZ MAT '+
-					'	ON MA.ID_MATRIZ = MAT.ID_MATRIZ ' +
-					' INNER JOIN TBL_ACTIVIDAD_EVALUADA AEV '+
-					'	ON MA.ID_ACTIVIDAD_EVALUADA = AEV.ID_ACTIVIDAD_EVALUADA ' +
-					' INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION  DOR ' +
-					'	ON AEV.ID_DEPARTAMENTO_ORGANIZACION = DOR.ID_DEPARTAMENTO_ORGANIZACION ' +
-					' INNER JOIN TBL_ACTIVIDAD_ESPECIFICA AE ON AEV.ID_ACTIVIDAD_ESPECIFICA = AE.ID_ACTIVIDAD_ESPECIFICA ' +
-					' INNER JOIN TBL_DEPARTAMENTO DP ON DOR.ID_DEPARTAMENTO = DP.ID_DEPARTAMENTO ' +
-					' INNER JOIN TBL_ACTIVIDAD_GENERAL AG ON AG.ID_ACTIVIDAD_GENERAL = AEV.ID_ACTIVIDAD_GENERAL ' +
-					' WHERE 1 = 1  '
-	IF @ID_ORGANIZACION <> 0
-	   SELECT @sql = @sql + ' AND DOR.ID_ORGANIZACION = @ID_ORGANIZACION '
-	IF @ID_DEPARTAMENTO_ORGANIZACION <> 0
-	   SELECT @sql = @sql + ' AND DOR.ID_DEPARTAMENTO_ORGANIZACION = @ID_DEPARTAMENTO_ORGANIZACION '
-	IF @ID_DIVISION <> 0
-	   SELECT @sql = @sql + ' AND AEV.ID_DIVISION = @ID_DIVISION ' 
-	IF @ID_AREA <> 0
-	   SELECT @sql = @sql + ' AND AEV.ID_AREA = @ID_AREA '
-	IF @ID_ACTIVIDAD_GENERAL <> 0
-	   SELECT @sql = @sql + ' AND AEV.ID_ACTIVIDAD_GENERAL = @ID_ACTIVIDAD_GENERAL '
-	IF @NOMBRE_ACTIVIDAD_ESPECIFICA IS NOT NULL
-	   SELECT @sql = @sql + ' AND AE.NOM_ACTIVIDAD_ESPECIFICA LIKE ''%''+@NOMBRE_ACTIVIDAD_ESPECIFICA+''%'' '
-	IF @ID_CARGO <> 0
-	   SELECT @sql = @sql + ' AND AEV.ID_CARGO = @ID_CARGO '
-	IF @CONDICION <> 0
-	   SELECT @sql = @sql + ' AND AEV.CONDICION = @CONDICION '
-	IF @FECHA_INICIO IS NOT NULL AND @FECHA_TERMINO IS NOT NULL
-	   SELECT @sql = @sql + ' AND AEV.FECHA_CREACION BETWEEN @FECHA_INICIO AND @FECHA_TERMINO '
-	IF @ID_USUARIO IS NOT NULL
-		SELECT @sql = @sql + ' AND MAT.ID_USUARIO = @ID_USUARIO '
-	SELECT @sql = @sql + ' ORDER BY MA.ID_MATRIZ DESC '
-	EXEC sp_executesql @sql, N'@ID_ORGANIZACION INT, @ID_DEPARTAMENTO_ORGANIZACION INT, @ID_DIVISION INT, @ID_AREA INT, @ID_ACTIVIDAD_GENERAL INT, @NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100), @ID_CARGO INT, @CONDICION INT, @FECHA_INICIO datetime, @FECHA_TERMINO datetime,@ID_USUARIO varchar(200)',
-					   @ID_ORGANIZACION, @ID_DEPARTAMENTO_ORGANIZACION, @ID_DIVISION, @ID_AREA, @ID_ACTIVIDAD_GENERAL, @NOMBRE_ACTIVIDAD_ESPECIFICA, @ID_CARGO, @CONDICION, @FECHA_INICIO, @FECHA_TERMINO, @ID_USUARIO
-GO
-
-
-/* 
-	Busqueda de MATRICEZ
-
-*/
-
-CREATE PROCEDURE sp_get_matriz_by_id
-	@ID_MATRIZ   int = 0
-AS
-	IF @ID_MATRIZ <> 0
-		SELECT 	MZ.ID_MATRIZ,
-				AG.NOM_ACTIVIDAD_GENERAL, 
-				AES.NOM_ACTIVIDAD_ESPECIFICA,
-				CG.NOMBRE_CARGO,
-				CASE WHEN AE.CONDICION=1 THEN 'Rutinaria' WHEN AE.CONDICION=2 THEN 'No Rutinaria' WHEN AE.CONDICION=3 THEN 'En Emergencia' END AS CONDICION,
-				PE.NOM_PELIGRO,
-				C.NOMBRE_CONSECUENCIA,
-				CASE 
-					WHEN AE.VALORACION_CONSECUENCIA=1 THEN
-						'Ligeramente Dañino'
-					WHEN AE.VALORACION_CONSECUENCIA=3 THEN
-						'Extremadamente Dañino'
-					ELSE
-						'Dañino'
-				END AS 'CONSECUENCIA',
-				CASE 
-					WHEN AE.VALORACION_PROBABILIDAD=1 THEN
-						'Baja'
-					WHEN AE.VALORACION_PROBABILIDAD=3 THEN
-						'Alta'
-					ELSE
-						'Media'
-				END AS 'PROBABILIDAD',
-				CASE 
-					WHEN (AE.VALORACION_CONSECUENCIA * AE.VALORACION_PROBABILIDAD)<3 THEN
-						'Baja'
-					WHEN (AE.VALORACION_CONSECUENCIA * AE.VALORACION_PROBABILIDAD)>5 THEN
-						'Alta'
-					ELSE
-						'Media'
-				END AS 'MRP',
-				AE.VALORACION_CONSECUENCIA,
-				AE.VALORACION_PROBABILIDAD,
-				MC.NOM_MEDIDA_DE_CONTROL,
-				CASE 
-					WHEN AE.MEDIDA_VALORACION_CONSECUENCIA=1 THEN
-						'Ligeramente Dañino'
-					WHEN AE.MEDIDA_VALORACION_CONSECUENCIA=3 THEN
-						'Extremadamente Dañino'
-					ELSE
-						'Dañino'
-				END AS 'MEDIDA_CONSECUENCIA',
-				CASE 
-					WHEN AE.MEDIDA_VALORACION_PROBABILIDAD=1 THEN
-						'Baja'
-					WHEN AE.MEDIDA_VALORACION_PROBABILIDAD=3 THEN
-						'Alta'
-					ELSE
-						'Media'
-				END AS 'MEDIDA_PROBABILIDAD',
-				CASE 
-					WHEN (AE.MEDIDA_VALORACION_CONSECUENCIA * AE.MEDIDA_VALORACION_PROBABILIDAD)<3 THEN
-						'Baja'
-					WHEN (AE.MEDIDA_VALORACION_CONSECUENCIA * AE.MEDIDA_VALORACION_PROBABILIDAD)>5 THEN
-						'Alta'
-					ELSE
-						'Media'
-				END AS 'MRCC',
-				AE.MEDIDA_VALORACION_CONSECUENCIA,
-				AE.MEDIDA_VALORACION_PROBABILIDAD,
-				ORG.NOMBRE_ORGANIZACION,
-				DEP.NOMBRE_DEPARTAMENTO,
-				DIV.NOMBRE_DIVISION
-		FROM TBL_MATRIZ MZ 
-				INNER JOIN TBL_MATRIZ_ACTIVIDAD MA ON MZ.ID_MATRIZ = MA.ID_MATRIZ
-				INNER JOIN TBL_ACTIVIDAD_EVALUADA AE ON MA.ID_ACTIVIDAD_EVALUADA = AE.ID_ACTIVIDAD_EVALUADA
-				INNER JOIN TBL_ACTIVIDAD_ESPECIFICA AES ON AE.ID_ACTIVIDAD_ESPECIFICA = AES.ID_ACTIVIDAD_ESPECIFICA
-				INNER JOIN TBL_ACTIVIDAD_GENERAL AG ON AE.ID_ACTIVIDAD_GENERAL = AG.ID_ACTIVIDAD_GENERAL
-				INNER JOIN TBL_CARGO CG ON AE.ID_CARGO = CG.ID_CARGO
-				INNER JOIN TBL_PELIGRO PE ON AE.ID_PELIGRO = PE.ID_PELIGRO
-				INNER JOIN TBL_PELIGRO_MEDIDA PM ON AE.ID_ACTIVIDAD_EVALUADA = PM.ID_ACTIVIDAD_EVALUADA
-				INNER JOIN TBL_MEDIDA_DE_CONTROL MC ON PM.ID_MEDIDAS_DE_CONTROL=MC.ID_MEDIDAS_DE_CONTROL
-				INNER JOIN TBL_PELIGRO_CONSECUENCIA PC ON PE.ID_PELIGRO = PC.ID_PELIGRO
-				INNER JOIN TBL_CONSECUENCIA C ON PC.ID_CONSECUENCIA = C.ID_CONSECUENCIA
-				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON AE.ID_DEPARTAMENTO_ORGANIZACION = DOR.ID_DEPARTAMENTO_ORGANIZACION
-				INNER JOIN TBL_ORGANIZACION ORG ON DOR.ID_ORGANIZACION = ORG.ID_ORGANIZACION
-				INNER JOIN TBL_DEPARTAMENTO DEP ON DOR.ID_DEPARTAMENTO = DEP.ID_DEPARTAMENTO
-				INNER JOIN TBL_DIVISION DIV ON AE.ID_DIVISION = DIV.ID_DIVISION
-		WHERE MZ.ID_MATRIZ = @ID_MATRIZ
-		ORDER BY AE.ID_ACTIVIDAD_EVALUADA, PE.ID_PELIGRO
 GO

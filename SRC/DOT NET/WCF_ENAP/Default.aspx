@@ -218,6 +218,9 @@
     .buscar-icon{background:transparent url(/icons/magnifier.png) 0 0 no-repeat !important;}
     .btn-add{background:transparent url(/icons/add.png) 0 0 no-repeat !important;}
     .btn-save{background:transparent url(/icons/database_save.png) 0 0 no-repeat !important;}
+    .btn-add-save{background:transparent url(/icons/database_add.png) 0 0 no-repeat !important;}
+    .btn-delete{background:transparent url(/icons/database_delete.png) 0 0 no-repeat !important;}
+    .btn-search{background:transparent url(/icons/magnifier.png) 0 0 no-repeat !important;}
     .grupo-icon{background:transparent url(/icons/group.png) 0 0 no-repeat !important;}
     .add-programaanual-icon{background:transparent url(/icons/chart_organisation_add.png) 0 0 no-repeat !important;}
     .update-programaanual-icon{background:transparent url(/icons/chart_organisation.png) 0 0 no-repeat !important;}

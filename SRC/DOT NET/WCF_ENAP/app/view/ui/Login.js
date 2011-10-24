@@ -31,7 +31,9 @@
                         buttons: [{
                             text: 'Login',
                             handler: function () {
-                                var form = this.up("form").getForm();
+                                var me = this;
+                                me.up("window").setLoading(true);
+                                var form = me.up("form").getForm();
 
                                 Ext.Ajax.request({
                                     url: '/LoginUser/',
@@ -45,8 +47,11 @@
                                         if (o.success) {
                                             window.location = "/";
                                         } else {
+                                            me.up("window").setLoading(false);
                                             Ext.Msg.alert('Datos Incorrectos', 'Usuario o Contraseña Incorrectos.');
+
                                         }
+
                                     }
                                 });
                             }

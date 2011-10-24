@@ -1,8 +1,15 @@
 Ext.define('WCF_ENAP.model.ProgramaAnual', {
     extend: 'Ext.data.Model',
     idProperty: 'ID_PROGRAMA_ANUAL',
-    fields: [{"name":"ID_PROGRAMA_ANUAL","type":"int","useNull":true},{"name":"OBJETIVO","type":"string"},{"name":"META","type":"string"},{"name":"FECHA_CREACION","type":"date"}],
-    validations: []
+    fields: [
+        { "name": "ID_PROGRAMA_ANUAL", "type": "int", "useNull": true },
+        { "name": "ID_DEPARTAMENTO_ORGANIZACION", "type": "int" },
+        { "name": "ID_DIVISION", "type": "int" },
+        { "name": "OBJETIVO", "type": "string" },
+        { "name": "META", "type": "string" },
+        { "name": "FECHA_CREACION", "type": "date" },
+        { "name": "NOMBRE_PROGRAMA", "type": "string" }
+    ]
 });
 Ext.define('WCF_ENAP.store.dsProgramaAnual', {
     extend: 'Ext.data.Store',

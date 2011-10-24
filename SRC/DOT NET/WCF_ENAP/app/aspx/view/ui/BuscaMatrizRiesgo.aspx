@@ -1,4 +1,17 @@
-﻿Ext.define('Probabilidad', {
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BuscaMatrizRiesgo.aspx.cs" Inherits="WCF_ENAP.app.aspx.view.ui.BuscaMatrizRiesgo" %>
+<% 
+    bool isLogued = false;
+    WCF_ENAP.EnapUser user;
+    if (Session["enap-log"] != null) {
+        try
+        {
+            user = (WCF_ENAP.EnapUser)Session["enap-log"];
+            isLogued = user.IsLogued;
+        }
+        catch (Exception ex){}
+    }
+%>
+Ext.define('Probabilidad', {
     extend: 'Ext.data.Model',
     fields: [
         { "name": "ID_PROBABILIDAD", "type": "int" },
@@ -254,6 +267,14 @@ var dataConsecuencia = [
                         }
                     ]
                 }
+                <% if (isLogued) { %>
+                   ,{
+                        xtype: 'checkboxfield',
+                        name: 'onlyMy',
+                        fieldLabel: 'Solo mis Matrices',
+                        anchor: '100%'
+                    }
+                <% } %>
 			]
 		}
 		],
@@ -265,6 +286,7 @@ var dataConsecuencia = [
 		        }
 		    }, {
 		        text: 'Buscar',
+                iconCls: 'btn-search',
 		        handler: function () {
 		            var form = Ext.getCmp('form_busca_actividad').getForm(),
                         values = form.getValues();

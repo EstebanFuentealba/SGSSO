@@ -1,4 +1,3 @@
-var rowEditingCargo = Ext.create('Ext.grid.plugin.RowEditing', {});
 Ext.define('WCF_ENAP.view.ui.Cargo', {
     extend: 'Ext.panel.Panel',
 
@@ -8,10 +7,10 @@ Ext.define('WCF_ENAP.view.ui.Cargo', {
     layout: {
         type: 'anchor'
     },
-    title: 'My Window',
+    title: 'Información del Cargo',
     id: 'panel-Cargo',
     initComponent: function () {
-        var me = this;
+        var me = this, rowEditingCargo = Ext.create('Ext.grid.plugin.RowEditing', {});
         me.items = [
             {
                 xtype: 'form',

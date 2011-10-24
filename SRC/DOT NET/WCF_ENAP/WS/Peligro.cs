@@ -34,7 +34,7 @@ namespace WCF_ENAP
             {
                 if (_dir == null)
                 {
-                    _dir = "DESC";
+                    _dir = "ASC";
                 }
                 if (_page == 0)
                 {

@@ -32,8 +32,16 @@
 				expanded: false,
 				iconCls: "programa-icon",
 				children:[
-					{"text":"Crear Programa","id":"AddProgramaAnual","leaf":true,iconCls: "add-programaanual-icon","stores":[]},
-					{"text":"Actualizar Programa","id":"ModificaProgramaAnual","leaf":true,iconCls: "update-programaanual-icon","stores":[]},
+					{"text":"Crear Programa","id":"ProgramaAnual","leaf":true,iconCls: "add-programaanual-icon","stores":[
+                        'dsProgramaAnual',
+                        'dsOrganizacion',
+                        'dsDepartamento',
+                        'dsDivision',
+                        'dsCargo',
+                        'dsFrecuencia',
+                        'dsEvidencia',
+                        'dsActividadProgramaAnualPrevencion'
+                    ]},
 					{"text":"Busca Programa Anual","id":"BuscaProgramaAnual","leaf":true,iconCls: "buscar-icon","stores":[]}
 				]
 			},
@@ -83,7 +91,6 @@
 						'dsCargo',
 						'dsActividadEvaluada',
                         'dsMatrizRiesgo'
-						
 					]}
 				]	
 		},

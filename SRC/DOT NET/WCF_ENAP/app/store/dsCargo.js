@@ -14,7 +14,7 @@ Ext.define('WCF_ENAP.store.dsCargo', {
             autoLoad: true,
             autoSync: true,
             storeId: 'dsCargo',
-            pageSize: 10,
+            pageSize: 200,
             remoteSort: true,
             model: 'WCF_ENAP.model.Cargo',
             proxy: {

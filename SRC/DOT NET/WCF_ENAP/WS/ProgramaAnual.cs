@@ -58,16 +58,19 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_PROGRAMA_ANUAL> Create(string OBJETIVO, string META, string FECHA_CREACION)
+        public JSONCollection<TBL_PROGRAMA_ANUAL> Create(int ID_DEPARTAMENTO_ORGANIZACION, int ID_DIVISION, string OBJETIVO, string META, string FECHA_CREACION, string NOMBRE_PROGRAMA)
 		{
             JSONCollection<TBL_PROGRAMA_ANUAL> objJSON = new JSONCollection<TBL_PROGRAMA_ANUAL>();
             try
             {
                 TBL_PROGRAMA_ANUAL nuevo = new TBL_PROGRAMA_ANUAL()
                 {
+                    NOMBRE_PROGRAMA = NOMBRE_PROGRAMA,
+                    ID_DEPARTAMENTO_ORGANIZACION = ID_DEPARTAMENTO_ORGANIZACION,
+                    ID_DIVISION = ID_DIVISION,
                     OBJETIVO = OBJETIVO, 
 					META = META, 
-					FECHA_CREACION = DateTime.Parse(FECHA_CREACION)
+					FECHA_CREACION = DateTime.Now
                 };
                 bd.TBL_PROGRAMA_ANUAL.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();

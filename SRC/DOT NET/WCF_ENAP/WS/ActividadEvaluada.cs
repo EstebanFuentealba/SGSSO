@@ -308,7 +308,7 @@ namespace WCF_ENAP
 			}
 			return "ID_ACTIVIDAD_EVALUADA";
 		}
-        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}")]
+        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}&onlyMy={_ONLYMY}")]
         public JSONCollection<List<sp_search_actividad_evaluadaResult>> Search(int _page,
                                                                             int _start,
                                                                             int _limit,
@@ -323,12 +323,14 @@ namespace WCF_ENAP
                                                                             int _ID_CARGO,
                                                                             int _CONDICION,
                                                                             string _STARTDT,
-                                                                            string _ENDDT)
+                                                                            string _ENDDT,
+                                                                            string _ONLYMY)
         {
             JSONCollection<List<sp_search_actividad_evaluadaResult>> objJSON = new JSONCollection<List<sp_search_actividad_evaluadaResult>>();
 
             DateTime startTime;
             DateTime endTime;
+            EnapUser user = null; 
                 if (_dir == null)
                 {
                     _dir = "DESC";
@@ -344,19 +346,25 @@ namespace WCF_ENAP
                 if (_STARTDT != null)
                 {
                     startTime = DateTime.Parse(_STARTDT);
+                    
                 }
                 else
                 {
-                    startTime = new DateTime(2011, 1, 1);
+                    startTime = new DateTime(2011, 1, 1,0,0,0);
                 }
                 if (_ENDDT != null)
                 {
                     endTime = DateTime.Parse(_ENDDT);
+                    endTime.AddHours(24);
                 }
                 else
                 {
                     endTime = DateTime.Now;
                 }
+                if (_ONLYMY == "on")
+                {
+                    user = (EnapUser)HttpContext.Current.Session["enap-log"];
+                } 
                 _start = (_page * _limit) - _limit;
                  var query = bd.sp_search_actividad_evaluada(_ID_ORGANIZACION,
                         _ID_DEPARTAMENTO_ORGANIZACION,
@@ -367,7 +375,8 @@ namespace WCF_ENAP
                         _ID_CARGO,
                         _CONDICION,
                         startTime,
-                        endTime
+                        endTime,
+                        ((user!=null)?user.Username:null)
                         ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                  List<sp_search_actividad_evaluadaResult> results = query.ToList < sp_search_actividad_evaluadaResult>();
 

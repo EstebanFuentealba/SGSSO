@@ -26,7 +26,9 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("ActividadEvaluada", new WebServiceHostFactory(), typeof(ActividadEvaluada)));
             RouteTable.Routes.Add(new ServiceRoute("TempActividadEvaluada", new WebServiceHostFactory(), typeof(TempActividadEvaluada))); 
             RouteTable.Routes.Add(new ServiceRoute("ActividadGeneral", new WebServiceHostFactory(), typeof(ActividadGeneral)));
-			RouteTable.Routes.Add(new ServiceRoute("ActividadTrabajador", new WebServiceHostFactory(), typeof(ActividadTrabajador)));
+            RouteTable.Routes.Add(new ServiceRoute("ActividadProgramaAnualPrevencion", new WebServiceHostFactory(), typeof(ActividadProgramaAnualPrevencion))); 
+            
+            RouteTable.Routes.Add(new ServiceRoute("ActividadTrabajador", new WebServiceHostFactory(), typeof(ActividadTrabajador)));
 			RouteTable.Routes.Add(new ServiceRoute("Archivo", new WebServiceHostFactory(), typeof(Archivo)));
 			RouteTable.Routes.Add(new ServiceRoute("Area", new WebServiceHostFactory(), typeof(Area)));
 			RouteTable.Routes.Add(new ServiceRoute("Cargo", new WebServiceHostFactory(), typeof(Cargo)));
@@ -36,7 +38,6 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("Departamento", new WebServiceHostFactory(), typeof(Departamento)));
 			RouteTable.Routes.Add(new ServiceRoute("Division", new WebServiceHostFactory(), typeof(Division)));
 			RouteTable.Routes.Add(new ServiceRoute("Empresa", new WebServiceHostFactory(), typeof(Empresa)));
-			RouteTable.Routes.Add(new ServiceRoute("EvaluacionMensual", new WebServiceHostFactory(), typeof(EvaluacionMensual)));
 			RouteTable.Routes.Add(new ServiceRoute("Evento", new WebServiceHostFactory(), typeof(Evento)));
 			RouteTable.Routes.Add(new ServiceRoute("EventoEmpresa", new WebServiceHostFactory(), typeof(EventoEmpresa)));
 			RouteTable.Routes.Add(new ServiceRoute("EventoTrabajador", new WebServiceHostFactory(), typeof(EventoTrabajador)));
@@ -49,11 +50,10 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("Organizacion", new WebServiceHostFactory(), typeof(Organizacion)));
 			RouteTable.Routes.Add(new ServiceRoute("ParteCorporal", new WebServiceHostFactory(), typeof(ParteCorporal)));
 			RouteTable.Routes.Add(new ServiceRoute("Peligro", new WebServiceHostFactory(), typeof(Peligro)));
-			RouteTable.Routes.Add(new ServiceRoute("ProgramaActividad", new WebServiceHostFactory(), typeof(ProgramaActividad)));
 			RouteTable.Routes.Add(new ServiceRoute("ProgramaAnual", new WebServiceHostFactory(), typeof(ProgramaAnual)));
 			RouteTable.Routes.Add(new ServiceRoute("PuntoGeografico", new WebServiceHostFactory(), typeof(PuntoGeografico)));
 			RouteTable.Routes.Add(new ServiceRoute("RecursoComprometido", new WebServiceHostFactory(), typeof(RecursoComprometido)));
-			RouteTable.Routes.Add(new ServiceRoute("SubActividad", new WebServiceHostFactory(), typeof(SubActividad)));
+
 			RouteTable.Routes.Add(new ServiceRoute("Trabajador", new WebServiceHostFactory(), typeof(Trabajador)));
 			RouteTable.Routes.Add(new ServiceRoute("Usuario", new WebServiceHostFactory(), typeof(Usuario)));
 			
