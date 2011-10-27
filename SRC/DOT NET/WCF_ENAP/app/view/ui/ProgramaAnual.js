@@ -8,51 +8,69 @@
     initComponent: function () {
         var me = this,winActividadProgramaAnual;
 
+        Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged',function(store,opts) {
+            Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load();
+        });
+        Ext.StoreManager.lookup('dsProgramaAnual').on('datachanged',function(store,opts) {
+            Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load();
+        });
         Ext.applyIf(me, {
             items: [
-            /*{
-            xtype: 'chart',
-            height: 150,
-            margin: '5 5 5 5',
-            width: 820,
-            animate: true,
-            insetPadding: 20,
-            axes: [
-            {
-            type: 'Category',
-            fields: [
-            'x'
-            ],
-            position: 'bottom',
-            title: 'Category Axis'
-            },
-            {
-            type: 'Numeric',
-            fields: [
-            'y'
-            ],
-            position: 'left',
-            title: 'Numeric Axis',
-            maximum: 100,
-            minimum: 0
-            }
-            ],
-            series: [
-            {
-            type: 'column',
-            label: {
-            display: 'insideEnd',
-            field: 'y',
-            color: '#333',
-            'text-anchor': 'middle'
-            },
-            xField: 'x',
-            yField: [
-            'y'
-            ]
-            }
-            ]
-            },*/
+                {
+                height: 170,
+                layout: 'fit',
+                margin: '5 10 5 10',
+                items: [{
+                    xtype: 'chart',
+                    store: 'dsGraphAvanceProgramaAnual',
+                    flex: 1,
+                    shadow: true,
+                    animate: true,
+                    axes: [
+                        {
+                            type: 'Category',
+                            fields: [
+                                'NOMBRE_PROGRAMA'
+                            ],
+                            position: 'bottom',
+                            title: 'Programas',
+                            label: {
+                                renderer: function(v) {
+                                    return Ext.String.ellipsis(v, 15, false);
+                                },
+                                font: '9px Arial'
+                            }
+                        },
+                        {
+                            type: 'Numeric',
+                            fields: [
+                                'PERCENT_TOTAL'
+                            ],
+                            position: 'left',
+                            title: '% Avance',
+                            maximum: 100,
+                            minimum: 0
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'column',
+                            label: {
+                                contrast: true,
+                                display: 'insideEnd',
+                                field: 'PERCENT_TOTAL',
+                                color: '#000',
+                                orientation: 'vertical',
+                                'text-anchor': 'middle'
+                            },
+                            xField: 'NOMBRE_PROGRAMA',
+                            yField: [
+                                'PERCENT_TOTAL'
+                            ]
+                        }
+                    ]
+                }]
+                },
                 {
                 xtype: 'panel',
                 height: 562,
@@ -77,22 +95,26 @@
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'NOMBRE_PROGRAMA',
-                                    text: 'NOMBRE_PROGRAMA'
+                                    text: 'Nombre del Programa',
+                                    flex: 0.4
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'ID_DIVISION',
-                                    text: 'DIVISION'
+                                    text: 'División',
+                                    flex: 0.2
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'OBJETIVO',
-                                    text: 'OBJETIVO'
+                                    text: 'Objetivo',
+                                    flex: 0.2
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'META',
-                                    text: 'META'
+                                    text: 'Meta',
+                                    flex: 0.2
                                 }
                             ],
                         dockedItems: [
@@ -127,7 +149,6 @@
                                                 console.log(records);
                                             }
                                     });
-                                    
                                     form.loadRecord(record);
                                     winActividadProgramaAnual.show();
                                     

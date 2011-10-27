@@ -9,6 +9,7 @@
                     winMedidas,
                     winMedida,
                     winActividadEspecifica,
+                    winAddCargo,
                     tempStore,
                     isLoadedActividadEspecifica = false,
                     isLoadedPeligro = false;
@@ -16,7 +17,24 @@
             storePeligro = Ext.data.StoreManager.lookup('dsPeligro'),
             storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada'),
             storeMatrizRiesgo = Ext.data.StoreManager.lookup('dsMatrizRiesgo');
-        console.log(storeActividadEspecifica.isLoading());
+
+
+        Ext.StoreManager.lookup('dsActividadEspecifica').on('write', function (store, operation, index, eOpts) {
+            var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Create') {
+                Ext.getCmp('cmb_evalua_actividad_especifica').select(record);
+            }
+        });
+        Ext.StoreManager.lookup('dsCargo').on('write', function (store, operation, index, eOpts) {
+            var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Create') {
+                Ext.getCmp('cmb_matriz_cargo').select(record);
+            }
+        });
+
+
         storeActividadEspecifica.on('load', function (store, records, options, grid) {
             isLoadedActividadEspecifica = true;
             onLoadedAll();
@@ -421,7 +439,7 @@
                                     },
                                     {
                                         xtype: 'button',
-                                        margin: '0 0 0 3',
+                                        margin: '0 0 0 5',
                                         iconCls: 'btn-add',
                                         columnWidth: 0.06,
                                         handler: function () {
@@ -472,18 +490,79 @@
                                     }
                                 ]
                            },
-                            {
-                                xtype: 'combobox',
-                                fieldLabel: 'Cargo <a class="tooltip" href="#" data-qtip="Papel, cargo u ocupación asociada a la actividad evaluada.">[<b>?</b>]</a>',
-                                store: 'dsCargo',
-                                displayField: 'NOMBRE_CARGO',
-                                labelWidth: 150,
-                                valueField: 'ID_CARGO',
-                                queryMode: 'local',
-                                anchor: '100%',
-                                name: 'ID_CARGO',
-                                allowBlank: false
-                            },
+                           {
+                               xtype: 'panel',
+                               border: 0,
+                               layout: {
+                                   type: 'column'
+                               },
+                               items: [
+                                {
+                                    xtype: 'combobox',
+                                    id: 'cmb_matriz_cargo',
+                                    fieldLabel: 'Cargo <a class="tooltip" href="#" data-qtip="Papel, cargo u ocupación asociada a la actividad evaluada.">[<b>?</b>]</a>',
+                                    labelWidth: 150,
+                                    displayField: 'NOMBRE_CARGO',
+                                    store: 'dsCargo',
+                                    valueField: 'ID_CARGO',
+                                    columnWidth: 0.94,
+                                    name: 'ID_CARGO',
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    iconCls: 'btn-add',
+                                    columnWidth: 0.06,
+                                    handler: function () {
+                                        if (!winAddCargo) {
+                                            winAddCargo = Ext.create('Ext.window.Window', {
+                                                modal: true,
+                                                closeAction: 'hide',
+                                                title: 'Agrega Cargo',
+                                                width: 600,
+                                                items: [
+                                                    {
+                                                        xtype: 'form',
+
+                                                        id: 'Form_Cargo',
+                                                        margin: '5 5 5 5',
+                                                        bodyPadding: 10,
+                                                        title: 'Datos del Cargo',
+                                                        items: [{ "xtype": "textfield", "fieldLabel": "Nombre Cargo", "anchor": "100%", "name": "NOMBRE_CARGO", "labelWidth": 120}],
+                                                        buttons: [{
+                                                            text: 'Agregar',
+                                                            handler: function () {
+                                                                var new_object,
+                                                                    errors,
+                                                                    form;
+
+                                                                form = this.up('form').getForm();
+                                                                new_object = Ext.create('WCF_ENAP.model.Cargo', form.getValues());
+                                                                errors = new_object.validate();
+
+                                                                if (errors.isValid() && form.isValid()) {
+                                                                    this.disable(true);
+                                                                    Ext.data.StoreManager.lookup('dsCargo').insert(0, new_object);
+                                                                    form.reset();
+                                                                    winAddCargo.hide();
+                                                                } else {
+                                                                    form.markInvalid(errors);
+                                                                }
+                                                                this.enable(true);
+                                                            }
+                                                        }]
+                                                    }
+                                                ]
+
+                                            });
+
+                                        }
+                                        winAddCargo.show();
+                                    }
+                                }
+                            ]
+                           },
                             {
                                 xtype: 'radiogroup',
                                 fieldLabel: 'Es <a class="tooltip" href="#" data-qtip="Es el tipo de actividad: <ul><li>Rutinaria.</li><li>No Rutinaria.</li><li>En situación de Emergencia.</li></ul>">[<b>?</b>]</a>',
@@ -753,7 +832,7 @@
                                                 title: 'Medidas de Control',
                                                 listeners: {
                                                     resize: function (win, width, height, options) {
-                                                        Ext.getCmp('grid-medidas-de-control').setHeight(height-40);
+                                                        Ext.getCmp('grid-medidas-de-control').setHeight(height - 40);
                                                         Ext.getCmp('grid-medidas-de-control').doLayout();
                                                     }
                                                 },
@@ -773,12 +852,32 @@
                                                                 xtype: 'gridcolumn',
                                                                 flex: 1,
                                                                 dataIndex: 'NOM_MEDIDA_DE_CONTROL',
-                                                                text: 'Medida de Control'
+                                                                text: 'Medida de Control',
+                                                                filter: {
+                                                                    type: 'string'
+                                                                    // specify disabled to disable the filter menu
+                                                                    //, disabled: true
+                                                                }
                                                             }
                                                         ],
                                                         viewConfig: {
 
                                                     },
+                                                    features: [{
+                                                        ftype: 'filters',
+                                                        // encode and local configuration options defined previously for easier reuse
+                                                        encode: false, // json encode the filter query
+                                                        local: true,   // defaults to false (remote filtering)
+
+                                                        // Filters are most naturally placed in the column definition, but can also be
+                                                        // added here.
+                                                        filters: [
+                                                            {
+                                                                type: 'boolean',
+                                                                dataIndex: 'visible'
+                                                            }
+                                                        ]
+                                                    }],
                                                     selModel: Ext.create('Ext.selection.CheckboxModel', {
                                                         checkOnly: true,
                                                         allowDeselect: true,

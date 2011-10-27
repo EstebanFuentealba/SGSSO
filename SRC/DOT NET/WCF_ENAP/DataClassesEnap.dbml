@@ -372,11 +372,11 @@
   <Table Name="dbo.TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO">
     <Type Name="TBL_GRUPO_PRIVILEGIO">
       <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="PRIVILEGIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ID_MODULO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PRIVILEGIO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="TBL_GRUPO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
-      <Association Name="TBL_MODULO_TBL_GRUPO_PRIVILEGIO" Member="TBL_MODULO" ThisKey="ID_MODULO" OtherKey="ID_MODULO" Type="TBL_MODULO" IsForeignKey="true" />
+      <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_NODO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_NODO" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_HISTORIAL_EMPRESA" Member="TBL_HISTORIAL_EMPRESA">
@@ -421,14 +421,28 @@
       <Association Name="TBL_MEDIDA_DE_CONTROL_TBL_PELIGRO_MEDIDA" Member="TBL_PELIGRO_MEDIDA" ThisKey="ID_MEDIDAS_DE_CONTROL" OtherKey="ID_MEDIDAS_DE_CONTROL" Type="TBL_PELIGRO_MEDIDA" />
     </Type>
   </Table>
-  <Table Name="dbo.TBL_MODULO" Member="TBL_MODULO">
-    <Type Name="TBL_MODULO">
-      <Column Name="ID_MODULO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.TBL_MODULO_STORE" Member="TBL_MODULO_STORE">
+    <Type Name="TBL_MODULO_STORE">
+      <Column Name="ID_STORE" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TBL_NODO_TBL_MODULO_STORE" Member="TBL_NODO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_NODO" IsForeignKey="true" />
+      <Association Name="TBL_STORE_TBL_MODULO_STORE" Member="TBL_STORE" ThisKey="ID_STORE" OtherKey="ID_STORE" Type="TBL_STORE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBL_NODO" Member="TBL_NODO">
+    <Type Name="TBL_NODO">
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NODO_PADRE" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="DESCRIPCION_MODULO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="URL_MODULO" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ID_COMPONENTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="TBL_MODULO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_MODULO" OtherKey="ID_MODULO" Type="TBL_GRUPO_PRIVILEGIO" />
+      <Column Name="TIPO_NODO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ICONCLS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="N_ORDER" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_GRUPO_PRIVILEGIO" />
+      <Association Name="TBL_NODO_TBL_MODULO_STORE" Member="TBL_MODULO_STORE" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_MODULO_STORE" />
+      <Association Name="TBL_NODO_TBL_NODO" Member="TBL_NODO2" ThisKey="ID_NODO" OtherKey="NODO_PADRE" Type="TBL_NODO" />
+      <Association Name="TBL_NODO_TBL_NODO" Member="TBL_NODO1" ThisKey="NODO_PADRE" OtherKey="ID_NODO" Type="TBL_NODO" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_ORGANIZACION" Member="TBL_ORGANIZACION">
@@ -507,6 +521,13 @@
       <Column Name="NOMBRE_RECURSO" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
       <Column Name="DESCRIPCION" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="TBL_RECURSO_COMPROMETIDO_TBL_ACCION_CORRECTIVA_RECURSO" Member="TBL_ACCION_CORRECTIVA_RECURSO" ThisKey="ID_RECURSO_COMPROMETIDO" OtherKey="ID_RECURSO_COMPROMETIDO" Type="TBL_ACCION_CORRECTIVA_RECURSO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBL_STORE" Member="TBL_STORE">
+    <Type Name="TBL_STORE">
+      <Column Name="ID_STORE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE_STORE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="TBL_STORE_TBL_MODULO_STORE" Member="TBL_MODULO_STORE" ThisKey="ID_STORE" OtherKey="ID_STORE" Type="TBL_MODULO_STORE" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_TRABAJADOR" Member="TBL_TRABAJADOR">
@@ -602,6 +623,30 @@
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_indicadores_all_programa_anual" Method="sp_indicadores_all_programa_anual">
+    <ElementType Name="sp_indicadores_all_programa_anualResult">
+      <Column Name="PERCENT_TOTAL" Type="System.Decimal" DbType="Decimal(38,16) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_indicadores_by_programa_anual" Method="sp_indicadores_by_programa_anual">
+    <Parameter Name="ID_PROGRAMA" Parameter="iD_PROGRAMA" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_indicadores_by_programa_anualResult">
+      <Column Name="ENERO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="FEBRERO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="MARZO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="ABRIL" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="MAYO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="JUNIO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="JULIO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="AGOSTO" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="SEPTIEMBRE" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="OCTUBRE" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="NOVIEMBRE" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
+      <Column Name="DICIEMBRE" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

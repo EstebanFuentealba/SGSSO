@@ -7,6 +7,20 @@ go
 
 if exists (select 1
           from sysobjects
+          where  id = object_id('SP_INDICADORES_ALL_PROGRAMA_ANUAL')
+          and type = 'P')
+   drop procedure SP_INDICADORES_ALL_PROGRAMA_ANUAL
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_INDICADORES_BY_PROGRAMA_ANUAL')
+          and type = 'P')
+   drop procedure SP_INDICADORES_BY_PROGRAMA_ANUAL
+go
+
+if exists (select 1
+          from sysobjects
           where  id = object_id('SP_SEARCH_ACTIVIDAD_EVALUADA')
           and type = 'P')
    drop procedure SP_SEARCH_ACTIVIDAD_EVALUADA
@@ -287,16 +301,16 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_GRUPO_PRIVILEGIO') and o.name = 'FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP')
+   where r.fkeyid = object_id('TBL_GRUPO_PRIVILEGIO') and o.name = 'FK_TBL_GRUP_REFERENCE_TBL_NODO')
 alter table TBL_GRUPO_PRIVILEGIO
-   drop constraint FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP
+   drop constraint FK_TBL_GRUP_REFERENCE_TBL_NODO
 go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_GRUPO_PRIVILEGIO') and o.name = 'FK_TBL_GRUP_MODULO_GR_TBL_MODU')
+   where r.fkeyid = object_id('TBL_GRUPO_PRIVILEGIO') and o.name = 'FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP')
 alter table TBL_GRUPO_PRIVILEGIO
-   drop constraint FK_TBL_GRUP_MODULO_GR_TBL_MODU
+   drop constraint FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP
 go
 
 if exists (select 1
@@ -325,6 +339,27 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_MATRIZ_ACTIVIDAD') and o.name = 'FK_TBL_MATR_INCLUYE_TBL_MATR')
 alter table TBL_MATRIZ_ACTIVIDAD
    drop constraint FK_TBL_MATR_INCLUYE_TBL_MATR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_MODULO_STORE') and o.name = 'FK_TBL_MODU_REFERENCE_TBL_NODO')
+alter table TBL_MODULO_STORE
+   drop constraint FK_TBL_MODU_REFERENCE_TBL_NODO
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_MODULO_STORE') and o.name = 'FK_TBL_MODU_REFERENCE_TBL_STOR')
+alter table TBL_MODULO_STORE
+   drop constraint FK_TBL_MODU_REFERENCE_TBL_STOR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_NODO') and o.name = 'FK_TBL_NODO_REFERENCE_TBL_NODO')
+alter table TBL_NODO
+   drop constraint FK_TBL_NODO_REFERENCE_TBL_NODO
 go
 
 if exists (select 1
@@ -672,9 +707,16 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('TBL_MODULO')
+           where  id = object_id('TBL_MODULO_STORE')
             and   type = 'U')
-   drop table TBL_MODULO
+   drop table TBL_MODULO_STORE
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_NODO')
+            and   type = 'U')
+   drop table TBL_NODO
 go
 
 if exists (select 1
@@ -742,6 +784,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('TBL_STORE')
+            and   type = 'U')
+   drop table TBL_STORE
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('TBL_TRABAJADOR')
             and   type = 'U')
    drop table TBL_TRABAJADOR
@@ -789,6 +838,14 @@ if exists(select 1 from systypes where name='TIPO_FRECUENCIA')
    execute sp_droptype TIPO_FRECUENCIA
 go
 
+if exists(select 1 from systypes where name='TIPO_NODO')
+   execute sp_unbindrule TIPO_NODO
+go
+
+if exists(select 1 from systypes where name='TIPO_NODO')
+   execute sp_droptype TIPO_NODO
+go
+
 if exists(select 1 from systypes where name='TURNO')
    execute sp_unbindrule TURNO
 go
@@ -809,6 +866,10 @@ if exists (select 1 from sysobjects where id=object_id('R_TIPO_FRECUENCIA') and 
    drop rule  R_TIPO_FRECUENCIA
 go
 
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_NODO') and type='R')
+   drop rule  R_TIPO_NODO
+go
+
 if exists (select 1 from sysobjects where id=object_id('R_TURNO') and type='R')
    drop rule  R_TURNO
 go
@@ -823,6 +884,10 @@ go
 
 create rule R_TIPO_FRECUENCIA as
       @column between 1 and 7 and @column in (1,2,3,4,5,6,7)
+go
+
+create rule R_TIPO_NODO as
+      @column between 1 and 2 and @column in (1,2)
 go
 
 create rule R_TURNO as
@@ -860,6 +925,15 @@ execute sp_addtype TIPO_FRECUENCIA, 'int'
 go
 
 execute sp_bindrule R_TIPO_FRECUENCIA, TIPO_FRECUENCIA
+go
+
+/*==============================================================*/
+/* Domain: TIPO_NODO                                            */
+/*==============================================================*/
+execute sp_addtype TIPO_NODO, 'int'
+go
+
+execute sp_bindrule R_TIPO_NODO, TIPO_NODO
 go
 
 /*==============================================================*/
@@ -1382,11 +1456,11 @@ go
 /*==============================================================*/
 create table TBL_GRUPO_PRIVILEGIO (
    ID_GRUPO             int                  not null,
-   PRIVILEGIO           int                  null
-      constraint CKC_PRIVILEGIO_TBL_GRUP check (PRIVILEGIO is null or (PRIVILEGIO between 1 and 4 and PRIVILEGIO in (1,2,3,4))),
-   ID_MODULO            int                  not null,
+   PRIVILEGIO           int                  not null
+      constraint CKC_PRIVILEGIO_TBL_GRUP check (PRIVILEGIO between 1 and 4 and PRIVILEGIO in (1,2,3,4)),
+   ID_NODO              int                  not null,
    ESTADO               bit                  null,
-   constraint PK_TBL_GRUPO_PRIVILEGIO primary key nonclustered (ID_GRUPO, ID_MODULO)
+   constraint PK_TBL_GRUPO_PRIVILEGIO primary key nonclustered (ID_GRUPO, PRIVILEGIO, ID_NODO)
 )
 go
 
@@ -1440,16 +1514,30 @@ create table TBL_MEDIDA_DE_CONTROL (
 go
 
 /*==============================================================*/
-/* Table: TBL_MODULO                                            */
+/* Table: TBL_MODULO_STORE                                      */
 /*==============================================================*/
-create table TBL_MODULO (
-   ID_MODULO            int                  identity,
+create table TBL_MODULO_STORE (
+   ID_STORE             int                  not null,
+   ID_NODO              int                  not null,
+   constraint PK_TBL_MODULO_STORE primary key (ID_STORE, ID_NODO)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_NODO                                              */
+/*==============================================================*/
+create table TBL_NODO (
+   ID_NODO              int                  identity,
+   NODO_PADRE           int                  null,
    NOMBRE_MODULO        varchar(100)         null,
-   DESCRIPCION_MODULO   text                 null,
-   URL_MODULO           varchar(255)         null,
+   ID_COMPONENTE        varchar(200)         null,
    ESTADO               bit                  null,
-   constraint PK_TBL_MODULO primary key nonclustered (ID_MODULO),
-   constraint AK_KEY_2_TBL_MODU unique (NOMBRE_MODULO)
+   TIPO_NODO            int                  null
+      constraint CKC_TIPO_NODO_TBL_NODO check (TIPO_NODO is null or (TIPO_NODO between 1 and 2 and TIPO_NODO in (1,2))),
+   ICONCLS              varchar(100)         null,
+   N_ORDER              int                  null,
+   constraint PK_TBL_NODO primary key nonclustered (ID_NODO),
+   constraint AK_KEY_2_TBL_NODO unique (NOMBRE_MODULO)
 )
 go
 
@@ -1551,6 +1639,17 @@ create table TBL_RECURSO_COMPROMETIDO (
    NOMBRE_RECURSO       varchar(150)         null,
    DESCRIPCION          text                 null,
    constraint PK_TBL_RECURSO_COMPROMETIDO primary key nonclustered (ID_RECURSO_COMPROMETIDO)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_STORE                                             */
+/*==============================================================*/
+create table TBL_STORE (
+   ID_STORE             int                  identity,
+   NOMBRE_STORE         varchar(200)         not null,
+   constraint PK_TBL_STORE primary key (ID_STORE),
+   constraint AK_KEY_2_TBL_STOR unique (NOMBRE_STORE)
 )
 go
 
@@ -1798,13 +1897,13 @@ alter table TBL_EVENTO_TRABAJADOR
 go
 
 alter table TBL_GRUPO_PRIVILEGIO
-   add constraint FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP foreign key (ID_GRUPO)
-      references TBL_GRUPO (ID_GRUPO)
+   add constraint FK_TBL_GRUP_REFERENCE_TBL_NODO foreign key (ID_NODO)
+      references TBL_NODO (ID_NODO)
 go
 
 alter table TBL_GRUPO_PRIVILEGIO
-   add constraint FK_TBL_GRUP_MODULO_GR_TBL_MODU foreign key (ID_MODULO)
-      references TBL_MODULO (ID_MODULO)
+   add constraint FK_TBL_GRUP_GRUPO_GRU_TBL_GRUP foreign key (ID_GRUPO)
+      references TBL_GRUPO (ID_GRUPO)
 go
 
 alter table TBL_HISTORIAL_EMPRESA
@@ -1825,6 +1924,21 @@ go
 alter table TBL_MATRIZ_ACTIVIDAD
    add constraint FK_TBL_MATR_INCLUYE_TBL_MATR foreign key (ID_MATRIZ)
       references TBL_MATRIZ (ID_MATRIZ)
+go
+
+alter table TBL_MODULO_STORE
+   add constraint FK_TBL_MODU_REFERENCE_TBL_NODO foreign key (ID_NODO)
+      references TBL_NODO (ID_NODO)
+go
+
+alter table TBL_MODULO_STORE
+   add constraint FK_TBL_MODU_REFERENCE_TBL_STOR foreign key (ID_STORE)
+      references TBL_STORE (ID_STORE)
+go
+
+alter table TBL_NODO
+   add constraint FK_TBL_NODO_REFERENCE_TBL_NODO foreign key (NODO_PADRE)
+      references TBL_NODO (ID_NODO)
 go
 
 alter table TBL_PARTE_CORPORAL_TRABAJADOR
@@ -1977,6 +2091,159 @@ AS
 		WHERE MZ.ID_MATRIZ = @ID_MATRIZ
 		ORDER BY AE.ID_ACTIVIDAD_EVALUADA, PE.ID_PELIGRO
 GO
+CREATE PROCEDURE sp_indicadores_all_programa_anual
+AS
+SELECT
+		ROUND (ISNULL((((SUM(CASE 
+			WHEN AC.ENERO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
+		END)/COUNT(*)) + (SUM(CASE 
+			WHEN AC.FEBRERO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.MARZO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.ABRIL_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
+		END)/COUNT(*)) + (SUM(CASE 
+			WHEN AC.MAYO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
+		END)/COUNT(*)) + (SUM(CASE 
+			WHEN AC.JUNIO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.JULIO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.AGOSTO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
+		END)/COUNT(*)) + (SUM(CASE 
+			WHEN AC.SEPTIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
+		END)/COUNT(*)) + (SUM(CASE 
+			WHEN AC.OCTUBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.NOVIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
+		END)/COUNT(*))+ (SUM(CASE 
+			WHEN AC.DICIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
+		END)/COUNT(*)))/12),0),2) AS 'PERCENT_TOTAL', PA.ID_PROGRAMA_ANUAL, PA.NOMBRE_PROGRAMA
+	FROM TBL_ACTIVIDAD AC
+		INNER JOIN TBL_PROGRAMA_ANUAL PA ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
+	GROUP BY PA.ID_PROGRAMA_ANUAL,PA.NOMBRE_PROGRAMA
+GO
+CREATE PROCEDURE sp_indicadores_by_programa_anual
+	@ID_PROGRAMA   int = 0
+AS
+	DECLARE @ROW_COUNT INT
+		SELECT @ROW_COUNT = COUNT(*)
+		FROM TBL_ACTIVIDAD
+		WHERE ID_PROGRAMA_ANUAL=@ID_PROGRAMA;
+	SELECT
+		(SUM(CASE 
+			WHEN AC.ENERO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'ENERO', --Enero
+		(SUM(CASE 
+			WHEN AC.FEBRERO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'FEBRERO', --Febrero
+		(SUM(CASE 
+			WHEN AC.MARZO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'MARZO', --Marzo
+		(SUM(CASE 
+			WHEN AC.ABRIL_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'ABRIL', --Abril
+		(SUM(CASE 
+			WHEN AC.MAYO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'MAYO', --Mayo
+		(SUM(CASE 
+			WHEN AC.JUNIO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'JUNIO', --Junio
+		(SUM(CASE 
+			WHEN AC.JULIO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'JULIO', --Julio
+		(SUM(CASE 
+			WHEN AC.AGOSTO_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'AGOSTO', --Agosto
+		(SUM(CASE 
+			WHEN AC.SEPTIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'SEPTIEMBRE', --Septiembre
+		(SUM(CASE 
+			WHEN AC.OCTUBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'OCTUBRE', --Octubre
+		(SUM(CASE 
+			WHEN AC.NOVIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'NOVIEMBRE', --Noviembre
+		(SUM(CASE 
+			WHEN AC.DICIEMBRE_P = 0 THEN
+				0
+			ELSE
+				((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
+		END)/@ROW_COUNT) AS 'DICIEMBRE' --Diciembre
+	FROM TBL_ACTIVIDAD AC
+		INNER JOIN TBL_PROGRAMA_ANUAL PA ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
+	WHERE PA.ID_PROGRAMA_ANUAL=@ID_PROGRAMA 
+	GROUP BY PA.ID_PROGRAMA_ANUAL
+GO
 CREATE PROCEDURE sp_search_actividad_evaluada 
 	@ID_ORGANIZACION   int = 0,
 	@ID_DEPARTAMENTO_ORGANIZACION int = 0,
@@ -2028,6 +2295,8 @@ DECLARE @sql nvarchar(4000)
 	EXEC sp_executesql @sql, N'@ID_ORGANIZACION INT, @ID_DEPARTAMENTO_ORGANIZACION INT, @ID_DIVISION INT, @ID_AREA INT, @ID_ACTIVIDAD_GENERAL INT, @NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100), @ID_CARGO INT, @CONDICION INT, @FECHA_INICIO datetime, @FECHA_TERMINO datetime,@ID_USUARIO varchar(200)',
 					   @ID_ORGANIZACION, @ID_DEPARTAMENTO_ORGANIZACION, @ID_DIVISION, @ID_AREA, @ID_ACTIVIDAD_GENERAL, @NOMBRE_ACTIVIDAD_ESPECIFICA, @ID_CARGO, @CONDICION, @FECHA_INICIO, @FECHA_TERMINO, @ID_USUARIO
 GO
+
+
 
 
 
@@ -2612,6 +2881,146 @@ INSERT INTO TBL_DATO_EVENTO VALUES('Falla sistema control',2);
 INSERT INTO TBL_DATO_EVENTO VALUES('Desgaste o corrosión acelerada',2);
 INSERT INTO TBL_DATO_EVENTO VALUES('Sobre presión en equipo o sistema',2);
 INSERT INTO TBL_DATO_EVENTO VALUES('Sobre temperatura en el equipo sistema',2);
+GO
 
+SET IDENTITY_INSERT TBL_STORE ON
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(1,'dsAccion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(2,'dsAccionCorrectiva');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(3,'dsActividadEspecifica');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(4,'dsActividadEspecificaMatriz');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(5,'dsActividadEvaluada');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(6,'dsActividadGeneral');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(7,'dsActividadProgramaAnualPrevencion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(8,'dsActividadResponsable');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(9,'dsActividadTrabajador');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(10,'dsArchivo');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(11,'dsArea');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(12,'dsAreaGeografica');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(13,'dsBuscaMatriz');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(14,'dsCalificacion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(15,'dsCargo');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(16,'dsCausa');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(17,'dsCondicion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(18,'dsConsecuencia');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(19,'dsConsecuencias');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(20,'dsdatoEvento');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(21,'dsDepartamento');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(22,'dsDepartamentoOrganizacion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(23,'dsDivision');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(24,'dse0063');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(25,'dse0064');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(26,'dsEmpresa');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(27,'dsEvaluacionMensual');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(28,'dsEvento');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(29,'dsEventoCalificacion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(30,'dsEventoEmpresa');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(31,'dsEventoTrabajador');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(32,'dsEvidencia');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(33,'dsFrecuencia');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(34,'dsGrupo');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(35,'dsHerramientaPreventiva');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(36,'dsHistorialEmpresa');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(37,'dshistorialInforme');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(38,'dsImagenes');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(39,'dsInvestigacionAccionCorrectiva');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(40,'dsMatriz');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(41,'dsmatrizHistorial');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(42,'dsMatrizRiesgo');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(43,'dsMatrizRiesgoIdentificado');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(44,'dsMedidaDeControl');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(45,'dsMedidasDeControl');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(46,'dsModulo');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(47,'dsOrganizacion');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(48,'dsParteCorporal');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(49,'dsPeligro');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(50,'dsPeligroDetalle');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(51,'dsPeligroMedida');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(52,'dsPrivilegio');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(53,'dsProgramaActividad');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(54,'dsProgramaAnual');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(55,'dsPuntoGeografico');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(56,'dsRecursoComprometido');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(57,'dsRol');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(58,'dsSubActividad');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(59,'dsTempActividadEvaluada');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(60,'dsTrabajador');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(61,'dsUsuario');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(62,'dsValoracionConsecuencia');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(63,'dsValoracionProbabilidad');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(64,'dsStores');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(65,'dsNodes');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(66,'dsNode');
 
 GO
+/* 
+	MODULOS
+*/
+GO
+SET IDENTITY_INSERT TBL_STORE OFF
+GO
+SET IDENTITY_INSERT TBL_NODO ON
+INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(1,NULL,'.',null,1,1,NULL,1);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(2,1,'Administración',NULL,1,1,'administracion-icon',1);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(3,2,'Menu Generador','MenuGenerator',1,2,'generator-editor-icon',1);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(4,2,'Grupos','Grupo',1,2,'grupo-icon',2);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(5,2,'Usuarios','Usuario',1,2,'user-icon',3);
+/*
+	STORE <-> MODULO
+*/
+SET IDENTITY_INSERT TBL_NODO OFF
+GO
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(64,3);
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(65,3);
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(66,3);
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(34,4);
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(61,5);
+INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
+	VALUES(26,5);
+GO
+SET IDENTITY_INSERT TBL_STORE OFF
+GO
+SET IDENTITY_INSERT TBL_GRUPO ON
+INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(1,'Invitado','Grupo que tiene acceso limitado');
+SET IDENTITY_INSERT TBL_GRUPO OFF
+GO
+
+INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,1,1,1) -- Lectura
+-- INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,4,1,1) --Imprimir
+/*
+	SELECT * FROM TBL_NODO ND
+				INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON ND.ID_NODO=GP.ID_NODO
+				INNER JOIN TBL_GRUPO G ON G.ID_GRUPO = GP.ID_GRUPO
+			WHERE G.NOMBRE_GRUPO='Invitado'
+			ORDER BY ND.NODO_PADRE, ND.N_ORDER ASC
+*/
+GO
+
+
+USE enap_v3;
+GO
+WITH GetTree (NODO_PADRE, ID_NODO,Level)
+AS
+(
+-- Anchor member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
+    FROM TBL_NODO AS e
+    WHERE e.NODO_PADRE IS NULL
+    UNION ALL
+-- Recursive member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,Level + 1
+    FROM TBL_NODO AS e
+    INNER JOIN GetTree AS d
+        ON e.NODO_PADRE = d.ID_NODO
+)
+-- Statement that executes the CTE
+SELECT G.NODO_PADRE, GP.ID_NODO,GP.PRIVILEGIO, Level
+FROM GetTree G
+	LEFT JOIN TBL_GRUPO_PRIVILEGIO GP ON G.ID_NODO = GP.ID_NODO
+GO
+
+

@@ -251,9 +251,11 @@
                                         c_new_object.set('TURNO',name);
                                         records.push(c_new_object);
                                     });
+                                    console.log(records);
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, records);
                                 } else {
                                     new_object.set('TURNO','0');
+                                    console.log(new_object);
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, new_object);
                                 }  
                                 form.reset();

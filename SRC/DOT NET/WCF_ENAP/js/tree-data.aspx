@@ -40,7 +40,8 @@
                         'dsCargo',
                         'dsFrecuencia',
                         'dsEvidencia',
-                        'dsActividadProgramaAnualPrevencion'
+                        'dsActividadProgramaAnualPrevencion',
+                        'dsGraphAvanceProgramaAnual'
                     ]},
 					{"text":"Busca Programa Anual","id":"BuscaProgramaAnual","leaf":true,iconCls: "buscar-icon","stores":[]}
 				]
@@ -103,7 +104,8 @@
 				{"text":"Grupos","id":"Grupo","leaf":true,iconCls: "grupo-icon","stores":["dsGrupo"]},
 				{"text":"Usuarios","id":"Usuario","leaf":true,iconCls: "user-icon","stores":["dsEmpresa","dsUsuario" ]},
 				{"text":"Empresas Contratistas","id":"Empresa","leaf":true,"stores":["dsEmpresa"]},
-				{"text":"Usuario Grupo","id":"UsuarioGrupo","leaf":true,"stores":["dsUsuarioGrupo"]}
+				{"text":"Usuario Grupo","id":"UsuarioGrupo","leaf":true,"stores":["dsUsuarioGrupo"]},
+                {"text":"Generador de Menú","id":"MenuGenerator","leaf":true,iconCls: "generator-editor-icon","stores":['dsStores','dsNodes','dsNode']}
 			]
 		},
         <% } %>

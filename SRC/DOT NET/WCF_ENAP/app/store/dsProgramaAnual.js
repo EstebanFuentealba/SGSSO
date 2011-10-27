@@ -8,7 +8,20 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "OBJETIVO", "type": "string" },
         { "name": "META", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date" },
-        { "name": "NOMBRE_PROGRAMA", "type": "string" }
+        { "name": "NOMBRE_PROGRAMA", "type": "string" },
+        { "name": "ENERO", "type": "int", defaultValue: 0 },
+        { "name": "FEBRERO", "type": "int", defaultValue: 0 },
+        { "name": "MARZO", "type": "int", defaultValue: 0 },
+        { "name": "ABRIL", "type": "int", defaultValue: 0 },
+        { "name": "MAYO", "type": "int", defaultValue: 0 },
+        { "name": "JUNIO", "type": "int", defaultValue: 0 },
+        { "name": "JULIO", "type": "int", defaultValue: 0 },
+        { "name": "AGOSTO", "type": "int", defaultValue: 0 },
+        { "name": "SEPTIEMBRE", "type": "int", defaultValue: 0 },
+        { "name": "OCTUBRE", "type": "int", defaultValue: 0 },
+        { "name": "NOVIEMBRE", "type": "int", defaultValue: 0 },
+        { "name": "DICIEMBRE", "type": "int", defaultValue: 0 }
+
     ]
 });
 Ext.define('WCF_ENAP.store.dsProgramaAnual', {

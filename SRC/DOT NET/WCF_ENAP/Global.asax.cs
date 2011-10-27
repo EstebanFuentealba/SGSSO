@@ -26,8 +26,10 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("ActividadEvaluada", new WebServiceHostFactory(), typeof(ActividadEvaluada)));
             RouteTable.Routes.Add(new ServiceRoute("TempActividadEvaluada", new WebServiceHostFactory(), typeof(TempActividadEvaluada))); 
             RouteTable.Routes.Add(new ServiceRoute("ActividadGeneral", new WebServiceHostFactory(), typeof(ActividadGeneral)));
-            RouteTable.Routes.Add(new ServiceRoute("ActividadProgramaAnualPrevencion", new WebServiceHostFactory(), typeof(ActividadProgramaAnualPrevencion))); 
-            
+            RouteTable.Routes.Add(new ServiceRoute("ActividadProgramaAnualPrevencion", new WebServiceHostFactory(), typeof(ActividadProgramaAnualPrevencion)));
+            RouteTable.Routes.Add(new ServiceRoute("GraphAvanceProgramaAnual", new WebServiceHostFactory(), typeof(GraphAvanceProgramaAnual)));
+            RouteTable.Routes.Add(new ServiceRoute("Stores", new WebServiceHostFactory(), typeof(Stores)));
+ 
             RouteTable.Routes.Add(new ServiceRoute("ActividadTrabajador", new WebServiceHostFactory(), typeof(ActividadTrabajador)));
 			RouteTable.Routes.Add(new ServiceRoute("Archivo", new WebServiceHostFactory(), typeof(Archivo)));
 			RouteTable.Routes.Add(new ServiceRoute("Area", new WebServiceHostFactory(), typeof(Area)));
@@ -46,7 +48,7 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("HistorialEmpresa", new WebServiceHostFactory(), typeof(HistorialEmpresa)));
 			RouteTable.Routes.Add(new ServiceRoute("Matriz", new WebServiceHostFactory(), typeof(Matriz)));
 			RouteTable.Routes.Add(new ServiceRoute("MedidaDeControl", new WebServiceHostFactory(), typeof(MedidaDeControl)));
-			RouteTable.Routes.Add(new ServiceRoute("Modulo", new WebServiceHostFactory(), typeof(Modulo)));
+            RouteTable.Routes.Add(new ServiceRoute("Nodo", new WebServiceHostFactory(), typeof(Nodo)));
 			RouteTable.Routes.Add(new ServiceRoute("Organizacion", new WebServiceHostFactory(), typeof(Organizacion)));
 			RouteTable.Routes.Add(new ServiceRoute("ParteCorporal", new WebServiceHostFactory(), typeof(ParteCorporal)));
 			RouteTable.Routes.Add(new ServiceRoute("Peligro", new WebServiceHostFactory(), typeof(Peligro)));

@@ -14,6 +14,7 @@
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
 	<link href="/ux/css/data-view.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/CenterLayout.css" rel="stylesheet" type="text/css" />
+
     <script src="/ext-4.0.2a/ext-all-debug.js" type="text/javascript"></script>
 	<script src="/ext-4.0.2a/locale/ext-lang-es.js"></script>
     <!--
@@ -48,7 +49,7 @@
         });
         Ext.define('WCF_ENAP.view.ui.MyTabPanel', {
             extend: 'Ext.tab.Panel',
-
+                    
             height: 432,
             width: 781,
             activeTab: 0,
@@ -224,13 +225,19 @@
     .grupo-icon{background:transparent url(/icons/group.png) 0 0 no-repeat !important;}
     .add-programaanual-icon{background:transparent url(/icons/chart_organisation_add.png) 0 0 no-repeat !important;}
     .update-programaanual-icon{background:transparent url(/icons/chart_organisation.png) 0 0 no-repeat !important;}
-    .excel-icon {background:transparent url(/icons/page_excel.png) 0 0 no-repeat !important;};
+    .excel-icon {background:transparent url(/icons/page_excel.png) 0 0 no-repeat !important;}
+    .generator-editor-icon {background:transparent url(/icons/cog_edit.png) 0 0 no-repeat !important;}
     .tooltip
     {
         float: right;        
     }
     </style>
     <script type="text/javascript">
+        Ext.require([
+            'Ext.ux.grid.FiltersFeature',
+            'Ext.ux.form.MultiSelect',
+            'Ext.ux.form.ItemSelector'
+        ]);
         /**
         * Rewrite of Ext.util.JSON to support .NET dates
         */
