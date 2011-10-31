@@ -19,8 +19,8 @@ namespace WCF_ENAP
         {
             bd = new DataClassesEnapDataContext();
         }
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<TBL_ACTIVIDAD>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_PROGRAMA_ANUAL={ID_PROGRAMA_ANUAL}")]
+        public JSONCollection<List<TBL_ACTIVIDAD>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int ID_PROGRAMA_ANUAL)
         {
             JSONCollection<List<TBL_ACTIVIDAD>> objJSON = new JSONCollection<List<TBL_ACTIVIDAD>>();
             try
@@ -38,7 +38,12 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_ACTIVIDAD.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.TBL_ACTIVIDAD.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir);
+                if (ID_PROGRAMA_ANUAL != 0)
+                {
+                    query = query.Where(w => w.ID_PROGRAMA_ANUAL == ID_PROGRAMA_ANUAL);
+                }
+                query = query.Select(r => r);
                 List<TBL_ACTIVIDAD> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_ACCION.Count<TBL_ACCION>();
@@ -58,7 +63,8 @@ namespace WCF_ENAP
             int ID_CARGO,
             int TIPO_FRECUENCIA,
             int CANTIDAD_FRECUENCIA,
-            char TURNO)
+            char TURNO,
+            int MES_INICIO)
         {
             JSONCollection<TBL_ACTIVIDAD> objJSON = new JSONCollection<TBL_ACTIVIDAD>();
             //try {
@@ -70,7 +76,8 @@ namespace WCF_ENAP
                     ID_EVIDENCIA = ID_EVIDENCIA,
                     ID_PROGRAMA_ANUAL = ID_PROGRAMA_ANUAL,
                     TIPO_FRECUENCIA = TIPO_FRECUENCIA,
-                    CANTIDAD_FRECUENCIA = CANTIDAD_FRECUENCIA
+                    CANTIDAD_FRECUENCIA = CANTIDAD_FRECUENCIA,
+                    MES_INICIO = MES_INICIO
                 };
                 bd.TBL_ACTIVIDAD.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
@@ -141,6 +148,7 @@ namespace WCF_ENAP
                 objeto.NOVIEMBRE_R = nuevo.NOVIEMBRE_R;
                 objeto.DICIEMBRE_P = nuevo.DICIEMBRE_P;
                 objeto.DICIEMBRE_R = nuevo.DICIEMBRE_R;
+                objeto.MES_INICIO = nuevo.MES_INICIO;
                 bd.SubmitChanges();
                 objJSON.items = objeto;
                 objJSON.totalCount = bd.TBL_ACCION.Count();

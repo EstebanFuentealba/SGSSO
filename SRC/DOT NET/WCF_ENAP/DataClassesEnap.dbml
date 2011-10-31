@@ -130,6 +130,7 @@
       <Column Name="DICIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DICIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TURNO" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="MES_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_CARGO_TBL_ACTIVIDAD" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
       <Association Name="TBL_EVIDENCIA_TBL_ACTIVIDAD" Member="TBL_EVIDENCIA" ThisKey="ID_EVIDENCIA" OtherKey="ID_EVIDENCIA" Type="TBL_EVIDENCIA" IsForeignKey="true" />
       <Association Name="TBL_PROGRAMA_ANUAL_TBL_ACTIVIDAD" Member="TBL_PROGRAMA_ANUAL" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_PROGRAMA_ANUAL" IsForeignKey="true" />
@@ -372,9 +373,14 @@
   <Table Name="dbo.TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO">
     <Type Name="TBL_GRUPO_PRIVILEGIO">
       <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="PRIVILEGIO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_READ" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_WRITE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_EDIT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_DELETE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_PRINT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="TBL_GRUPO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
       <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_NODO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_NODO" IsForeignKey="true" />
     </Type>
@@ -439,6 +445,7 @@
       <Column Name="TIPO_NODO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ICONCLS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="N_ORDER" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TIPO_DISPLAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_GRUPO_PRIVILEGIO" />
       <Association Name="TBL_NODO_TBL_MODULO_STORE" Member="TBL_MODULO_STORE" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_MODULO_STORE" />
       <Association Name="TBL_NODO_TBL_NODO" Member="TBL_NODO2" ThisKey="ID_NODO" OtherKey="NODO_PADRE" Type="TBL_NODO" />
@@ -500,7 +507,9 @@
       <Column Name="OBJETIVO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="META" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="MES_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ANO_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_PROGRAMA_ANUAL_TBL_ACTIVIDAD" Member="TBL_ACTIVIDAD" ThisKey="ID_PROGRAMA_ANUAL" OtherKey="ID_PROGRAMA_ANUAL" Type="TBL_ACTIVIDAD" />
       <Association Name="TBL_DEPARTAMENTO_ORGANIZACION_TBL_PROGRAMA_ANUAL" Member="TBL_DEPARTAMENTO_ORGANIZACION" ThisKey="ID_DEPARTAMENTO_ORGANIZACION" OtherKey="ID_DEPARTAMENTO_ORGANIZACION" Type="TBL_DEPARTAMENTO_ORGANIZACION" IsForeignKey="true" />
       <Association Name="TBL_DIVISION_TBL_PROGRAMA_ANUAL" Member="TBL_DIVISION" ThisKey="ID_DIVISION" OtherKey="ID_DIVISION" Type="TBL_DIVISION" IsForeignKey="true" />
@@ -537,7 +546,6 @@
       <Column Name="APELLIDO_MATERNO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="APELLIDO_PATERNO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="TELEFONO" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="ANOS_EXPERIENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_TRABAJADOR" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ANOS_EXPERIENCIA_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -560,6 +568,7 @@
       <Column Name="APELLIDO_PATERNO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="TELEFONO" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="ANOS_EXPERIENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IS_LOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO_GRUPO" />
       <Association Name="TBL_USUARIO_TBL_ACCION_CORRECTIVA" Member="TBL_ACCION_CORRECTIVA" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_ACCION_CORRECTIVA" />
       <Association Name="TBL_USUARIO_TBL_MATRIZ" Member="TBL_MATRIZ" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_MATRIZ" />
@@ -625,11 +634,26 @@
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_get_privilegios_by_usuario" Method="sp_get_privilegios_by_usuario">
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.String" DbType="VarChar(200)" />
+    <ElementType Name="sp_get_privilegios_by_usuarioResult">
+      <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="NODO_PADRE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ALLOW_READ" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_WRITE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_EDIT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_DELETE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_PRINT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.sp_indicadores_all_programa_anual" Method="sp_indicadores_all_programa_anual">
     <ElementType Name="sp_indicadores_all_programa_anualResult">
       <Column Name="PERCENT_TOTAL" Type="System.Decimal" DbType="Decimal(38,16) NOT NULL" CanBeNull="false" />
       <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="NOMBRE_PROGRAMA" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.sp_indicadores_by_programa_anual" Method="sp_indicadores_by_programa_anual">

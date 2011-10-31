@@ -1,8 +1,43 @@
 if exists (select 1
           from sysobjects
+          where id = object_id('TRIG_UPDATE_NODE')
+          and type = 'TR')
+   drop trigger TRIG_UPDATE_NODE
+go
+
+if exists (select 1
+          from sysobjects
+          where id = object_id('TRIG_ADD_NODE')
+          and type = 'TR')
+   drop trigger TRIG_ADD_NODE
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('FN_NODES_BY_PARENT')
+          and type = 'P')
+   drop procedure FN_NODES_BY_PARENT
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('FN_RECURSIVE_NODE')
+          and type = 'P')
+   drop procedure FN_RECURSIVE_NODE
+go
+
+if exists (select 1
+          from sysobjects
           where  id = object_id('SP_GET_MATRIZ_BY_ID')
           and type = 'P')
    drop procedure SP_GET_MATRIZ_BY_ID
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_GET_PRIVILEGIOS_BY_USUARIO')
+          and type = 'P')
+   drop procedure SP_GET_PRIVILEGIOS_BY_USUARIO
 go
 
 if exists (select 1
@@ -810,6 +845,18 @@ if exists (select 1
    drop table TBL_USUARIO_GRUPO
 go
 
+if exists(select 1 from systypes where name='DOMAIN_9')
+   execute sp_droptype DOMAIN_9
+go
+
+if exists(select 1 from systypes where name='MESES')
+   execute sp_unbindrule MESES
+go
+
+if exists(select 1 from systypes where name='MESES')
+   execute sp_droptype MESES
+go
+
 if exists(select 1 from systypes where name='MOMENTO_OCURRIDO')
    execute sp_unbindrule MOMENTO_OCURRIDO
 go
@@ -820,6 +867,14 @@ go
 
 if exists(select 1 from systypes where name='PRIVILEGIO')
    execute sp_droptype PRIVILEGIO
+go
+
+if exists(select 1 from systypes where name='TIPO_DISPLAY')
+   execute sp_unbindrule TIPO_DISPLAY
+go
+
+if exists(select 1 from systypes where name='TIPO_DISPLAY')
+   execute sp_droptype TIPO_DISPLAY
 go
 
 if exists(select 1 from systypes where name='TIPO_EVENTO')
@@ -854,8 +909,16 @@ if exists(select 1 from systypes where name='TURNO')
    execute sp_droptype TURNO
 go
 
+if exists (select 1 from sysobjects where id=object_id('R_MESES') and type='R')
+   drop rule  R_MESES
+go
+
 if exists (select 1 from sysobjects where id=object_id('R_MOMENTO_OCURRIDO') and type='R')
    drop rule  R_MOMENTO_OCURRIDO
+go
+
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_DISPLAY') and type='R')
+   drop rule  R_TIPO_DISPLAY
 go
 
 if exists (select 1 from sysobjects where id=object_id('R_TIPO_EVENTO') and type='R')
@@ -874,8 +937,16 @@ if exists (select 1 from sysobjects where id=object_id('R_TURNO') and type='R')
    drop rule  R_TURNO
 go
 
+create rule R_MESES as
+      @column between 1 and 12 and @column in (1,2,3,4,5,6,7,8,9,10,11,12)
+go
+
 create rule R_MOMENTO_OCURRIDO as
       @column between 1 and 3 and @column in (1,2,3)
+go
+
+create rule R_TIPO_DISPLAY as
+      @column between 1 and 2 and @column in (1,2)
 go
 
 create rule R_TIPO_EVENTO as
@@ -895,6 +966,21 @@ create rule R_TURNO as
 go
 
 /*==============================================================*/
+/* Domain: DOMAIN_9                                             */
+/*==============================================================*/
+execute sp_addtype DOMAIN_9, 'char(10)'
+go
+
+/*==============================================================*/
+/* Domain: MESES                                                */
+/*==============================================================*/
+execute sp_addtype MESES, 'int'
+go
+
+execute sp_bindrule R_MESES, MESES
+go
+
+/*==============================================================*/
 /* Domain: MOMENTO_OCURRIDO                                     */
 /*==============================================================*/
 execute sp_addtype MOMENTO_OCURRIDO, 'int'
@@ -907,6 +993,15 @@ go
 /* Domain: PRIVILEGIO                                           */
 /*==============================================================*/
 execute sp_addtype PRIVILEGIO, 'int'
+go
+
+/*==============================================================*/
+/* Domain: TIPO_DISPLAY                                         */
+/*==============================================================*/
+execute sp_addtype TIPO_DISPLAY, 'int'
+go
+
+execute sp_bindrule R_TIPO_DISPLAY, TIPO_DISPLAY
 go
 
 /*==============================================================*/
@@ -1108,6 +1203,8 @@ create table TBL_ACTIVIDAD (
       constraint CKC_DICIEMBRE_R_TBL_ACTI check (DICIEMBRE_R is null or (DICIEMBRE_R between 0 and 100)),
    TURNO                char(1)              null
       constraint CKC_TURNO_TBL_ACTI check (TURNO is null or (TURNO in ('A','B','C','D','0'))),
+   MES_INICIO           int                  null
+      constraint CKC_MES_INICIO_TBL_ACTI check (MES_INICIO is null or (MES_INICIO between 1 and 12 and MES_INICIO in (1,2,3,4,5,6,7,8,9,10,11,12))),
    constraint PK_TBL_ACTIVIDAD primary key nonclustered (ID_ACTIVIDAD)
 )
 go
@@ -1456,11 +1553,15 @@ go
 /*==============================================================*/
 create table TBL_GRUPO_PRIVILEGIO (
    ID_GRUPO             int                  not null,
-   PRIVILEGIO           int                  not null
-      constraint CKC_PRIVILEGIO_TBL_GRUP check (PRIVILEGIO between 1 and 4 and PRIVILEGIO in (1,2,3,4)),
    ID_NODO              int                  not null,
    ESTADO               bit                  null,
-   constraint PK_TBL_GRUPO_PRIVILEGIO primary key nonclustered (ID_GRUPO, PRIVILEGIO, ID_NODO)
+   ALLOW_READ           bit                  null,
+   ALLOW_WRITE          bit                  null,
+   ALLOW_EDIT           bit                  null,
+   ALLOW_DELETE         bit                  null,
+   ALLOW_PRINT          bit                  null,
+   ALLOW_CRUD           bit                  null,
+   constraint PK_TBL_GRUPO_PRIVILEGIO primary key nonclustered (ID_GRUPO, ID_NODO)
 )
 go
 
@@ -1536,6 +1637,8 @@ create table TBL_NODO (
       constraint CKC_TIPO_NODO_TBL_NODO check (TIPO_NODO is null or (TIPO_NODO between 1 and 2 and TIPO_NODO in (1,2))),
    ICONCLS              varchar(100)         null,
    N_ORDER              int                  null,
+   TIPO_DISPLAY         int                  null
+      constraint CKC_TIPO_DISPLAY_TBL_NODO check (TIPO_DISPLAY is null or (TIPO_DISPLAY between 1 and 2 and TIPO_DISPLAY in (1,2))),
    constraint PK_TBL_NODO primary key nonclustered (ID_NODO),
    constraint AK_KEY_2_TBL_NODO unique (NOMBRE_MODULO)
 )
@@ -1614,7 +1717,10 @@ create table TBL_PROGRAMA_ANUAL (
    OBJETIVO             text                 null,
    META                 text                 null,
    FECHA_CREACION       datetime             null,
-   NOMBRE_PROGRAMA      char(10)             null,
+   NOMBRE_PROGRAMA      varchar(255)         null,
+   MES_INICIO           int                  null
+      constraint CKC_MES_INICIO_TBL_PROG check (MES_INICIO is null or (MES_INICIO between 1 and 12 and MES_INICIO in (1,2,3,4,5,6,7,8,9,10,11,12))),
+   ANO_INICIO           int                  null,
    constraint PK_TBL_PROGRAMA_ANUAL primary key nonclustered (ID_PROGRAMA_ANUAL)
 )
 go
@@ -1662,7 +1768,6 @@ create table TBL_TRABAJADOR (
    APELLIDO_MATERNO     varchar(200)         null,
    APELLIDO_PATERNO     varchar(200)         null,
    TELEFONO             varchar(20)          null,
-   ANOS_EXPERIENCIA     int                  null,
    ID_TRABAJADOR        int                  identity,
    ID_CARGO             int                  null,
    ANOS_EXPERIENCIA_CARGO int                  null,
@@ -1686,6 +1791,7 @@ create table TBL_USUARIO (
    APELLIDO_PATERNO     varchar(200)         null,
    TELEFONO             varchar(20)          null,
    ANOS_EXPERIENCIA     int                  null,
+   IS_LOGUED            bit                  null,
    constraint PK_TBL_USUARIO primary key nonclustered (ID_USUARIO)
 )
 go
@@ -2006,6 +2112,86 @@ alter table TBL_USUARIO_GRUPO
       references TBL_GRUPO (ID_GRUPO)
 go
 
+CREATE FUNCTION fn_nodes_by_parent (@ID_NODO INT)
+RETURNS @nodes TABLE 
+(
+	ID_NODO INT,
+	NOMBRE_MODULO VARCHAR(200),
+	ALLOW_READ BIT,
+	ALLOW_WRITE BIT,
+	ALLOW_EDIT BIT,
+	ALLOW_DELETE BIT,
+	ALLOW_PRINT BIT,
+	ALLOW_CRUD BIT
+)
+AS
+BEGIN
+WITH NODESBYPARENT (ID_NODO,
+	NOMBRE_MODULO,
+	ALLOW_READ,
+	ALLOW_WRITE,
+	ALLOW_EDIT,
+	ALLOW_DELETE,
+	ALLOW_PRINT,
+	ALLOW_CRUD)
+AS
+(
+	SELECT 	
+		CHILD_ROW.ID_NODO,
+			CHILD_ROW.NOMBRE_MODULO,
+			GP.ALLOW_READ,
+			GP.ALLOW_WRITE,
+			GP.ALLOW_EDIT,
+			GP.ALLOW_DELETE,
+			GP.ALLOW_PRINT,
+			GP.ALLOW_CRUD
+	FROM TBL_NODO AS CURRENT_ROW
+		INNER JOIN TBL_NODO AS CHILD_ROW ON CURRENT_ROW.ID_NODO = CHILD_ROW.NODO_PADRE
+		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON GP.ID_NODO = CHILD_ROW.NODO_PADRE
+	WHERE CURRENT_ROW.ID_NODO=@ID_NODO AND GP.ALLOW_READ=1
+)
+	INSERT @nodes
+   SELECT ID_NODO,
+			NOMBRE_MODULO,
+			ALLOW_READ,
+			ALLOW_WRITE,
+			ALLOW_EDIT,
+			ALLOW_DELETE,
+			ALLOW_PRINT,
+			ALLOW_CRUD
+   FROM NODESBYPARENT
+   RETURN
+END; 
+GO
+CREATE FUNCTION fn_recursive_node ()
+RETURNS @nodes TABLE 
+(
+    NODO_PADRE INT,
+    ID_NODO INT,
+    LEVEL INT
+)
+AS
+BEGIN
+WITH GetTree (NODO_PADRE, ID_NODO,Level)
+AS
+(
+-- Anchor member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
+    FROM TBL_NODO AS e
+    WHERE e.NODO_PADRE IS NULL
+    UNION ALL
+-- Recursive member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,Level + 1
+    FROM TBL_NODO AS e
+    INNER JOIN GetTree AS d
+        ON e.NODO_PADRE = d.ID_NODO
+)
+	INSERT @nodes
+   SELECT NODO_PADRE, ID_NODO,Level
+   FROM GetTree
+   RETURN
+END; 
+GO
 CREATE PROCEDURE sp_get_matriz_by_id
 	@ID_MATRIZ   int = 0
 AS
@@ -2090,6 +2276,33 @@ AS
 				INNER JOIN TBL_DIVISION DIV ON AE.ID_DIVISION = DIV.ID_DIVISION
 		WHERE MZ.ID_MATRIZ = @ID_MATRIZ
 		ORDER BY AE.ID_ACTIVIDAD_EVALUADA, PE.ID_PELIGRO
+GO
+CREATE PROCEDURE sp_get_privilegios_by_usuario
+	@ID_USUARIO  VARCHAR(200) = ''
+AS
+WITH GetTree (NODO_PADRE, ID_NODO,Level)
+AS
+(
+-- Anchor member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
+    FROM TBL_NODO AS e
+    WHERE e.NODO_PADRE IS NULL
+    UNION ALL
+-- Recursive member definition
+    SELECT e.NODO_PADRE, e.ID_NODO,Level + 1
+    FROM TBL_NODO AS e
+    INNER JOIN GetTree AS d
+        ON e.NODO_PADRE = d.ID_NODO
+)
+-- Statement that executes the CTE
+SELECT NOD.NOMBRE_MODULO,G.NODO_PADRE, G.ID_NODO, Level,GP.ALLOW_READ,GP.ALLOW_WRITE,GP.ALLOW_EDIT,GP.ALLOW_DELETE,GP.ALLOW_PRINT,GP.ALLOW_CRUD
+FROM GetTree G
+	LEFT JOIN TBL_GRUPO_PRIVILEGIO GP ON G.ID_NODO = GP.ID_NODO
+	LEFT JOIN TBL_NODO NOD ON NOD.ID_NODO = G.ID_NODO
+	LEFT JOIN TBL_USUARIO_GRUPO UG ON UG.ID_GRUPO = GP.ID_GRUPO
+    INNER JOIN TBL_USUARIO U ON UG.ID_USUARIO = U.ID_USUARIO
+WHERE UG.ID_USUARIO = @ID_USUARIO OR (U.IS_LOGUED = 0 AND GP.ID_GRUPO=1 AND GP.ALLOW_READ = 1)
+ORDER BY Level,ISNULL(G.NODO_PADRE,0) ASC
 GO
 CREATE PROCEDURE sp_indicadores_all_programa_anual
 AS
@@ -2295,6 +2508,110 @@ DECLARE @sql nvarchar(4000)
 	EXEC sp_executesql @sql, N'@ID_ORGANIZACION INT, @ID_DEPARTAMENTO_ORGANIZACION INT, @ID_DIVISION INT, @ID_AREA INT, @ID_ACTIVIDAD_GENERAL INT, @NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100), @ID_CARGO INT, @CONDICION INT, @FECHA_INICIO datetime, @FECHA_TERMINO datetime,@ID_USUARIO varchar(200)',
 					   @ID_ORGANIZACION, @ID_DEPARTAMENTO_ORGANIZACION, @ID_DIVISION, @ID_AREA, @ID_ACTIVIDAD_GENERAL, @NOMBRE_ACTIVIDAD_ESPECIFICA, @ID_CARGO, @CONDICION, @FECHA_INICIO, @FECHA_TERMINO, @ID_USUARIO
 GO
+
+CREATE TRIGGER TRIG_UPDATE_NODE ON TBL_GRUPO_PRIVILEGIO
+AFTER INSERT, UPDATE
+AS
+
+	DECLARE @ID_NODO AS INT;
+	DECLARE @ID_GRUPO AS INT;
+	DECLARE @ALLOW_READ AS BIT;
+	DECLARE @ALLOW_WRITE AS BIT;
+	DECLARE @ALLOW_EDIT AS BIT;
+	DECLARE @ALLOW_DELETE AS BIT;
+	DECLARE @ALLOW_PRINT AS BIT;
+	DECLARE @ALLOW_CRUD AS BIT;
+	
+	 SELECT @ID_NODO = ID_NODO,
+			@ID_GRUPO = ID_GRUPO,
+			@ALLOW_READ = ALLOW_READ,
+			@ALLOW_WRITE = ALLOW_WRITE,
+			@ALLOW_EDIT = ALLOW_EDIT,
+			@ALLOW_DELETE = ALLOW_DELETE,
+			@ALLOW_PRINT = ALLOW_PRINT,
+			@ALLOW_CRUD = ALLOW_CRUD
+			FROM inserted;
+			
+	INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD,ESTADO)
+	SELECT ND.ID_NODO , 
+			@ID_GRUPO, 
+			@ALLOW_READ,
+			@ALLOW_WRITE,
+			@ALLOW_EDIT,
+			@ALLOW_DELETE,
+			@ALLOW_PRINT,
+			@ALLOW_CRUD,
+			1
+		FROM fn_recursive_node() G
+			INNER JOIN TBL_NODO ND ON G.ID_NODO=ND.ID_NODO
+		where nd.NODO_PADRE=@ID_NODO AND NOT EXISTS (SELECT * FROM TBL_GRUPO_PRIVILEGIO GP
+              WHERE ND.ID_NODO = GP.ID_NODO AND GP.ID_GRUPO = @ID_GRUPO)
+	/*SELECT ND.ID_NODO , @ID_GRUPO, @ALLOW_READ,
+			@ALLOW_WRITE,
+			@ALLOW_EDIT,
+			@ALLOW_DELETE,
+			@ALLOW_PRINT,
+			@ALLOW_CRUD,
+			1
+		FROM fn_recursive_node() G
+			INNER JOIN TBL_NODO ND ON G.ID_NODO=ND.NODO_PADRE
+	WHERE G.ID_NODO=@ID_NODO AND NOT EXISTS (SELECT * FROM TBL_NODO N
+              WHERE ND.ID_NODO = N.ID_NODO)
+	*/
+	 UPDATE TBL_GRUPO_PRIVILEGIO
+		SET ALLOW_READ = @ALLOW_READ,
+			ALLOW_WRITE = @ALLOW_WRITE,
+			ALLOW_EDIT = @ALLOW_EDIT,
+			ALLOW_DELETE = @ALLOW_DELETE,
+			ALLOW_PRINT = @ALLOW_PRINT,
+			ALLOW_CRUD = @ALLOW_CRUD
+	 WHERE ID_NODO IN (SELECT ND.ID_NODO 
+							FROM fn_recursive_node() G
+								INNER JOIN TBL_NODO ND ON G.ID_NODO=ND.NODO_PADRE 
+						WHERE G.ID_NODO=@ID_NODO) AND ID_GRUPO=@ID_GRUPO;
+GO
+
+
+
+CREATE TRIGGER TRIG_ADD_NODE
+ON TBL_NODO
+AFTER INSERT
+AS
+	DECLARE @NODO_PADRE AS INT
+	DECLARE @ID_NODO AS INT
+	
+	SELECT 	@ID_NODO = ID_NODO,
+			@NODO_PADRE = NODO_PADRE 
+	FROM INSERTED;
+	
+	INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,ID_NODO,ESTADO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD)
+	SELECT GP.ID_GRUPO,
+				@ID_NODO,
+				GP.ESTADO,
+				GP.ALLOW_READ,
+				GP.ALLOW_WRITE,
+				GP.ALLOW_EDIT,
+				GP.ALLOW_DELETE,
+				GP.ALLOW_PRINT,
+				GP.ALLOW_CRUD
+	FROM TBL_NODO ND
+		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON  ND.ID_NODO=GP.ID_NODO
+		WHERE ND.ID_NODO=@NODO_PADRE;
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2955,18 +3272,26 @@ GO
 /* 
 	MODULOS
 */
-GO
 SET IDENTITY_INSERT TBL_STORE OFF
 GO
+SET IDENTITY_INSERT TBL_GRUPO ON
+INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(1,'Invitado','Grupo que tiene acceso limitado');
+INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(2,'Administrador','Grupo que tiene acceso Total');
+SET IDENTITY_INSERT TBL_GRUPO OFF
+GO
+
+GO
 SET IDENTITY_INSERT TBL_NODO ON
+GO
 INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(1,NULL,'.',null,1,1,NULL,1);
+INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD,ESTADO)
+	VALUES(1,1,1,1,0,0,0,0,1) -- Lectura
 	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(2,1,'Administración',NULL,1,1,'administracion-icon',1);
 		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(3,2,'Menu Generador','MenuGenerator',1,2,'generator-editor-icon',1);
 		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(4,2,'Grupos','Grupo',1,2,'grupo-icon',2);
 		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(5,2,'Usuarios','Usuario',1,2,'user-icon',3);
-/*
-	STORE <-> MODULO
-*/
+
+GO
 SET IDENTITY_INSERT TBL_NODO OFF
 GO
 INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
@@ -2984,14 +3309,15 @@ INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
 GO
 SET IDENTITY_INSERT TBL_STORE OFF
 GO
-SET IDENTITY_INSERT TBL_GRUPO ON
-INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(1,'Invitado','Grupo que tiene acceso limitado');
-SET IDENTITY_INSERT TBL_GRUPO OFF
-GO
 
-INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,1,1,1) -- Lectura
--- INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,4,1,1) --Imprimir
+
 /*
+INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,PRIVILEGIO,ID_NODO,ESTADO,ALLOW) 
+	VALUES(1,1,1,1,1) -- Lectura
+INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,PRIVILEGIO,ID_NODO,ESTADO,ALLOW) 
+	VALUES(1,1,2,1,0) -- Lectura
+-- INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,4,1,1) --Imprimir
+
 	SELECT * FROM TBL_NODO ND
 				INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON ND.ID_NODO=GP.ID_NODO
 				INNER JOIN TBL_GRUPO G ON G.ID_GRUPO = GP.ID_GRUPO
@@ -3001,26 +3327,104 @@ INSERT INTO TBL_GRUPO_PRIVILEGIO VALUES(1,1,1,1) -- Lectura
 GO
 
 
-USE enap_v3;
-GO
-WITH GetTree (NODO_PADRE, ID_NODO,Level)
+DECLARE @ID_USUARIO VARCHAR(200);
+SELECT 
+	@ID_USUARIO='cramirez';
+EXEC sp_get_privilegios_by_usuario @ID_USUARIO;
+SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
+    FROM TBL_NODO AS e;
+	
+/*
+	SELECT CHILD_ROW.ID_NODO
+		FROM TBL_NODO AS CURRENT_ROW
+		INNER JOIN TBL_NODO AS CHILD_ROW ON CURRENT_ROW.ID_NODO = CHILD_ROW.NODO_PADRE
+		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON GP.ID_NODO = CHILD_ROW.NODO_PADRE
+	WHERE CURRENT_ROW.ID_NODO=2
+
+*/
+
+
+/*
+CREATE FUNCTION fn_nodes_by_parent (@ID_NODO INT)
+RETURNS @nodes TABLE 
+(
+	ID_NODO INT,
+	NOMBRE_MODULO VARCHAR(200),
+	ALLOW_READ BIT,
+	ALLOW_WRITE BIT,
+	ALLOW_EDIT BIT,
+	ALLOW_DELETE BIT,
+	ALLOW_PRINT BIT,
+	ALLOW_CRUD BIT
+)
+AS
+BEGIN
+WITH NODESBYPARENT (ID_NODO,
+	NOMBRE_MODULO,
+	ALLOW_READ,
+	ALLOW_WRITE,
+	ALLOW_EDIT,
+	ALLOW_DELETE,
+	ALLOW_PRINT,
+	ALLOW_CRUD)
 AS
 (
--- Anchor member definition
-    SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
-    FROM TBL_NODO AS e
-    WHERE e.NODO_PADRE IS NULL
-    UNION ALL
--- Recursive member definition
-    SELECT e.NODO_PADRE, e.ID_NODO,Level + 1
-    FROM TBL_NODO AS e
-    INNER JOIN GetTree AS d
-        ON e.NODO_PADRE = d.ID_NODO
+	SELECT 	
+		CHILD_ROW.ID_NODO,
+			CHILD_ROW.NOMBRE_MODULO,
+			GP.ALLOW_READ,
+			GP.ALLOW_WRITE,
+			GP.ALLOW_EDIT,
+			GP.ALLOW_DELETE,
+			GP.ALLOW_PRINT,
+			GP.ALLOW_CRUD
+	FROM TBL_NODO AS CURRENT_ROW
+		INNER JOIN TBL_NODO AS CHILD_ROW ON CURRENT_ROW.ID_NODO = CHILD_ROW.NODO_PADRE
+		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON GP.ID_NODO = CHILD_ROW.NODO_PADRE
+	WHERE CURRENT_ROW.ID_NODO=@ID_NODO AND GP.ALLOW_READ=1
 )
--- Statement that executes the CTE
-SELECT G.NODO_PADRE, GP.ID_NODO,GP.PRIVILEGIO, Level
-FROM GetTree G
-	LEFT JOIN TBL_GRUPO_PRIVILEGIO GP ON G.ID_NODO = GP.ID_NODO
+	INSERT @nodes
+   SELECT ID_NODO,
+			NOMBRE_MODULO,
+			ALLOW_READ,
+			ALLOW_WRITE,
+			ALLOW_EDIT,
+			ALLOW_DELETE,
+			ALLOW_PRINT,
+			ALLOW_CRUD
+   FROM NODESBYPARENT
+   RETURN
+END; 
 GO
+
+
+SELECT	CHILD.ID_NODO,
+		CHILD.NOMBRE_MODULO,
+		CHILD.NODO_PADRE,
+		GP.ALLOW_READ,
+		GP.ALLOW_WRITE,
+		GP.ALLOW_EDIT,
+		GP.ALLOW_DELETE,
+		GP.ALLOW_PRINT,
+		GP.ALLOW_CRUD
+FROM TBL_GRUPO_PRIVILEGIO GP
+	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
+	INNER JOIN fn_recursive_node() RN ON ND.ID_NODO= RN.NODO_PADRE
+	INNER JOIN TBL_NODO CHILD ON RN.ID_NODO = CHILD.ID_NODO
+WHERE (GP.ID_GRUPO=3 OR GP.ID_GRUPO=1) AND GP.ALLOW_READ=1
+ORDER BY CHILD.NODO_PADRE ASC
+*/
+
+
+
+SELECT	ND.ID_NODO,
+		ND.NODO_PADRE,
+		ND.NOMBRE_MODULO,
+		GP.*
+FROM TBL_GRUPO_PRIVILEGIO GP
+	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
+WHERE (GP.ID_GRUPO=1 OR GP.ID_GRUPO=1) AND GP.ALLOW_READ=1
+
+
 
 

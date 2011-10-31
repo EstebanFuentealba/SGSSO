@@ -58,7 +58,7 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_PROGRAMA_ANUAL> Create(int ID_DEPARTAMENTO_ORGANIZACION, int ID_DIVISION, string OBJETIVO, string META, string FECHA_CREACION, string NOMBRE_PROGRAMA)
+        public JSONCollection<TBL_PROGRAMA_ANUAL> Create(int ID_DEPARTAMENTO_ORGANIZACION, int ID_DIVISION, string OBJETIVO, string META, string FECHA_CREACION, string NOMBRE_PROGRAMA,int MES_INICIO,int ANO_INICIO)
 		{
             JSONCollection<TBL_PROGRAMA_ANUAL> objJSON = new JSONCollection<TBL_PROGRAMA_ANUAL>();
             try
@@ -70,7 +70,9 @@ namespace WCF_ENAP
                     ID_DIVISION = ID_DIVISION,
                     OBJETIVO = OBJETIVO, 
 					META = META, 
-					FECHA_CREACION = DateTime.Now
+					FECHA_CREACION = DateTime.Now,
+                    MES_INICIO = MES_INICIO,
+                    ANO_INICIO = ANO_INICIO
                 };
                 bd.TBL_PROGRAMA_ANUAL.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
@@ -115,7 +117,7 @@ namespace WCF_ENAP
                               select variable).Single();
                 objeto.OBJETIVO = nuevo.OBJETIVO;
 				objeto.META = nuevo.META;
-				objeto.FECHA_CREACION = nuevo.FECHA_CREACION;
+                objeto.MES_INICIO = nuevo.ANO_INICIO;
                 bd.SubmitChanges();
                 objJSON.items = objeto;
                 objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count();

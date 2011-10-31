@@ -20,7 +20,9 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "SEPTIEMBRE", "type": "int", defaultValue: 0 },
         { "name": "OCTUBRE", "type": "int", defaultValue: 0 },
         { "name": "NOVIEMBRE", "type": "int", defaultValue: 0 },
-        { "name": "DICIEMBRE", "type": "int", defaultValue: 0 }
+        { "name": "DICIEMBRE", "type": "int", defaultValue: 0 },
+        { "name": "MES_INICIO", "type": "int" },
+        { "name": "ANO_INICIO", "type": "int" }
 
     ]
 });

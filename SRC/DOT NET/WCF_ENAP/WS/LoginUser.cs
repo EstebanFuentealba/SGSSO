@@ -35,6 +35,7 @@ namespace WCF_ENAP
             try
             {
                 EnapUser user;
+                
                 SearchResult rs = LDAP.IsInActiveDirectory(USERNAME, PASSWORD);
                 if (rs != null)
                 {
@@ -42,6 +43,12 @@ namespace WCF_ENAP
                     List<string> groups = LDAP.GetGroupsMember(USERNAME, PASSWORD);
                     user.Memberof = groups;
                     user.Username = USERNAME;
+                    /*
+                    List<sp_get_privilegios_by_usuarioResult> privilegios = bd.sp_get_privilegios_by_usuario(user.Username).ToList<sp_get_privilegios_by_usuarioResult>();
+                    foreach (sp_get_privilegios_by_usuarioResult privilegio in privilegios)
+                    {
+                        
+                    }*/
                     user.IsLogued = true;
                     try
                     {
@@ -68,6 +75,7 @@ namespace WCF_ENAP
                     {
                         user_update = objeto[0];
                     }
+                    user_update.IS_LOGUED = true;
                     foreach (string nombre_grupo in user.Memberof)
                     {
                         try
@@ -119,6 +127,15 @@ namespace WCF_ENAP
         [WebGet(UriTemplate = "")]
         public JSONCollection<string> LogOut()
         {
+            try
+            {
+                EnapUser user = (EnapUser)Session["enap-log"];
+                TBL_USUARIO objeto = (from variable in bd.TBL_USUARIO
+                                      where variable.ID_USUARIO == user.Username
+                                      select variable).Single<TBL_USUARIO>();
+                objeto.IS_LOGUED = false;
+            }
+            catch (Exception ex) { }
             Session["enap-log"] = null; 
             JSONCollection<string> objJSON = new JSONCollection<string>();
             objJSON.items = "LogOff";

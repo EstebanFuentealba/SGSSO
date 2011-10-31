@@ -58,7 +58,7 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_TRABAJADOR> Create(string RUT_TRABAJADOR, string NOMBRES, string APELLIDO_MATERNO, string APELLIDO_PATERNO, string TELEFONO, string ANOS_EXPERIENCIA, string ID_CARGO)
+        public JSONCollection<TBL_TRABAJADOR> Create(string RUT_TRABAJADOR, string NOMBRES, string APELLIDO_MATERNO, string APELLIDO_PATERNO, string TELEFONO, int ANOS_EXPERIENCIA_CARGO, int ANOS_EXPERIENCIA_LABORAL, string ID_CARGO)
 		{
             JSONCollection<TBL_TRABAJADOR> objJSON = new JSONCollection<TBL_TRABAJADOR>();
             try
@@ -70,7 +70,8 @@ namespace WCF_ENAP
 					APELLIDO_MATERNO = APELLIDO_MATERNO, 
 					APELLIDO_PATERNO = APELLIDO_PATERNO, 
 					TELEFONO = TELEFONO, 
-					ANOS_EXPERIENCIA = int.Parse(ANOS_EXPERIENCIA), 
+					ANOS_EXPERIENCIA_CARGO = ANOS_EXPERIENCIA_CARGO,
+                    ANOS_EXPERIENCIA_LABORAL = ANOS_EXPERIENCIA_LABORAL,
 					ID_CARGO = int.Parse(ID_CARGO)
                 };
                 bd.TBL_TRABAJADOR.InsertOnSubmit(nuevo);
@@ -119,8 +120,9 @@ namespace WCF_ENAP
 				objeto.APELLIDO_MATERNO = nuevo.APELLIDO_MATERNO;
 				objeto.APELLIDO_PATERNO = nuevo.APELLIDO_PATERNO;
 				objeto.TELEFONO = nuevo.TELEFONO;
-				objeto.ANOS_EXPERIENCIA = nuevo.ANOS_EXPERIENCIA;
-				objeto.ID_CARGO = nuevo.ID_CARGO;
+                objeto.ANOS_EXPERIENCIA_CARGO = nuevo.ANOS_EXPERIENCIA_CARGO;
+                objeto.ANOS_EXPERIENCIA_LABORAL = nuevo.ANOS_EXPERIENCIA_LABORAL; 
+                objeto.ID_CARGO = nuevo.ID_CARGO;
                 bd.SubmitChanges();
                 objJSON.items = objeto;
                 objJSON.totalCount = bd.TBL_TRABAJADOR.Count();

@@ -1,76 +1,77 @@
 ﻿Ext.define('WCF_ENAP.view.ui.ProgramaAnual', {
     extend: 'Ext.panel.Panel',
-
+    autoScroll: true,
     height: 624,
     width: 831,
     title: 'Programa Anual',
     id: 'panel-ProgramaAnual',
     initComponent: function () {
-        var me = this,winActividadProgramaAnual;
+        var me = this,
+            winActividadProgramaAnual;
 
-        Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged',function(store,opts) {
+        Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged', function (store, opts) {
             Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load();
         });
-        Ext.StoreManager.lookup('dsProgramaAnual').on('datachanged',function(store,opts) {
+        Ext.StoreManager.lookup('dsProgramaAnual').on('datachanged', function (store, opts) {
             Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load();
         });
         Ext.applyIf(me, {
             items: [
-                {
-                height: 170,
-                layout: 'fit',
-                margin: '5 10 5 10',
-                items: [{
-                    xtype: 'chart',
-                    store: 'dsGraphAvanceProgramaAnual',
-                    flex: 1,
-                    shadow: true,
-                    animate: true,
-                    axes: [
-                        {
-                            type: 'Category',
-                            fields: [
-                                'NOMBRE_PROGRAMA'
-                            ],
-                            position: 'bottom',
-                            title: 'Programas',
-                            label: {
-                                renderer: function(v) {
-                                    return Ext.String.ellipsis(v, 15, false);
-                                },
-                                font: '9px Arial'
-                            }
-                        },
-                        {
-                            type: 'Numeric',
-                            fields: [
-                                'PERCENT_TOTAL'
-                            ],
-                            position: 'left',
-                            title: '% Avance',
-                            maximum: 100,
-                            minimum: 0
-                        }
-                    ],
-                    series: [
-                        {
-                            type: 'column',
-                            label: {
-                                contrast: true,
-                                display: 'insideEnd',
-                                field: 'PERCENT_TOTAL',
-                                color: '#000',
-                                orientation: 'vertical',
-                                'text-anchor': 'middle'
-                            },
-                            xField: 'NOMBRE_PROGRAMA',
-                            yField: [
-                                'PERCENT_TOTAL'
-                            ]
-                        }
-                    ]
-                }]
-                },
+            {
+            height: 170,
+            layout: 'fit',
+            margin: '5 10 5 10',
+            items: [{
+            xtype: 'chart',
+            store: 'dsGraphAvanceProgramaAnual',
+            flex: 1,
+            shadow: true,
+            animate: true,
+            axes: [
+            {
+            type: 'Category',
+            fields: [
+            'NOMBRE_PROGRAMA'
+            ],
+            position: 'bottom',
+            title: 'Programas',
+            label: {
+            renderer: function(v) {
+            return Ext.String.ellipsis(v, 15, false);
+            },
+            font: '9px Arial'
+            }
+            },
+            {
+            type: 'Numeric',
+            fields: [
+            'PERCENT_TOTAL'
+            ],
+            position: 'left',
+            title: '% Avance',
+            maximum: 100,
+            minimum: 0
+            }
+            ],
+            series: [
+            {
+            type: 'column',
+            label: {
+            contrast: true,
+            display: 'insideEnd',
+            field: 'PERCENT_TOTAL',
+            color: '#000',
+            orientation: 'vertical',
+            'text-anchor': 'middle'
+            },
+            xField: 'NOMBRE_PROGRAMA',
+            yField: [
+            'PERCENT_TOTAL'
+            ]
+            }
+            ]
+            }]
+            },
                 {
                 xtype: 'panel',
                 height: 562,
@@ -125,36 +126,39 @@
                                     dock: 'bottom'
                                 }
                             ],
-                            listeners: {
-		                        itemdblclick: function(view,record,item, index,e, options){ 
-                                    var idProgramaAnual = record.get("ID_PROGRAMA_ANUAL");
+                        listeners: {
+                            itemdblclick: function (view, record, item, index, e, options) {
+                                var idProgramaAnual = record.get("ID_PROGRAMA_ANUAL");
 
-                                    if(!winActividadProgramaAnual){
-                                        var gridProgramaAnual = Ext.create('WCF_ENAP.view.ui.ProgramaAnualPrevencion');
-                                        winActividadProgramaAnual = Ext.create('Ext.window.Window',{
-                                            modal: true,
-                                            width: 850,
-                                            closeAction: 'hide',
-                                            maximizable: true,
-                                            title: record.get('NOMBRE_PROGRAMA'),
-                                            items:[gridProgramaAnual]
-                                        });
-                                    }
-                                   
-                                    var form = winActividadProgramaAnual.getComponent('form_programa_anual').getForm();
-                                    
-                                    Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
-                                        params: { 'ID_PROGRAMA_ANUAL': idProgramaAnual },
-                                            callback: function (records, operation, success) {
-                                                console.log(records);
-                                            }
-                                    });
-                                    form.loadRecord(record);
-                                    winActividadProgramaAnual.show();
-                                    
+                                //if(!winActividadProgramaAnual){
+                                var gridProgramaAnual = Ext.create('WCF_ENAP.view.ui.ProgramaAnualPrevencion', {
+                                    recordParent: record
+                            });
+                            winActividadProgramaAnual = Ext.create('Ext.window.Window', {
+                                modal: true,
+                                width: 850,
+                                maximizable: true,
+                                title: record.get('NOMBRE_PROGRAMA'),
+                                items: [gridProgramaAnual]
+                            });
+                            //}
+                            var formulario = winActividadProgramaAnual.getComponent('form_programa_anual');
+                            var form = formulario.getForm();
+
+                            Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
+                                params: { 'ID_PROGRAMA_ANUAL': idProgramaAnual },
+                                callback: function (records, operation, success) {
+                                    //console.log(records);
                                 }
-                            }
-                    },
+                            });
+                            form.loadRecord(record);
+                            //formulario.setColumns(record.get('MES_INICIO'));
+                            //console.log(record);
+                            winActividadProgramaAnual.show();
+
+                        }
+                    }
+                },
                         {
                             xtype: 'form',
                             margin: '5 5 5 0',
@@ -169,6 +173,41 @@
                                     labelAlign: 'top',
                                     allowBlank: false,
                                     anchor: '100%'
+                                },
+                                {
+                                    xtype: 'panel',
+                                    border: 0,
+                                    layout: {
+                                        type: 'column'
+                                    },
+                                    anchor: '100%',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            fieldLabel: 'Mes',
+                                            store: 'dsMeses',
+                                            valueField: 'ID_MES',
+                                            displayField: 'NOMBRE_MES',
+                                            labelAlign: 'top',
+                                            queryMode: 'local',
+                                            columnWidth: 0.5,
+                                            name: 'MES_INICIO'
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            store: Ext.create('Ext.data.ArrayStore', {
+                                                fields: ['ANO'],
+                                                data: [[2004], [2005], [2006], [2007], [2008], [2009], [2010], [2011], [2012]]
+                                            }),
+                                            margin: '0 0 0 5',
+                                            fieldLabel: 'Año',
+                                            labelAlign: 'top',
+                                            columnWidth: 0.5,
+                                            valueField: 'ANO',
+                                            displayField: 'ANO',
+                                            name: 'ANO_INICIO'
+                                        }
+                                    ]
                                 },
                                 {
                                     xtype: 'combobox',
@@ -248,7 +287,7 @@
                                     emptyText: 'Selecciona un Departamento',
                                     queryMode: 'local',
                                     lastQuery: '',
-                                    selectOnFocus: true,
+                                    selectOnFocus: true
                                 },
                                 {
                                     xtype: 'textareafield',

@@ -9,13 +9,25 @@
     id: 'panel-MenuGenerator',
     initComponent: function () {
 
-        var me = this;
+        var me = this, winPrivilegios;
         Ext.define('Icons', {
             extend: 'Ext.data.Model',
             fields: [
                 { 'name': 'ID_ICON', type: 'string' }
             ]
         });
+        Ext.StoreManager.lookup('dsGrupoPrivilegio').on('write', function (store, operation, eOpts) {
+            var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Update') {
+                this.load({
+                    params: { 'ID_NODO': recordAction.raw.ID_NODO },
+                    callback: function (records, operation, success) {
+                    }
+                });
+            }
+        });
+        var rowEditingPrivilegios = Ext.create('Ext.grid.plugin.RowEditing');
         var recordAction = null;
         var contextMenu = Ext.create('Ext.menu.Menu', {
             items: [
@@ -57,6 +69,221 @@
                             Ext.getCmp('STORE_LIST').setRawValue(recordNode.get('STORE_LIST'));
                             Ext.getCmp('btn_action_submit').setText('Editar');
                         } catch (ex) { }
+                    }
+                },
+                {
+                    text: 'Asignar Permisos al Nodo',
+                    iconCls: 'btn-edit',
+                    handler: function (widget, event) {
+                        if (!winPrivilegios) {
+                            winPrivilegios = Ext.create('Ext.window.Window', {
+                                height: 416,
+                                width: 641,
+                                closeAction: 'hide',
+                                title: 'Permisos de Nodos (Módulos/Componentes)',
+                                modal: true,
+                                items: [
+                                {
+                                    xtype: 'form',
+                                    height: 372,
+                                    margin: '5 5 5 5',
+                                    bodyPadding: 10,
+                                    title: 'Permisos',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            id: 'cmb_asigna_privilegio_nodo',
+                                            fieldLabel: 'Nodo',
+                                            displayField: 'NOMBRE_MODULO',
+                                            store: 'dsNode',
+                                            valueField: 'ID_NODO',
+                                            anchor: '100%'
+                                        },
+                                        {
+                                            xtype: 'gridpanel',
+                                            height: 297,
+                                            title: 'Permisos del Nodo',
+                                            store: 'dsGrupoPrivilegio',
+                                            columns: [
+                                                {
+                                                    xtype: 'gridcolumn',
+                                                    dataIndex: 'ID_NODO',
+                                                    text: 'Nodo',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        var storeNodo = Ext.StoreManager.lookup('dsNode');
+                                                        var idx = storeNodo.find('ID_NODO', value);
+                                                        return idx !== -1 ? storeNodo.getAt(idx).get('NOMBRE_MODULO') : '';
+                                                    },
+                                                    field: {
+                                                        xtype: 'combobox',
+                                                        name: 'ID_NODO',
+                                                        disabled: true,
+                                                        displayField: 'NOMBRE_MODULO',
+                                                        store: 'dsNode',
+                                                        valueField: 'ID_NODO',
+                                                        anchor: '100%'
+                                                    }
+                                                },
+                                                  {
+                                                      xtype: 'gridcolumn',
+                                                      dataIndex: 'ID_GRUPO',
+                                                      flex: 0.4,
+                                                      text: 'Grupo',
+                                                      renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                          var storeGrupo = Ext.StoreManager.lookup('dsGrupo');
+                                                          var idx = storeGrupo.find('ID_GRUPO', value);
+                                                          return idx !== -1 ? storeGrupo.getAt(idx).get('NOMBRE_GRUPO') : '';
+                                                      },
+                                                      field: {
+                                                          xtype: 'combobox',
+                                                          name: 'ID_GRUPO',
+                                                          displayField: 'NOMBRE_GRUPO',
+                                                          store: 'dsGrupo',
+                                                          valueField: 'ID_GRUPO',
+                                                          anchor: '100%'
+                                                      }
+                                                  },
+                                                {
+                                                    xtype: 'gridcolumn',
+                                                    dataIndex: 'ALLOW_READ',
+                                                    flex: 0.1,
+                                                    text: 'Visualizar',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_READ'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'booleancolumn',
+                                                    dataIndex: 'ALLOW_WRITE',
+                                                    flex: 0.1,
+                                                    text: 'Crear',
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_WRITE'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'booleancolumn',
+                                                    dataIndex: 'ALLOW_EDIT',
+                                                    flex: 0.1,
+                                                    text: 'Modificar',
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_EDIT'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'booleancolumn',
+                                                    dataIndex: 'ALLOW_DELETE',
+                                                    flex: 0.1,
+                                                    text: 'Eliminar',
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_DELETE'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'booleancolumn',
+                                                    dataIndex: 'ALLOW_PRINT',
+                                                    flex: 0.1,
+                                                    text: 'Imprimir',
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_PRINT'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'booleancolumn',
+                                                    dataIndex: 'ALLOW_CRUD',
+                                                    flex: 0.1,
+                                                    text: 'Mantener',
+                                                    field: {
+                                                        xtype: 'checkboxfield',
+                                                        anchor: '100%',
+                                                        name: 'ALLOW_CRUD'
+                                                    }
+                                                }
+                                            ],
+                                            dockedItems: [
+                                                {
+                                                    xtype: 'toolbar',
+                                                    dock: 'top',
+                                                    items: [
+                                                        {
+                                                            xtype: 'button',
+                                                            text: 'Asignar',
+                                                            handler: function () {
+                                                                Ext.StoreManager.lookup('dsGrupoPrivilegio').insert(0, Ext.create('WCF_ENAP.model.GrupoPrivilegio', {
+                                                                    'ID_NODO': Ext.getCmp('cmb_asigna_privilegio_nodo').getValue()
+                                                                }));
+                                                                rowEditingPrivilegios.startEdit(0, 0);
+                                                            }
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            text: 'Eliminar',
+                                                            itemId: 'deletePrivilegio',
+                                                            disabled: true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    xtype: 'pagingtoolbar',
+                                                    store: 'dsGrupoPrivilegio',
+                                                    displayInfo: true,
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            plugins: [
+                                                rowEditingPrivilegios
+                                            ],
+                                            listeners: {
+                                                selectionchange: function (selModel, selections) {
+                                                    this.down('#deletePrivilegio').setDisabled(selections.length === 0);
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                            });
+                        }
+
+                        //
+                        winPrivilegios.show();
+                        var storeGrupoPrivilegio = Ext.StoreManager.lookup('dsGrupoPrivilegio');
+                        storeGrupoPrivilegio.load({
+                            params: { 'ID_NODO': recordAction.raw.ID_NODO },
+                            callback: function (records, operation, success) {
+                                console.log(recordAction.raw.ID_NODO);
+                                Ext.getCmp('cmb_asigna_privilegio_nodo').select(recordAction.raw.ID_NODO);
+                            }
+                        });
+                        /*try {
+                        var storeNode = Ext.data.StoreManager.lookup('dsNode');
+                        var idx = storeNode.find('ID_NODO', recordAction.raw.ID_NODO);
+                        var recordNode = storeNode.getAt(idx);
+                        winPrivilegios.getComponent('form_asigna_privilegios').loadRecord(recordNode);
+                            
+                        } catch (ex) {
+                        var storeNode = Ext.data.StoreManager.lookup('dsNode');
+                        var idx = storeNode.find('ID_NODO', 1);
+                        var recordNode = storeNode.getAt(idx);
+                        winPrivilegios.getComponent('form_asigna_privilegios').loadRecord(recordNode);
+
+                        }*/
                     }
                 }
             ]
@@ -136,6 +363,25 @@
                             anchor: '100%'
                         },
                         {
+                            xtype: 'radiogroup',
+                            fieldLabel: 'Tipo ExtJS Componente',
+                            anchor: '100%',
+                            items: [
+                                {
+                                    xtype: 'radiofield',
+                                    name: 'TIPO_DISPLAY',
+                                    boxLabel: 'Ext.panel.Panel',
+                                    inputValue: 1
+                                },
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Ext.window.Window',
+                                    name: 'TIPO_DISPLAY',
+                                    inputValue: 2
+                                }
+                            ]
+                        },
+                        {
                             xtype: 'textfield',
                             fieldLabel: 'Identificador',
                             name: 'ID_COMPONENTE',
@@ -213,7 +459,7 @@
                             displayField: 'ID_ICON',
                             valueField: 'ID_ICON',
                             listConfig: {
-                                getInnerTpl: function() {
+                                getInnerTpl: function () {
                                     return '<span style="display: block; width: 16px; height: 16px;" class="{ID_ICON}"></span> {ID_ICON}';
                                 }
                             }

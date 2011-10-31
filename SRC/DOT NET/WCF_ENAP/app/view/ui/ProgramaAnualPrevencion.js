@@ -4,6 +4,11 @@
     bodyPadding: 10,
     id: 'form_programa_anual',
     border: 0,
+    recordParent: null,
+    constructor: function () {
+        Ext.applyIf(this, arguments);
+        this.callParent(arguments);
+    },
     initComponent: function () {
         var me = this,
             winActividadProgramaAnualPrevencion,
@@ -19,20 +24,19 @@
 		        { name: 'Octubre', value: 10 },
 		        { name: 'Noviembre', value: 11 },
 		        { name: 'Diciembre', value: 12 }
-	        ], 
+	        ],
             meses_columns = [],
             showSummary = true,
-            grouping = Ext.create('Ext.grid.feature.Grouping', {
-                groupHeaderTpl: 'Actividad: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
-            });
+            VAL_MES_INICIO = me.recordParent.get('MES_INICIO'),
+            VAL_ANO_INICIO = me.recordParent.get('ANO_INICIO');
 
-        for (var i = 0; i < meses.length; i++) {
+        for (var i = VAL_MES_INICIO - 1, x = VAL_ANO_INICIO, j = 0; j < 12; i++, j++) {
             var objMes = {};
             var varName = meses[i].name.toLowerCase();
             var renderFunction = eval("(function(value, metaData, record, rowIdx, colIdx, store, view) { var x = Math.round(((record.get('" + varName.toLocaleUpperCase() + "_R') * 1)/ record.get('" + varName.toLocaleUpperCase() + "_P'))*100); return isNaN(x)?0:x; })");
-            var sumaryTypeFunction = eval("(function(records){ var i = 0,length = records.length,total = 0,record; for (; i < length; ++i) { record = records[i]; total += ((record.get('" + varName.toLocaleUpperCase() + "_R') * 1)/ record.get('" + varName.toLocaleUpperCase() + "_P')); }; var x = Math.round((total/length)*100); return isNaN(x)?0:x; })");
+            var sumaryTypeFunction = eval("(function(records){ var total = 0; Ext.each(records, function (record) { var programado = 0, realizado = 0; try { programado = record.get('" + varName.toLocaleUpperCase() + "_P'); } catch (ex) { }; try { realizado = record.get('" + varName.toLocaleUpperCase() + "_R'); } catch (ex) { }; if (programado != 0 || realizado != 0) { total += Math.round(((realizado * 1) / programado) * 100); } }); var x = ((total / records.length)); return isNaN(x) ? 0 : x; })");
 
-            objMes.header = meses[i].name;
+            objMes.header = meses[i].name + ' / ' + x;
             objMes.columns = [{
                 text: 'P',
                 dataIndex: varName.toLocaleUpperCase() + '_P',
@@ -50,12 +54,19 @@
                 sortable: false,
                 groupable: false,
                 renderer: renderFunction,
-                summaryType: sumaryTypeFunction
+                summaryType: sumaryTypeFunction,
+                summaryRenderer: function (value) {
+                    return "<b>" + value + "%</b>";
+                }
             }
 		];
             meses_columns.push(objMes);
-        }
 
+            if (i == meses.length - 1) {
+                i = -1;
+                x++;
+            }
+        }
         Ext.applyIf(me, {
             items: [
                 {
@@ -72,24 +83,28 @@
                     columnLines: true,
                     store: 'dsActividadProgramaAnualPrevencion',
                     title: 'Programa Prevención de Riesgos',
+                    listeners: {
+                        'afterrender': function (cmp, opt) {
+                            cmp.doLayout();
+                        }
+                    },
                     columns: [
                     {
                         xtype: 'gridcolumn',
-                        flex: 1,
                         text: 'Información General',
-
                         columns: [
 
                             {
                                 xtype: 'gridcolumn',
                                 dataIndex: 'TIPO_FRECUENCIA',
-                                flex: 0.2,
-                                text: 'Frecuencia'
+                                text: 'Frecuencia',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    return value;
+                                }
                             },
                             {
                                 xtype: 'gridcolumn',
                                 dataIndex: 'ID_EVIDENCIA',
-                                flex: 0.2,
                                 text: 'Evidencia',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     var storeCargo = Ext.StoreManager.lookup('dsEvidencia');
@@ -100,7 +115,6 @@
                             {
                                 xtype: 'gridcolumn',
                                 dataIndex: 'ID_CARGO',
-                                flex: 0.2,
                                 text: 'Responsable',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     var storeCargo = Ext.StoreManager.lookup('dsCargo');
@@ -111,7 +125,6 @@
                             {
                                 xtype: 'gridcolumn',
                                 dataIndex: 'TURNO',
-                                flex: 0.1,
                                 text: 'Turno',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     if (value == '0') {
@@ -123,17 +136,13 @@
                             }
                         ]
                     },
-                    {
-                        xtype: 'gridcolumn',
-                        flex: 0.35,
-                        text: 'Meses',
-                        columns: meses_columns
-                    }
+                    meses_columns
+
                 ],
-                viewConfig: {
+                    viewConfig: {
                         stripeRows: true
-                },
-                plugins: [
+                    },
+                    plugins: [
                     Ext.create('Ext.grid.plugin.CellEditing', {
                         listeners: {
                             edit: function () {
@@ -142,13 +151,13 @@
                         }
                     })
                 ],
-                features: [{
-                    id: 'groupAnual',
-                    ftype: 'groupingsummary',
-                    groupHeaderTpl: '{name}',
-                    enableGroupingMenu: false
-                }],
-                dockedItems: [
+                    features: [{
+                        id: 'groupAnual',
+                        ftype: 'groupingsummary',
+                        groupHeaderTpl: '{name}',
+                        enableGroupingMenu: false
+                    }],
+                    dockedItems: [
                         {
                             xtype: 'toolbar',
                             dock: 'top',
@@ -163,13 +172,41 @@
                                         if (!winActividadProgramaAnualPrevencion) {
                                             winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion");
                                         }
+                                        var view = Ext.getCmp('grid_programa_anual').getView();
+                                        showSummary = false;
+                                        view.getFeature('groupAnual').toggleSummaryRow(showSummary);
+                                        view.refresh();
                                         winActividadProgramaAnualPrevencion.getComponent('form_actividad_programa_anual').loadRecord(record);
                                         winActividadProgramaAnualPrevencion.show();
                                     }
                                 },
                                 {
                                     xtype: 'button',
-                                    text: 'Remover Actividad Seleccionada'
+                                    text: 'Remover Actividad Seleccionada',
+                                    handler: function () {
+                                        var view = Ext.getCmp('grid_programa_anual').getView(),
+                                            summaryGroups = view.getFeature('groupAnual').summaryGroups,
+                                            summaryData = view.getFeature('groupAnual').generateSummaryData(),
+                                            total = [];
+                                        /* Calculo Total Avance */
+                                        for (var i = 0, length = summaryGroups.length; i < length; ++i) {
+                                            var actividad = summaryData[summaryGroups[i].name], index = 0;
+                                            for (var percent in actividad) {
+                                                if (!total[index]) { total[index] = 0; }
+                                                total[index] = total[index] + actividad[percent];
+                                                index++;
+                                            }
+                                        }
+                                        var avance_total_mensual = [], avance_total_programa = 0;
+                                        Ext.each(total, function (objeto) {
+                                            var percent_month = (objeto / summaryGroups.length);
+                                            avance_total_mensual.push(percent_month);
+                                            avance_total_programa += percent_month;
+                                        });
+                                        avance_total_programa = avance_total_programa / avance_total_mensual.length;
+                                        console.log(avance_total_mensual);
+                                        console.log(avance_total_programa);
+                                    }
                                 },
                                 {
                                     tooltip: 'Click Para ocultar o Mostrar el Total Mensual de Avance',
@@ -184,10 +221,10 @@
                             ]
                         }
                     ],
-                selModel: Ext.create('Ext.selection.RowModel', {
+                    selModel: Ext.create('Ext.selection.RowModel', {
 
-            })
-        }
+                })
+            }
             ]
         });
 
@@ -198,115 +235,115 @@
 
 /*
 Ext.define('WCF_ENAP.view.ui.ProgramaAnualPrevencion', {
-    extend: 'Ext.grid.Panel',
-    height: 350,
-    width: 900,
-    columnLines: true,
-    title: 'Programa Prevención de Riesgos',
-    store: 'dsActividadProgramaAnualPrevencion',
-    initComponent: function () {
-        var me = this, winActividadProgramaAnualPrevencion;
-        Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('load', function ( store,  records, successful, operation,  eOpts ) {
-            console.log(store);
-        });
-        Ext.applyIf(me, {
+extend: 'Ext.grid.Panel',
+height: 350,
+width: 900,
+columnLines: true,
+title: 'Programa Prevención de Riesgos',
+store: 'dsActividadProgramaAnualPrevencion',
+initComponent: function () {
+var me = this, winActividadProgramaAnualPrevencion;
+Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('load', function ( store,  records, successful, operation,  eOpts ) {
+console.log(store);
+});
+Ext.applyIf(me, {
 
-            columns: [
-                {
-                    xtype: 'gridcolumn',
-                    flex: 0.65,
-                    text: 'Información General',
+columns: [
+{
+xtype: 'gridcolumn',
+flex: 0.65,
+text: 'Información General',
 
-                    columns: [
+columns: [
 
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'TIPO_FRECUENCIA',
-                            flex: 0.2,
-                            text: 'Frecuencia'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'NOMBRE_EVIDENCIA',
-                            flex: 0.2,
-                            text: 'Evidencia'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'NOMBRE_RESPONSABLE',
-                            flex: 0.2,
-                            text: 'Responsable'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'TURNO',
-                            flex: 0.1,
-                            text: 'Turno'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'gridcolumn',
-                    flex: 0.35,
-                    text: 'Meses',
-                    columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'ENERO_P',
-                            editor: {
-                                type: 'numberfield'
-                            },
-                            text: 'MyColumn6'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'ENERO_R',
-                            text: 'MyColumn7'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'ENERO_A',
-                            text: 'MyColumn9'
-                        }
-                    ]
-                }
-            ],
-            viewConfig: {
-        },
-        plugins: [
-                Ext.create('Ext.grid.plugin.CellEditing', {
+{
+xtype: 'gridcolumn',
+dataIndex: 'TIPO_FRECUENCIA',
+flex: 0.2,
+text: 'Frecuencia'
+},
+{
+xtype: 'gridcolumn',
+dataIndex: 'NOMBRE_EVIDENCIA',
+flex: 0.2,
+text: 'Evidencia'
+},
+{
+xtype: 'gridcolumn',
+dataIndex: 'NOMBRE_RESPONSABLE',
+flex: 0.2,
+text: 'Responsable'
+},
+{
+xtype: 'gridcolumn',
+dataIndex: 'TURNO',
+flex: 0.1,
+text: 'Turno'
+}
+]
+},
+{
+xtype: 'gridcolumn',
+flex: 0.35,
+text: 'Meses',
+columns: [
+{
+xtype: 'gridcolumn',
+dataIndex: 'ENERO_P',
+editor: {
+type: 'numberfield'
+},
+text: 'MyColumn6'
+},
+{
+xtype: 'gridcolumn',
+dataIndex: 'ENERO_R',
+text: 'MyColumn7'
+},
+{
+xtype: 'gridcolumn',
+dataIndex: 'ENERO_A',
+text: 'MyColumn9'
+}
+]
+}
+],
+viewConfig: {
+},
+plugins: [
+Ext.create('Ext.grid.plugin.CellEditing', {
 
-            })
-            ],
-        features: [Ext.create('Ext.grid.feature.Grouping', {
-            groupHeaderTpl: 'Actividad: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
-        })],
-        dockedItems: [
-                {
-                    xtype: 'toolbar',
-                    dock: 'top',
-                    items: [
-                        {
-                            xtype: 'button',
-                            iconCls: 'btn-add',
-                            text: 'Agregar Actividad',
-                            handler: function () {
-                                if (!winActividadProgramaAnualPrevencion) {
-                                    winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion");
-                                }
-                                winActividadProgramaAnualPrevencion.show();
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            text: 'Remover Actividad Seleccionada'
-                        }
-                    ]
-                }
-            ],
-        selModel: Ext.create('Ext.selection.RowModel', {
+})
+],
+features: [Ext.create('Ext.grid.feature.Grouping', {
+groupHeaderTpl: 'Actividad: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+})],
+dockedItems: [
+{
+xtype: 'toolbar',
+dock: 'top',
+items: [
+{
+xtype: 'button',
+iconCls: 'btn-add',
+text: 'Agregar Actividad',
+handler: function () {
+if (!winActividadProgramaAnualPrevencion) {
+winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion");
+}
+winActividadProgramaAnualPrevencion.show();
+}
+},
+{
+xtype: 'button',
+text: 'Remover Actividad Seleccionada'
+}
+]
+}
+],
+selModel: Ext.create('Ext.selection.RowModel', {
 
-    })
+})
 });
 
 me.callParent(arguments);

@@ -30,6 +30,17 @@
                             anchor: '100%'
                         },
                         {
+                            xtype: 'combobox',
+                            fieldLabel: 'Mes',
+                            store: 'dsMeses',
+                            valueField: 'ID_MES',
+                            labelWidth: 120,
+                            anchor: '100%',
+                            displayField: 'NOMBRE_MES',
+                            queryMode: 'local',
+                            name: 'MES_INICIO'
+                        },
+                        {
                             xtype: 'panel',
                             border: 0,
                             layout: {

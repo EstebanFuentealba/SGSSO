@@ -44,7 +44,6 @@
             onLoadedAll();
         });
         var onLoadedAll = function () {
-            console.log(" LOADED");
             if (isLoadedActividadEspecifica && isLoadedPeligro) {
                 Ext.getCmp('panel-EvaluaActividadEspecifica').add({
                     xtype: 'gridpanel',

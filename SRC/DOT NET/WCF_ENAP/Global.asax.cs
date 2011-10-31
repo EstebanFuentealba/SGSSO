@@ -29,7 +29,7 @@ namespace WCF_ENAP
             RouteTable.Routes.Add(new ServiceRoute("ActividadProgramaAnualPrevencion", new WebServiceHostFactory(), typeof(ActividadProgramaAnualPrevencion)));
             RouteTable.Routes.Add(new ServiceRoute("GraphAvanceProgramaAnual", new WebServiceHostFactory(), typeof(GraphAvanceProgramaAnual)));
             RouteTable.Routes.Add(new ServiceRoute("Stores", new WebServiceHostFactory(), typeof(Stores)));
- 
+            RouteTable.Routes.Add(new ServiceRoute("GrupoPrivilegio", new WebServiceHostFactory(), typeof(GrupoPrivilegio)));
             RouteTable.Routes.Add(new ServiceRoute("ActividadTrabajador", new WebServiceHostFactory(), typeof(ActividadTrabajador)));
 			RouteTable.Routes.Add(new ServiceRoute("Archivo", new WebServiceHostFactory(), typeof(Archivo)));
 			RouteTable.Routes.Add(new ServiceRoute("Area", new WebServiceHostFactory(), typeof(Area)));

@@ -33,7 +33,8 @@
                 { name: 'NOVIEMBRE_P', type: 'int', defaultValue: 0 },
 		        { name: 'NOVIEMBRE_R', type: 'int', defaultValue: 0 },
                 { name: 'DICIEMBRE_P', type: 'int', defaultValue: 0 },
-		        { name: 'DICIEMBRE_R', type: 'int', defaultValue: 0 }
+		        { name: 'DICIEMBRE_R', type: 'int', defaultValue: 0 },
+                { "name": "MES_INICIO", "type": "int" }
             ]
 });
 Ext.define('WCF_ENAP.store.dsActividadProgramaAnualPrevencion', {
