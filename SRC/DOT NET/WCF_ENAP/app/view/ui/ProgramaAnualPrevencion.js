@@ -29,28 +29,36 @@
             showSummary = true,
             VAL_MES_INICIO = me.recordParent.get('MES_INICIO'),
             VAL_ANO_INICIO = me.recordParent.get('ANO_INICIO');
-
+        Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
+            params: { 'ID_PROGRAMA_ANUAL': me.recordParent.get('ID_PROGRAMA_ANUAL') },
+            callback: function (records, operation, success) {
+                //console.log(records);
+            }
+        });
         for (var i = VAL_MES_INICIO - 1, x = VAL_ANO_INICIO, j = 0; j < 12; i++, j++) {
             var objMes = {};
             var varName = meses[i].name.toLowerCase();
-            var renderFunction = eval("(function(value, metaData, record, rowIdx, colIdx, store, view) { var x = Math.round(((record.get('" + varName.toLocaleUpperCase() + "_R') * 1)/ record.get('" + varName.toLocaleUpperCase() + "_P'))*100); return isNaN(x)?0:x; })");
-            var sumaryTypeFunction = eval("(function(records){ var total = 0; Ext.each(records, function (record) { var programado = 0, realizado = 0; try { programado = record.get('" + varName.toLocaleUpperCase() + "_P'); } catch (ex) { }; try { realizado = record.get('" + varName.toLocaleUpperCase() + "_R'); } catch (ex) { }; if (programado != 0 || realizado != 0) { total += Math.round(((realizado * 1) / programado) * 100); } }); var x = ((total / records.length)); return isNaN(x) ? 0 : x; })");
-
+            var renderFunction = eval("(function(value, metaData, record, rowIdx, colIdx, store, view) { var x = Math.round(((record.get('" + varName.toLocaleUpperCase() + "_R') * 1)/ record.get('" + varName.toLocaleUpperCase() + "_P'))*100); return '<b>'+(isNaN(x)?0:x)+'%</b>'; })");
+            var sumaryTypeFunction = eval("(function(records){ var total = 0; Ext.each(records, function (record) { var programado = 0, realizado = 0; try { programado = record.get('" + varName.toLocaleUpperCase() + "_P'); } catch (ex) { }; try { realizado = record.get('" + varName.toLocaleUpperCase() + "_R'); } catch (ex) { }; if (programado != 0 || realizado != 0) { total += Math.round(((realizado * 1) / programado) * 100); } }); var x = ((total / records.length)); return (isNaN(x) ? 0 : x); })");
+            
             objMes.header = meses[i].name + ' / ' + x;
             objMes.columns = [{
                 text: 'P',
+                width: 30,
                 dataIndex: varName.toLocaleUpperCase() + '_P',
                 editor: {
                     xtype: 'numberfield'
                 }
             }, {
                 text: 'R',
+                width: 30,
                 dataIndex: varName.toLocaleUpperCase() + '_R',
                 editor: {
                     xtype: 'numberfield'
                 }
             }, {
                 text: '%',
+                width: 50,
                 sortable: false,
                 groupable: false,
                 renderer: renderFunction,
@@ -59,7 +67,7 @@
                     return "<b>" + value + "%</b>";
                 }
             }
-		];
+		    ];
             meses_columns.push(objMes);
 
             if (i == meses.length - 1) {
@@ -99,7 +107,9 @@
                                 dataIndex: 'TIPO_FRECUENCIA',
                                 text: 'Frecuencia',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    return value;
+                                    var arrayFrecuencia = ["Diario", "Semanal", "Mensual", "Anual"];
+                                    return record.get('CANTIDAD_FRECUENCIA') + ' ' + arrayFrecuencia[value - 1];
+
                                 }
                             },
                             {
@@ -169,9 +179,9 @@
                                     handler: function () {
                                         var form = this.up('form').getForm();
                                         var record = form.getRecord();
-                                        if (!winActividadProgramaAnualPrevencion) {
-                                            winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion");
-                                        }
+                                        winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion", {
+                                            recordParent: record
+                                        });
                                         var view = Ext.getCmp('grid_programa_anual').getView();
                                         showSummary = false;
                                         view.getFeature('groupAnual').toggleSummaryRow(showSummary);
@@ -204,8 +214,8 @@
                                             avance_total_programa += percent_month;
                                         });
                                         avance_total_programa = avance_total_programa / avance_total_mensual.length;
-                                        console.log(avance_total_mensual);
-                                        console.log(avance_total_programa);
+                                        //console.log(avance_total_mensual);
+                                        //console.log(avance_total_programa);
                                     }
                                 },
                                 {

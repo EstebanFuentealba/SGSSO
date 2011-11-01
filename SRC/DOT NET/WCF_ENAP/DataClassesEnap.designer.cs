@@ -2988,49 +2988,73 @@ namespace WCF_ENAP
 		
 		private System.Nullable<int> _ENERO_R;
 		
+		private System.Nullable<bool> _ENERO_E;
+		
 		private System.Nullable<int> _FEBRERO_P;
 		
 		private System.Nullable<int> _FEBRERO_R;
+		
+		private System.Nullable<bool> _FEBRERO_E;
 		
 		private System.Nullable<int> _MARZO_P;
 		
 		private System.Nullable<int> _MARZO_R;
 		
+		private System.Nullable<bool> _MARZO_E;
+		
 		private System.Nullable<int> _ABRIL_P;
 		
 		private System.Nullable<int> _ABRIL_R;
+		
+		private System.Nullable<bool> _ABRIL_E;
 		
 		private System.Nullable<int> _MAYO_P;
 		
 		private System.Nullable<int> _MAYO_R;
 		
+		private System.Nullable<bool> _MAYO_E;
+		
 		private System.Nullable<int> _JUNIO_P;
 		
 		private System.Nullable<int> _JUNIO_R;
+		
+		private System.Nullable<bool> _JUNIO_E;
 		
 		private System.Nullable<int> _JULIO_P;
 		
 		private System.Nullable<int> _JULIO_R;
 		
+		private System.Nullable<bool> _JULIO_E;
+		
 		private System.Nullable<int> _AGOSTO_P;
 		
 		private System.Nullable<int> _AGOSTO_R;
+		
+		private System.Nullable<bool> _AGOSTO_E;
 		
 		private System.Nullable<int> _SEPTIEMBRE_P;
 		
 		private System.Nullable<int> _SEPTIEMBRE_R;
 		
+		private System.Nullable<bool> _SEPTIEMBRE_E;
+		
 		private System.Nullable<int> _OCTUBRE_P;
 		
 		private System.Nullable<int> _OCTUBRE_R;
+		
+		private System.Nullable<bool> _OCTUBRE_E;
 		
 		private System.Nullable<int> _NOVIEMBRE_P;
 		
 		private System.Nullable<int> _NOVIEMBRE_R;
 		
+		private System.Nullable<bool> _NOVIEMBRE_E;
+		
 		private System.Nullable<int> _DICIEMBRE_P;
 		
 		private System.Nullable<int> _DICIEMBRE_R;
+		
+		private System.Nullable<bool> _DICIEMBRE_E;
 		
 		private System.Nullable<char> _TURNO;
 		
@@ -3064,50 +3088,74 @@ namespace WCF_ENAP
     partial void OnENERO_PChanged();
     partial void OnENERO_RChanging(System.Nullable<int> value);
     partial void OnENERO_RChanged();
+    partial void OnENERO_EChanging(System.Nullable<bool> value);
+    partial void OnENERO_EChanged();
     partial void OnFEBRERO_PChanging(System.Nullable<int> value);
     partial void OnFEBRERO_PChanged();
     partial void OnFEBRERO_RChanging(System.Nullable<int> value);
     partial void OnFEBRERO_RChanged();
+    partial void OnFEBRERO_EChanging(System.Nullable<bool> value);
+    partial void OnFEBRERO_EChanged();
     partial void OnMARZO_PChanging(System.Nullable<int> value);
     partial void OnMARZO_PChanged();
     partial void OnMARZO_RChanging(System.Nullable<int> value);
     partial void OnMARZO_RChanged();
+    partial void OnMARZO_EChanging(System.Nullable<bool> value);
+    partial void OnMARZO_EChanged();
     partial void OnABRIL_PChanging(System.Nullable<int> value);
     partial void OnABRIL_PChanged();
     partial void OnABRIL_RChanging(System.Nullable<int> value);
     partial void OnABRIL_RChanged();
+    partial void OnABRIL_EChanging(System.Nullable<bool> value);
+    partial void OnABRIL_EChanged();
     partial void OnMAYO_PChanging(System.Nullable<int> value);
     partial void OnMAYO_PChanged();
     partial void OnMAYO_RChanging(System.Nullable<int> value);
     partial void OnMAYO_RChanged();
+    partial void OnMAYO_EChanging(System.Nullable<bool> value);
+    partial void OnMAYO_EChanged();
     partial void OnJUNIO_PChanging(System.Nullable<int> value);
     partial void OnJUNIO_PChanged();
     partial void OnJUNIO_RChanging(System.Nullable<int> value);
     partial void OnJUNIO_RChanged();
+    partial void OnJUNIO_EChanging(System.Nullable<bool> value);
+    partial void OnJUNIO_EChanged();
     partial void OnJULIO_PChanging(System.Nullable<int> value);
     partial void OnJULIO_PChanged();
     partial void OnJULIO_RChanging(System.Nullable<int> value);
     partial void OnJULIO_RChanged();
+    partial void OnJULIO_EChanging(System.Nullable<bool> value);
+    partial void OnJULIO_EChanged();
     partial void OnAGOSTO_PChanging(System.Nullable<int> value);
     partial void OnAGOSTO_PChanged();
     partial void OnAGOSTO_RChanging(System.Nullable<int> value);
     partial void OnAGOSTO_RChanged();
+    partial void OnAGOSTO_EChanging(System.Nullable<bool> value);
+    partial void OnAGOSTO_EChanged();
     partial void OnSEPTIEMBRE_PChanging(System.Nullable<int> value);
     partial void OnSEPTIEMBRE_PChanged();
     partial void OnSEPTIEMBRE_RChanging(System.Nullable<int> value);
     partial void OnSEPTIEMBRE_RChanged();
+    partial void OnSEPTIEMBRE_EChanging(System.Nullable<bool> value);
+    partial void OnSEPTIEMBRE_EChanged();
     partial void OnOCTUBRE_PChanging(System.Nullable<int> value);
     partial void OnOCTUBRE_PChanged();
     partial void OnOCTUBRE_RChanging(System.Nullable<int> value);
     partial void OnOCTUBRE_RChanged();
+    partial void OnOCTUBRE_EChanging(System.Nullable<bool> value);
+    partial void OnOCTUBRE_EChanged();
     partial void OnNOVIEMBRE_PChanging(System.Nullable<int> value);
     partial void OnNOVIEMBRE_PChanged();
     partial void OnNOVIEMBRE_RChanging(System.Nullable<int> value);
     partial void OnNOVIEMBRE_RChanged();
+    partial void OnNOVIEMBRE_EChanging(System.Nullable<bool> value);
+    partial void OnNOVIEMBRE_EChanged();
     partial void OnDICIEMBRE_PChanging(System.Nullable<int> value);
     partial void OnDICIEMBRE_PChanged();
     partial void OnDICIEMBRE_RChanging(System.Nullable<int> value);
     partial void OnDICIEMBRE_RChanged();
+    partial void OnDICIEMBRE_EChanging(System.Nullable<bool> value);
+    partial void OnDICIEMBRE_EChanged();
     partial void OnTURNOChanging(System.Nullable<char> value);
     partial void OnTURNOChanged();
     partial void OnMES_INICIOChanging(System.Nullable<int> value);
@@ -3320,8 +3368,29 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FEBRERO_P", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ENERO_E", DbType="Bit")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public System.Nullable<bool> ENERO_E
+		{
+			get
+			{
+				return this._ENERO_E;
+			}
+			set
+			{
+				if ((this._ENERO_E != value))
+				{
+					this.OnENERO_EChanging(value);
+					this.SendPropertyChanging();
+					this._ENERO_E = value;
+					this.SendPropertyChanged("ENERO_E");
+					this.OnENERO_EChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FEBRERO_P", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
 		public System.Nullable<int> FEBRERO_P
 		{
 			get
@@ -3342,7 +3411,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FEBRERO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
 		public System.Nullable<int> FEBRERO_R
 		{
 			get
@@ -3362,8 +3431,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FEBRERO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public System.Nullable<bool> FEBRERO_E
+		{
+			get
+			{
+				return this._FEBRERO_E;
+			}
+			set
+			{
+				if ((this._FEBRERO_E != value))
+				{
+					this.OnFEBRERO_EChanging(value);
+					this.SendPropertyChanging();
+					this._FEBRERO_E = value;
+					this.SendPropertyChanged("FEBRERO_E");
+					this.OnFEBRERO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MARZO_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
 		public System.Nullable<int> MARZO_P
 		{
 			get
@@ -3384,7 +3474,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MARZO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
 		public System.Nullable<int> MARZO_R
 		{
 			get
@@ -3404,8 +3494,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MARZO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+		public System.Nullable<bool> MARZO_E
+		{
+			get
+			{
+				return this._MARZO_E;
+			}
+			set
+			{
+				if ((this._MARZO_E != value))
+				{
+					this.OnMARZO_EChanging(value);
+					this.SendPropertyChanging();
+					this._MARZO_E = value;
+					this.SendPropertyChanged("MARZO_E");
+					this.OnMARZO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ABRIL_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
 		public System.Nullable<int> ABRIL_P
 		{
 			get
@@ -3426,7 +3537,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ABRIL_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
 		public System.Nullable<int> ABRIL_R
 		{
 			get
@@ -3446,8 +3557,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ABRIL_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+		public System.Nullable<bool> ABRIL_E
+		{
+			get
+			{
+				return this._ABRIL_E;
+			}
+			set
+			{
+				if ((this._ABRIL_E != value))
+				{
+					this.OnABRIL_EChanging(value);
+					this.SendPropertyChanging();
+					this._ABRIL_E = value;
+					this.SendPropertyChanged("ABRIL_E");
+					this.OnABRIL_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MAYO_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=20)]
 		public System.Nullable<int> MAYO_P
 		{
 			get
@@ -3468,7 +3600,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MAYO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=21)]
 		public System.Nullable<int> MAYO_R
 		{
 			get
@@ -3488,8 +3620,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MAYO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+		public System.Nullable<bool> MAYO_E
+		{
+			get
+			{
+				return this._MAYO_E;
+			}
+			set
+			{
+				if ((this._MAYO_E != value))
+				{
+					this.OnMAYO_EChanging(value);
+					this.SendPropertyChanging();
+					this._MAYO_E = value;
+					this.SendPropertyChanged("MAYO_E");
+					this.OnMAYO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JUNIO_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=23)]
 		public System.Nullable<int> JUNIO_P
 		{
 			get
@@ -3510,7 +3663,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JUNIO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=24)]
 		public System.Nullable<int> JUNIO_R
 		{
 			get
@@ -3530,8 +3683,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JUNIO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=25)]
+		public System.Nullable<bool> JUNIO_E
+		{
+			get
+			{
+				return this._JUNIO_E;
+			}
+			set
+			{
+				if ((this._JUNIO_E != value))
+				{
+					this.OnJUNIO_EChanging(value);
+					this.SendPropertyChanging();
+					this._JUNIO_E = value;
+					this.SendPropertyChanged("JUNIO_E");
+					this.OnJUNIO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JULIO_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=26)]
 		public System.Nullable<int> JULIO_P
 		{
 			get
@@ -3552,7 +3726,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JULIO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=27)]
 		public System.Nullable<int> JULIO_R
 		{
 			get
@@ -3572,8 +3746,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JULIO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=28)]
+		public System.Nullable<bool> JULIO_E
+		{
+			get
+			{
+				return this._JULIO_E;
+			}
+			set
+			{
+				if ((this._JULIO_E != value))
+				{
+					this.OnJULIO_EChanging(value);
+					this.SendPropertyChanging();
+					this._JULIO_E = value;
+					this.SendPropertyChanged("JULIO_E");
+					this.OnJULIO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AGOSTO_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=29)]
 		public System.Nullable<int> AGOSTO_P
 		{
 			get
@@ -3594,7 +3789,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AGOSTO_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=23)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=30)]
 		public System.Nullable<int> AGOSTO_R
 		{
 			get
@@ -3614,8 +3809,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AGOSTO_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=31)]
+		public System.Nullable<bool> AGOSTO_E
+		{
+			get
+			{
+				return this._AGOSTO_E;
+			}
+			set
+			{
+				if ((this._AGOSTO_E != value))
+				{
+					this.OnAGOSTO_EChanging(value);
+					this.SendPropertyChanging();
+					this._AGOSTO_E = value;
+					this.SendPropertyChanged("AGOSTO_E");
+					this.OnAGOSTO_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEPTIEMBRE_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=24)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=32)]
 		public System.Nullable<int> SEPTIEMBRE_P
 		{
 			get
@@ -3636,7 +3852,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEPTIEMBRE_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=25)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=33)]
 		public System.Nullable<int> SEPTIEMBRE_R
 		{
 			get
@@ -3656,8 +3872,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEPTIEMBRE_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=34)]
+		public System.Nullable<bool> SEPTIEMBRE_E
+		{
+			get
+			{
+				return this._SEPTIEMBRE_E;
+			}
+			set
+			{
+				if ((this._SEPTIEMBRE_E != value))
+				{
+					this.OnSEPTIEMBRE_EChanging(value);
+					this.SendPropertyChanging();
+					this._SEPTIEMBRE_E = value;
+					this.SendPropertyChanged("SEPTIEMBRE_E");
+					this.OnSEPTIEMBRE_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OCTUBRE_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=26)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=35)]
 		public System.Nullable<int> OCTUBRE_P
 		{
 			get
@@ -3678,7 +3915,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OCTUBRE_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=27)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=36)]
 		public System.Nullable<int> OCTUBRE_R
 		{
 			get
@@ -3698,8 +3935,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OCTUBRE_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=37)]
+		public System.Nullable<bool> OCTUBRE_E
+		{
+			get
+			{
+				return this._OCTUBRE_E;
+			}
+			set
+			{
+				if ((this._OCTUBRE_E != value))
+				{
+					this.OnOCTUBRE_EChanging(value);
+					this.SendPropertyChanging();
+					this._OCTUBRE_E = value;
+					this.SendPropertyChanged("OCTUBRE_E");
+					this.OnOCTUBRE_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOVIEMBRE_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=28)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=38)]
 		public System.Nullable<int> NOVIEMBRE_P
 		{
 			get
@@ -3720,7 +3978,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOVIEMBRE_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=29)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=39)]
 		public System.Nullable<int> NOVIEMBRE_R
 		{
 			get
@@ -3740,8 +3998,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOVIEMBRE_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=40)]
+		public System.Nullable<bool> NOVIEMBRE_E
+		{
+			get
+			{
+				return this._NOVIEMBRE_E;
+			}
+			set
+			{
+				if ((this._NOVIEMBRE_E != value))
+				{
+					this.OnNOVIEMBRE_EChanging(value);
+					this.SendPropertyChanging();
+					this._NOVIEMBRE_E = value;
+					this.SendPropertyChanged("NOVIEMBRE_E");
+					this.OnNOVIEMBRE_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DICIEMBRE_P", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=30)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=41)]
 		public System.Nullable<int> DICIEMBRE_P
 		{
 			get
@@ -3762,7 +4041,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DICIEMBRE_R", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=31)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=42)]
 		public System.Nullable<int> DICIEMBRE_R
 		{
 			get
@@ -3782,8 +4061,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DICIEMBRE_E", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=43)]
+		public System.Nullable<bool> DICIEMBRE_E
+		{
+			get
+			{
+				return this._DICIEMBRE_E;
+			}
+			set
+			{
+				if ((this._DICIEMBRE_E != value))
+				{
+					this.OnDICIEMBRE_EChanging(value);
+					this.SendPropertyChanging();
+					this._DICIEMBRE_E = value;
+					this.SendPropertyChanged("DICIEMBRE_E");
+					this.OnDICIEMBRE_EChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TURNO", DbType="Char(1)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=32)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=44)]
 		public System.Nullable<char> TURNO
 		{
 			get
@@ -3804,7 +4104,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_INICIO", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=33)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=45)]
 		public System.Nullable<int> MES_INICIO
 		{
 			get
@@ -11280,6 +11580,8 @@ namespace WCF_ENAP
 		
 		private System.Nullable<int> _TIPO_DISPLAY;
 		
+		private string _GROUP_ID;
+		
 		private EntitySet<TBL_GRUPO_PRIVILEGIO> _TBL_GRUPO_PRIVILEGIO;
 		
 		private EntitySet<TBL_MODULO_STORE> _TBL_MODULO_STORE;
@@ -11312,6 +11614,8 @@ namespace WCF_ENAP
     partial void OnN_ORDERChanged();
     partial void OnTIPO_DISPLAYChanging(System.Nullable<int> value);
     partial void OnTIPO_DISPLAYChanged();
+    partial void OnGROUP_IDChanging(string value);
+    partial void OnGROUP_IDChanged();
     #endregion
 		
 		public TBL_NODO()
@@ -11512,8 +11816,29 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GROUP_ID", DbType="VarChar(100)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public string GROUP_ID
+		{
+			get
+			{
+				return this._GROUP_ID;
+			}
+			set
+			{
+				if ((this._GROUP_ID != value))
+				{
+					this.OnGROUP_IDChanging(value);
+					this.SendPropertyChanging();
+					this._GROUP_ID = value;
+					this.SendPropertyChanged("GROUP_ID");
+					this.OnGROUP_IDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO", Storage="_TBL_GRUPO_PRIVILEGIO", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
 		public EntitySet<TBL_GRUPO_PRIVILEGIO> TBL_GRUPO_PRIVILEGIO
 		{
 			get
@@ -11532,7 +11857,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_MODULO_STORE", Storage="_TBL_MODULO_STORE", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
 		public EntitySet<TBL_MODULO_STORE> TBL_MODULO_STORE
 		{
 			get
@@ -11551,7 +11876,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_NODO", Storage="_TBL_NODO2", ThisKey="ID_NODO", OtherKey="NODO_PADRE")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
 		public EntitySet<TBL_NODO> TBL_NODO2
 		{
 			get

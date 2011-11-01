@@ -46,7 +46,7 @@ namespace WCF_ENAP
                 query = query.Select(r => r);
                 List<TBL_ACTIVIDAD> results = query.ToList();
                 objJSON.items = results;
-                objJSON.totalCount = bd.TBL_ACCION.Count<TBL_ACCION>();
+                objJSON.totalCount = bd.TBL_ACTIVIDAD.Count<TBL_ACTIVIDAD>();
                 objJSON.success = true;
             }
             catch (Exception ex)
@@ -64,10 +64,24 @@ namespace WCF_ENAP
             int TIPO_FRECUENCIA,
             int CANTIDAD_FRECUENCIA,
             char TURNO,
-            int MES_INICIO)
+            int MES_INICIO,
+            int ANO_INICIO,
+            int ENERO_E,
+            int FEBRERO_E,
+            int MARZO_E,
+            int ABRIL_E,
+            int MAYO_E,
+            int JUNIO_E,
+            int JULIO_E,
+            int AGOSTO_E,
+            int SEPTIEMBRE_E,
+            int OCTUBRE_E,
+            int NOVIEMBRE_E,
+            int DICIEMBRE_E)
         {
             JSONCollection<TBL_ACTIVIDAD> objJSON = new JSONCollection<TBL_ACTIVIDAD>();
             //try {
+                
                 TBL_ACTIVIDAD nuevo = new TBL_ACTIVIDAD()
                 {
                     NOMBRE_ACTIVIDAD = NOMBRE_ACTIVIDAD,
@@ -79,6 +93,83 @@ namespace WCF_ENAP
                     CANTIDAD_FRECUENCIA = CANTIDAD_FRECUENCIA,
                     MES_INICIO = MES_INICIO
                 };
+                nuevo.ENERO_E = true;
+                nuevo.FEBRERO_E = true;
+                nuevo.MARZO_E = true;
+                nuevo.ABRIL_E = true;
+                nuevo.MAYO_E = true;
+                nuevo.JUNIO_E = true;
+                nuevo.JULIO_E = true;
+                nuevo.AGOSTO_E = true;
+                nuevo.SEPTIEMBRE_E = true;
+                nuevo.OCTUBRE_E = true;
+                nuevo.NOVIEMBRE_E = true;
+                nuevo.DICIEMBRE_E = true;
+
+                if (TIPO_FRECUENCIA == 1)
+                {
+                    /*Diario*/
+                    nuevo.ENERO_P = (DateTime.DaysInMonth(ANO_INICIO, 1) * CANTIDAD_FRECUENCIA);
+                    nuevo.FEBRERO_P = (DateTime.DaysInMonth(ANO_INICIO, 2) * CANTIDAD_FRECUENCIA);
+                    nuevo.MARZO_P = (DateTime.DaysInMonth(ANO_INICIO, 3) * CANTIDAD_FRECUENCIA);
+                    nuevo.ABRIL_P = (DateTime.DaysInMonth(ANO_INICIO, 4) * CANTIDAD_FRECUENCIA);
+                    nuevo.MAYO_P = (DateTime.DaysInMonth(ANO_INICIO, 5) * CANTIDAD_FRECUENCIA);
+                    nuevo.JUNIO_P = (DateTime.DaysInMonth(ANO_INICIO, 6) * CANTIDAD_FRECUENCIA);
+                    nuevo.JULIO_P = (DateTime.DaysInMonth(ANO_INICIO, 7) * CANTIDAD_FRECUENCIA);
+                    nuevo.AGOSTO_P = (DateTime.DaysInMonth(ANO_INICIO, 8) * CANTIDAD_FRECUENCIA);
+                    nuevo.SEPTIEMBRE_P = (DateTime.DaysInMonth(ANO_INICIO, 9) * CANTIDAD_FRECUENCIA);
+                    nuevo.OCTUBRE_P = (DateTime.DaysInMonth(ANO_INICIO, 10) * CANTIDAD_FRECUENCIA);
+                    nuevo.NOVIEMBRE_P = (DateTime.DaysInMonth(ANO_INICIO, 11) * CANTIDAD_FRECUENCIA);
+                    nuevo.DICIEMBRE_P = (DateTime.DaysInMonth(ANO_INICIO, 12) * CANTIDAD_FRECUENCIA);
+                }
+                else if (TIPO_FRECUENCIA == 2)
+                {
+                    /*Semanal*/
+                    nuevo.ENERO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.FEBRERO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.MARZO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.ABRIL_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.MAYO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.JUNIO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.JULIO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.AGOSTO_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.SEPTIEMBRE_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.OCTUBRE_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.NOVIEMBRE_P = (4 * CANTIDAD_FRECUENCIA);
+                    nuevo.DICIEMBRE_P = (4 * CANTIDAD_FRECUENCIA);
+                }
+                else if (TIPO_FRECUENCIA == 3)
+                {
+                    /*Mensual*/
+                    nuevo.ENERO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.FEBRERO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.MARZO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.ABRIL_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.MAYO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.JUNIO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.JULIO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.AGOSTO_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.SEPTIEMBRE_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.OCTUBRE_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.NOVIEMBRE_P = (1 * CANTIDAD_FRECUENCIA);
+                    nuevo.DICIEMBRE_P = (1 * CANTIDAD_FRECUENCIA);
+                }
+                else if (TIPO_FRECUENCIA == 4)
+                {
+                    /*Anual*/
+                    nuevo.ENERO_E = bool.Parse(ENERO_E.ToString());
+                    nuevo.FEBRERO_E = bool.Parse(FEBRERO_E.ToString());
+                    nuevo.MARZO_E = bool.Parse(MARZO_E.ToString());
+                    nuevo.ABRIL_E = bool.Parse(ABRIL_E.ToString());
+                    nuevo.MAYO_E = bool.Parse(MAYO_E.ToString());
+                    nuevo.JUNIO_E = bool.Parse(JUNIO_E.ToString());
+                    nuevo.JULIO_E = bool.Parse(JULIO_E.ToString());
+                    nuevo.AGOSTO_E = bool.Parse(AGOSTO_E.ToString());
+                    nuevo.SEPTIEMBRE_E = bool.Parse(SEPTIEMBRE_E.ToString());
+                    nuevo.OCTUBRE_E = bool.Parse(OCTUBRE_E.ToString());
+                    nuevo.NOVIEMBRE_E = bool.Parse(NOVIEMBRE_E.ToString());
+                    nuevo.DICIEMBRE_E = bool.Parse(DICIEMBRE_E.ToString());
+                }
                 bd.TBL_ACTIVIDAD.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
 

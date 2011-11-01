@@ -32,8 +32,7 @@ namespace WCF_ENAP
         public JSONCollection<EnapUser> LogIn(string USERNAME, string PASSWORD)
         {
             JSONCollection<EnapUser> objJSON = new JSONCollection<EnapUser>();
-            try
-            {
+            try{
                 EnapUser user;
                 
                 SearchResult rs = LDAP.IsInActiveDirectory(USERNAME, PASSWORD);
@@ -117,11 +116,7 @@ namespace WCF_ENAP
                     objJSON.success = false;
                 }
                 
-            }
-            catch (Exception e)
-            {
-                objJSON.success = false;
-            }
+            } catch (Exception e) { objJSON.success = false; }
             return objJSON;
         }
         [WebGet(UriTemplate = "")]

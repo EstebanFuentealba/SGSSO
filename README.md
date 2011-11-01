@@ -14,6 +14,7 @@ TODO
 * [Crear Matriz de Riesgo]	Medidas de Control Extra segun Actividad
 * [Informe E-020-00 Planilla]	~~Modificar Ultima Línea de la plantilla (Datos)~~
 * [Programa Anual]			Agregar sumario Total (Calculo de los 12 meses)
+* [Programa Anual]			Deshabilitar meses que no seevaluan, calcular solomeses evaluados
 * [ALL]							Filtro a Grillas con muchas filas
 * [ALL] 						setLoading(true) a componentes al hacer consultas ajax
 * [ALL] 						~~Habilitar Fechas en ExtJS <-> WCF .NET~~

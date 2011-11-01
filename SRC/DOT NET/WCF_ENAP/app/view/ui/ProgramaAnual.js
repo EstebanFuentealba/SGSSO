@@ -145,12 +145,12 @@
                             var formulario = winActividadProgramaAnual.getComponent('form_programa_anual');
                             var form = formulario.getForm();
 
-                            Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
+                            /*Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
                                 params: { 'ID_PROGRAMA_ANUAL': idProgramaAnual },
                                 callback: function (records, operation, success) {
                                     //console.log(records);
                                 }
-                            });
+                            });*/
                             form.loadRecord(record);
                             //formulario.setColumns(record.get('MES_INICIO'));
                             //console.log(record);

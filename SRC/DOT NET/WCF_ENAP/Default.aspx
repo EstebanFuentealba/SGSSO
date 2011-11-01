@@ -24,9 +24,9 @@
     -->
     
 
-    <script type="text/javascript" src="/js/layouts/basic.js"></script> 
+    <!--<script type="text/javascript" src="/js/layouts/basic.js"></script>
     <script type="text/javascript" src="/js/layouts/custom.js"></script> 
-    <script type="text/javascript" src="/js/layouts/combination.js"></script> 
+    <script type="text/javascript" src="/js/layouts/combination.js"></script>--> 
 	<script type="text/javascript" src="/js/layouts/layout-browser.js?01"></script>
     
     <style type="text/css">

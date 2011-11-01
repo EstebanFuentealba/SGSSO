@@ -107,28 +107,40 @@
       <Column Name="CANTIDAD_FRECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ENERO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ENERO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ENERO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FEBRERO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FEBRERO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FEBRERO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="MARZO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MARZO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MARZO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ABRIL_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ABRIL_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ABRIL_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="MAYO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MAYO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MAYO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="JUNIO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="JUNIO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JUNIO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="JULIO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="JULIO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="JULIO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="AGOSTO_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AGOSTO_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AGOSTO_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="SEPTIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="SEPTIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEPTIEMBRE_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="OCTUBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="OCTUBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OCTUBRE_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="NOVIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NOVIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOVIEMBRE_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="DICIEMBRE_P" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DICIEMBRE_R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DICIEMBRE_E" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="TURNO" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
       <Column Name="MES_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_CARGO_TBL_ACTIVIDAD" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
@@ -446,6 +458,7 @@
       <Column Name="ICONCLS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="N_ORDER" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TIPO_DISPLAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GROUP_ID" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_GRUPO_PRIVILEGIO" />
       <Association Name="TBL_NODO_TBL_MODULO_STORE" Member="TBL_MODULO_STORE" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_MODULO_STORE" />
       <Association Name="TBL_NODO_TBL_NODO" Member="TBL_NODO2" ThisKey="ID_NODO" OtherKey="NODO_PADRE" Type="TBL_NODO" />

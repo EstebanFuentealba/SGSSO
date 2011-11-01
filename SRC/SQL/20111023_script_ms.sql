@@ -14,6 +14,13 @@ go
 
 if exists (select 1
           from sysobjects
+          where id = object_id('TRIG_INSERT_USUARIO')
+          and type = 'TR')
+   drop trigger TRIG_INSERT_USUARIO
+go
+
+if exists (select 1
+          from sysobjects
           where  id = object_id('FN_NODES_BY_PARENT')
           and type = 'P')
    drop procedure FN_NODES_BY_PARENT
@@ -946,7 +953,7 @@ create rule R_MOMENTO_OCURRIDO as
 go
 
 create rule R_TIPO_DISPLAY as
-      @column between 1 and 2 and @column in (1,2)
+      @column between 1 and 3 and @column in (1,2,3)
 go
 
 create rule R_TIPO_EVENTO as
@@ -1157,50 +1164,62 @@ create table TBL_ACTIVIDAD (
       constraint CKC_ENERO_P_TBL_ACTI check (ENERO_P is null or (ENERO_P between 0 and 100)),
    ENERO_R              int                  null default 0
       constraint CKC_ENERO_R_TBL_ACTI check (ENERO_R is null or (ENERO_R between 0 and 100)),
+   ENERO_E              bit                  null default 1,
    FEBRERO_P            int                  null default 0
       constraint CKC_FEBRERO_P_TBL_ACTI check (FEBRERO_P is null or (FEBRERO_P between 0 and 100)),
    FEBRERO_R            int                  null default 0
       constraint CKC_FEBRERO_R_TBL_ACTI check (FEBRERO_R is null or (FEBRERO_R between 0 and 100)),
+   FEBRERO_E            bit                  null default 1,
    MARZO_P              int                  null default 0
       constraint CKC_MARZO_P_TBL_ACTI check (MARZO_P is null or (MARZO_P between 0 and 100)),
    MARZO_R              int                  null default 0
       constraint CKC_MARZO_R_TBL_ACTI check (MARZO_R is null or (MARZO_R between 0 and 100)),
+   MARZO_E              bit                  null default 1,
    ABRIL_P              int                  null default 0
       constraint CKC_ABRIL_P_TBL_ACTI check (ABRIL_P is null or (ABRIL_P between 0 and 100)),
    ABRIL_R              int                  null default 0
       constraint CKC_ABRIL_R_TBL_ACTI check (ABRIL_R is null or (ABRIL_R between 0 and 100)),
+   ABRIL_E              bit                  null default 1,
    MAYO_P               int                  null default 0
       constraint CKC_MAYO_P_TBL_ACTI check (MAYO_P is null or (MAYO_P between 0 and 100)),
    MAYO_R               int                  null default 0
       constraint CKC_MAYO_R_TBL_ACTI check (MAYO_R is null or (MAYO_R between 0 and 100)),
+   MAYO_E               bit                  null,
    JUNIO_P              int                  null default 0
       constraint CKC_JUNIO_P_TBL_ACTI check (JUNIO_P is null or (JUNIO_P between 0 and 100)),
    JUNIO_R              int                  null default 0
       constraint CKC_JUNIO_R_TBL_ACTI check (JUNIO_R is null or (JUNIO_R between 0 and 100)),
+   JUNIO_E              bit                  null default 1,
    JULIO_P              int                  null default 0
       constraint CKC_JULIO_P_TBL_ACTI check (JULIO_P is null or (JULIO_P between 0 and 100)),
    JULIO_R              int                  null default 0
       constraint CKC_JULIO_R_TBL_ACTI check (JULIO_R is null or (JULIO_R between 0 and 100)),
+   JULIO_E              bit                  null default 1,
    AGOSTO_P             int                  null default 0
       constraint CKC_AGOSTO_P_TBL_ACTI check (AGOSTO_P is null or (AGOSTO_P between 0 and 100)),
    AGOSTO_R             int                  null default 0
       constraint CKC_AGOSTO_R_TBL_ACTI check (AGOSTO_R is null or (AGOSTO_R between 0 and 100)),
+   AGOSTO_E             bit                  null default 1,
    SEPTIEMBRE_P         int                  null default 0
       constraint CKC_SEPTIEMBRE_P_TBL_ACTI check (SEPTIEMBRE_P is null or (SEPTIEMBRE_P between 0 and 100)),
    SEPTIEMBRE_R         int                  null default 0
       constraint CKC_SEPTIEMBRE_R_TBL_ACTI check (SEPTIEMBRE_R is null or (SEPTIEMBRE_R between 0 and 100)),
+   SEPTIEMBRE_E         bit                  null default 1,
    OCTUBRE_P            int                  null default 0
       constraint CKC_OCTUBRE_P_TBL_ACTI check (OCTUBRE_P is null or (OCTUBRE_P between 0 and 100)),
    OCTUBRE_R            int                  null default 0
       constraint CKC_OCTUBRE_R_TBL_ACTI check (OCTUBRE_R is null or (OCTUBRE_R between 0 and 100)),
+   OCTUBRE_E            bit                  null default 1,
    NOVIEMBRE_P          int                  null default 0
       constraint CKC_NOVIEMBRE_P_TBL_ACTI check (NOVIEMBRE_P is null or (NOVIEMBRE_P between 0 and 100)),
    NOVIEMBRE_R          int                  null default 0
       constraint CKC_NOVIEMBRE_R_TBL_ACTI check (NOVIEMBRE_R is null or (NOVIEMBRE_R between 0 and 100)),
+   NOVIEMBRE_E          bit                  null default 1,
    DICIEMBRE_P          int                  null default 0
       constraint CKC_DICIEMBRE_P_TBL_ACTI check (DICIEMBRE_P is null or (DICIEMBRE_P between 0 and 100)),
    DICIEMBRE_R          int                  null default 0
       constraint CKC_DICIEMBRE_R_TBL_ACTI check (DICIEMBRE_R is null or (DICIEMBRE_R between 0 and 100)),
+   DICIEMBRE_E          bit                  null default 1,
    TURNO                char(1)              null
       constraint CKC_TURNO_TBL_ACTI check (TURNO is null or (TURNO in ('A','B','C','D','0'))),
    MES_INICIO           int                  null
@@ -1638,7 +1657,8 @@ create table TBL_NODO (
    ICONCLS              varchar(100)         null,
    N_ORDER              int                  null,
    TIPO_DISPLAY         int                  null
-      constraint CKC_TIPO_DISPLAY_TBL_NODO check (TIPO_DISPLAY is null or (TIPO_DISPLAY between 1 and 2 and TIPO_DISPLAY in (1,2))),
+      constraint CKC_TIPO_DISPLAY_TBL_NODO check (TIPO_DISPLAY is null or (TIPO_DISPLAY between 1 and 3 and TIPO_DISPLAY in (1,2,3))),
+   GROUP_ID             varchar(100)         null,
    constraint PK_TBL_NODO primary key nonclustered (ID_NODO),
    constraint AK_KEY_2_TBL_NODO unique (NOMBRE_MODULO)
 )
@@ -2572,32 +2592,38 @@ AS
 GO
 
 
-
 CREATE TRIGGER TRIG_ADD_NODE
 ON TBL_NODO
 AFTER INSERT
 AS
 	DECLARE @NODO_PADRE AS INT
 	DECLARE @ID_NODO AS INT
-	
-	SELECT 	@ID_NODO = ID_NODO,
-			@NODO_PADRE = NODO_PADRE 
+	SELECT 	@NODO_PADRE = NODO_PADRE,
+			@ID_NODO = ID_NODO
 	FROM INSERTED;
-	
-	INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,ID_NODO,ESTADO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD)
-	SELECT GP.ID_GRUPO,
-				@ID_NODO,
-				GP.ESTADO,
-				GP.ALLOW_READ,
-				GP.ALLOW_WRITE,
-				GP.ALLOW_EDIT,
-				GP.ALLOW_DELETE,
-				GP.ALLOW_PRINT,
-				GP.ALLOW_CRUD
-	FROM TBL_NODO ND
-		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON  ND.ID_NODO=GP.ID_NODO
-		WHERE ND.ID_NODO=@NODO_PADRE;
+	INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,ID_NODO,ESTADO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD) 
+		SELECT ID_GRUPO,@ID_NODO,ESTADO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD
+		FROM TBL_GRUPO_PRIVILEGIO
+		WHERE ID_NODO = @NODO_PADRE
 GO
+
+
+CREATE TRIGGER TRIG_INSERT_USUARIO ON TBL_USUARIO
+AFTER INSERT
+AS
+
+	DECLARE @ID_USUARIO AS VARCHAR(200);
+	SELECT @ID_USUARIO = ID_USUARIO
+    FROM inserted;
+    -- Usuario Normal
+	INSERT INTO TBL_USUARIO_GRUPO(ID_GRUPO,ID_USUARIO,GRUPO_ADMIN)
+        VALUES(3,@ID_USUARIO,0);
+go
+
+
+
+
+
 
 
 
@@ -3277,19 +3303,22 @@ GO
 SET IDENTITY_INSERT TBL_GRUPO ON
 INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(1,'Invitado','Grupo que tiene acceso limitado');
 INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(2,'Administrador','Grupo que tiene acceso Total');
+INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(3,'Usuario Normal','Grupo al que pertenecen todos los usuarios registrados');
 SET IDENTITY_INSERT TBL_GRUPO OFF
 GO
 
 GO
 SET IDENTITY_INSERT TBL_NODO ON
 GO
-INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(1,NULL,'.',null,1,1,NULL,1);
+INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(1,NULL,'.',null,1,1,NULL,1,3,NULL);
 INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD,ESTADO)
 	VALUES(1,1,1,1,0,0,0,0,1) -- Lectura
-	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(2,1,'Administración',NULL,1,1,'administracion-icon',1);
-		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(3,2,'Menu Generador','MenuGenerator',1,2,'generator-editor-icon',1);
-		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(4,2,'Grupos','Grupo',1,2,'grupo-icon',2);
-		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER) VALUES(5,2,'Usuarios','Usuario',1,2,'user-icon',3);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(2,1,'Administración',NULL,1,1,'administracion-icon',1,3,NULL);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(3,2,'Menu Generador','MenuGenerator',1,2,'generator-editor-icon',1,2,NULL);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(4,2,'Grupos','Grupo',1,2,'grupo-icon',2,2,NULL);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(5,2,'Usuarios','Usuario',1,2,'user-icon',3,2,NULL);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(6,1,'Login',NULL,1,1,'login-icon',10,1,1);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID) VALUES(7,1,'Logout',NULL,1,1,'logout-icon',11,1,1);
 
 GO
 SET IDENTITY_INSERT TBL_NODO OFF
@@ -3423,7 +3452,9 @@ SELECT	ND.ID_NODO,
 		GP.*
 FROM TBL_GRUPO_PRIVILEGIO GP
 	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
-WHERE (GP.ID_GRUPO=1 OR GP.ID_GRUPO=1) AND GP.ALLOW_READ=1
+WHERE (((GP.ID_GRUPO IN (SELECT ID_GRUPO FROM TBL_USUARIO  WHERE ID_USUARIO='efuentealba') OR GP.ID_GRUPO=1)) OR GP.ID_GRUPO=3)
+		AND GP.ALLOW_READ=1
+ORDER BY ND.NODO_PADRE, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC;
 
 
 
