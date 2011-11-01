@@ -245,9 +245,16 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_CAUSA') and o.name = 'FK_TBL_CAUS_PERTENECE_E006_4')
-alter table TBL_CAUSA
-   drop constraint FK_TBL_CAUS_PERTENECE_E006_4
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_CAUS')
+alter table TBL_CAUSA_INFORME
+   drop constraint FK_TBL_CAUS_REFERENCE_TBL_CAUS
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_E006_4')
+alter table TBL_CAUSA_INFORME
+   drop constraint FK_TBL_CAUS_REFERENCE_E006_4
 go
 
 if exists (select 1
@@ -496,6 +503,20 @@ alter table TBL_USUARIO_GRUPO
 go
 
 if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('THL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_THL_HERR_REFERENCE_TBL_TRAB')
+alter table THL_HERRAMIENTA_TRABAJADOR
+   drop constraint FK_THL_HERR_REFERENCE_TBL_TRAB
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('THL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_THL_HERR_REFERENCE_TBL_HERR')
+alter table THL_HERRAMIENTA_TRABAJADOR
+   drop constraint FK_THL_HERR_REFERENCE_TBL_HERR
+go
+
+if exists (select 1
             from  sysobjects
            where  id = object_id('E006_3')
             and   type = 'U')
@@ -623,6 +644,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('TBL_CAUSA_INFORME')
+            and   type = 'U')
+   drop table TBL_CAUSA_INFORME
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('TBL_CAUSA_MEDIDA_DE_CONTROL')
             and   type = 'U')
    drop table TBL_CAUSA_MEDIDA_DE_CONTROL
@@ -717,6 +745,13 @@ if exists (select 1
            where  id = object_id('TBL_GRUPO_PRIVILEGIO')
             and   type = 'U')
    drop table TBL_GRUPO_PRIVILEGIO
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_HERRAMIENTA')
+            and   type = 'U')
+   drop table TBL_HERRAMIENTA
 go
 
 if exists (select 1
@@ -852,6 +887,13 @@ if exists (select 1
    drop table TBL_USUARIO_GRUPO
 go
 
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('THL_HERRAMIENTA_TRABAJADOR')
+            and   type = 'U')
+   drop table THL_HERRAMIENTA_TRABAJADOR
+go
+
 if exists(select 1 from systypes where name='DOMAIN_9')
    execute sp_droptype DOMAIN_9
 go
@@ -874,6 +916,14 @@ go
 
 if exists(select 1 from systypes where name='PRIVILEGIO')
    execute sp_droptype PRIVILEGIO
+go
+
+if exists(select 1 from systypes where name='TIPO_CAUSA')
+   execute sp_unbindrule TIPO_CAUSA
+go
+
+if exists(select 1 from systypes where name='TIPO_CAUSA')
+   execute sp_droptype TIPO_CAUSA
 go
 
 if exists(select 1 from systypes where name='TIPO_DISPLAY')
@@ -908,6 +958,14 @@ if exists(select 1 from systypes where name='TIPO_NODO')
    execute sp_droptype TIPO_NODO
 go
 
+if exists(select 1 from systypes where name='TIPO_PELIGRO')
+   execute sp_unbindrule TIPO_PELIGRO
+go
+
+if exists(select 1 from systypes where name='TIPO_PELIGRO')
+   execute sp_droptype TIPO_PELIGRO
+go
+
 if exists(select 1 from systypes where name='TURNO')
    execute sp_unbindrule TURNO
 go
@@ -922,6 +980,10 @@ go
 
 if exists (select 1 from sysobjects where id=object_id('R_MOMENTO_OCURRIDO') and type='R')
    drop rule  R_MOMENTO_OCURRIDO
+go
+
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_CAUSA') and type='R')
+   drop rule  R_TIPO_CAUSA
 go
 
 if exists (select 1 from sysobjects where id=object_id('R_TIPO_DISPLAY') and type='R')
@@ -940,6 +1002,10 @@ if exists (select 1 from sysobjects where id=object_id('R_TIPO_NODO') and type='
    drop rule  R_TIPO_NODO
 go
 
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_PELIGRO') and type='R')
+   drop rule  R_TIPO_PELIGRO
+go
+
 if exists (select 1 from sysobjects where id=object_id('R_TURNO') and type='R')
    drop rule  R_TURNO
 go
@@ -950,6 +1016,10 @@ go
 
 create rule R_MOMENTO_OCURRIDO as
       @column between 1 and 3 and @column in (1,2,3)
+go
+
+create rule R_TIPO_CAUSA as
+      @column between 1 and 20
 go
 
 create rule R_TIPO_DISPLAY as
@@ -965,6 +1035,10 @@ create rule R_TIPO_FRECUENCIA as
 go
 
 create rule R_TIPO_NODO as
+      @column between 1 and 2 and @column in (1,2)
+go
+
+create rule R_TIPO_PELIGRO as
       @column between 1 and 2 and @column in (1,2)
 go
 
@@ -1003,6 +1077,15 @@ execute sp_addtype PRIVILEGIO, 'int'
 go
 
 /*==============================================================*/
+/* Domain: TIPO_CAUSA                                           */
+/*==============================================================*/
+execute sp_addtype TIPO_CAUSA, 'int'
+go
+
+execute sp_bindrule R_TIPO_CAUSA, TIPO_CAUSA
+go
+
+/*==============================================================*/
 /* Domain: TIPO_DISPLAY                                         */
 /*==============================================================*/
 execute sp_addtype TIPO_DISPLAY, 'int'
@@ -1036,6 +1119,15 @@ execute sp_addtype TIPO_NODO, 'int'
 go
 
 execute sp_bindrule R_TIPO_NODO, TIPO_NODO
+go
+
+/*==============================================================*/
+/* Domain: TIPO_PELIGRO                                         */
+/*==============================================================*/
+execute sp_addtype TIPO_PELIGRO, 'int'
+go
+
+execute sp_bindrule R_TIPO_PELIGRO, TIPO_PELIGRO
 go
 
 /*==============================================================*/
@@ -1378,11 +1470,20 @@ go
 /*==============================================================*/
 create table TBL_CAUSA (
    ID_CAUSA             int                  identity,
-   ID_INFORME           int                  null,
    DESCRIPCION          text                 null,
    TIPO_CAUSA           int                  null
-      constraint CKC_TIPO_CAUSA_TBL_CAUS check (TIPO_CAUSA is null or (TIPO_CAUSA between 1 and 3 and TIPO_CAUSA in (1,2,3))),
+      constraint CKC_TIPO_CAUSA_TBL_CAUS check (TIPO_CAUSA is null or (TIPO_CAUSA between 1 and 20)),
    constraint PK_TBL_CAUSA primary key nonclustered (ID_CAUSA)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_CAUSA_INFORME                                     */
+/*==============================================================*/
+create table TBL_CAUSA_INFORME (
+   ID_INFORME           int                  not null,
+   ID_CAUSA             int                  not null,
+   constraint PK_TBL_CAUSA_INFORME primary key (ID_INFORME, ID_CAUSA)
 )
 go
 
@@ -1585,6 +1686,17 @@ create table TBL_GRUPO_PRIVILEGIO (
 go
 
 /*==============================================================*/
+/* Table: TBL_HERRAMIENTA                                       */
+/*==============================================================*/
+create table TBL_HERRAMIENTA (
+   ID_HERRAMIENTA       int                  identity,
+   NOMBRE_HERRAMIENTA   varchar(200)         null,
+   constraint PK_TBL_HERRAMIENTA primary key (ID_HERRAMIENTA),
+   constraint AK_KEY_2_TBL_HERR unique (NOMBRE_HERRAMIENTA)
+)
+go
+
+/*==============================================================*/
 /* Table: TBL_HISTORIAL_EMPRESA                                 */
 /*==============================================================*/
 create table TBL_HISTORIAL_EMPRESA (
@@ -1701,6 +1813,8 @@ go
 create table TBL_PELIGRO (
    ID_PELIGRO           int                  identity,
    NOM_PELIGRO          varchar(200)         not null,
+   TIPO_PELIGRO         int                  null
+      constraint CKC_TIPO_PELIGRO_TBL_PELI check (TIPO_PELIGRO is null or (TIPO_PELIGRO between 1 and 2 and TIPO_PELIGRO in (1,2,3))),
    constraint PK_TBL_PELIGRO primary key nonclustered (ID_PELIGRO),
    constraint UK_TBL_PELIGRO unique (NOM_PELIGRO)
 )
@@ -1824,6 +1938,16 @@ create table TBL_USUARIO_GRUPO (
    ID_USUARIO           varchar(200)         not null,
    GRUPO_ADMIN          bit                  null,
    constraint PK_TBL_USUARIO_GRUPO primary key nonclustered (ID_GRUPO, ID_USUARIO)
+)
+go
+
+/*==============================================================*/
+/* Table: THL_HERRAMIENTA_TRABAJADOR                            */
+/*==============================================================*/
+create table THL_HERRAMIENTA_TRABAJADOR (
+   ID_HERRAMIENTA       int                  not null,
+   ID_TRABAJADOR        int                  not null,
+   constraint PK_THL_HERRAMIENTA_TRABAJADOR primary key (ID_HERRAMIENTA, ID_TRABAJADOR)
 )
 go
 
@@ -1952,8 +2076,13 @@ alter table TBL_AREA
       references TBL_DIVISION (ID_DIVISION)
 go
 
-alter table TBL_CAUSA
-   add constraint FK_TBL_CAUS_PERTENECE_E006_4 foreign key (ID_INFORME)
+alter table TBL_CAUSA_INFORME
+   add constraint FK_TBL_CAUS_REFERENCE_TBL_CAUS foreign key (ID_CAUSA)
+      references TBL_CAUSA (ID_CAUSA)
+go
+
+alter table TBL_CAUSA_INFORME
+   add constraint FK_TBL_CAUS_REFERENCE_E006_4 foreign key (ID_INFORME)
       references E006_4 (ID_INFORME)
 go
 
@@ -2130,6 +2259,16 @@ go
 alter table TBL_USUARIO_GRUPO
    add constraint FK_TBL_USUA_TBL_USUAR_TBL_GRUP foreign key (ID_GRUPO)
       references TBL_GRUPO (ID_GRUPO)
+go
+
+alter table THL_HERRAMIENTA_TRABAJADOR
+   add constraint FK_THL_HERR_REFERENCE_TBL_TRAB foreign key (ID_TRABAJADOR)
+      references TBL_TRABAJADOR (ID_TRABAJADOR)
+go
+
+alter table THL_HERRAMIENTA_TRABAJADOR
+   add constraint FK_THL_HERR_REFERENCE_TBL_HERR foreign key (ID_HERRAMIENTA)
+      references TBL_HERRAMIENTA (ID_HERRAMIENTA)
 go
 
 CREATE FUNCTION fn_nodes_by_parent (@ID_NODO INT)
@@ -2650,6 +2789,8 @@ go
 
 
 
+
+
 /*
 DATA
 */
@@ -2875,50 +3016,70 @@ GO
 	TBL_PELIGRO
 */
 
-Insert into TBL_PELIGRO (Nom_Peligro ) values('1: Atrapamiento entre objetos en movimiento o fijo y movimiento');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('2: Atrapamiento por Objeto fijo o en movimiento');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('3: Atropello');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('4: Caída a diferente Nivel');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('5: Caída al mismo nivel ');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('6: Causado por animal o insecto');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('7: Causado por terceras personas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('8:  Choque contra elementos móviles');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('9:  Choque contra objetos o estructura fija');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('10: Choque por otro vehículo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('11: Contacto con electricidad');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('12:  Contacto con fuego');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('13:  Contacto con Objetos Calientes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('14:  Contacto con Objetos Cortantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('15:  Contacto con Objetos Punzantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('16:  Contacto con sustancias químicas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('17:  Explosión');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('18:  Exposición  a radiaciones ultravioletas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('19:  Exposición a agentes biológicos (bacterias, hongos, etc.)');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('20:  Exposición a calor');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('21:  Exposición a frío');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('22:  Exposición a gases');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('23:  Exposición a humos metálicos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('24:  Exposición a nieblas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('25:  Exposición a Polvo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('26:  Exposición a presiones anormales');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('27:  Exposición a radiaciones infrarrojas');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('28:  Exposición a radiaciones íonizantes');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('29:  Exposición a rocíos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('30:  Exposición a ruido');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('31:  Exposición a vapores');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('32:  Exposición a vibraciones');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('33:  Golpeado con objeto o herramienta');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('34:  Golpeado contra objetos o equipos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('35:  Golpeado por Objeto');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('36:  Incendio');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('37:  Inmersión');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('38:  Intoxicación por alimentos');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('39:  Sobre carga física');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('40:  Sobre tensión mental y psicológica');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('41:  Sobreesfuerzo por movimiento repetitivo');
-Insert into TBL_PELIGRO (Nom_Peligro ) values('42:  Sobreesfuerzo por manejo manual de materiales');
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro) values('1: Atrapamiento entre objetos en movimiento o fijo y movimiento',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro) values('2: Atrapamiento por Objeto fijo o en movimiento',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('3: Atropello',1);
+Insert into TBL_PELIGRO (Nom_Peligro ,tipo_peligro) values('4: Caída a diferente Nivel',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('5: Caída al mismo nivel ',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('6: Causado por animal o insecto',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('7: Causado por terceras personas',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('8:  Choque contra elementos móviles',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('9:  Choque contra objetos o estructura fija',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('10: Choque por otro vehículo',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('11: Contacto con electricidad',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('12:  Contacto con fuego',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('13:  Contacto con Objetos Calientes',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('14:  Contacto con Objetos Cortantes',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('15:  Contacto con Objetos Punzantes',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('16:  Contacto con sustancias químicas',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('17:  Explosión',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('18:  Exposición  a radiaciones ultravioletas',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('19:  Exposición a agentes biológicos (bacterias, hongos, etc.)',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('20:  Exposición a calor',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('21:  Exposición a frío',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('22:  Exposición a gases',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('23:  Exposición a humos metálicos',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('24:  Exposición a nieblas',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('25:  Exposición a Polvo',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('26:  Exposición a presiones anormales',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('27:  Exposición a radiaciones infrarrojas',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('28:  Exposición a radiaciones íonizantes',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('29:  Exposición a rocíos',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('30:  Exposición a ruido',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('31:  Exposición a vapores',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('32:  Exposición a vibraciones',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('33:  Golpeado con objeto o herramienta',1);
+Insert into TBL_PELIGRO (Nom_Peligro ,tipo_peligro) values('34:  Golpeado contra objetos o equipos',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('35:  Golpeado por Objeto',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('36:  Incendio',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('37:  Inmersión',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('38:  Intoxicación por alimentos',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('39:  Sobre carga física',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('40:  Sobre tensión mental y psicológica',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('41:  Sobreesfuerzo por movimiento repetitivo',1);
+Insert into TBL_PELIGRO (Nom_Peligro,tipo_peligro ) values('42:  Sobreesfuerzo por manejo manual de materiales',1);
 GO
 
+insert into TBL_PELIGRO values ('Incendio', 2);
+insert into TBL_PELIGRO values ('Derrame', 2);
+insert into TBL_PELIGRO values ('Fuga', 2);
+insert into TBL_PELIGRO values ('Filtración', 2);
+insert into TBL_PELIGRO values ('Pérdida de Energía', 2);
+insert into TBL_PELIGRO values ('Reactividad Química', 2);
+insert into TBL_PELIGRO values ('Explosión', 2);
+insert into TBL_PELIGRO values ('Rotura', 2);
+insert into TBL_PELIGRO values ('Contaminación producto', 2);
+insert into TBL_PELIGRO values ('Contaminación ambiental', 2);
+insert into TBL_PELIGRO values ('Emisiones', 2);
+insert into TBL_PELIGRO values ('Corto circuito', 2);
+insert into TBL_PELIGRO values ('Atentado', 2);
+insert into TBL_PELIGRO values ('Volcamiento/Choque', 2);
+insert into TBL_PELIGRO values ('Evento Natural', 2);
+insert into TBL_PELIGRO values ('Falla sistema control', 2);
+insert into TBL_PELIGRO values ('Desgaste o corrosión acelerada', 2);
+insert into TBL_PELIGRO values ('Sobre presión en equipo o sistema', 2) ;
+insert into TBL_PELIGRO values ('Sobre temperatura en el equipo sistema', 2);
+GO
 
 /* 
 
@@ -3339,6 +3500,207 @@ GO
 SET IDENTITY_INSERT TBL_STORE OFF
 GO
 
+INSERT INTO TBL_CAUSA VALUES ('Desatención en zonas de tránsito', 2);
+INSERT INTO TBL_CAUSA VALUES ('Errores en conducción de vehículo', 2);
+INSERT INTO TBL_CAUSA VALUES ('Uso indebido de mano u otras partes del cuerpo', 2);
+INSERT INTO TBL_CAUSA VALUES ('Operar o trabajar a velocidad insegura', 2);
+INSERT INTO TBL_CAUSA VALUES ('No analizar el riesgo', 2);
+INSERT INTO TBL_CAUSA VALUES ('Transgredir  un Estándar / Procedimiento', 2);
+INSERT INTO TBL_CAUSA VALUES ('Operar equipos sin autorización', 2);
+INSERT INTO TBL_CAUSA VALUES ('No señalar o advertir', 2);
+INSERT INTO TBL_CAUSA VALUES ('Falla en asegurar adecuadamente', 2);
+INSERT INTO TBL_CAUSA VALUES ('Operar a velocidad inadecuada', 2);
+INSERT INTO TBL_CAUSA VALUES ('Dejar fuera de servicio los dispositivos de seguridad', 2);
+INSERT INTO TBL_CAUSA VALUES ('Eliminar o retirar los dispositivos de seguridad', 2);
+INSERT INTO TBL_CAUSA VALUES ('Usar equipo defectuoso', 2);
+INSERT INTO TBL_CAUSA VALUES ('Usar los equipos de manera incorrecta', 2);
+INSERT INTO TBL_CAUSA VALUES ('Emplear en forma inadecuada o no usar el equipo de protección personal', 2);
+INSERT INTO TBL_CAUSA VALUES ('Instalar carga de manera incorrecta', 2);
+INSERT INTO TBL_CAUSA VALUES ('Almacenar de manera incorrecta', 2);
+INSERT INTO TBL_CAUSA VALUES ('Levantar objetos en forma incorrecta', 2);
+INSERT INTO TBL_CAUSA VALUES ('Adoptar una posición inadecuada para hacer la tarea', 2);
+INSERT INTO TBL_CAUSA VALUES ('Realizar mantenimiento de los equipos mientras se encuentran operando', 2);
+INSERT INTO TBL_CAUSA VALUES ('Hacer bromas', 2);
+INSERT INTO TBL_CAUSA VALUES ('Trabajar bajo la influencia del alcohol y/u otras drogas', 2);
+
+
+INSERT INTO TBL_CAUSA VALUES ('Mantención inadecuada', 3);
+INSERT INTO TBL_CAUSA VALUES ('Almacenamiento defectuoso', 3);
+INSERT INTO TBL_CAUSA VALUES ('Fabricación o instalación defectuosa', 3);
+INSERT INTO TBL_CAUSA VALUES ('Vestimenta  o equipos defectuosos', 3);
+INSERT INTO TBL_CAUSA VALUES ('Dispositivo de seguridad en mal estado', 3);
+INSERT INTO TBL_CAUSA VALUES ('Condición climáticas adversa', 3);
+INSERT INTO TBL_CAUSA VALUES ('Protecciones y resguardos inadecuados', 3);
+INSERT INTO TBL_CAUSA VALUES ('Equipos de protección inadecuados o insuficientes', 3);
+INSERT INTO TBL_CAUSA VALUES ('Herramientas, equipos o materiales defectuosos', 3);
+INSERT INTO TBL_CAUSA VALUES ('Espacio restringido o limitado para desenvolverse', 3);
+INSERT INTO TBL_CAUSA VALUES ('Sistemas de advertencia insuficientes', 3);
+INSERT INTO TBL_CAUSA VALUES ('Peligro de explosión o incendio', 3);
+INSERT INTO TBL_CAUSA VALUES ('Orden y limpieza deficientes en el lugar de trabajo', 3);
+INSERT INTO TBL_CAUSA VALUES ('Condiciones ambientales peligrosas: gases, polvos, humos, emanaciones metálicas, vapores', 3);
+INSERT INTO TBL_CAUSA VALUES ('Exposiciones a ruido', 3);
+INSERT INTO TBL_CAUSA VALUES ('Exposiciones a radiaciones', 3);
+INSERT INTO TBL_CAUSA VALUES ('Exposiciones a temperaturas altas o bajas', 3);
+INSERT INTO TBL_CAUSA VALUES ('Iluminación excesiva o deficiente', 3);
+INSERT INTO TBL_CAUSA VALUES ('Ventilación insuficiente', 3);
+
+INSERT INTO TBL_CAUSA VALUES ('Altura, peso, alcance, etc., inapropiados', 4);
+INSERT INTO TBL_CAUSA VALUES ('Movimiento corporal limitado', 4);
+INSERT INTO TBL_CAUSA VALUES ('Capacidad limitada para sostener posiciones corporales', 4);
+INSERT INTO TBL_CAUSA VALUES ('Sensibilidades a sustancias o alergias', 4);
+INSERT INTO TBL_CAUSA VALUES ('Sensibilidad a extremos sensoriales (temperatura, ruido, etc.,)', 4);
+INSERT INTO TBL_CAUSA VALUES ('Deficiencia de visual', 4);
+INSERT INTO TBL_CAUSA VALUES ('Deficiencia de auditiva', 4);
+INSERT INTO TBL_CAUSA VALUES ('Otras deficiencias sensoriales (tacto, gusto, olfato, equilibrio)', 4);
+INSERT INTO TBL_CAUSA VALUES ('Incapacidad respiratoria', 4);
+INSERT INTO TBL_CAUSA VALUES ('Otras invalideces físicas permanentes', 4);
+INSERT INTO TBL_CAUSA VALUES ('Incapacidades temporales', 4);
+
+INSERT INTO TBL_CAUSA VALUES ('Temores y fobias', 5);
+INSERT INTO TBL_CAUSA VALUES ('Problemas emocionales', 5);
+INSERT INTO TBL_CAUSA VALUES ('Enfermedad mental', 5);
+INSERT INTO TBL_CAUSA VALUES ('Nivel de inteligencia', 5);
+INSERT INTO TBL_CAUSA VALUES ('Incapacidad de comprensión', 5);
+INSERT INTO TBL_CAUSA VALUES ('Falta de juicio', 5);
+INSERT INTO TBL_CAUSA VALUES ('Escasa coordinación', 5);
+INSERT INTO TBL_CAUSA VALUES ('Reacción lenta / bajo tiempo de reacción', 5);
+INSERT INTO TBL_CAUSA VALUES ('Aptitud mecánica deficiente', 5);
+INSERT INTO TBL_CAUSA VALUES ('Baja aptitud de aprendizaje', 5);
+INSERT INTO TBL_CAUSA VALUES ('Problemas  de memoria', 5);
+
+INSERT INTO TBL_CAUSA VALUES ('Lesión o enfermedad', 6);
+INSERT INTO TBL_CAUSA VALUES ('Fatiga por carga o duración de la tarea', 6);
+INSERT INTO TBL_CAUSA VALUES ('Fatiga por falta de descanso', 6);
+INSERT INTO TBL_CAUSA VALUES ('Fatiga por sobrecarga sensorial', 6);
+INSERT INTO TBL_CAUSA VALUES ('Exposición a riesgos contra la salud', 6);
+INSERT INTO TBL_CAUSA VALUES ('Exposición a temperaturas extremas', 6);
+INSERT INTO TBL_CAUSA VALUES ('Insuficiencia de oxigeno', 6);
+INSERT INTO TBL_CAUSA VALUES ('Variaciones en la presión atmosférica', 6);
+INSERT INTO TBL_CAUSA VALUES ('Movimiento restringido', 6);
+INSERT INTO TBL_CAUSA VALUES ('Insuficiencia de azúcar en la sangre', 6);
+INSERT INTO TBL_CAUSA VALUES ('Ingestión de Drogas', 6);
+
+INSERT INTO TBL_CAUSA VALUES ('Sobrecarga emocional', 7);
+INSERT INTO TBL_CAUSA VALUES ('Fatiga por carga o velocidad de tarea mental', 7);
+INSERT INTO TBL_CAUSA VALUES ('Obligaciones que exigen juicio o toma decisión extremas', 7);
+INSERT INTO TBL_CAUSA VALUES ('Rutina, monotonía de trabajos no importantes', 7);
+INSERT INTO TBL_CAUSA VALUES ('Exigencia de concentración y percepción profunda', 7);
+INSERT INTO TBL_CAUSA VALUES ('Actividades “sin sentido” o "degradantes"', 7);
+INSERT INTO TBL_CAUSA VALUES ('Direcciones y ordenes confusas', 7);
+INSERT INTO TBL_CAUSA VALUES ('Peticiones o solicitudes conflictivas', 7);
+INSERT INTO TBL_CAUSA VALUES ('Preocupación debido a problemas', 7);
+INSERT INTO TBL_CAUSA VALUES ('Frustración', 7);
+INSERT INTO TBL_CAUSA VALUES ('Enfermedad mental', 7);
+
+INSERT INTO TBL_CAUSA VALUES ('Falta de experiencia', 8);
+INSERT INTO TBL_CAUSA VALUES ('Orientación deficiente', 8);
+INSERT INTO TBL_CAUSA VALUES ('Entrenamiento inicial inadecuado', 8);
+INSERT INTO TBL_CAUSA VALUES ('Reentrenamiento insuficiente', 8);
+INSERT INTO TBL_CAUSA VALUES ('Ordenes mal entendidas o interpretadas', 8);
+
+
+INSERT INTO TBL_CAUSA VALUES ('Instrucción inicial deficiente', 9);
+INSERT INTO TBL_CAUSA VALUES ('Práctica insuficiente', 9);
+INSERT INTO TBL_CAUSA VALUES ('Ejecución poco frecuente o esporádica', 9);
+INSERT INTO TBL_CAUSA VALUES ('Falta de preparación/asesoramiento', 9);
+INSERT INTO TBL_CAUSA VALUES ('Revisión inadecuada de instrucciones', 9);
+
+
+INSERT INTO TBL_CAUSA VALUES ('Permisividad (tolerancia) al desempeño inadecuado', 10);
+INSERT INTO TBL_CAUSA VALUES ('El desempeño estándar causa desagrado', 10);
+INSERT INTO TBL_CAUSA VALUES ('Falta de incentivos', 10);
+INSERT INTO TBL_CAUSA VALUES ('Frustración excesiva', 10);
+INSERT INTO TBL_CAUSA VALUES ('Falta de desafíos', 10);
+INSERT INTO TBL_CAUSA VALUES ('Intento inapropiado de ahorrar tiempo o esfuerzo', 10);
+INSERT INTO TBL_CAUSA VALUES ('Intento inapropiado de evitar la incomodidad', 10);
+INSERT INTO TBL_CAUSA VALUES ('Sin interés de aprender', 10);
+INSERT INTO TBL_CAUSA VALUES ('Disciplina inadecuada', 10);
+INSERT INTO TBL_CAUSA VALUES ('Presión inapropiada de los compañeros', 10);
+INSERT INTO TBL_CAUSA VALUES ('Ejemplo inadecuado de la supervisión', 10);
+INSERT INTO TBL_CAUSA VALUES ('Retroalimentación deficiente en relación al desempeño', 10);
+INSERT INTO TBL_CAUSA VALUES ('Refuerzo deficiente del comportamiento positivo', 10);
+INSERT INTO TBL_CAUSA VALUES ('Falta de comprensión de los incentivos de producción ', 10);
+
+
+
+
+
+
+INSERT INTO TBL_CAUSA VALUES ('Relaciones jerárquicas poco claras o conflictivas', 11);
+INSERT INTO TBL_CAUSA VALUES ('Asignación de responsabilidades poco claras o conflictivas', 11);
+INSERT INTO TBL_CAUSA VALUES ('Delegación inadecuada o insuficiente', 11);
+INSERT INTO TBL_CAUSA VALUES ('Dar políticas, procedimientos, prácticas o pautas inadecuadas', 11);
+INSERT INTO TBL_CAUSA VALUES ('Dar objetivos, metas o normas que ocasionan conflictos', 11);
+INSERT INTO TBL_CAUSA VALUES ('Planificación o programación inadecuada del trabajo', 11);
+INSERT INTO TBL_CAUSA VALUES ('Instrucciones, orientación y/o preparación insuficiente', 11);
+INSERT INTO TBL_CAUSA VALUES ('Documentos de referencias, instrucciones y publicaciones de asesoramiento inadecuados', 11);
+INSERT INTO TBL_CAUSA VALUES ('Identificación y evaluación deficiente de exposiciones a peligros', 11);
+INSERT INTO TBL_CAUSA VALUES ('Conocimiento inadecuado del trabajo de supervisión/administración', 11);
+INSERT INTO TBL_CAUSA VALUES ('Ubicación inadecuada del trabajador de acuerdo a sus cualidades y exigencias de la tarea', 11);
+INSERT INTO TBL_CAUSA VALUES ('Medición y evaluación deficiente del desempeño', 11);
+INSERT INTO TBL_CAUSA VALUES ('Retroinformación deficiente o incorrecta del desempeño', 11);
+
+INSERT INTO TBL_CAUSA VALUES ('Valoración inadecuada de las exposiciones al peligro', 12);
+INSERT INTO TBL_CAUSA VALUES ('Consideración deficiente de factores humanos y ergonómicos', 12);
+INSERT INTO TBL_CAUSA VALUES ('Estándares y especificaciones y/o criterios de diseños deficientes', 12);
+INSERT INTO TBL_CAUSA VALUES ('Control o inspección inadecuado de la construcción', 12);
+INSERT INTO TBL_CAUSA VALUES ('Evaluación inadecuada de condiciones operacionales', 12);
+INSERT INTO TBL_CAUSA VALUES ('Monitoreo u operación inicial inadecuada', 12);
+INSERT INTO TBL_CAUSA VALUES ('Evaluación inadecuada del cambio', 12);
+
+
+INSERT INTO TBL_CAUSA VALUES ('Especificaciones deficientes de ordenes y pedidos', 13);
+INSERT INTO TBL_CAUSA VALUES ('Investigación inadecuada del materiales/equipos', 13);
+INSERT INTO TBL_CAUSA VALUES ('Especificaciones inadecuadas a compradores', 13);
+INSERT INTO TBL_CAUSA VALUES ('Modalidad o ruta de embarque inadecuada', 13);
+INSERT INTO TBL_CAUSA VALUES ('Inspección de recepción deficiente', 13);
+INSERT INTO TBL_CAUSA VALUES ('Comunicación inadecuada de la información de salud y seguridad', 13);
+INSERT INTO TBL_CAUSA VALUES ('Manejo inadecuado de materiales', 13);
+INSERT INTO TBL_CAUSA VALUES ('Almacenamiento inadecuado de materiales', 13);
+INSERT INTO TBL_CAUSA VALUES ('Transporte inadecuado de materiales', 13);
+INSERT INTO TBL_CAUSA VALUES ('Identificación deficiente de materiales peligrosos', 13);
+INSERT INTO TBL_CAUSA VALUES ('Disposición inadecuada de residuos y desperdicios', 13);
+INSERT INTO TBL_CAUSA VALUES ('Selección inadecuada de contratistas', 13);
+
+
+
+INSERT INTO TBL_CAUSA VALUES ('Prevención inadecuada para evaluación de necesidades (lubricación, ajuste, limpieza)', 14);
+INSERT INTO TBL_CAUSA VALUES ('Acciones correctivas deficientes (comunicación, programación, revisión, remplazo', 14);
+
+INSERT INTO TBL_CAUSA VALUES ('Desarrollo inadecuado de normas (necesidades, coordinación, compromisos, inconsistencias)', 15);
+INSERT INTO TBL_CAUSA VALUES ('Comunicación inadecuada de normas (publicación, distribución, entrenamiento)', 15);
+INSERT INTO TBL_CAUSA VALUES ('Mantención inadecuada de normas (seguimiento de aplicación, actualización, control)', 15);
+
+INSERT INTO TBL_CAUSA VALUES ('Evaluación deficiente de necesidades y los peligros', 16);
+INSERT INTO TBL_CAUSA VALUES ('Consideración inadecuada de factores humanos y ergonómicos', 16);
+INSERT INTO TBL_CAUSA VALUES ('Estándares o especificaciones inadecuados', 16);
+INSERT INTO TBL_CAUSA VALUES ('Disponibilidad inadecuada', 16);
+INSERT INTO TBL_CAUSA VALUES ('Ajuste/reparación/mantenimiento deficiente', 16);
+INSERT INTO TBL_CAUSA VALUES ('Reparación y recuperación de materiales deficiente', 16);
+INSERT INTO TBL_CAUSA VALUES ('Remoción y reemplazo de piezas defectuosas ', 16);
+
+INSERT INTO TBL_CAUSA VALUES ('Planificación inadecuada de uso', 17);
+INSERT INTO TBL_CAUSA VALUES ('Extensión inadecuada de la vida útil', 17);
+INSERT INTO TBL_CAUSA VALUES ('Inspección y/o control deficiente', 17);
+INSERT INTO TBL_CAUSA VALUES ('Sobre Carga o proporción de uso excesivo', 17);
+INSERT INTO TBL_CAUSA VALUES ('Mantenimiento deficiente', 17);
+INSERT INTO TBL_CAUSA VALUES ('Uso por personas no calificadas o entrenadas', 17);
+INSERT INTO TBL_CAUSA VALUES ('Uso para otros propósito', 17);
+
+INSERT INTO TBL_CAUSA VALUES ('Permitidos por conducta permisiva intencional de la supervisión', 18);
+INSERT INTO TBL_CAUSA VALUES ('Permitidos por conducta permisiva no intencional de la supervisión', 18);
+
+INSERT INTO TBL_CAUSA VALUES ('Prisa', 19);
+INSERT INTO TBL_CAUSA VALUES ('Frustración', 19);
+INSERT INTO TBL_CAUSA VALUES ('Fatiga', 19);
+INSERT INTO TBL_CAUSA VALUES ('Complacencia', 19);
+
+INSERT INTO TBL_CAUSA VALUES ('Ojos no en la tarea', 20);
+INSERT INTO TBL_CAUSA VALUES ('Mente no en la tarea', 20);
+INSERT INTO TBL_CAUSA VALUES ('Ojos y mente no en la tarea', 20);
+INSERT INTO TBL_CAUSA VALUES ('Perdida de equilibrio, tracción o agarre', 20);
+INSERT INTO TBL_CAUSA VALUES ('Línea de fuego', 20);
+
 
 /*
 INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,PRIVILEGIO,ID_NODO,ESTADO,ALLOW) 
@@ -3457,5 +3819,28 @@ WHERE (((GP.ID_GRUPO IN (SELECT ID_GRUPO FROM TBL_USUARIO  WHERE ID_USUARIO='efu
 ORDER BY ND.NODO_PADRE, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC;
 
 
+
+DECLARE @ID_DIVISION INT;
+DECLARE @FECHA_PROGRAMA_INICIO DATETIME;
+DECLARE @FECHA_PROGRAMA_FIN DATETIME;
+DECLARE @AREA_BY_DIVISION INT=0;
+DECLARE @MATRIZ_BY_DIVISION INT=0;
+SET @ID_DIVISION = 24;
+SET @FECHA_PROGRAMA_INICIO = 2011;
+SET @FECHA_PROGRAMA_FIN = GETDATE();
+
+	(SELECT @AREA_BY_DIVISION = COUNT(*) 
+	FROM TBL_AREA 
+	WHERE ID_DIVISION=12)
+	
+SELECT @MATRIZ_BY_DIVISION = COUNT(*)
+FROM TBL_MATRIZ M 
+	INNER JOIN TBL_MATRIZ_ACTIVIDAD MA ON M.ID_MATRIZ = MA.ID_MATRIZ
+	INNER JOIN TBL_ACTIVIDAD_EVALUADA AEV ON MA.ID_ACTIVIDAD_EVALUADA = AEV.ID_ACTIVIDAD_EVALUADA
+WHERE AEV.ID_DIVISION = @ID_DIVISION 
+	AND (M.FECHA_CREACION BETWEEN @FECHA_PROGRAMA_INICIO AND @FECHA_PROGRAMA_FIN)
+GROUP BY M.ID_MATRIZ;
+
+SELECT @AREA_BY_DIVISION, @MATRIZ_BY_DIVISION;
 
 

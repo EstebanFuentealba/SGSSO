@@ -14,13 +14,12 @@
       <Association Name="TBL_EVENTO_EMPRESA_E006_3" Member="TBL_EVENTO_EMPRESA" ThisKey="ID_EVENTO_EMPRESA" OtherKey="ID_EVENTO_EMPRESA" Type="TBL_EVENTO_EMPRESA" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO">
-    <Type Name="TBL_USUARIO_GRUPO">
-      <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ID_USUARIO" Type="System.String" DbType="VarChar(200) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="GRUPO_ADMIN" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
-      <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO" IsForeignKey="true" />
+  <Table Name="dbo.THL_HERRAMIENTA_TRABAJADOR" Member="THL_HERRAMIENTA_TRABAJADOR">
+    <Type Name="THL_HERRAMIENTA_TRABAJADOR">
+      <Column Name="ID_HERRAMIENTA" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_TRABAJADOR" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TBL_HERRAMIENTA_THL_HERRAMIENTA_TRABAJADOR" Member="TBL_HERRAMIENTA" ThisKey="ID_HERRAMIENTA" OtherKey="ID_HERRAMIENTA" Type="TBL_HERRAMIENTA" IsForeignKey="true" />
+      <Association Name="TBL_TRABAJADOR_THL_HERRAMIENTA_TRABAJADOR" Member="TBL_TRABAJADOR" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_TRABAJADOR" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.E006_4" Member="E006_4">
@@ -32,7 +31,7 @@
       <Column Name="RELATO_DE_HECHO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="COMENTARIO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="E006_4_TBL_CAUSA" Member="TBL_CAUSA" ThisKey="ID_INFORME" OtherKey="ID_INFORME" Type="TBL_CAUSA" />
+      <Association Name="E006_4_TBL_CAUSA_INFORME" Member="TBL_CAUSA_INFORME" ThisKey="ID_INFORME" OtherKey="ID_INFORME" Type="TBL_CAUSA_INFORME" />
       <Association Name="E006_3_E006_4" Member="E006_3" ThisKey="E00_ID_INFORME" OtherKey="ID_INFORME" Type="E006_3" IsForeignKey="true" />
     </Type>
   </Table>
@@ -236,11 +235,18 @@
   <Table Name="dbo.TBL_CAUSA" Member="TBL_CAUSA">
     <Type Name="TBL_CAUSA">
       <Column Name="ID_CAUSA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ID_INFORME" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DESCRIPCION" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="TIPO_CAUSA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TBL_CAUSA_TBL_CAUSA_INFORME" Member="TBL_CAUSA_INFORME" ThisKey="ID_CAUSA" OtherKey="ID_CAUSA" Type="TBL_CAUSA_INFORME" />
       <Association Name="TBL_CAUSA_TBL_CAUSA_MEDIDA_DE_CONTROL" Member="TBL_CAUSA_MEDIDA_DE_CONTROL" ThisKey="ID_CAUSA" OtherKey="ID_CAUSA" Type="TBL_CAUSA_MEDIDA_DE_CONTROL" />
-      <Association Name="E006_4_TBL_CAUSA" Member="E006_4" ThisKey="ID_INFORME" OtherKey="ID_INFORME" Type="E006_4" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBL_CAUSA_INFORME" Member="TBL_CAUSA_INFORME">
+    <Type Name="TBL_CAUSA_INFORME">
+      <Column Name="ID_INFORME" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_CAUSA" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="E006_4_TBL_CAUSA_INFORME" Member="E006_4" ThisKey="ID_INFORME" OtherKey="ID_INFORME" Type="E006_4" IsForeignKey="true" />
+      <Association Name="TBL_CAUSA_TBL_CAUSA_INFORME" Member="TBL_CAUSA" ThisKey="ID_CAUSA" OtherKey="ID_CAUSA" Type="TBL_CAUSA" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_CAUSA_MEDIDA_DE_CONTROL" Member="TBL_CAUSA_MEDIDA_DE_CONTROL">
@@ -378,8 +384,8 @@
       <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NOMBRE_GRUPO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="DESCRIPCION_GRUPO" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_USUARIO_GRUPO" />
       <Association Name="TBL_GRUPO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO_PRIVILEGIO" />
+      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_USUARIO_GRUPO" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO_PRIVILEGIO">
@@ -395,6 +401,13 @@
       <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="TBL_GRUPO_TBL_GRUPO_PRIVILEGIO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
       <Association Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO" Member="TBL_NODO" ThisKey="ID_NODO" OtherKey="ID_NODO" Type="TBL_NODO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBL_HERRAMIENTA" Member="TBL_HERRAMIENTA">
+    <Type Name="TBL_HERRAMIENTA">
+      <Column Name="ID_HERRAMIENTA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE_HERRAMIENTA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="TBL_HERRAMIENTA_THL_HERRAMIENTA_TRABAJADOR" Member="THL_HERRAMIENTA_TRABAJADOR" ThisKey="ID_HERRAMIENTA" OtherKey="ID_HERRAMIENTA" Type="THL_HERRAMIENTA_TRABAJADOR" />
     </Type>
   </Table>
   <Table Name="dbo.TBL_HISTORIAL_EMPRESA" Member="TBL_HISTORIAL_EMPRESA">
@@ -491,6 +504,7 @@
     <Type Name="TBL_PELIGRO">
       <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NOM_PELIGRO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="TIPO_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="TBL_PELIGRO_TBL_ACTIVIDAD_EVALUADA" Member="TBL_ACTIVIDAD_EVALUADA" ThisKey="ID_PELIGRO" OtherKey="ID_PELIGRO" Type="TBL_ACTIVIDAD_EVALUADA" />
       <Association Name="TBL_PELIGRO_TBL_PELIGRO_CONSECUENCIA" Member="TBL_PELIGRO_CONSECUENCIA" ThisKey="ID_PELIGRO" OtherKey="ID_PELIGRO" Type="TBL_PELIGRO_CONSECUENCIA" />
     </Type>
@@ -563,6 +577,7 @@
       <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ANOS_EXPERIENCIA_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ANOS_EXPERIENCIA_LABORAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TBL_TRABAJADOR_THL_HERRAMIENTA_TRABAJADOR" Member="THL_HERRAMIENTA_TRABAJADOR" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="THL_HERRAMIENTA_TRABAJADOR" />
       <Association Name="TBL_TRABAJADOR_TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" Member="TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_ACTIVIDAD_TRABAJADOR_REALIZADA" />
       <Association Name="TBL_TRABAJADOR_TBL_EVENTO_TRABAJADOR" Member="TBL_EVENTO_TRABAJADOR" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_EVENTO_TRABAJADOR" />
       <Association Name="TBL_CARGO_TBL_TRABAJADOR" Member="TBL_CARGO" ThisKey="ID_CARGO" OtherKey="ID_CARGO" Type="TBL_CARGO" IsForeignKey="true" />
@@ -582,10 +597,19 @@
       <Column Name="TELEFONO" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="ANOS_EXPERIENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IS_LOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO_GRUPO" />
       <Association Name="TBL_USUARIO_TBL_ACCION_CORRECTIVA" Member="TBL_ACCION_CORRECTIVA" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_ACCION_CORRECTIVA" />
       <Association Name="TBL_USUARIO_TBL_MATRIZ" Member="TBL_MATRIZ" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_MATRIZ" />
+      <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO_GRUPO" />
       <Association Name="TBL_EMPRESA_TBL_USUARIO" Member="TBL_EMPRESA" ThisKey="ID_EMPRESA" OtherKey="ID_EMPRESA" Type="TBL_EMPRESA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBL_USUARIO_GRUPO" Member="TBL_USUARIO_GRUPO">
+    <Type Name="TBL_USUARIO_GRUPO">
+      <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_USUARIO" Type="System.String" DbType="VarChar(200) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GRUPO_ADMIN" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="TBL_USUARIO_TBL_USUARIO_GRUPO" Member="TBL_USUARIO" ThisKey="ID_USUARIO" OtherKey="ID_USUARIO" Type="TBL_USUARIO" IsForeignKey="true" />
+      <Association Name="TBL_GRUPO_TBL_USUARIO_GRUPO" Member="TBL_GRUPO" ThisKey="ID_GRUPO" OtherKey="ID_GRUPO" Type="TBL_GRUPO" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_get_matriz_by_id" Method="sp_get_matriz_by_id">

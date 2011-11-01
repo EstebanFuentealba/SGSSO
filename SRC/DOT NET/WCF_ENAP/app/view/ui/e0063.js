@@ -1,4 +1,4 @@
-var rowEditinge0063 = Ext.create('Ext.grid.plugin.RowEditing', {});
+锘縱ar rowEditinge0063 = Ext.create('Ext.grid.plugin.RowEditing', {});
 
 Ext.define('WCF_ENAP.view.ui.e0063', {
     extend: 'Ext.panel.Panel',
@@ -10,238 +10,237 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
     id: 'panel-e0063',
     autoScroll :'true',
     initComponent: function () {
-        var me = this,winAcciones , winPeligros, winHerramientas;
-        var storeCargo = Ext.data.StoreManager.lookup('dsCargo');
-        storeCargo.on('load', function(store, records, successful, operation, options){
+        var me = this,
+                winAcciones , 
+                winPeligros, 
+                winHerramientas,
+                storeCargo = Ext.data.StoreManager.lookup('dsCargo'),
+                dsPeligroLista = Ext.create('WCF_ENAP.store.dsPeligro', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsPeligroListaTipoIncidentePatrimonio = Ext.create('WCF_ENAP.store.dsPeligro', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaAccion = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaCondcion = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresCapMental = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresTencionMental = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresFaltaConocimiento = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresFaltaHabilidad = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresMotivacionInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresFaltaLiderazgo = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresIngInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresComprasInadecuadas = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresMantenimientoInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresEstTrabajoInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresHerrEquioInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresUsoDesgaste = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresAbuso = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresAutocuidado = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                dsCausaListaFactoresErrores = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                });
+        /*storeCargo.on('load', function(store, records, successful, operation, options){
             var storeTrabajador = Ext.data.StoreManager.lookup('dsTrabajador');
             storeTrabajador.load();
         }); 
         // INICIO
-        var dsPeligroLista = Ext.create('WCF_ENAP.store.dsPeligro', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsPeligroLista.load({
             params: { 'TIPO_PELIGRO': 2 },
             callback: function (records, operation, success) {
             }
         });
-
-         var dsPeligroListaTipoIncidentePatrimonio = Ext.create('WCF_ENAP.store.dsPeligro', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
-
         dsPeligroListaTipoIncidentePatrimonio.load({
             params: { 'TIPO_PELIGRO': 3 },
             callback: function (records, operation, success) {
             }
         });
-
-        var dsCausaListaAccion = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
-
         dsCausaListaAccion.load({
             params: { 'TIPO_CAUSA': 2 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaCondcion = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaCondcion.load({
             params: { 'TIPO_CAUSA': 3 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresCapFisicaInadecuada.load({
             params: { 'TIPO_CAUSA': 4 },
             callback: function (records, operation, success) {
             }
         });
         
-        var dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresCapPsicologicaInadecuada.load({
             params: { 'TIPO_CAUSA': 5 },
             callback: function (records, operation, success) {
             }
         });
         
-        var dsCausaListaFactoresCapMental = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresCapMental.load({
             params: { 'TIPO_CAUSA': 6 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresTencionMental = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresTencionMental.load({
             params: { 'TIPO_CAUSA': 7 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresFaltaConocimiento = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresFaltaConocimiento.load({
             params: { 'TIPO_CAUSA': 8 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresFaltaHabilidad = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresFaltaHabilidad.load({
             params: { 'TIPO_CAUSA': 9 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresMotivacionInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresMotivacionInadecuada.load({
             params: { 'TIPO_CAUSA': 10 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresFaltaLiderazgo = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresFaltaLiderazgo.load({
             params: { 'TIPO_CAUSA': 11 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresIngInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresIngInadecuada.load({
             params: { 'TIPO_CAUSA': 12 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresComprasInadecuadas = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresComprasInadecuadas.load({
             params: { 'TIPO_CAUSA': 13 },
             callback: function (records, operation, success) {
             }
         });
 
-         var dsCausaListaFactoresMantenimientoInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresMantenimientoInadecuado.load({
             params: { 'TIPO_CAUSA': 14 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresEstTrabajoInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresEstTrabajoInadecuado.load({
             params: { 'TIPO_CAUSA': 15 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresHerrEquioInadecuado = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresHerrEquioInadecuado.load({
             params: { 'TIPO_CAUSA': 16 },
             callback: function (records, operation, success) {
             }
         });
 
-        var dsCausaListaFactoresUsoDesgaste = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresUsoDesgaste.load({
             params: { 'TIPO_CAUSA': 17 },
             callback: function (records, operation, success) {
             }
         });
 
-         var dsCausaListaFactoresAbuso = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresAbuso.load({
             params: { 'TIPO_CAUSA': 18 },
             callback: function (records, operation, success) {
             }
         });
 
-         var dsCausaListaFactoresAutocuidado = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
         dsCausaListaFactoresAutocuidado.load({
             params: { 'TIPO_CAUSA': 19 },
             callback: function (records, operation, success) {
             }
-        });
-        var dsCausaListaFactoresErrores = Ext.create('WCF_ENAP.store.dsCausa', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
         });
         dsCausaListaFactoresErrores.load({
             params: { 'TIPO_CAUSA': 20 },
@@ -249,13 +248,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
             }
         });
         // FIN 
-        //Herramientas
-         var dsHerramientas = Ext.create('WCF_ENAP.store.dsHerramienta', {
-            autoLoad: false,
-            autoSync: false,
-            pageSize: 50,
-        });
-        
+        */
        
 
         me.items = [
@@ -278,8 +271,9 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 				                items: [    //revisar donde keda conectado organizacion-departamento con empresa contratistas
                                             {
                                                 xtype: 'combobox',
+                                                margin: '5 5 5 5',
                                                 labelAlign: 'top',
-                                                fieldLabel: 'Organizaci髇',
+                                                fieldLabel: 'Organizaci贸n',
                                                 displayField: 'NOMBRE_ORGANIZACION',
                                                 store: 'dsOrganizacion',
                                                 valueField: 'ID_ORGANIZACION',
@@ -290,7 +284,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 editable: false,
                                                 allowBlank: false,
                                                 triggerAction: 'all',
-                                                emptyText: 'Seleccione la Organizaci髇',
+                                                emptyText: 'Seleccione la Organizaci贸n',
                                                 listeners: {
                                                     'change': function (cmb, newValue, oldValue, eOpts) {
                                                         var cmbDepto = Ext.getCmp('organizacion_departamento');
@@ -307,6 +301,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             },
                                             {
                                                 xtype: 'combobox',
+                                                margin: '5 5 5 5',
                                                 labelAlign: 'top',
                                                 fieldLabel: 'Departamento',
                                                 id: 'organizacion_departamento',
@@ -340,8 +335,9 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             },
                                             {
                                                 xtype: 'combobox',
+                                                margin: '5 5 5 5',
                                                 labelAlign: 'top',
-                                                fieldLabel: 'Divisi髇',
+                                                fieldLabel: 'Divisi贸n',
                                                 id: 'organizacion_division',
                                                 displayField: 'NOMBRE_DIVISION',
                                                 store: 'dsDivision',
@@ -354,7 +350,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 typeAhead: true,
                                                 forceSelection: true,
                                                 triggerAction: 'all',
-                                                emptyText: 'Seleccione la Divisi髇',
+                                                emptyText: 'Seleccione la Divisi贸n',
                                                 queryMode: 'local',
                                                 lastQuery: '',
                                                 selectOnFocus: true,
@@ -375,6 +371,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             },
                                             {
                                                 xtype: 'combobox',
+                                                margin: '5 5 5 5',
                                                 labelAlign: 'top',
                                                 fieldLabel: 'Area',
                                                 displayField: 'NOMBRE_AREA',
@@ -385,7 +382,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 anchor: '100%',
                                                 disabled: true,
                                                 editable: false,
-                                                disabled: true,
                                                 typeAhead: true,
                                                 forceSelection: true,
                                                 triggerAction: 'all',
@@ -401,8 +397,10 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 					                                items: [
 					                                            {
 					                                                xtype: 'datefield',
+                                                                    margin: '5 5 5 5',
 					                                                name: 'FECHA_HORA_EVENTO',
 					                                                fieldLabel: 'Fecha',
+                                                                    labelAlign: 'top',
 					                                                store: 'dsEvento',
                                                                     emptyText: 'Fecha del Evento',
 					                                                allowBlank: false,
@@ -410,9 +408,9 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 					                                            },
 					                                            {
 					                                                xtype: 'timefield',
-					                                                margin: '0 0 0 5',
+					                                                margin: '5 5 5 0',
+                                                                    labelAlign: 'top',
 					                                                name: 'FECHA_HORA_EVENTO',
-					                                                fieldLabel: 'Fecha',
                                                                     emptyText: 'Hora del Evento',
 					                                                fieldLabel: 'Hora',
 					                                                allowBlank: false,
@@ -423,6 +421,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 					                        },
                                              {
                                                 xtype: 'checkboxgroup',
+                                                margin: '5 5 5 5',
                                                 labelAlign: 'top',
                                                 fieldLabel: 'Afecta a',
                                                 columns: 2,
@@ -438,6 +437,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             {
                                                 xtype: 'htmleditor',
                                                 labelAlign: 'top',
+                                                margin: '5 5 5 5',
                                                 height: 150,
                                                 name: 'ID_EVENTO_EMPRESA',
                                                 store: 'dsEventoEmpresa',
@@ -464,7 +464,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 					            height: 303,
 					            id: 'gmap-panel',
 					            margin: '0 0 0 5',
-					            title: 'Geo Localizaci髇 del Evento',
+					            title: 'Geo Localizaci贸n del Evento',
 					            columnWidth: 0.5
 					        }          
                        ]  
@@ -502,7 +502,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 name: 'NOMBRES',
                                                 emptyText: 'Ingrese los Nombres del trabajador',
                                                 allowBlank: false,
-                                                vtype: 'alpha',
                                                 anchor: '100%'
                                             },
                                             {
@@ -512,7 +511,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 emptyText: 'Ingrese Apellido Paterno del Trabajador',
                                                 name: 'APELLIDO_PATERNO',
                                                 allowBlank: false,
-                                                vtype: 'alpha',
                                                 anchor: '100%'
                                             },
                                             {
@@ -522,7 +520,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 name: 'APELLIDO_MATERNO',
                                                 emptyText: 'Ingrese Apellido Materno del Trabajador',
                                                 allowBlank: false,
-                                                vtype: 'alpha',
                                                 anchor: '100%'
                                             },
                                             {
@@ -535,7 +532,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 				                                    displayField: 'NOMBRE_CARGO',
 				                                    valueField: 'ID_CARGO',
 				                                    anchor: '100%',
-				                                    //allowBlank: false
+				                                    allowBlank: false
 				                            },
                                             {
 				                                    xtype: 'radiogroup',
@@ -558,7 +555,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             {
                                                 xtype: 'numberfield',
                                                 labelAlign: 'top',
-                                                fieldLabel: 'A駉s de experiencia Laboral en ENAP',
+                                                fieldLabel: 'A帽os de experiencia Laboral en ENAP',
                                                 name: 'ANOS_EXPERIENCIA_LABORAL',
                                                 name: 'ANOS_EXPERIENCIA_LABORAL',
                                                 //allowBlank: false,
@@ -567,7 +564,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             {
                                                 xtype: 'numberfield',
                                                 labelAlign: 'top',
-                                                fieldLabel: 'A駉s de experiencia en el Cargo',
+                                                fieldLabel: 'A帽os de experiencia en el Cargo',
                                                 name: 'ANOS_EXPERIENCIA_CARGO',
                                                 //allowBlank: false,
                                                 anchor: '100%'
@@ -694,7 +691,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                     //flex: 0.14,
                                                     anchor: '100%'
                                                 },
-                                                text: 'A駉s Experiencia Laboral'
+                                                text: 'A帽os Experiencia Laboral'
                                             },
                                             {
                                                 xtype: 'gridcolumn',
@@ -707,7 +704,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                     //flex: 0.14,
                                                     anchor: '100%'
                                                 },
-                                                text: 'A駉s Experiencia Cargo'
+                                                text: 'A帽os Experiencia Cargo'
                                             }
                     
                                         ],
@@ -1141,7 +1138,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 displayField: 'DESCRIPCION',
                                                 valueField: 'ID_CAUSA',
                                                 multiSelect: true,
-                                                fieldLabel: 'Supervisi髇 Deficientes',
+                                                fieldLabel: 'Supervisi贸n Deficientes',
                                                 queryMode: 'local'
                                             },
                                             {
@@ -1156,7 +1153,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 displayField: 'DESCRIPCION',
                                                 valueField: 'ID_CAUSA',
                                                 multiSelect: true,
-                                                fieldLabel: 'Ingenier韆 Inadecuada',
+                                                fieldLabel: 'Ingenier铆a Inadecuada',
                                                 queryMode: 'local'
                                             },
                                             {
@@ -1186,7 +1183,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 displayField: 'DESCRIPCION',
                                                 valueField: 'ID_CAUSA',
                                                 multiSelect: true,
-                                                fieldLabel: 'Mantenci髇 Deficiente',
+                                                fieldLabel: 'Mantenci贸n Deficiente',
                                                 queryMode: 'local'
                                             },
                                             {
@@ -1267,22 +1264,18 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 				                margin: '5 5 5 5',
 				                bodyPadding: 10,
 				                columnWidth: 0.4,
-				                title: 'Acciones Correctivas',
+				                title: 'Acci贸n Correctiva',
 				                items: [
                                            {
 	                                            xtype: 'panel',
 	                                            border: 0,
-	                                            margin: '0 0 0 0 ',
 	                                            layout: {
 		                                            type: 'column'
 	                                            },
-	                                            anchor: '100%',
-	                                            items: [
+	                                            items: [    
 		                                             {
 			                                            xtype: 'combobox',
-			                                            labelAlign: 'top',
-			                                            margin: '5 5 5 5',
-			                                            anchor: '100%',
+                                                        margin: '5 5 5 5',
 			                                            name: 'ID_ACCION',
 			                                            store: 'dsAccion',
 			                                            displayField: 'NOMBRE_ACCION',
@@ -1291,11 +1284,12 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 			                                            emptyText: 'Listado de Acciones Correctivas',
 			                                            multiSelect: true,
 			                                            allowBlank: false,
+                                                        anchor: '100%',
 			                                            columnWidth: 0.94
 		                                            },
 		                                            {
 														xtype: 'button',
-														margin: '0 0 0 3',
+                                                        margin: '5 5 5 0',
 														iconCls: 'btn-add',
 														columnWidth: 0.06,
 
@@ -1363,7 +1357,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                             },
                                             {
                                                 xtype: 'combobox',
-                                                labelAlign: 'top',
                                                 margin: '5 5 5 5',
                                                 anchor: '100%',
                                                 name: 'ID_CARGO',
@@ -1375,35 +1368,45 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                                                 allowBlank: false
                                             },
                                             {
-					                            xtype: 'datefield',
-                                                labelAlign: 'top',
-                                                name: 'ID_ACCION_CORRECTIVA',
-					                            displayField: 'FECHA_CREACION',
-                                                margin: '5 5 5 5',
-					                            fieldLabel: 'Fecha',
-                                                anchor: '100%',
-					                            store: 'dsAccionCorrectiva',
-                                                emptyText: 'Fecha Inicio',
-					                            allowBlank: false,
-					                            //columnWidth: 0.5
-					                        },
-                                            {
-					                            xtype: 'datefield',
-                                                labelAlign: 'top',
-                                                name: 'ID_ACCION_CORRECTIVA',
-					                            displayField: 'FECHA_PLAZO',
-                                                margin: '5 5 5 5',
-					                            //fieldLabel: 'Fecha',
-                                                anchor: '100%',
-					                            store: 'dsAccionCorrectiva',
-                                                emptyText: 'Fecha Finalizacion',
-					                            allowBlank: false,
-					                            //columnWidth: 0.5
-					                        },
+                                                xtype: 'panel',
+                                                border: 0,
+                                                layout: {
+                                                    type: 'column'
+                                                },
+                                                items: [
+                                                    {
+					                                    xtype: 'datefield',
+                                                        labelAlign: 'top',
+                                                        name: 'ID_ACCION_CORRECTIVA',
+					                                    displayField: 'FECHA_CREACION',
+                                                        margin: '5 5 5 5',
+					                                    fieldLabel: 'Fecha Inicio',
+                                                        anchor: '100%',
+					                                    store: 'dsAccionCorrectiva',
+                                                        emptyText: 'Fecha Inicio',
+					                                    allowBlank: false,
+					                                    columnWidth: 0.5
+					                                },
+                                                    {
+					                                    xtype: 'datefield',
+                                                        labelAlign: 'top',
+                                                        name: 'ID_ACCION_CORRECTIVA',
+					                                    displayField: 'FECHA_PLAZO',
+                                                        margin: '5 5 5 5',
+					                                    fieldLabel: 'Fecha Plazo',
+                                                        anchor: '100%',
+					                                    store: 'dsAccionCorrectiva',
+                                                        emptyText: 'Fecha Finalizacion',
+					                                    allowBlank: false,
+					                                    columnWidth: 0.5
+					                                }
+                                                ]
+                                            },
                                             {
                                                 xtype: 'htmleditor',
                                                 labelAlign: 'top',
                                                 height: 150,
+                                                margin: '5 5 5 5',
                                                 name: 'ID_ACCION_CORRECTIVA',
                                                 store: 'dsAccionCorrectiva',
                                                 displayField: 'DESCRIPCION',
@@ -1546,13 +1549,6 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
 				        
 		                ]
             }
-
-
-
-
-
-
-
         ];
         me.callParent(arguments);
     }

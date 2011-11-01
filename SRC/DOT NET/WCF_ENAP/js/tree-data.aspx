@@ -20,7 +20,7 @@
             expanded: false,
 			iconCls: "evento-icon",
             children:[
-				{"text":"Ingreso de Evento","id":"IngresoEvento","leaf":true,iconCls: "add-evento-icon","stores":[
+				{"text":"Ingreso de Evento","id":"e0063","leaf":true,iconCls: "add-evento-icon","stores":[
                  'dse0063',
                     'dsEmpresa',
                     'dsPeligro',
@@ -37,7 +37,6 @@
                     'dsEventoEmpresa',
                     'dsMedidaDeControl',
                     'dsPeligroMedida',
-                    'dsPersonaPeligroTipoIncidente',
                     'dsAccion',
                     'dsAccionCorrectiva',
                     'dsHerramienta'

@@ -78,6 +78,7 @@
     <Content Include="app\view\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
+    <Content Include="app\view\ui\e0063.js" />
     <Content Include="app\view\ui\Login.js" />
     <Content Include="app\view\ui\MenuGenerator.js" />
     <Content Include="app\view\ui\MisEvaluaciones.js" />
@@ -4201,7 +4202,6 @@
     <Content Include="app\view\ui\Causa.js" />
     <Content Include="app\view\ui\Consecuencia.js" />
     <Content Include="app\view\ui\DepartamentoOrganizacion.js" />
-    <Content Include="app\view\ui\e0063.js" />
     <Content Include="app\view\ui\e0064.js" />
     <Content Include="app\view\ui\EventoEmpresa.js" />
     <Content Include="app\view\ui\EventoTrabajador.js" />
@@ -4433,7 +4433,9 @@
     <Content Include="utils\Export-Matriz.aspx" />
     <Content Include="ux\form\SearchField.js" />
     <Content Include="ux\GMapPanel.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
