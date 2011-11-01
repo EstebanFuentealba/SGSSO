@@ -20,7 +20,28 @@
             expanded: false,
 			iconCls: "evento-icon",
             children:[
-				{"text":"Ingreso de Evento","id":"IngresoEvento","leaf":true,iconCls: "add-evento-icon","stores":[]},
+				{"text":"Ingreso de Evento","id":"IngresoEvento","leaf":true,iconCls: "add-evento-icon","stores":[
+                 'dse0063',
+                    'dsEmpresa',
+                    'dsPeligro',
+                    'dsCargo',
+                    'dsEventoEmpresa',
+                    'dsOrganizacion',
+                    'dsDepartamento',
+                    'dsDivision',
+                    'dsArea',
+                    'dsTrabajador',
+                    'dsGrupo',
+                    'dsEvento',
+                    'dsCausa',
+                    'dsEventoEmpresa',
+                    'dsMedidaDeControl',
+                    'dsPeligroMedida',
+                    'dsPersonaPeligroTipoIncidente',
+                    'dsAccion',
+                    'dsAccionCorrectiva',
+                    'dsHerramienta'
+                ]},
 				{"text":"Seguimiento","id":"SeguimientoEvento","leaf":true,iconCls: "seguimiento-icon","stores":[]},
 				{"text":"Busqueda","id":"BusquedaEvento","leaf":true,iconCls: "buscar-icon","stores":[]}
             ]
