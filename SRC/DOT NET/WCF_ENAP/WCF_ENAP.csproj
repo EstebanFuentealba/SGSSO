@@ -72,6 +72,7 @@
     <Content Include="app\store\dsNodes.js" />
     <Content Include="app\store\dsStores.js" />
     <Content Include="app\view\ActividadProgramaAnualPrevencion.js" />
+    <Content Include="app\view\EventoList.js" />
     <Content Include="app\view\Login.js" />
     <Content Include="app\view\MenuGenerator.js" />
     <Content Include="app\view\MisEvaluaciones.js" />
@@ -79,6 +80,7 @@
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
     <Content Include="app\view\ui\e0063.js" />
+    <Content Include="app\view\ui\EventoList.js" />
     <Content Include="app\view\ui\Login.js" />
     <Content Include="app\view\ui\MenuGenerator.js" />
     <Content Include="app\view\ui\MisEvaluaciones.js" />

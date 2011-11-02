@@ -20,6 +20,7 @@
             expanded: false,
 			iconCls: "evento-icon",
             children:[
+                {"text":"Lista Eventos","id":"EventoList","leaf":true,iconCls: "add-evento-icon","stores":['dsEvento']},
 				{"text":"Ingreso de Evento","id":"e0063","leaf":true,iconCls: "add-evento-icon","stores":[
                  'dse0063',
                     'dsEmpresa',

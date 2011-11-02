@@ -18,10 +18,6 @@
     
     <script src="/ext-4.0.2a/ext-all-debug.js" type="text/javascript"></script>
 	<script src="/ext-4.0.2a/locale/ext-lang-es.js"></script>
-    <!--
-    <script src="/ext-4.0.7-gpl/ext-all.js" type="text/javascript"></script>
-	<script src="/ext-4.0.7-gpl/locale/ext-lang-es.js"></script>
-    -->
     
 
     <!--<script type="text/javascript" src="/js/layouts/basic.js"></script>

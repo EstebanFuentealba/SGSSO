@@ -18,70 +18,70 @@
         Ext.applyIf(me, {
             items: [
             {
-            height: 170,
-            layout: 'fit',
-            margin: '5 10 5 10',
-            items: [{
-            xtype: 'chart',
-            store: 'dsGraphAvanceProgramaAnual',
-            flex: 1,
-            shadow: true,
-            animate: true,
-            axes: [
+                height: 170,
+                layout: 'fit',
+                margin: '5 10 5 10',
+                items: [{
+                    xtype: 'chart',
+                    store: 'dsGraphAvanceProgramaAnual',
+                    flex: 1,
+                    shadow: true,
+                    animate: true,
+                    axes: [
             {
-            type: 'Category',
-            fields: [
+                type: 'Category',
+                fields: [
             'NOMBRE_PROGRAMA'
             ],
-            position: 'bottom',
-            title: 'Programas',
-            label: {
-            renderer: function(v) {
-            return Ext.String.ellipsis(v, 15, false);
-            },
-            font: '9px Arial'
-            }
+                position: 'bottom',
+                title: 'Programas',
+                label: {
+                    renderer: function (v) {
+                        return Ext.String.ellipsis(v, 15, false);
+                    },
+                    font: '9px Arial'
+                }
             },
             {
-            type: 'Numeric',
-            fields: [
+                type: 'Numeric',
+                fields: [
             'PERCENT_TOTAL'
             ],
-            position: 'left',
-            title: '% Avance',
-            maximum: 100,
-            minimum: 0
+                position: 'left',
+                title: '% Avance',
+                maximum: 100,
+                minimum: 0
             }
             ],
-            series: [
+                    series: [
             {
-            type: 'column',
-            label: {
-            contrast: true,
-            display: 'insideEnd',
-            field: 'PERCENT_TOTAL',
-            color: '#000',
-            orientation: 'vertical',
-            'text-anchor': 'middle'
-            },
-            xField: 'NOMBRE_PROGRAMA',
-            yField: [
+                type: 'column',
+                label: {
+                    contrast: true,
+                    display: 'insideEnd',
+                    field: 'PERCENT_TOTAL',
+                    color: '#000',
+                    orientation: 'vertical',
+                    'text-anchor': 'middle'
+                },
+                xField: 'NOMBRE_PROGRAMA',
+                yField: [
             'PERCENT_TOTAL'
             ]
             }
             ]
-            }]
+                }]
             },
                 {
-                xtype: 'panel',
-                height: 562,
-                border: 0,
-                margin: '5 5 5 5',
-                layout: {
-                    type: 'column'
-                },
-                title: '',
-                items: [
+                    xtype: 'panel',
+                    height: 562,
+                    border: 0,
+                    margin: '5 5 5 5',
+                    layout: {
+                        type: 'column'
+                    },
+                    title: '',
+                    items: [
                         {
                             xtype: 'gridpanel',
                             height: 400,
@@ -133,32 +133,32 @@
                                 //if(!winActividadProgramaAnual){
                                 var gridProgramaAnual = Ext.create('WCF_ENAP.view.ui.ProgramaAnualPrevencion', {
                                     recordParent: record
-                            });
-                            winActividadProgramaAnual = Ext.create('Ext.window.Window', {
-                                modal: true,
-                                width: 850,
-                                maximizable: true,
-                                title: record.get('NOMBRE_PROGRAMA'),
-                                items: [gridProgramaAnual]
-                            });
-                            //}
-                            var formulario = winActividadProgramaAnual.getComponent('form_programa_anual');
-                            var form = formulario.getForm();
+                                });
+                                winActividadProgramaAnual = Ext.create('Ext.window.Window', {
+                                    modal: true,
+                                    width: 850,
+                                    maximizable: true,
+                                    title: record.get('NOMBRE_PROGRAMA'),
+                                    items: [gridProgramaAnual]
+                                });
+                                //}
+                                var formulario = winActividadProgramaAnual.getComponent('form_programa_anual');
+                                var form = formulario.getForm();
 
-                            /*Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
+                                /*Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
                                 params: { 'ID_PROGRAMA_ANUAL': idProgramaAnual },
                                 callback: function (records, operation, success) {
-                                    //console.log(records);
+                                //console.log(records);
                                 }
-                            });*/
-                            form.loadRecord(record);
-                            //formulario.setColumns(record.get('MES_INICIO'));
-                            //console.log(record);
-                            winActividadProgramaAnual.show();
+                                });*/
+                                form.loadRecord(record);
+                                //formulario.setColumns(record.get('MES_INICIO'));
+                                //console.log(record);
+                                winActividadProgramaAnual.show();
 
+                            }
                         }
-                    }
-                },
+                    },
                         {
                             xtype: 'form',
                             margin: '5 5 5 0',
@@ -229,13 +229,14 @@
                                         'change': function (cmb, newValue, oldValue, eOpts) {
                                             var cmbDepto = Ext.getCmp('cmb_programaAnual_departamento');
                                             cmbDepto.clearValue();
-                                            Ext.data.StoreManager.lookup('dsDepartamento').load({
-                                                params: { 'ID_ORGANIZACION': newValue },
-                                                callback: function (records, operation, success) {
-                                                    cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
-                                                }
-                                            });
-
+                                            if (newValue != null) {
+                                                Ext.data.StoreManager.lookup('dsDepartamento').load({
+                                                    params: { 'ID_ORGANIZACION': newValue },
+                                                    callback: function (records, operation, success) {
+                                                        cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                 },
@@ -261,12 +262,14 @@
                                         'change': function (cmb, newValue, oldValue, eOpts) {
                                             var cmbDiv = Ext.getCmp('cmb_programaAnual_division');
                                             cmbDiv.clearValue();
-                                            Ext.data.StoreManager.lookup('dsDivision').load({
-                                                params: { 'ID_DEPARTAMENTO': newValue },
-                                                callback: function (records, operation, success) {
-                                                    cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
-                                                }
-                                            });
+                                            if (newValue != null) {
+                                                Ext.data.StoreManager.lookup('dsDivision').load({
+                                                    params: { 'ID_DEPARTAMENTO': newValue },
+                                                    callback: function (records, operation, success) {
+                                                        cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                 },
@@ -335,7 +338,7 @@
                             }]
                         }
                     ]
-            }
+                }
             ]
         });
 

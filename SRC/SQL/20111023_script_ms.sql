@@ -70,27 +70,6 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('E006_3') and o.name = 'FK_E006_3_INCORPORA_TBL_EVEN')
-alter table E006_3
-   drop constraint FK_E006_3_INCORPORA_TBL_EVEN
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('E006_4') and o.name = 'FK_E006_4_RELATIONS_E006_3')
-alter table E006_4
-   drop constraint FK_E006_4_RELATIONS_E006_3
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('HISTORIAL_INFORME') and o.name = 'FK_HISTORIA_NECESITA_E006_3')
-alter table HISTORIAL_INFORME
-   drop constraint FK_HISTORIA_NECESITA_E006_3
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('MATRIZ_EMPRESA') and o.name = 'FK_MATRIZ_E_EMPRESA_M_TBL_EMPR')
 alter table MATRIZ_EMPRESA
    drop constraint FK_MATRIZ_E_EMPRESA_M_TBL_EMPR
@@ -112,16 +91,16 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_ACCION_CO_E006_3')
+   where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_REFERENCE_TBL_USUA')
 alter table TBL_ACCION_CORRECTIVA
-   drop constraint FK_TBL_ACCI_ACCION_CO_E006_3
+   drop constraint FK_TBL_ACCI_REFERENCE_TBL_USUA
 go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_REFERENCE_TBL_USUA')
+   where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_REFERENCE_TBL_I_PR')
 alter table TBL_ACCION_CORRECTIVA
-   drop constraint FK_TBL_ACCI_REFERENCE_TBL_USUA
+   drop constraint FK_TBL_ACCI_REFERENCE_TBL_I_PR
 go
 
 if exists (select 1
@@ -231,9 +210,9 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ARCHIVO') and o.name = 'FK_TBL_ARCH_ARCHIVO_E_E006_3')
+   where r.fkeyid = object_id('TBL_ARCHIVO') and o.name = 'FK_TBL_ARCH_ARCHIVO_E_TBL_I_PR')
 alter table TBL_ARCHIVO
-   drop constraint FK_TBL_ARCH_ARCHIVO_E_E006_3
+   drop constraint FK_TBL_ARCH_ARCHIVO_E_TBL_I_PR
 go
 
 if exists (select 1
@@ -252,9 +231,9 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_E006_4')
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_I_FI')
 alter table TBL_CAUSA_INFORME
-   drop constraint FK_TBL_CAUS_REFERENCE_E006_4
+   drop constraint FK_TBL_CAUS_REFERENCE_TBL_I_FI
 go
 
 if exists (select 1
@@ -301,16 +280,16 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_EVENTO_DATO') and o.name = 'FK_TBL_EVEN_DATO_EVEN_TBL_DATO')
+   where r.fkeyid = object_id('TBL_EVENTO_DATO') and o.name = 'FK_TBL_EVEN_REFERENCE_TBL_I_PR')
 alter table TBL_EVENTO_DATO
-   drop constraint FK_TBL_EVEN_DATO_EVEN_TBL_DATO
+   drop constraint FK_TBL_EVEN_REFERENCE_TBL_I_PR
 go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_EVENTO_DATO') and o.name = 'FK_TBL_EVEN_E006-3-EV_E006_3')
+   where r.fkeyid = object_id('TBL_EVENTO_DATO') and o.name = 'FK_TBL_EVEN_DATO_EVEN_TBL_DATO')
 alter table TBL_EVENTO_DATO
-   drop constraint "FK_TBL_EVEN_E006-3-EV_E006_3"
+   drop constraint FK_TBL_EVEN_DATO_EVEN_TBL_DATO
 go
 
 if exists (select 1
@@ -367,6 +346,27 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_HISTORIAL_EMPRESA') and o.name = 'FK_TBL_HIST_REGISTRA_TBL_EMPR')
 alter table TBL_HISTORIAL_EMPRESA
    drop constraint FK_TBL_HIST_REGISTRA_TBL_EMPR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_HISTORIAL_INFORME') and o.name = 'FK_TBL_HIST_REFERENCE_TBL_I_PR')
+alter table TBL_HISTORIAL_INFORME
+   drop constraint FK_TBL_HIST_REFERENCE_TBL_I_PR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_I_FINAL') and o.name = 'FK_TBL_I_FI_REFERENCE_TBL_I_PR')
+alter table TBL_I_FINAL
+   drop constraint FK_TBL_I_FI_REFERENCE_TBL_I_PR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_I_PRELIMINAR') and o.name = 'FK_TBL_I_PR_INCORPORA_TBL_EVEN')
+alter table TBL_I_PRELIMINAR
+   drop constraint FK_TBL_I_PR_INCORPORA_TBL_EVEN
 go
 
 if exists (select 1
@@ -514,27 +514,6 @@ if exists (select 1
    where r.fkeyid = object_id('THL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_THL_HERR_REFERENCE_TBL_HERR')
 alter table THL_HERRAMIENTA_TRABAJADOR
    drop constraint FK_THL_HERR_REFERENCE_TBL_HERR
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('E006_3')
-            and   type = 'U')
-   drop table E006_3
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('E006_4')
-            and   type = 'U')
-   drop table E006_4
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('HISTORIAL_INFORME')
-            and   type = 'U')
-   drop table HISTORIAL_INFORME
 go
 
 if exists (select 1
@@ -759,6 +738,27 @@ if exists (select 1
            where  id = object_id('TBL_HISTORIAL_EMPRESA')
             and   type = 'U')
    drop table TBL_HISTORIAL_EMPRESA
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_HISTORIAL_INFORME')
+            and   type = 'U')
+   drop table TBL_HISTORIAL_INFORME
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_I_FINAL')
+            and   type = 'U')
+   drop table TBL_I_FINAL
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_I_PRELIMINAR')
+            and   type = 'U')
+   drop table TBL_I_PRELIMINAR
 go
 
 if exists (select 1
@@ -1140,46 +1140,6 @@ execute sp_bindrule R_TURNO, TURNO
 go
 
 /*==============================================================*/
-/* Table: E006_3                                                */
-/*==============================================================*/
-create table E006_3 (
-   ID_INFORME           int                  identity,
-   ID_EVENTO_EMPRESA    int                  null,
-   FECHA_INGRESO        datetime             null,
-   CLASIFICACION        int                  null
-      constraint CKC_CLASIFICACION_E006_3 check (CLASIFICACION is null or (CLASIFICACION between 1 and 6 and CLASIFICACION in (1,2,3,4,5,6))),
-   constraint PK_E006_3 primary key nonclustered (ID_INFORME)
-)
-go
-
-/*==============================================================*/
-/* Table: E006_4                                                */
-/*==============================================================*/
-create table E006_4 (
-   ID_INFORME           int                  identity,
-   E00_ID_INFORME       int                  null,
-   DESCRIPCION_INCIDENTE text                 null,
-   ANTECEDENTES         text                 null,
-   RELATO_DE_HECHO      text                 null,
-   COMENTARIO           text                 null,
-   FECHA_CREACION       datetime             null,
-   constraint PK_E006_4 primary key nonclustered (ID_INFORME)
-)
-go
-
-/*==============================================================*/
-/* Table: HISTORIAL_INFORME                                     */
-/*==============================================================*/
-create table HISTORIAL_INFORME (
-   ID_HISTORIAL_INFORME int                  identity,
-   ID_INFORME           int                  null,
-   FECHA_MODIFICACION   datetime             null,
-   DESCRIPCION_MODIFICACION text                 null,
-   constraint PK_HISTORIAL_INFORME primary key nonclustered (ID_HISTORIAL_INFORME)
-)
-go
-
-/*==============================================================*/
 /* Table: MATRIZ_EMPRESA                                        */
 /*==============================================================*/
 create table MATRIZ_EMPRESA (
@@ -1217,9 +1177,9 @@ go
 /*==============================================================*/
 create table TBL_ACCION_CORRECTIVA (
    ID_ACCION_CORRECTIVA int                  identity,
-   ID_INFORME           int                  not null,
    ID_ACCION            int                  null,
    ID_USUARIO           varchar(200)         null,
+   ID_INFORME_PRELIMINAR int                  null,
    FECHA_PLAZO          datetime             null,
    FECHA_REALIZACION    datetime             null,
    PORCENTAJE_CUMPLIMIENTO int                  null,
@@ -1481,9 +1441,9 @@ go
 /* Table: TBL_CAUSA_INFORME                                     */
 /*==============================================================*/
 create table TBL_CAUSA_INFORME (
-   ID_INFORME           int                  not null,
    ID_CAUSA             int                  not null,
-   constraint PK_TBL_CAUSA_INFORME primary key (ID_INFORME, ID_CAUSA)
+   ID_INFORME_FINAL     int                  not null,
+   constraint PK_TBL_CAUSA_INFORME primary key (ID_CAUSA, ID_INFORME_FINAL)
 )
 go
 
@@ -1600,10 +1560,10 @@ go
 /* Table: TBL_EVENTO_DATO                                       */
 /*==============================================================*/
 create table TBL_EVENTO_DATO (
-   ID_INFORME           int                  not null,
    ID_TIPO_EVENTO       int                  not null,
+   ID_INFORME_PRELIMINAR int                  not null,
    ESTADO               bit                  null,
-   constraint PK_TBL_EVENTO_DATO primary key nonclustered (ID_INFORME, ID_TIPO_EVENTO)
+   constraint PK_TBL_EVENTO_DATO primary key nonclustered (ID_TIPO_EVENTO, ID_INFORME_PRELIMINAR)
 )
 go
 
@@ -1707,6 +1667,46 @@ create table TBL_HISTORIAL_EMPRESA (
    H_TRABAJADAS         int                  null,
    H_SOBRETIEMPO        int                  null,
    constraint PK_TBL_HISTORIAL_EMPRESA primary key nonclustered (ID_HISTORIAL)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_HISTORIAL_INFORME                                 */
+/*==============================================================*/
+create table TBL_HISTORIAL_INFORME (
+   ID_HISTORIAL_INFORME int                  identity,
+   ID_INFORME_PRELIMINAR int                  null,
+   FECHA_MODIFICACION   datetime             null,
+   DESCRIPCION_MODIFICACION text                 null,
+   constraint PK_TBL_HISTORIAL_INFORME primary key nonclustered (ID_HISTORIAL_INFORME)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_I_FINAL                                           */
+/*==============================================================*/
+create table TBL_I_FINAL (
+   ID_INFORME_FINAL     int                  not null,
+   ID_INFORME_PRELIMINAR int                  null,
+   DESCRIPCION_INCIDENTE text                 null,
+   ANTECEDENTES         text                 null,
+   RELATO_DE_HECHO      text                 null,
+   COMENTARIO           text                 null,
+   FECHA_CREACION       datetime             null,
+   constraint PK_TBL_I_FINAL primary key nonclustered (ID_INFORME_FINAL)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_I_PRELIMINAR                                      */
+/*==============================================================*/
+create table TBL_I_PRELIMINAR (
+   ID_INFORME_PRELIMINAR int                  identity,
+   ID_EVENTO_EMPRESA    int                  null,
+   FECHA_INGRESO        datetime             null,
+   CLASIFICACION        int                  null
+      constraint CKC_CLASIFICACION_TBL_I_PR check (CLASIFICACION is null or (CLASIFICACION between 1 and 6 and CLASIFICACION in (1,2,3,4,5,6))),
+   constraint PK_TBL_I_PRELIMINAR primary key nonclustered (ID_INFORME_PRELIMINAR)
 )
 go
 
@@ -1951,21 +1951,6 @@ create table THL_HERRAMIENTA_TRABAJADOR (
 )
 go
 
-alter table E006_3
-   add constraint FK_E006_3_INCORPORA_TBL_EVEN foreign key (ID_EVENTO_EMPRESA)
-      references TBL_EVENTO_EMPRESA (ID_EVENTO_EMPRESA)
-go
-
-alter table E006_4
-   add constraint FK_E006_4_RELATIONS_E006_3 foreign key (E00_ID_INFORME)
-      references E006_3 (ID_INFORME)
-go
-
-alter table HISTORIAL_INFORME
-   add constraint FK_HISTORIA_NECESITA_E006_3 foreign key (ID_INFORME)
-      references E006_3 (ID_INFORME)
-go
-
 alter table MATRIZ_EMPRESA
    add constraint FK_MATRIZ_E_EMPRESA_M_TBL_EMPR foreign key (ID_EMPRESA)
       references TBL_EMPRESA (ID_EMPRESA)
@@ -1982,13 +1967,13 @@ alter table MATRIZ_HISTORIAL
 go
 
 alter table TBL_ACCION_CORRECTIVA
-   add constraint FK_TBL_ACCI_ACCION_CO_E006_3 foreign key (ID_INFORME)
-      references E006_3 (ID_INFORME)
+   add constraint FK_TBL_ACCI_REFERENCE_TBL_USUA foreign key (ID_USUARIO)
+      references TBL_USUARIO (ID_USUARIO)
 go
 
 alter table TBL_ACCION_CORRECTIVA
-   add constraint FK_TBL_ACCI_REFERENCE_TBL_USUA foreign key (ID_USUARIO)
-      references TBL_USUARIO (ID_USUARIO)
+   add constraint FK_TBL_ACCI_REFERENCE_TBL_I_PR foreign key (ID_INFORME_PRELIMINAR)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
 go
 
 alter table TBL_ACCION_CORRECTIVA
@@ -2067,8 +2052,8 @@ alter table TBL_ACTIVIDAD_TRABAJADOR_REALIZADA
 go
 
 alter table TBL_ARCHIVO
-   add constraint FK_TBL_ARCH_ARCHIVO_E_E006_3 foreign key (ID_INFORME)
-      references E006_3 (ID_INFORME)
+   add constraint FK_TBL_ARCH_ARCHIVO_E_TBL_I_PR foreign key (ID_INFORME)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
 go
 
 alter table TBL_AREA
@@ -2082,8 +2067,8 @@ alter table TBL_CAUSA_INFORME
 go
 
 alter table TBL_CAUSA_INFORME
-   add constraint FK_TBL_CAUS_REFERENCE_E006_4 foreign key (ID_INFORME)
-      references E006_4 (ID_INFORME)
+   add constraint FK_TBL_CAUS_REFERENCE_TBL_I_FI foreign key (ID_INFORME_FINAL)
+      references TBL_I_FINAL (ID_INFORME_FINAL)
 go
 
 alter table TBL_CAUSA_MEDIDA_DE_CONTROL
@@ -2117,13 +2102,13 @@ alter table TBL_EVENTO
 go
 
 alter table TBL_EVENTO_DATO
-   add constraint FK_TBL_EVEN_DATO_EVEN_TBL_DATO foreign key (ID_TIPO_EVENTO)
-      references TBL_DATO_EVENTO (ID_TIPO_EVENTO)
+   add constraint FK_TBL_EVEN_REFERENCE_TBL_I_PR foreign key (ID_INFORME_PRELIMINAR)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
 go
 
 alter table TBL_EVENTO_DATO
-   add constraint "FK_TBL_EVEN_E006-3-EV_E006_3" foreign key (ID_INFORME)
-      references E006_3 (ID_INFORME)
+   add constraint FK_TBL_EVEN_DATO_EVEN_TBL_DATO foreign key (ID_TIPO_EVENTO)
+      references TBL_DATO_EVENTO (ID_TIPO_EVENTO)
 go
 
 alter table TBL_EVENTO_EMPRESA
@@ -2164,6 +2149,21 @@ go
 alter table TBL_HISTORIAL_EMPRESA
    add constraint FK_TBL_HIST_REGISTRA_TBL_EMPR foreign key (ID_EMPRESA)
       references TBL_EMPRESA (ID_EMPRESA)
+go
+
+alter table TBL_HISTORIAL_INFORME
+   add constraint FK_TBL_HIST_REFERENCE_TBL_I_PR foreign key (ID_INFORME_PRELIMINAR)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
+go
+
+alter table TBL_I_FINAL
+   add constraint FK_TBL_I_FI_REFERENCE_TBL_I_PR foreign key (ID_INFORME_PRELIMINAR)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
+go
+
+alter table TBL_I_PRELIMINAR
+   add constraint FK_TBL_I_PR_INCORPORA_TBL_EVEN foreign key (ID_EVENTO_EMPRESA)
+      references TBL_EVENTO_EMPRESA (ID_EVENTO_EMPRESA)
 go
 
 alter table TBL_MATRIZ
@@ -2758,10 +2758,6 @@ AS
 	INSERT INTO TBL_USUARIO_GRUPO(ID_GRUPO,ID_USUARIO,GRUPO_ADMIN)
         VALUES(3,@ID_USUARIO,0);
 go
-
-
-
-
 
 
 
@@ -3456,6 +3452,9 @@ INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(65,'dsNodes');
 INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(66,'dsNode');
 
 GO
+
+INSERT INTO TBL_EMPRESA(NOMBRE_EMPRESA,DIRECCION_EMPRESA,FONO_EMPRESA,EMAIL_EMPRESA,NOMBRE_CONTRATO) 
+	VALUES('ENAP Refinería Bio Bio','Camino a Lenga 2001',NULL,NULL,NULL);
 /* 
 	MODULOS
 */
@@ -3842,5 +3841,4 @@ WHERE AEV.ID_DIVISION = @ID_DIVISION
 GROUP BY M.ID_MATRIZ;
 
 SELECT @AREA_BY_DIVISION, @MATRIZ_BY_DIVISION;
-
 
