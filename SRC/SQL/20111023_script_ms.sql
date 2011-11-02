@@ -21,6 +21,13 @@ go
 
 if exists (select 1
           from sysobjects
+          where id = object_id('TRIG_INSERT_USUARIO_BEFORE')
+          and type = 'TR')
+   drop trigger TRIG_INSERT_USUARIO_BEFORE
+go
+
+if exists (select 1
+          from sysobjects
           where  id = object_id('FN_NODES_BY_PARENT')
           and type = 'P')
    drop procedure FN_NODES_BY_PARENT
@@ -1574,7 +1581,6 @@ create table TBL_EVENTO_EMPRESA (
    ID_EVENTO_EMPRESA    int                  identity,
    ID_EVENTO            int                  null,
    ID_EMPRESA           int                  null,
-   DESCRIPCION          text                 null,
    ESTADO               bit                  null,
    constraint PK_TBL_EVENTO_EMPRESA primary key nonclustered (ID_EVENTO_EMPRESA)
 )
@@ -2760,6 +2766,31 @@ AS
 go
 
 
+CREATE TRIGGER TRIG_INSERT_USUARIO_BEFORE ON TBL_USUARIO
+INSTEAD OF INSERT
+AS
+	INSERT INTO TBL_USUARIO(ID_USUARIO,
+            RUT_TRABAJADOR,
+            NOMBRES,
+            APELLIDO_PATERNO,
+            APELLIDO_MATERNO,
+            ESTADO,
+            EMAIL,
+            PASSWORD)
+       SELECT ID_USUARIO,
+            RUT_TRABAJADOR,
+            NOMBRES,
+            APELLIDO_PATERNO,
+            APELLIDO_MATERNO,
+            ESTADO,
+            EMAIL,
+            SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', PASSWORD)),3,32)
+       FROM inserted;
+go
+
+
+
+
 
 
 
@@ -3467,6 +3498,8 @@ INSERT INTO TBL_GRUPO(ID_GRUPO,NOMBRE_GRUPO,DESCRIPCION_GRUPO) VALUES(3,'Usuario
 SET IDENTITY_INSERT TBL_GRUPO OFF
 GO
 
+INSERT INTO TBL_USUARIO(ID_USUARIO,NOMBRES,ESTADO,PASSWORD)  VALUES('admin','Administrador',1,'admin');
+INSERT INTO TBL_USUARIO_GRUPO(ID_GRUPO,ID_USUARIO,GRUPO_ADMIN) VALUES(2,'admin',1);
 GO
 SET IDENTITY_INSERT TBL_NODO ON
 GO
@@ -3841,4 +3874,5 @@ WHERE AEV.ID_DIVISION = @ID_DIVISION
 GROUP BY M.ID_MATRIZ;
 
 SELECT @AREA_BY_DIVISION, @MATRIZ_BY_DIVISION;
+
 

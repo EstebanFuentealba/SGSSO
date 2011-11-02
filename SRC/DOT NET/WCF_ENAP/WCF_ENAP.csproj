@@ -4539,6 +4539,7 @@
     <Compile Include="WS\GraphAvanceProgramaAnual.cs" />
     <Compile Include="WS\Grupo.cs" />
     <Compile Include="WS\GrupoPrivilegio.cs" />
+    <Compile Include="WS\Herramienta.cs" />
     <Compile Include="WS\HistorialEmpresa.cs" />
     <Compile Include="WS\historialInforme.cs" />
     <Compile Include="WS\JSONCollection.cs" />
