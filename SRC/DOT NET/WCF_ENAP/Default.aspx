@@ -10,8 +10,7 @@
     <meta http-equiv="Expires" CONTENT="0">
     <meta http-equiv="Cache-Control" CONTENT="no-cache">
     <meta http-equiv="Pragma" CONTENT="no-cache">
-    <!--<link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />-->
-    <link href="/ext-4.0.7-gpl/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+    <link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
 	<link href="/ux/css/data-view.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/CenterLayout.css" rel="stylesheet" type="text/css" />

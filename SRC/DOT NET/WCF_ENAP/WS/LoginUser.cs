@@ -69,12 +69,6 @@ namespace WCF_ENAP
                         List<string> groups = LDAP.GetGroupsMember(USERNAME, PASSWORD);
                         user.Memberof = groups;
                         user.Username = USERNAME;
-                        /*
-                        List<sp_get_privilegios_by_usuarioResult> privilegios = bd.sp_get_privilegios_by_usuario(user.Username).ToList<sp_get_privilegios_by_usuarioResult>();
-                        foreach (sp_get_privilegios_by_usuarioResult privilegio in privilegios)
-                        {
-                        
-                        }*/
                         user.IsLogued = true;
                         try
                         {

@@ -109,6 +109,7 @@ namespace WCF_ENAP
                 if (TIPO_FRECUENCIA == 1)
                 {
                     /*Diario*/
+                    
                     nuevo.ENERO_P = (DateTime.DaysInMonth(ANO_INICIO, 1) * CANTIDAD_FRECUENCIA);
                     nuevo.FEBRERO_P = (DateTime.DaysInMonth(ANO_INICIO, 2) * CANTIDAD_FRECUENCIA);
                     nuevo.MARZO_P = (DateTime.DaysInMonth(ANO_INICIO, 3) * CANTIDAD_FRECUENCIA);
@@ -157,18 +158,120 @@ namespace WCF_ENAP
                 else if (TIPO_FRECUENCIA == 4)
                 {
                     /*Anual*/
-                    nuevo.ENERO_E = bool.Parse(ENERO_E.ToString());
-                    nuevo.FEBRERO_E = bool.Parse(FEBRERO_E.ToString());
-                    nuevo.MARZO_E = bool.Parse(MARZO_E.ToString());
-                    nuevo.ABRIL_E = bool.Parse(ABRIL_E.ToString());
-                    nuevo.MAYO_E = bool.Parse(MAYO_E.ToString());
-                    nuevo.JUNIO_E = bool.Parse(JUNIO_E.ToString());
-                    nuevo.JULIO_E = bool.Parse(JULIO_E.ToString());
-                    nuevo.AGOSTO_E = bool.Parse(AGOSTO_E.ToString());
-                    nuevo.SEPTIEMBRE_E = bool.Parse(SEPTIEMBRE_E.ToString());
-                    nuevo.OCTUBRE_E = bool.Parse(OCTUBRE_E.ToString());
-                    nuevo.NOVIEMBRE_E = bool.Parse(NOVIEMBRE_E.ToString());
-                    nuevo.DICIEMBRE_E = bool.Parse(DICIEMBRE_E.ToString());
+                    if (ENERO_E == 0) {
+                        nuevo.ENERO_E = false;
+                    } else
+                    {
+                        nuevo.ENERO_E = true;
+                        nuevo.ENERO_P = 1;
+                    }
+                    if (FEBRERO_E == 0)
+                    {
+                        nuevo.FEBRERO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.FEBRERO_E = true;
+                        nuevo.FEBRERO_P = 1;
+                    }
+                    if (MARZO_E == 0)
+                    {
+                        nuevo.MARZO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.MARZO_E = true;
+                        nuevo.MARZO_P = 1;
+                    }
+                    if (ABRIL_E == 0)
+                    {
+                        nuevo.ABRIL_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.ABRIL_E = true;
+                        nuevo.ABRIL_P = 1;
+                    }
+                    if (MAYO_E == 0)
+                    {
+                        nuevo.MAYO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.MAYO_E = true;
+                        nuevo.MAYO_P = 1;
+                    }
+                    if (JUNIO_E == 0)
+                    {
+                        nuevo.JUNIO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.JUNIO_E = true;
+                        nuevo.JUNIO_P = 1;
+                    }
+                    if (JULIO_E == 0)
+                    {
+                        nuevo.JULIO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.JULIO_E = true;
+                        nuevo.JULIO_P = 1;
+                    }
+                    if (AGOSTO_E == 0)
+                    {
+                        nuevo.AGOSTO_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.AGOSTO_E = true;
+                        nuevo.AGOSTO_P = 1;
+                    }
+                    if (SEPTIEMBRE_E == 0)
+                    {
+                        nuevo.SEPTIEMBRE_E = false;
+                        
+                    }
+                    else
+                    {
+                        nuevo.SEPTIEMBRE_E = true;
+                        nuevo.SEPTIEMBRE_P = 1;
+                    }
+                    if (OCTUBRE_E == 0)
+                    {
+                        nuevo.OCTUBRE_E = false;
+                    }
+                    else
+                    {
+                        nuevo.OCTUBRE_E = true;
+                        nuevo.OCTUBRE_P = 1;
+                    }
+                    if (NOVIEMBRE_E == 0)
+                    {
+                        nuevo.NOVIEMBRE_E = false;
+                    }
+                    else
+                    {
+                        nuevo.NOVIEMBRE_E = true;
+                        nuevo.NOVIEMBRE_P = 1;
+                    }
+                    if (DICIEMBRE_E == 0)
+                    {
+                        nuevo.DICIEMBRE_E = false;
+                    }
+                    else
+                    {
+                        nuevo.DICIEMBRE_E = true;
+                        nuevo.DICIEMBRE_P = 1;
+                    }
                 }
                 bd.TBL_ACTIVIDAD.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
