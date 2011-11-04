@@ -66,8 +66,7 @@ namespace WCF_ENAP
                 TBL_EVENTO_EMPRESA nuevo = new TBL_EVENTO_EMPRESA()
                 {
                     ID_EVENTO = int.Parse(ID_EVENTO), 
-					ID_EMPRESA = int.Parse(ID_EMPRESA), 
-					DESCRIPCION = DESCRIPCION
+					ID_EMPRESA = int.Parse(ID_EMPRESA)
                 };
                 bd.TBL_EVENTO_EMPRESA.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
@@ -112,7 +111,6 @@ namespace WCF_ENAP
                               select variable).Single();
                 objeto.ID_EVENTO = nuevo.ID_EVENTO;
 				objeto.ID_EMPRESA = nuevo.ID_EMPRESA;
-				objeto.DESCRIPCION = nuevo.DESCRIPCION;
                 bd.SubmitChanges();
                 objJSON.items = objeto;
                 objJSON.totalCount = bd.TBL_EVENTO_EMPRESA.Count();

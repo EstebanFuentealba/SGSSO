@@ -103,7 +103,10 @@
                                     xtype: 'gridcolumn',
                                     dataIndex: 'ID_DIVISION',
                                     text: 'División',
-                                    flex: 0.2
+                                    flex: 0.2,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        return record.get('NOMBRE_DIVISION');
+                                    }
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -287,10 +290,24 @@
                                     typeAhead: true,
                                     forceSelection: true,
                                     triggerAction: 'all',
-                                    emptyText: 'Selecciona un Departamento',
+                                    emptyText: 'Selecciona una División',
                                     queryMode: 'local',
                                     lastQuery: '',
-                                    selectOnFocus: true
+                                    selectOnFocus: true,
+                                    listeners: {
+                                        'change': function (cmb, newValue, oldValue, eOpts) {
+                                            try {
+                                                var storeDivision = Ext.StoreManager.lookup('dsDivision');
+                                                var id_division_record = storeDivision.find('ID_DIVISION', newValue);
+                                                Ext.getCmp('txt_nombre_division_programa').setValue(storeDivision.getAt(id_division_record).get('NOMBRE_DIVISION'));
+                                            } catch (e) { /*Record no contiene la ID*/ }
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'hiddenfield',
+                                    id: 'txt_nombre_division_programa',
+                                    name: 'NOMBRE_DIVISION'
                                 },
                                 {
                                     xtype: 'textareafield',

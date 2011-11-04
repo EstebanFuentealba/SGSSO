@@ -44,21 +44,21 @@
             objMes.header = meses[i].name + ' / ' + x;
             objMes.columns = [{
                 text: 'P',
-                width: 30,
+                width: 40,
                 dataIndex: varName.toLocaleUpperCase() + '_P',
                 editor: {
                     xtype: 'numberfield'
                 }
             }, {
                 text: 'R',
-                width: 30,
+                width:40,
                 dataIndex: varName.toLocaleUpperCase() + '_R',
                 editor: {
                     xtype: 'numberfield'
                 }
             }, {
                 text: '%',
-                width: 50,
+                width: 60,
                 sortable: false,
                 groupable: false,
                 renderer: renderFunction,

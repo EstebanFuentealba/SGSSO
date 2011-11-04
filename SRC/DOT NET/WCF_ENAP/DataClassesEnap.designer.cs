@@ -31,21 +31,12 @@ namespace WCF_ENAP
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnCreated();
-    partial void InsertE006_3(E006_3 instance);
-    partial void UpdateE006_3(E006_3 instance);
-    partial void DeleteE006_3(E006_3 instance);
-    partial void InsertTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
-    partial void UpdateTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
-    partial void DeleteTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
-    partial void InsertE006_4(E006_4 instance);
-    partial void UpdateE006_4(E006_4 instance);
-    partial void DeleteE006_4(E006_4 instance);
-    partial void InsertHISTORIAL_INFORME(HISTORIAL_INFORME instance);
-    partial void UpdateHISTORIAL_INFORME(HISTORIAL_INFORME instance);
-    partial void DeleteHISTORIAL_INFORME(HISTORIAL_INFORME instance);
     partial void InsertMATRIZ_EMPRESA(MATRIZ_EMPRESA instance);
     partial void UpdateMATRIZ_EMPRESA(MATRIZ_EMPRESA instance);
     partial void DeleteMATRIZ_EMPRESA(MATRIZ_EMPRESA instance);
+    partial void InsertTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
+    partial void UpdateTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
+    partial void DeleteTHL_HERRAMIENTA_TRABAJADOR(THL_HERRAMIENTA_TRABAJADOR instance);
     partial void InsertMATRIZ_HISTORIAL(MATRIZ_HISTORIAL instance);
     partial void UpdateMATRIZ_HISTORIAL(MATRIZ_HISTORIAL instance);
     partial void DeleteMATRIZ_HISTORIAL(MATRIZ_HISTORIAL instance);
@@ -139,6 +130,15 @@ namespace WCF_ENAP
     partial void InsertTBL_HISTORIAL_EMPRESA(TBL_HISTORIAL_EMPRESA instance);
     partial void UpdateTBL_HISTORIAL_EMPRESA(TBL_HISTORIAL_EMPRESA instance);
     partial void DeleteTBL_HISTORIAL_EMPRESA(TBL_HISTORIAL_EMPRESA instance);
+    partial void InsertTBL_HISTORIAL_INFORME(TBL_HISTORIAL_INFORME instance);
+    partial void UpdateTBL_HISTORIAL_INFORME(TBL_HISTORIAL_INFORME instance);
+    partial void DeleteTBL_HISTORIAL_INFORME(TBL_HISTORIAL_INFORME instance);
+    partial void InsertTBL_I_FINAL(TBL_I_FINAL instance);
+    partial void UpdateTBL_I_FINAL(TBL_I_FINAL instance);
+    partial void DeleteTBL_I_FINAL(TBL_I_FINAL instance);
+    partial void InsertTBL_I_PRELIMINAR(TBL_I_PRELIMINAR instance);
+    partial void UpdateTBL_I_PRELIMINAR(TBL_I_PRELIMINAR instance);
+    partial void DeleteTBL_I_PRELIMINAR(TBL_I_PRELIMINAR instance);
     partial void InsertTBL_MATRIZ(TBL_MATRIZ instance);
     partial void UpdateTBL_MATRIZ(TBL_MATRIZ instance);
     partial void DeleteTBL_MATRIZ(TBL_MATRIZ instance);
@@ -225,11 +225,11 @@ namespace WCF_ENAP
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<E006_3> E006_3
+		public System.Data.Linq.Table<MATRIZ_EMPRESA> MATRIZ_EMPRESA
 		{
 			get
 			{
-				return this.GetTable<E006_3>();
+				return this.GetTable<MATRIZ_EMPRESA>();
 			}
 		}
 		
@@ -238,30 +238,6 @@ namespace WCF_ENAP
 			get
 			{
 				return this.GetTable<THL_HERRAMIENTA_TRABAJADOR>();
-			}
-		}
-		
-		public System.Data.Linq.Table<E006_4> E006_4
-		{
-			get
-			{
-				return this.GetTable<E006_4>();
-			}
-		}
-		
-		public System.Data.Linq.Table<HISTORIAL_INFORME> HISTORIAL_INFORME
-		{
-			get
-			{
-				return this.GetTable<HISTORIAL_INFORME>();
-			}
-		}
-		
-		public System.Data.Linq.Table<MATRIZ_EMPRESA> MATRIZ_EMPRESA
-		{
-			get
-			{
-				return this.GetTable<MATRIZ_EMPRESA>();
 			}
 		}
 		
@@ -513,6 +489,30 @@ namespace WCF_ENAP
 			}
 		}
 		
+		public System.Data.Linq.Table<TBL_HISTORIAL_INFORME> TBL_HISTORIAL_INFORME
+		{
+			get
+			{
+				return this.GetTable<TBL_HISTORIAL_INFORME>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TBL_I_FINAL> TBL_I_FINAL
+		{
+			get
+			{
+				return this.GetTable<TBL_I_FINAL>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TBL_I_PRELIMINAR> TBL_I_PRELIMINAR
+		{
+			get
+			{
+				return this.GetTable<TBL_I_PRELIMINAR>();
+			}
+		}
+		
 		public System.Data.Linq.Table<TBL_MATRIZ> TBL_MATRIZ
 		{
 			get
@@ -671,11 +671,11 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_search_actividad_evaluadaResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_privilegios_by_usuario")]
-		public ISingleResult<sp_get_privilegios_by_usuarioResult> sp_get_privilegios_by_usuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_programas_anuales")]
+		public ISingleResult<sp_get_programas_anualesResult> sp_get_programas_anuales()
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_USUARIO);
-			return ((ISingleResult<sp_get_privilegios_by_usuarioResult>)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<sp_get_programas_anualesResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_indicadores_all_programa_anual")]
@@ -691,1075 +691,19 @@ namespace WCF_ENAP
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_PROGRAMA);
 			return ((ISingleResult<sp_indicadores_by_programa_anualResult>)(result.ReturnValue));
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.E006_3")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class E006_3 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_INFORME;
-		
-		private System.Nullable<int> _ID_EVENTO_EMPRESA;
-		
-		private System.Nullable<System.DateTime> _FECHA_INGRESO;
-		
-		private System.Nullable<int> _CLASIFICACION;
-		
-		private EntitySet<E006_4> _E006_4;
-		
-		private EntitySet<HISTORIAL_INFORME> _HISTORIAL_INFORME;
-		
-		private EntitySet<TBL_ACCION_CORRECTIVA> _TBL_ACCION_CORRECTIVA;
-		
-		private EntitySet<TBL_ARCHIVO> _TBL_ARCHIVO;
-		
-		private EntitySet<TBL_EVENTO_DATO> _TBL_EVENTO_DATO;
-		
-		private EntityRef<TBL_EVENTO_EMPRESA> _TBL_EVENTO_EMPRESA;
-		
-		private bool serializing;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_INFORMEChanging(int value);
-    partial void OnID_INFORMEChanged();
-    partial void OnID_EVENTO_EMPRESAChanging(System.Nullable<int> value);
-    partial void OnID_EVENTO_EMPRESAChanged();
-    partial void OnFECHA_INGRESOChanging(System.Nullable<System.DateTime> value);
-    partial void OnFECHA_INGRESOChanged();
-    partial void OnCLASIFICACIONChanging(System.Nullable<int> value);
-    partial void OnCLASIFICACIONChanged();
-    #endregion
-		
-		public E006_3()
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_stores_by_nodo")]
+		public ISingleResult<sp_get_stores_by_nodoResult> sp_get_stores_by_nodo([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_NODO", DbType="Int")] System.Nullable<int> iD_NODO)
 		{
-			this.Initialize();
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_NODO);
+			return ((ISingleResult<sp_get_stores_by_nodoResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_INFORME
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_privilegios_by_usuario")]
+		public ISingleResult<sp_get_privilegios_by_usuarioResult> sp_get_privilegios_by_usuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
 		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO_EMPRESA", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> ID_EVENTO_EMPRESA
-		{
-			get
-			{
-				return this._ID_EVENTO_EMPRESA;
-			}
-			set
-			{
-				if ((this._ID_EVENTO_EMPRESA != value))
-				{
-					if (this._TBL_EVENTO_EMPRESA.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_EVENTO_EMPRESAChanging(value);
-					this.SendPropertyChanging();
-					this._ID_EVENTO_EMPRESA = value;
-					this.SendPropertyChanged("ID_EVENTO_EMPRESA");
-					this.OnID_EVENTO_EMPRESAChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_INGRESO", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<System.DateTime> FECHA_INGRESO
-		{
-			get
-			{
-				return this._FECHA_INGRESO;
-			}
-			set
-			{
-				if ((this._FECHA_INGRESO != value))
-				{
-					this.OnFECHA_INGRESOChanging(value);
-					this.SendPropertyChanging();
-					this._FECHA_INGRESO = value;
-					this.SendPropertyChanged("FECHA_INGRESO");
-					this.OnFECHA_INGRESOChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CLASIFICACION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public System.Nullable<int> CLASIFICACION
-		{
-			get
-			{
-				return this._CLASIFICACION;
-			}
-			set
-			{
-				if ((this._CLASIFICACION != value))
-				{
-					this.OnCLASIFICACIONChanging(value);
-					this.SendPropertyChanging();
-					this._CLASIFICACION = value;
-					this.SendPropertyChanged("CLASIFICACION");
-					this.OnCLASIFICACIONChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_E006_4", Storage="_E006_4", ThisKey="ID_INFORME", OtherKey="E00_ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5, EmitDefaultValue=false)]
-		public EntitySet<E006_4> E006_4
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._E006_4.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._E006_4;
-			}
-			set
-			{
-				this._E006_4.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_HISTORIAL_INFORME", Storage="_HISTORIAL_INFORME", ThisKey="ID_INFORME", OtherKey="ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
-		public EntitySet<HISTORIAL_INFORME> HISTORIAL_INFORME
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._HISTORIAL_INFORME.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._HISTORIAL_INFORME;
-			}
-			set
-			{
-				this._HISTORIAL_INFORME.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_ACCION_CORRECTIVA", Storage="_TBL_ACCION_CORRECTIVA", ThisKey="ID_INFORME", OtherKey="ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
-		public EntitySet<TBL_ACCION_CORRECTIVA> TBL_ACCION_CORRECTIVA
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._TBL_ACCION_CORRECTIVA.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._TBL_ACCION_CORRECTIVA;
-			}
-			set
-			{
-				this._TBL_ACCION_CORRECTIVA.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_ARCHIVO", Storage="_TBL_ARCHIVO", ThisKey="ID_INFORME", OtherKey="ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
-		public EntitySet<TBL_ARCHIVO> TBL_ARCHIVO
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._TBL_ARCHIVO.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._TBL_ARCHIVO;
-			}
-			set
-			{
-				this._TBL_ARCHIVO.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_EVENTO_DATO", Storage="_TBL_EVENTO_DATO", ThisKey="ID_INFORME", OtherKey="ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9, EmitDefaultValue=false)]
-		public EntitySet<TBL_EVENTO_DATO> TBL_EVENTO_DATO
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._TBL_EVENTO_DATO.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._TBL_EVENTO_DATO;
-			}
-			set
-			{
-				this._TBL_EVENTO_DATO.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_EVENTO_EMPRESA_E006_3", Storage="_TBL_EVENTO_EMPRESA", ThisKey="ID_EVENTO_EMPRESA", OtherKey="ID_EVENTO_EMPRESA", IsForeignKey=true)]
-		public TBL_EVENTO_EMPRESA TBL_EVENTO_EMPRESA
-		{
-			get
-			{
-				return this._TBL_EVENTO_EMPRESA.Entity;
-			}
-			set
-			{
-				TBL_EVENTO_EMPRESA previousValue = this._TBL_EVENTO_EMPRESA.Entity;
-				if (((previousValue != value) 
-							|| (this._TBL_EVENTO_EMPRESA.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TBL_EVENTO_EMPRESA.Entity = null;
-						previousValue.E006_3.Remove(this);
-					}
-					this._TBL_EVENTO_EMPRESA.Entity = value;
-					if ((value != null))
-					{
-						value.E006_3.Add(this);
-						this._ID_EVENTO_EMPRESA = value.ID_EVENTO_EMPRESA;
-					}
-					else
-					{
-						this._ID_EVENTO_EMPRESA = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("TBL_EVENTO_EMPRESA");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_E006_4(E006_4 entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = this;
-		}
-		
-		private void detach_E006_4(E006_4 entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = null;
-		}
-		
-		private void attach_HISTORIAL_INFORME(HISTORIAL_INFORME entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = this;
-		}
-		
-		private void detach_HISTORIAL_INFORME(HISTORIAL_INFORME entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = null;
-		}
-		
-		private void attach_TBL_ACCION_CORRECTIVA(TBL_ACCION_CORRECTIVA entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = this;
-		}
-		
-		private void detach_TBL_ACCION_CORRECTIVA(TBL_ACCION_CORRECTIVA entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = null;
-		}
-		
-		private void attach_TBL_ARCHIVO(TBL_ARCHIVO entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = this;
-		}
-		
-		private void detach_TBL_ARCHIVO(TBL_ARCHIVO entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = null;
-		}
-		
-		private void attach_TBL_EVENTO_DATO(TBL_EVENTO_DATO entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = this;
-		}
-		
-		private void detach_TBL_EVENTO_DATO(TBL_EVENTO_DATO entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_3 = null;
-		}
-		
-		private void Initialize()
-		{
-			this._E006_4 = new EntitySet<E006_4>(new Action<E006_4>(this.attach_E006_4), new Action<E006_4>(this.detach_E006_4));
-			this._HISTORIAL_INFORME = new EntitySet<HISTORIAL_INFORME>(new Action<HISTORIAL_INFORME>(this.attach_HISTORIAL_INFORME), new Action<HISTORIAL_INFORME>(this.detach_HISTORIAL_INFORME));
-			this._TBL_ACCION_CORRECTIVA = new EntitySet<TBL_ACCION_CORRECTIVA>(new Action<TBL_ACCION_CORRECTIVA>(this.attach_TBL_ACCION_CORRECTIVA), new Action<TBL_ACCION_CORRECTIVA>(this.detach_TBL_ACCION_CORRECTIVA));
-			this._TBL_ARCHIVO = new EntitySet<TBL_ARCHIVO>(new Action<TBL_ARCHIVO>(this.attach_TBL_ARCHIVO), new Action<TBL_ARCHIVO>(this.detach_TBL_ARCHIVO));
-			this._TBL_EVENTO_DATO = new EntitySet<TBL_EVENTO_DATO>(new Action<TBL_EVENTO_DATO>(this.attach_TBL_EVENTO_DATO), new Action<TBL_EVENTO_DATO>(this.detach_TBL_EVENTO_DATO));
-			this._TBL_EVENTO_EMPRESA = default(EntityRef<TBL_EVENTO_EMPRESA>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerializing(StreamingContext context)
-		{
-			this.serializing = true;
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializedAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerialized(StreamingContext context)
-		{
-			this.serializing = false;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.THL_HERRAMIENTA_TRABAJADOR")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class THL_HERRAMIENTA_TRABAJADOR : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_HERRAMIENTA;
-		
-		private int _ID_TRABAJADOR;
-		
-		private EntityRef<TBL_HERRAMIENTA> _TBL_HERRAMIENTA;
-		
-		private EntityRef<TBL_TRABAJADOR> _TBL_TRABAJADOR;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_HERRAMIENTAChanging(int value);
-    partial void OnID_HERRAMIENTAChanged();
-    partial void OnID_TRABAJADORChanging(int value);
-    partial void OnID_TRABAJADORChanged();
-    #endregion
-		
-		public THL_HERRAMIENTA_TRABAJADOR()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_HERRAMIENTA", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_HERRAMIENTA
-		{
-			get
-			{
-				return this._ID_HERRAMIENTA;
-			}
-			set
-			{
-				if ((this._ID_HERRAMIENTA != value))
-				{
-					if (this._TBL_HERRAMIENTA.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_HERRAMIENTAChanging(value);
-					this.SendPropertyChanging();
-					this._ID_HERRAMIENTA = value;
-					this.SendPropertyChanged("ID_HERRAMIENTA");
-					this.OnID_HERRAMIENTAChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_TRABAJADOR", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public int ID_TRABAJADOR
-		{
-			get
-			{
-				return this._ID_TRABAJADOR;
-			}
-			set
-			{
-				if ((this._ID_TRABAJADOR != value))
-				{
-					if (this._TBL_TRABAJADOR.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_TRABAJADORChanging(value);
-					this.SendPropertyChanging();
-					this._ID_TRABAJADOR = value;
-					this.SendPropertyChanged("ID_TRABAJADOR");
-					this.OnID_TRABAJADORChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_HERRAMIENTA_THL_HERRAMIENTA_TRABAJADOR", Storage="_TBL_HERRAMIENTA", ThisKey="ID_HERRAMIENTA", OtherKey="ID_HERRAMIENTA", IsForeignKey=true)]
-		public TBL_HERRAMIENTA TBL_HERRAMIENTA
-		{
-			get
-			{
-				return this._TBL_HERRAMIENTA.Entity;
-			}
-			set
-			{
-				TBL_HERRAMIENTA previousValue = this._TBL_HERRAMIENTA.Entity;
-				if (((previousValue != value) 
-							|| (this._TBL_HERRAMIENTA.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TBL_HERRAMIENTA.Entity = null;
-						previousValue.THL_HERRAMIENTA_TRABAJADOR.Remove(this);
-					}
-					this._TBL_HERRAMIENTA.Entity = value;
-					if ((value != null))
-					{
-						value.THL_HERRAMIENTA_TRABAJADOR.Add(this);
-						this._ID_HERRAMIENTA = value.ID_HERRAMIENTA;
-					}
-					else
-					{
-						this._ID_HERRAMIENTA = default(int);
-					}
-					this.SendPropertyChanged("TBL_HERRAMIENTA");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_TRABAJADOR_THL_HERRAMIENTA_TRABAJADOR", Storage="_TBL_TRABAJADOR", ThisKey="ID_TRABAJADOR", OtherKey="ID_TRABAJADOR", IsForeignKey=true)]
-		public TBL_TRABAJADOR TBL_TRABAJADOR
-		{
-			get
-			{
-				return this._TBL_TRABAJADOR.Entity;
-			}
-			set
-			{
-				TBL_TRABAJADOR previousValue = this._TBL_TRABAJADOR.Entity;
-				if (((previousValue != value) 
-							|| (this._TBL_TRABAJADOR.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TBL_TRABAJADOR.Entity = null;
-						previousValue.THL_HERRAMIENTA_TRABAJADOR.Remove(this);
-					}
-					this._TBL_TRABAJADOR.Entity = value;
-					if ((value != null))
-					{
-						value.THL_HERRAMIENTA_TRABAJADOR.Add(this);
-						this._ID_TRABAJADOR = value.ID_TRABAJADOR;
-					}
-					else
-					{
-						this._ID_TRABAJADOR = default(int);
-					}
-					this.SendPropertyChanged("TBL_TRABAJADOR");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void Initialize()
-		{
-			this._TBL_HERRAMIENTA = default(EntityRef<TBL_HERRAMIENTA>);
-			this._TBL_TRABAJADOR = default(EntityRef<TBL_TRABAJADOR>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.E006_4")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class E006_4 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_INFORME;
-		
-		private System.Nullable<int> _E00_ID_INFORME;
-		
-		private string _DESCRIPCION_INCIDENTE;
-		
-		private string _ANTECEDENTES;
-		
-		private string _RELATO_DE_HECHO;
-		
-		private string _COMENTARIO;
-		
-		private System.Nullable<System.DateTime> _FECHA_CREACION;
-		
-		private EntitySet<TBL_CAUSA_INFORME> _TBL_CAUSA_INFORME;
-		
-		private EntityRef<E006_3> _E006_3;
-		
-		private bool serializing;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_INFORMEChanging(int value);
-    partial void OnID_INFORMEChanged();
-    partial void OnE00_ID_INFORMEChanging(System.Nullable<int> value);
-    partial void OnE00_ID_INFORMEChanged();
-    partial void OnDESCRIPCION_INCIDENTEChanging(string value);
-    partial void OnDESCRIPCION_INCIDENTEChanged();
-    partial void OnANTECEDENTESChanging(string value);
-    partial void OnANTECEDENTESChanged();
-    partial void OnRELATO_DE_HECHOChanging(string value);
-    partial void OnRELATO_DE_HECHOChanged();
-    partial void OnCOMENTARIOChanging(string value);
-    partial void OnCOMENTARIOChanged();
-    partial void OnFECHA_CREACIONChanging(System.Nullable<System.DateTime> value);
-    partial void OnFECHA_CREACIONChanged();
-    #endregion
-		
-		public E006_4()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_INFORME
-		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_E00_ID_INFORME", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> E00_ID_INFORME
-		{
-			get
-			{
-				return this._E00_ID_INFORME;
-			}
-			set
-			{
-				if ((this._E00_ID_INFORME != value))
-				{
-					if (this._E006_3.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnE00_ID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._E00_ID_INFORME = value;
-					this.SendPropertyChanged("E00_ID_INFORME");
-					this.OnE00_ID_INFORMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_INCIDENTE", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public string DESCRIPCION_INCIDENTE
-		{
-			get
-			{
-				return this._DESCRIPCION_INCIDENTE;
-			}
-			set
-			{
-				if ((this._DESCRIPCION_INCIDENTE != value))
-				{
-					this.OnDESCRIPCION_INCIDENTEChanging(value);
-					this.SendPropertyChanging();
-					this._DESCRIPCION_INCIDENTE = value;
-					this.SendPropertyChanged("DESCRIPCION_INCIDENTE");
-					this.OnDESCRIPCION_INCIDENTEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ANTECEDENTES", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public string ANTECEDENTES
-		{
-			get
-			{
-				return this._ANTECEDENTES;
-			}
-			set
-			{
-				if ((this._ANTECEDENTES != value))
-				{
-					this.OnANTECEDENTESChanging(value);
-					this.SendPropertyChanging();
-					this._ANTECEDENTES = value;
-					this.SendPropertyChanged("ANTECEDENTES");
-					this.OnANTECEDENTESChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RELATO_DE_HECHO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public string RELATO_DE_HECHO
-		{
-			get
-			{
-				return this._RELATO_DE_HECHO;
-			}
-			set
-			{
-				if ((this._RELATO_DE_HECHO != value))
-				{
-					this.OnRELATO_DE_HECHOChanging(value);
-					this.SendPropertyChanging();
-					this._RELATO_DE_HECHO = value;
-					this.SendPropertyChanged("RELATO_DE_HECHO");
-					this.OnRELATO_DE_HECHOChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COMENTARIO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public string COMENTARIO
-		{
-			get
-			{
-				return this._COMENTARIO;
-			}
-			set
-			{
-				if ((this._COMENTARIO != value))
-				{
-					this.OnCOMENTARIOChanging(value);
-					this.SendPropertyChanging();
-					this._COMENTARIO = value;
-					this.SendPropertyChanged("COMENTARIO");
-					this.OnCOMENTARIOChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public System.Nullable<System.DateTime> FECHA_CREACION
-		{
-			get
-			{
-				return this._FECHA_CREACION;
-			}
-			set
-			{
-				if ((this._FECHA_CREACION != value))
-				{
-					this.OnFECHA_CREACIONChanging(value);
-					this.SendPropertyChanging();
-					this._FECHA_CREACION = value;
-					this.SendPropertyChanged("FECHA_CREACION");
-					this.OnFECHA_CREACIONChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_4_TBL_CAUSA_INFORME", Storage="_TBL_CAUSA_INFORME", ThisKey="ID_INFORME", OtherKey="ID_INFORME")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
-		public EntitySet<TBL_CAUSA_INFORME> TBL_CAUSA_INFORME
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._TBL_CAUSA_INFORME.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._TBL_CAUSA_INFORME;
-			}
-			set
-			{
-				this._TBL_CAUSA_INFORME.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_E006_4", Storage="_E006_3", ThisKey="E00_ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_3 E006_3
-		{
-			get
-			{
-				return this._E006_3.Entity;
-			}
-			set
-			{
-				E006_3 previousValue = this._E006_3.Entity;
-				if (((previousValue != value) 
-							|| (this._E006_3.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._E006_3.Entity = null;
-						previousValue.E006_4.Remove(this);
-					}
-					this._E006_3.Entity = value;
-					if ((value != null))
-					{
-						value.E006_4.Add(this);
-						this._E00_ID_INFORME = value.ID_INFORME;
-					}
-					else
-					{
-						this._E00_ID_INFORME = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("E006_3");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TBL_CAUSA_INFORME(TBL_CAUSA_INFORME entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_4 = this;
-		}
-		
-		private void detach_TBL_CAUSA_INFORME(TBL_CAUSA_INFORME entity)
-		{
-			this.SendPropertyChanging();
-			entity.E006_4 = null;
-		}
-		
-		private void Initialize()
-		{
-			this._TBL_CAUSA_INFORME = new EntitySet<TBL_CAUSA_INFORME>(new Action<TBL_CAUSA_INFORME>(this.attach_TBL_CAUSA_INFORME), new Action<TBL_CAUSA_INFORME>(this.detach_TBL_CAUSA_INFORME));
-			this._E006_3 = default(EntityRef<E006_3>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerializing(StreamingContext context)
-		{
-			this.serializing = true;
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializedAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerialized(StreamingContext context)
-		{
-			this.serializing = false;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.HISTORIAL_INFORME")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class HISTORIAL_INFORME : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_HISTORIAL_INFORME;
-		
-		private System.Nullable<int> _ID_INFORME;
-		
-		private System.Nullable<System.DateTime> _FECHA_MODIFICACION;
-		
-		private string _DESCRIPCION_MODIFICACION;
-		
-		private EntityRef<E006_3> _E006_3;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_HISTORIAL_INFORMEChanging(int value);
-    partial void OnID_HISTORIAL_INFORMEChanged();
-    partial void OnID_INFORMEChanging(System.Nullable<int> value);
-    partial void OnID_INFORMEChanged();
-    partial void OnFECHA_MODIFICACIONChanging(System.Nullable<System.DateTime> value);
-    partial void OnFECHA_MODIFICACIONChanged();
-    partial void OnDESCRIPCION_MODIFICACIONChanging(string value);
-    partial void OnDESCRIPCION_MODIFICACIONChanged();
-    #endregion
-		
-		public HISTORIAL_INFORME()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_HISTORIAL_INFORME", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_HISTORIAL_INFORME
-		{
-			get
-			{
-				return this._ID_HISTORIAL_INFORME;
-			}
-			set
-			{
-				if ((this._ID_HISTORIAL_INFORME != value))
-				{
-					this.OnID_HISTORIAL_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_HISTORIAL_INFORME = value;
-					this.SendPropertyChanged("ID_HISTORIAL_INFORME");
-					this.OnID_HISTORIAL_INFORMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> ID_INFORME
-		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					if (this._E006_3.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_MODIFICACION", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<System.DateTime> FECHA_MODIFICACION
-		{
-			get
-			{
-				return this._FECHA_MODIFICACION;
-			}
-			set
-			{
-				if ((this._FECHA_MODIFICACION != value))
-				{
-					this.OnFECHA_MODIFICACIONChanging(value);
-					this.SendPropertyChanging();
-					this._FECHA_MODIFICACION = value;
-					this.SendPropertyChanged("FECHA_MODIFICACION");
-					this.OnFECHA_MODIFICACIONChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_MODIFICACION", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public string DESCRIPCION_MODIFICACION
-		{
-			get
-			{
-				return this._DESCRIPCION_MODIFICACION;
-			}
-			set
-			{
-				if ((this._DESCRIPCION_MODIFICACION != value))
-				{
-					this.OnDESCRIPCION_MODIFICACIONChanging(value);
-					this.SendPropertyChanging();
-					this._DESCRIPCION_MODIFICACION = value;
-					this.SendPropertyChanged("DESCRIPCION_MODIFICACION");
-					this.OnDESCRIPCION_MODIFICACIONChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_HISTORIAL_INFORME", Storage="_E006_3", ThisKey="ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_3 E006_3
-		{
-			get
-			{
-				return this._E006_3.Entity;
-			}
-			set
-			{
-				E006_3 previousValue = this._E006_3.Entity;
-				if (((previousValue != value) 
-							|| (this._E006_3.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._E006_3.Entity = null;
-						previousValue.HISTORIAL_INFORME.Remove(this);
-					}
-					this._E006_3.Entity = value;
-					if ((value != null))
-					{
-						value.HISTORIAL_INFORME.Add(this);
-						this._ID_INFORME = value.ID_INFORME;
-					}
-					else
-					{
-						this._ID_INFORME = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("E006_3");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void Initialize()
-		{
-			this._E006_3 = default(EntityRef<E006_3>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_USUARIO);
+			return ((ISingleResult<sp_get_privilegios_by_usuarioResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1960,6 +904,189 @@ namespace WCF_ENAP
 		{
 			this._TBL_EMPRESA = default(EntityRef<TBL_EMPRESA>);
 			this._TBL_MATRIZ = default(EntityRef<TBL_MATRIZ>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.THL_HERRAMIENTA_TRABAJADOR")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class THL_HERRAMIENTA_TRABAJADOR : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_HERRAMIENTA;
+		
+		private int _ID_TRABAJADOR;
+		
+		private EntityRef<TBL_HERRAMIENTA> _TBL_HERRAMIENTA;
+		
+		private EntityRef<TBL_TRABAJADOR> _TBL_TRABAJADOR;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_HERRAMIENTAChanging(int value);
+    partial void OnID_HERRAMIENTAChanged();
+    partial void OnID_TRABAJADORChanging(int value);
+    partial void OnID_TRABAJADORChanged();
+    #endregion
+		
+		public THL_HERRAMIENTA_TRABAJADOR()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_HERRAMIENTA", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_HERRAMIENTA
+		{
+			get
+			{
+				return this._ID_HERRAMIENTA;
+			}
+			set
+			{
+				if ((this._ID_HERRAMIENTA != value))
+				{
+					if (this._TBL_HERRAMIENTA.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_HERRAMIENTAChanging(value);
+					this.SendPropertyChanging();
+					this._ID_HERRAMIENTA = value;
+					this.SendPropertyChanged("ID_HERRAMIENTA");
+					this.OnID_HERRAMIENTAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_TRABAJADOR", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int ID_TRABAJADOR
+		{
+			get
+			{
+				return this._ID_TRABAJADOR;
+			}
+			set
+			{
+				if ((this._ID_TRABAJADOR != value))
+				{
+					if (this._TBL_TRABAJADOR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_TRABAJADORChanging(value);
+					this.SendPropertyChanging();
+					this._ID_TRABAJADOR = value;
+					this.SendPropertyChanged("ID_TRABAJADOR");
+					this.OnID_TRABAJADORChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_HERRAMIENTA_THL_HERRAMIENTA_TRABAJADOR", Storage="_TBL_HERRAMIENTA", ThisKey="ID_HERRAMIENTA", OtherKey="ID_HERRAMIENTA", IsForeignKey=true)]
+		public TBL_HERRAMIENTA TBL_HERRAMIENTA
+		{
+			get
+			{
+				return this._TBL_HERRAMIENTA.Entity;
+			}
+			set
+			{
+				TBL_HERRAMIENTA previousValue = this._TBL_HERRAMIENTA.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_HERRAMIENTA.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_HERRAMIENTA.Entity = null;
+						previousValue.THL_HERRAMIENTA_TRABAJADOR.Remove(this);
+					}
+					this._TBL_HERRAMIENTA.Entity = value;
+					if ((value != null))
+					{
+						value.THL_HERRAMIENTA_TRABAJADOR.Add(this);
+						this._ID_HERRAMIENTA = value.ID_HERRAMIENTA;
+					}
+					else
+					{
+						this._ID_HERRAMIENTA = default(int);
+					}
+					this.SendPropertyChanged("TBL_HERRAMIENTA");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_TRABAJADOR_THL_HERRAMIENTA_TRABAJADOR", Storage="_TBL_TRABAJADOR", ThisKey="ID_TRABAJADOR", OtherKey="ID_TRABAJADOR", IsForeignKey=true)]
+		public TBL_TRABAJADOR TBL_TRABAJADOR
+		{
+			get
+			{
+				return this._TBL_TRABAJADOR.Entity;
+			}
+			set
+			{
+				TBL_TRABAJADOR previousValue = this._TBL_TRABAJADOR.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_TRABAJADOR.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_TRABAJADOR.Entity = null;
+						previousValue.THL_HERRAMIENTA_TRABAJADOR.Remove(this);
+					}
+					this._TBL_TRABAJADOR.Entity = value;
+					if ((value != null))
+					{
+						value.THL_HERRAMIENTA_TRABAJADOR.Add(this);
+						this._ID_TRABAJADOR = value.ID_TRABAJADOR;
+					}
+					else
+					{
+						this._ID_TRABAJADOR = default(int);
+					}
+					this.SendPropertyChanged("TBL_TRABAJADOR");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void Initialize()
+		{
+			this._TBL_HERRAMIENTA = default(EntityRef<TBL_HERRAMIENTA>);
+			this._TBL_TRABAJADOR = default(EntityRef<TBL_TRABAJADOR>);
 			OnCreated();
 		}
 		
@@ -2323,11 +1450,11 @@ namespace WCF_ENAP
 		
 		private int _ID_ACCION_CORRECTIVA;
 		
-		private int _ID_INFORME;
-		
 		private System.Nullable<int> _ID_ACCION;
 		
 		private string _ID_USUARIO;
+		
+		private System.Nullable<int> _ID_INFORME_PRELIMINAR;
 		
 		private System.Nullable<System.DateTime> _FECHA_PLAZO;
 		
@@ -2341,9 +1468,9 @@ namespace WCF_ENAP
 		
 		private EntitySet<TBL_ACCION_CORRECTIVA_RECURSO> _TBL_ACCION_CORRECTIVA_RECURSO;
 		
-		private EntityRef<E006_3> _E006_3;
-		
 		private EntityRef<TBL_ACCION> _TBL_ACCION;
+		
+		private EntityRef<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
 		
 		private EntityRef<TBL_USUARIO> _TBL_USUARIO;
 		
@@ -2355,12 +1482,12 @@ namespace WCF_ENAP
     partial void OnCreated();
     partial void OnID_ACCION_CORRECTIVAChanging(int value);
     partial void OnID_ACCION_CORRECTIVAChanged();
-    partial void OnID_INFORMEChanging(int value);
-    partial void OnID_INFORMEChanged();
     partial void OnID_ACCIONChanging(System.Nullable<int> value);
     partial void OnID_ACCIONChanged();
     partial void OnID_USUARIOChanging(string value);
     partial void OnID_USUARIOChanged();
+    partial void OnID_INFORME_PRELIMINARChanging(System.Nullable<int> value);
+    partial void OnID_INFORME_PRELIMINARChanged();
     partial void OnFECHA_PLAZOChanging(System.Nullable<System.DateTime> value);
     partial void OnFECHA_PLAZOChanged();
     partial void OnFECHA_REALIZACIONChanging(System.Nullable<System.DateTime> value);
@@ -2399,33 +1526,8 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public int ID_INFORME
-		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					if (this._E006_3.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACCION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public System.Nullable<int> ID_ACCION
 		{
 			get
@@ -2450,7 +1552,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_USUARIO", DbType="VarChar(200)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public string ID_USUARIO
 		{
 			get
@@ -2470,6 +1572,31 @@ namespace WCF_ENAP
 					this._ID_USUARIO = value;
 					this.SendPropertyChanged("ID_USUARIO");
 					this.OnID_USUARIOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_PRELIMINAR", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public System.Nullable<int> ID_INFORME_PRELIMINAR
+		{
+			get
+			{
+				return this._ID_INFORME_PRELIMINAR;
+			}
+			set
+			{
+				if ((this._ID_INFORME_PRELIMINAR != value))
+				{
+					if (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_INFORME_PRELIMINARChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_PRELIMINAR = value;
+					this.SendPropertyChanged("ID_INFORME_PRELIMINAR");
+					this.OnID_INFORME_PRELIMINARChanged();
 				}
 			}
 		}
@@ -2598,40 +1725,6 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_ACCION_CORRECTIVA", Storage="_E006_3", ThisKey="ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_3 E006_3
-		{
-			get
-			{
-				return this._E006_3.Entity;
-			}
-			set
-			{
-				E006_3 previousValue = this._E006_3.Entity;
-				if (((previousValue != value) 
-							|| (this._E006_3.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._E006_3.Entity = null;
-						previousValue.TBL_ACCION_CORRECTIVA.Remove(this);
-					}
-					this._E006_3.Entity = value;
-					if ((value != null))
-					{
-						value.TBL_ACCION_CORRECTIVA.Add(this);
-						this._ID_INFORME = value.ID_INFORME;
-					}
-					else
-					{
-						this._ID_INFORME = default(int);
-					}
-					this.SendPropertyChanged("E006_3");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_ACCION_TBL_ACCION_CORRECTIVA", Storage="_TBL_ACCION", ThisKey="ID_ACCION", OtherKey="ID_ACCION", IsForeignKey=true)]
 		public TBL_ACCION TBL_ACCION
 		{
@@ -2662,6 +1755,40 @@ namespace WCF_ENAP
 						this._ID_ACCION = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("TBL_ACCION");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_ACCION_CORRECTIVA", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR", IsForeignKey=true)]
+		public TBL_I_PRELIMINAR TBL_I_PRELIMINAR
+		{
+			get
+			{
+				return this._TBL_I_PRELIMINAR.Entity;
+			}
+			set
+			{
+				TBL_I_PRELIMINAR previousValue = this._TBL_I_PRELIMINAR.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_I_PRELIMINAR.Entity = null;
+						previousValue.TBL_ACCION_CORRECTIVA.Remove(this);
+					}
+					this._TBL_I_PRELIMINAR.Entity = value;
+					if ((value != null))
+					{
+						value.TBL_ACCION_CORRECTIVA.Add(this);
+						this._ID_INFORME_PRELIMINAR = value.ID_INFORME_PRELIMINAR;
+					}
+					else
+					{
+						this._ID_INFORME_PRELIMINAR = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TBL_I_PRELIMINAR");
 				}
 			}
 		}
@@ -2735,8 +1862,8 @@ namespace WCF_ENAP
 		private void Initialize()
 		{
 			this._TBL_ACCION_CORRECTIVA_RECURSO = new EntitySet<TBL_ACCION_CORRECTIVA_RECURSO>(new Action<TBL_ACCION_CORRECTIVA_RECURSO>(this.attach_TBL_ACCION_CORRECTIVA_RECURSO), new Action<TBL_ACCION_CORRECTIVA_RECURSO>(this.detach_TBL_ACCION_CORRECTIVA_RECURSO));
-			this._E006_3 = default(EntityRef<E006_3>);
 			this._TBL_ACCION = default(EntityRef<TBL_ACCION>);
+			this._TBL_I_PRELIMINAR = default(EntityRef<TBL_I_PRELIMINAR>);
 			this._TBL_USUARIO = default(EntityRef<TBL_USUARIO>);
 			OnCreated();
 		}
@@ -5743,7 +4870,7 @@ namespace WCF_ENAP
 		
 		private string _PATH;
 		
-		private EntityRef<E006_3> _E006_3;
+		private EntityRef<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -5797,7 +4924,7 @@ namespace WCF_ENAP
 			{
 				if ((this._ID_INFORME != value))
 				{
-					if (this._E006_3.HasLoadedOrAssignedValue)
+					if (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -5852,36 +4979,36 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_ARCHIVO", Storage="_E006_3", ThisKey="ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_3 E006_3
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_ARCHIVO", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_INFORME", OtherKey="ID_INFORME_PRELIMINAR", IsForeignKey=true)]
+		public TBL_I_PRELIMINAR TBL_I_PRELIMINAR
 		{
 			get
 			{
-				return this._E006_3.Entity;
+				return this._TBL_I_PRELIMINAR.Entity;
 			}
 			set
 			{
-				E006_3 previousValue = this._E006_3.Entity;
+				TBL_I_PRELIMINAR previousValue = this._TBL_I_PRELIMINAR.Entity;
 				if (((previousValue != value) 
-							|| (this._E006_3.HasLoadedOrAssignedValue == false)))
+							|| (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._E006_3.Entity = null;
+						this._TBL_I_PRELIMINAR.Entity = null;
 						previousValue.TBL_ARCHIVO.Remove(this);
 					}
-					this._E006_3.Entity = value;
+					this._TBL_I_PRELIMINAR.Entity = value;
 					if ((value != null))
 					{
 						value.TBL_ARCHIVO.Add(this);
-						this._ID_INFORME = value.ID_INFORME;
+						this._ID_INFORME = value.ID_INFORME_PRELIMINAR;
 					}
 					else
 					{
 						this._ID_INFORME = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("E006_3");
+					this.SendPropertyChanged("TBL_I_PRELIMINAR");
 				}
 			}
 		}
@@ -5908,7 +5035,7 @@ namespace WCF_ENAP
 		
 		private void Initialize()
 		{
-			this._E006_3 = default(EntityRef<E006_3>);
+			this._TBL_I_PRELIMINAR = default(EntityRef<TBL_I_PRELIMINAR>);
 			OnCreated();
 		}
 		
@@ -6573,22 +5700,22 @@ namespace WCF_ENAP
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ID_INFORME;
-		
 		private int _ID_CAUSA;
 		
-		private EntityRef<E006_4> _E006_4;
+		private int _ID_INFORME_FINAL;
 		
 		private EntityRef<TBL_CAUSA> _TBL_CAUSA;
+		
+		private EntityRef<TBL_I_FINAL> _TBL_I_FINAL;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnID_INFORMEChanging(int value);
-    partial void OnID_INFORMEChanged();
     partial void OnID_CAUSAChanging(int value);
     partial void OnID_CAUSAChanged();
+    partial void OnID_INFORME_FINALChanging(int value);
+    partial void OnID_INFORME_FINALChanged();
     #endregion
 		
 		public TBL_CAUSA_INFORME()
@@ -6596,33 +5723,8 @@ namespace WCF_ENAP
 			this.Initialize();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_INFORME
-		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					if (this._E006_4.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_CAUSA", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int ID_CAUSA
 		{
 			get
@@ -6646,36 +5748,27 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_4_TBL_CAUSA_INFORME", Storage="_E006_4", ThisKey="ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_4 E006_4
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_FINAL", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int ID_INFORME_FINAL
 		{
 			get
 			{
-				return this._E006_4.Entity;
+				return this._ID_INFORME_FINAL;
 			}
 			set
 			{
-				E006_4 previousValue = this._E006_4.Entity;
-				if (((previousValue != value) 
-							|| (this._E006_4.HasLoadedOrAssignedValue == false)))
+				if ((this._ID_INFORME_FINAL != value))
 				{
+					if (this._TBL_I_FINAL.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_INFORME_FINALChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._E006_4.Entity = null;
-						previousValue.TBL_CAUSA_INFORME.Remove(this);
-					}
-					this._E006_4.Entity = value;
-					if ((value != null))
-					{
-						value.TBL_CAUSA_INFORME.Add(this);
-						this._ID_INFORME = value.ID_INFORME;
-					}
-					else
-					{
-						this._ID_INFORME = default(int);
-					}
-					this.SendPropertyChanged("E006_4");
+					this._ID_INFORME_FINAL = value;
+					this.SendPropertyChanged("ID_INFORME_FINAL");
+					this.OnID_INFORME_FINALChanged();
 				}
 			}
 		}
@@ -6714,6 +5807,40 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_FINAL_TBL_CAUSA_INFORME", Storage="_TBL_I_FINAL", ThisKey="ID_INFORME_FINAL", OtherKey="ID_INFORME_FINAL", IsForeignKey=true)]
+		public TBL_I_FINAL TBL_I_FINAL
+		{
+			get
+			{
+				return this._TBL_I_FINAL.Entity;
+			}
+			set
+			{
+				TBL_I_FINAL previousValue = this._TBL_I_FINAL.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_I_FINAL.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_I_FINAL.Entity = null;
+						previousValue.TBL_CAUSA_INFORME.Remove(this);
+					}
+					this._TBL_I_FINAL.Entity = value;
+					if ((value != null))
+					{
+						value.TBL_CAUSA_INFORME.Add(this);
+						this._ID_INFORME_FINAL = value.ID_INFORME_FINAL;
+					}
+					else
+					{
+						this._ID_INFORME_FINAL = default(int);
+					}
+					this.SendPropertyChanged("TBL_I_FINAL");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6736,8 +5863,8 @@ namespace WCF_ENAP
 		
 		private void Initialize()
 		{
-			this._E006_4 = default(EntityRef<E006_4>);
 			this._TBL_CAUSA = default(EntityRef<TBL_CAUSA>);
+			this._TBL_I_FINAL = default(EntityRef<TBL_I_FINAL>);
 			OnCreated();
 		}
 		
@@ -8866,24 +7993,24 @@ namespace WCF_ENAP
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ID_INFORME;
-		
 		private int _ID_TIPO_EVENTO;
+		
+		private int _ID_INFORME_PRELIMINAR;
 		
 		private System.Nullable<bool> _ESTADO;
 		
 		private EntityRef<TBL_DATO_EVENTO> _TBL_DATO_EVENTO;
 		
-		private EntityRef<E006_3> _E006_3;
+		private EntityRef<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnID_INFORMEChanging(int value);
-    partial void OnID_INFORMEChanged();
     partial void OnID_TIPO_EVENTOChanging(int value);
     partial void OnID_TIPO_EVENTOChanged();
+    partial void OnID_INFORME_PRELIMINARChanging(int value);
+    partial void OnID_INFORME_PRELIMINARChanged();
     partial void OnESTADOChanging(System.Nullable<bool> value);
     partial void OnESTADOChanged();
     #endregion
@@ -8893,33 +8020,8 @@ namespace WCF_ENAP
 			this.Initialize();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_INFORME
-		{
-			get
-			{
-				return this._ID_INFORME;
-			}
-			set
-			{
-				if ((this._ID_INFORME != value))
-				{
-					if (this._E006_3.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnID_INFORMEChanging(value);
-					this.SendPropertyChanging();
-					this._ID_INFORME = value;
-					this.SendPropertyChanged("ID_INFORME");
-					this.OnID_INFORMEChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_TIPO_EVENTO", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int ID_TIPO_EVENTO
 		{
 			get
@@ -8939,6 +8041,31 @@ namespace WCF_ENAP
 					this._ID_TIPO_EVENTO = value;
 					this.SendPropertyChanged("ID_TIPO_EVENTO");
 					this.OnID_TIPO_EVENTOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_PRELIMINAR", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int ID_INFORME_PRELIMINAR
+		{
+			get
+			{
+				return this._ID_INFORME_PRELIMINAR;
+			}
+			set
+			{
+				if ((this._ID_INFORME_PRELIMINAR != value))
+				{
+					if (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_INFORME_PRELIMINARChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_PRELIMINAR = value;
+					this.SendPropertyChanged("ID_INFORME_PRELIMINAR");
+					this.OnID_INFORME_PRELIMINARChanged();
 				}
 			}
 		}
@@ -8998,36 +8125,36 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="E006_3_TBL_EVENTO_DATO", Storage="_E006_3", ThisKey="ID_INFORME", OtherKey="ID_INFORME", IsForeignKey=true)]
-		public E006_3 E006_3
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_EVENTO_DATO", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR", IsForeignKey=true)]
+		public TBL_I_PRELIMINAR TBL_I_PRELIMINAR
 		{
 			get
 			{
-				return this._E006_3.Entity;
+				return this._TBL_I_PRELIMINAR.Entity;
 			}
 			set
 			{
-				E006_3 previousValue = this._E006_3.Entity;
+				TBL_I_PRELIMINAR previousValue = this._TBL_I_PRELIMINAR.Entity;
 				if (((previousValue != value) 
-							|| (this._E006_3.HasLoadedOrAssignedValue == false)))
+							|| (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._E006_3.Entity = null;
+						this._TBL_I_PRELIMINAR.Entity = null;
 						previousValue.TBL_EVENTO_DATO.Remove(this);
 					}
-					this._E006_3.Entity = value;
+					this._TBL_I_PRELIMINAR.Entity = value;
 					if ((value != null))
 					{
 						value.TBL_EVENTO_DATO.Add(this);
-						this._ID_INFORME = value.ID_INFORME;
+						this._ID_INFORME_PRELIMINAR = value.ID_INFORME_PRELIMINAR;
 					}
 					else
 					{
-						this._ID_INFORME = default(int);
+						this._ID_INFORME_PRELIMINAR = default(int);
 					}
-					this.SendPropertyChanged("E006_3");
+					this.SendPropertyChanged("TBL_I_PRELIMINAR");
 				}
 			}
 		}
@@ -9055,7 +8182,7 @@ namespace WCF_ENAP
 		private void Initialize()
 		{
 			this._TBL_DATO_EVENTO = default(EntityRef<TBL_DATO_EVENTO>);
-			this._E006_3 = default(EntityRef<E006_3>);
+			this._TBL_I_PRELIMINAR = default(EntityRef<TBL_I_PRELIMINAR>);
 			OnCreated();
 		}
 		
@@ -9080,13 +8207,11 @@ namespace WCF_ENAP
 		
 		private System.Nullable<int> _ID_EMPRESA;
 		
-		private string _DESCRIPCION;
-		
 		private System.Nullable<bool> _ESTADO;
 		
-		private EntitySet<E006_3> _E006_3;
-		
 		private EntitySet<TBL_EVENTO_TRABAJADOR> _TBL_EVENTO_TRABAJADOR;
+		
+		private EntitySet<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
 		
 		private EntityRef<TBL_EVENTO> _TBL_EVENTO;
 		
@@ -9104,8 +8229,6 @@ namespace WCF_ENAP
     partial void OnID_EVENTOChanged();
     partial void OnID_EMPRESAChanging(System.Nullable<int> value);
     partial void OnID_EMPRESAChanged();
-    partial void OnDESCRIPCIONChanging(string value);
-    partial void OnDESCRIPCIONChanged();
     partial void OnESTADOChanging(System.Nullable<bool> value);
     partial void OnESTADOChanged();
     #endregion
@@ -9186,29 +8309,8 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public string DESCRIPCION
-		{
-			get
-			{
-				return this._DESCRIPCION;
-			}
-			set
-			{
-				if ((this._DESCRIPCION != value))
-				{
-					this.OnDESCRIPCIONChanging(value);
-					this.SendPropertyChanging();
-					this._DESCRIPCION = value;
-					this.SendPropertyChanged("DESCRIPCION");
-					this.OnDESCRIPCIONChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ESTADO", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public System.Nullable<bool> ESTADO
 		{
 			get
@@ -9228,27 +8330,8 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_EVENTO_EMPRESA_E006_3", Storage="_E006_3", ThisKey="ID_EVENTO_EMPRESA", OtherKey="ID_EVENTO_EMPRESA")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
-		public EntitySet<E006_3> E006_3
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._E006_3.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._E006_3;
-			}
-			set
-			{
-				this._E006_3.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_EVENTO_EMPRESA_TBL_EVENTO_TRABAJADOR", Storage="_TBL_EVENTO_TRABAJADOR", ThisKey="ID_EVENTO_EMPRESA", OtherKey="ID_EVENTO_EMPRESA")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5, EmitDefaultValue=false)]
 		public EntitySet<TBL_EVENTO_TRABAJADOR> TBL_EVENTO_TRABAJADOR
 		{
 			get
@@ -9263,6 +8346,25 @@ namespace WCF_ENAP
 			set
 			{
 				this._TBL_EVENTO_TRABAJADOR.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_EVENTO_EMPRESA_TBL_I_PRELIMINAR", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_EVENTO_EMPRESA", OtherKey="ID_EVENTO_EMPRESA")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
+		public EntitySet<TBL_I_PRELIMINAR> TBL_I_PRELIMINAR
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_I_PRELIMINAR;
+			}
+			set
+			{
+				this._TBL_I_PRELIMINAR.Assign(value);
 			}
 		}
 		
@@ -9354,18 +8456,6 @@ namespace WCF_ENAP
 			}
 		}
 		
-		private void attach_E006_3(E006_3 entity)
-		{
-			this.SendPropertyChanging();
-			entity.TBL_EVENTO_EMPRESA = this;
-		}
-		
-		private void detach_E006_3(E006_3 entity)
-		{
-			this.SendPropertyChanging();
-			entity.TBL_EVENTO_EMPRESA = null;
-		}
-		
 		private void attach_TBL_EVENTO_TRABAJADOR(TBL_EVENTO_TRABAJADOR entity)
 		{
 			this.SendPropertyChanging();
@@ -9378,10 +8468,22 @@ namespace WCF_ENAP
 			entity.TBL_EVENTO_EMPRESA = null;
 		}
 		
+		private void attach_TBL_I_PRELIMINAR(TBL_I_PRELIMINAR entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_EVENTO_EMPRESA = this;
+		}
+		
+		private void detach_TBL_I_PRELIMINAR(TBL_I_PRELIMINAR entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_EVENTO_EMPRESA = null;
+		}
+		
 		private void Initialize()
 		{
-			this._E006_3 = new EntitySet<E006_3>(new Action<E006_3>(this.attach_E006_3), new Action<E006_3>(this.detach_E006_3));
 			this._TBL_EVENTO_TRABAJADOR = new EntitySet<TBL_EVENTO_TRABAJADOR>(new Action<TBL_EVENTO_TRABAJADOR>(this.attach_TBL_EVENTO_TRABAJADOR), new Action<TBL_EVENTO_TRABAJADOR>(this.detach_TBL_EVENTO_TRABAJADOR));
+			this._TBL_I_PRELIMINAR = new EntitySet<TBL_I_PRELIMINAR>(new Action<TBL_I_PRELIMINAR>(this.attach_TBL_I_PRELIMINAR), new Action<TBL_I_PRELIMINAR>(this.detach_TBL_I_PRELIMINAR));
 			this._TBL_EVENTO = default(EntityRef<TBL_EVENTO>);
 			this._TBL_EMPRESA = default(EntityRef<TBL_EMPRESA>);
 			OnCreated();
@@ -10920,6 +10022,893 @@ namespace WCF_ENAP
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TBL_HISTORIAL_INFORME")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class TBL_HISTORIAL_INFORME : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_HISTORIAL_INFORME;
+		
+		private System.Nullable<int> _ID_INFORME_PRELIMINAR;
+		
+		private System.Nullable<System.DateTime> _FECHA_MODIFICACION;
+		
+		private string _DESCRIPCION_MODIFICACION;
+		
+		private EntityRef<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_HISTORIAL_INFORMEChanging(int value);
+    partial void OnID_HISTORIAL_INFORMEChanged();
+    partial void OnID_INFORME_PRELIMINARChanging(System.Nullable<int> value);
+    partial void OnID_INFORME_PRELIMINARChanged();
+    partial void OnFECHA_MODIFICACIONChanging(System.Nullable<System.DateTime> value);
+    partial void OnFECHA_MODIFICACIONChanged();
+    partial void OnDESCRIPCION_MODIFICACIONChanging(string value);
+    partial void OnDESCRIPCION_MODIFICACIONChanged();
+    #endregion
+		
+		public TBL_HISTORIAL_INFORME()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_HISTORIAL_INFORME", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_HISTORIAL_INFORME
+		{
+			get
+			{
+				return this._ID_HISTORIAL_INFORME;
+			}
+			set
+			{
+				if ((this._ID_HISTORIAL_INFORME != value))
+				{
+					this.OnID_HISTORIAL_INFORMEChanging(value);
+					this.SendPropertyChanging();
+					this._ID_HISTORIAL_INFORME = value;
+					this.SendPropertyChanged("ID_HISTORIAL_INFORME");
+					this.OnID_HISTORIAL_INFORMEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_PRELIMINAR", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<int> ID_INFORME_PRELIMINAR
+		{
+			get
+			{
+				return this._ID_INFORME_PRELIMINAR;
+			}
+			set
+			{
+				if ((this._ID_INFORME_PRELIMINAR != value))
+				{
+					if (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_INFORME_PRELIMINARChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_PRELIMINAR = value;
+					this.SendPropertyChanged("ID_INFORME_PRELIMINAR");
+					this.OnID_INFORME_PRELIMINARChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_MODIFICACION", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.Nullable<System.DateTime> FECHA_MODIFICACION
+		{
+			get
+			{
+				return this._FECHA_MODIFICACION;
+			}
+			set
+			{
+				if ((this._FECHA_MODIFICACION != value))
+				{
+					this.OnFECHA_MODIFICACIONChanging(value);
+					this.SendPropertyChanging();
+					this._FECHA_MODIFICACION = value;
+					this.SendPropertyChanged("FECHA_MODIFICACION");
+					this.OnFECHA_MODIFICACIONChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_MODIFICACION", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string DESCRIPCION_MODIFICACION
+		{
+			get
+			{
+				return this._DESCRIPCION_MODIFICACION;
+			}
+			set
+			{
+				if ((this._DESCRIPCION_MODIFICACION != value))
+				{
+					this.OnDESCRIPCION_MODIFICACIONChanging(value);
+					this.SendPropertyChanging();
+					this._DESCRIPCION_MODIFICACION = value;
+					this.SendPropertyChanged("DESCRIPCION_MODIFICACION");
+					this.OnDESCRIPCION_MODIFICACIONChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_HISTORIAL_INFORME", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR", IsForeignKey=true)]
+		public TBL_I_PRELIMINAR TBL_I_PRELIMINAR
+		{
+			get
+			{
+				return this._TBL_I_PRELIMINAR.Entity;
+			}
+			set
+			{
+				TBL_I_PRELIMINAR previousValue = this._TBL_I_PRELIMINAR.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_I_PRELIMINAR.Entity = null;
+						previousValue.TBL_HISTORIAL_INFORME.Remove(this);
+					}
+					this._TBL_I_PRELIMINAR.Entity = value;
+					if ((value != null))
+					{
+						value.TBL_HISTORIAL_INFORME.Add(this);
+						this._ID_INFORME_PRELIMINAR = value.ID_INFORME_PRELIMINAR;
+					}
+					else
+					{
+						this._ID_INFORME_PRELIMINAR = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TBL_I_PRELIMINAR");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void Initialize()
+		{
+			this._TBL_I_PRELIMINAR = default(EntityRef<TBL_I_PRELIMINAR>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TBL_I_FINAL")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class TBL_I_FINAL : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_INFORME_FINAL;
+		
+		private System.Nullable<int> _ID_INFORME_PRELIMINAR;
+		
+		private string _DESCRIPCION_INCIDENTE;
+		
+		private string _ANTECEDENTES;
+		
+		private string _RELATO_DE_HECHO;
+		
+		private string _COMENTARIO;
+		
+		private System.Nullable<System.DateTime> _FECHA_CREACION;
+		
+		private EntitySet<TBL_CAUSA_INFORME> _TBL_CAUSA_INFORME;
+		
+		private EntityRef<TBL_I_PRELIMINAR> _TBL_I_PRELIMINAR;
+		
+		private bool serializing;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_INFORME_FINALChanging(int value);
+    partial void OnID_INFORME_FINALChanged();
+    partial void OnID_INFORME_PRELIMINARChanging(System.Nullable<int> value);
+    partial void OnID_INFORME_PRELIMINARChanged();
+    partial void OnDESCRIPCION_INCIDENTEChanging(string value);
+    partial void OnDESCRIPCION_INCIDENTEChanged();
+    partial void OnANTECEDENTESChanging(string value);
+    partial void OnANTECEDENTESChanged();
+    partial void OnRELATO_DE_HECHOChanging(string value);
+    partial void OnRELATO_DE_HECHOChanged();
+    partial void OnCOMENTARIOChanging(string value);
+    partial void OnCOMENTARIOChanged();
+    partial void OnFECHA_CREACIONChanging(System.Nullable<System.DateTime> value);
+    partial void OnFECHA_CREACIONChanged();
+    #endregion
+		
+		public TBL_I_FINAL()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_FINAL", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_INFORME_FINAL
+		{
+			get
+			{
+				return this._ID_INFORME_FINAL;
+			}
+			set
+			{
+				if ((this._ID_INFORME_FINAL != value))
+				{
+					this.OnID_INFORME_FINALChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_FINAL = value;
+					this.SendPropertyChanged("ID_INFORME_FINAL");
+					this.OnID_INFORME_FINALChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_PRELIMINAR", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<int> ID_INFORME_PRELIMINAR
+		{
+			get
+			{
+				return this._ID_INFORME_PRELIMINAR;
+			}
+			set
+			{
+				if ((this._ID_INFORME_PRELIMINAR != value))
+				{
+					if (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_INFORME_PRELIMINARChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_PRELIMINAR = value;
+					this.SendPropertyChanged("ID_INFORME_PRELIMINAR");
+					this.OnID_INFORME_PRELIMINARChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_INCIDENTE", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string DESCRIPCION_INCIDENTE
+		{
+			get
+			{
+				return this._DESCRIPCION_INCIDENTE;
+			}
+			set
+			{
+				if ((this._DESCRIPCION_INCIDENTE != value))
+				{
+					this.OnDESCRIPCION_INCIDENTEChanging(value);
+					this.SendPropertyChanging();
+					this._DESCRIPCION_INCIDENTE = value;
+					this.SendPropertyChanged("DESCRIPCION_INCIDENTE");
+					this.OnDESCRIPCION_INCIDENTEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ANTECEDENTES", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string ANTECEDENTES
+		{
+			get
+			{
+				return this._ANTECEDENTES;
+			}
+			set
+			{
+				if ((this._ANTECEDENTES != value))
+				{
+					this.OnANTECEDENTESChanging(value);
+					this.SendPropertyChanging();
+					this._ANTECEDENTES = value;
+					this.SendPropertyChanged("ANTECEDENTES");
+					this.OnANTECEDENTESChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RELATO_DE_HECHO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string RELATO_DE_HECHO
+		{
+			get
+			{
+				return this._RELATO_DE_HECHO;
+			}
+			set
+			{
+				if ((this._RELATO_DE_HECHO != value))
+				{
+					this.OnRELATO_DE_HECHOChanging(value);
+					this.SendPropertyChanging();
+					this._RELATO_DE_HECHO = value;
+					this.SendPropertyChanged("RELATO_DE_HECHO");
+					this.OnRELATO_DE_HECHOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COMENTARIO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string COMENTARIO
+		{
+			get
+			{
+				return this._COMENTARIO;
+			}
+			set
+			{
+				if ((this._COMENTARIO != value))
+				{
+					this.OnCOMENTARIOChanging(value);
+					this.SendPropertyChanging();
+					this._COMENTARIO = value;
+					this.SendPropertyChanged("COMENTARIO");
+					this.OnCOMENTARIOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public System.Nullable<System.DateTime> FECHA_CREACION
+		{
+			get
+			{
+				return this._FECHA_CREACION;
+			}
+			set
+			{
+				if ((this._FECHA_CREACION != value))
+				{
+					this.OnFECHA_CREACIONChanging(value);
+					this.SendPropertyChanging();
+					this._FECHA_CREACION = value;
+					this.SendPropertyChanged("FECHA_CREACION");
+					this.OnFECHA_CREACIONChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_FINAL_TBL_CAUSA_INFORME", Storage="_TBL_CAUSA_INFORME", ThisKey="ID_INFORME_FINAL", OtherKey="ID_INFORME_FINAL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
+		public EntitySet<TBL_CAUSA_INFORME> TBL_CAUSA_INFORME
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_CAUSA_INFORME.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_CAUSA_INFORME;
+			}
+			set
+			{
+				this._TBL_CAUSA_INFORME.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_I_FINAL", Storage="_TBL_I_PRELIMINAR", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR", IsForeignKey=true)]
+		public TBL_I_PRELIMINAR TBL_I_PRELIMINAR
+		{
+			get
+			{
+				return this._TBL_I_PRELIMINAR.Entity;
+			}
+			set
+			{
+				TBL_I_PRELIMINAR previousValue = this._TBL_I_PRELIMINAR.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_I_PRELIMINAR.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_I_PRELIMINAR.Entity = null;
+						previousValue.TBL_I_FINAL.Remove(this);
+					}
+					this._TBL_I_PRELIMINAR.Entity = value;
+					if ((value != null))
+					{
+						value.TBL_I_FINAL.Add(this);
+						this._ID_INFORME_PRELIMINAR = value.ID_INFORME_PRELIMINAR;
+					}
+					else
+					{
+						this._ID_INFORME_PRELIMINAR = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TBL_I_PRELIMINAR");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TBL_CAUSA_INFORME(TBL_CAUSA_INFORME entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_FINAL = this;
+		}
+		
+		private void detach_TBL_CAUSA_INFORME(TBL_CAUSA_INFORME entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_FINAL = null;
+		}
+		
+		private void Initialize()
+		{
+			this._TBL_CAUSA_INFORME = new EntitySet<TBL_CAUSA_INFORME>(new Action<TBL_CAUSA_INFORME>(this.attach_TBL_CAUSA_INFORME), new Action<TBL_CAUSA_INFORME>(this.detach_TBL_CAUSA_INFORME));
+			this._TBL_I_PRELIMINAR = default(EntityRef<TBL_I_PRELIMINAR>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TBL_I_PRELIMINAR")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class TBL_I_PRELIMINAR : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_INFORME_PRELIMINAR;
+		
+		private System.Nullable<int> _ID_EVENTO_EMPRESA;
+		
+		private System.Nullable<System.DateTime> _FECHA_INGRESO;
+		
+		private System.Nullable<int> _CLASIFICACION;
+		
+		private EntitySet<TBL_ACCION_CORRECTIVA> _TBL_ACCION_CORRECTIVA;
+		
+		private EntitySet<TBL_ARCHIVO> _TBL_ARCHIVO;
+		
+		private EntitySet<TBL_EVENTO_DATO> _TBL_EVENTO_DATO;
+		
+		private EntitySet<TBL_HISTORIAL_INFORME> _TBL_HISTORIAL_INFORME;
+		
+		private EntitySet<TBL_I_FINAL> _TBL_I_FINAL;
+		
+		private EntityRef<TBL_EVENTO_EMPRESA> _TBL_EVENTO_EMPRESA;
+		
+		private bool serializing;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_INFORME_PRELIMINARChanging(int value);
+    partial void OnID_INFORME_PRELIMINARChanged();
+    partial void OnID_EVENTO_EMPRESAChanging(System.Nullable<int> value);
+    partial void OnID_EVENTO_EMPRESAChanged();
+    partial void OnFECHA_INGRESOChanging(System.Nullable<System.DateTime> value);
+    partial void OnFECHA_INGRESOChanged();
+    partial void OnCLASIFICACIONChanging(System.Nullable<int> value);
+    partial void OnCLASIFICACIONChanged();
+    #endregion
+		
+		public TBL_I_PRELIMINAR()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_INFORME_PRELIMINAR", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_INFORME_PRELIMINAR
+		{
+			get
+			{
+				return this._ID_INFORME_PRELIMINAR;
+			}
+			set
+			{
+				if ((this._ID_INFORME_PRELIMINAR != value))
+				{
+					this.OnID_INFORME_PRELIMINARChanging(value);
+					this.SendPropertyChanging();
+					this._ID_INFORME_PRELIMINAR = value;
+					this.SendPropertyChanged("ID_INFORME_PRELIMINAR");
+					this.OnID_INFORME_PRELIMINARChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO_EMPRESA", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<int> ID_EVENTO_EMPRESA
+		{
+			get
+			{
+				return this._ID_EVENTO_EMPRESA;
+			}
+			set
+			{
+				if ((this._ID_EVENTO_EMPRESA != value))
+				{
+					if (this._TBL_EVENTO_EMPRESA.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_EVENTO_EMPRESAChanging(value);
+					this.SendPropertyChanging();
+					this._ID_EVENTO_EMPRESA = value;
+					this.SendPropertyChanged("ID_EVENTO_EMPRESA");
+					this.OnID_EVENTO_EMPRESAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_INGRESO", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.Nullable<System.DateTime> FECHA_INGRESO
+		{
+			get
+			{
+				return this._FECHA_INGRESO;
+			}
+			set
+			{
+				if ((this._FECHA_INGRESO != value))
+				{
+					this.OnFECHA_INGRESOChanging(value);
+					this.SendPropertyChanging();
+					this._FECHA_INGRESO = value;
+					this.SendPropertyChanged("FECHA_INGRESO");
+					this.OnFECHA_INGRESOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CLASIFICACION", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public System.Nullable<int> CLASIFICACION
+		{
+			get
+			{
+				return this._CLASIFICACION;
+			}
+			set
+			{
+				if ((this._CLASIFICACION != value))
+				{
+					this.OnCLASIFICACIONChanging(value);
+					this.SendPropertyChanging();
+					this._CLASIFICACION = value;
+					this.SendPropertyChanged("CLASIFICACION");
+					this.OnCLASIFICACIONChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_ACCION_CORRECTIVA", Storage="_TBL_ACCION_CORRECTIVA", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5, EmitDefaultValue=false)]
+		public EntitySet<TBL_ACCION_CORRECTIVA> TBL_ACCION_CORRECTIVA
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_ACCION_CORRECTIVA.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_ACCION_CORRECTIVA;
+			}
+			set
+			{
+				this._TBL_ACCION_CORRECTIVA.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_ARCHIVO", Storage="_TBL_ARCHIVO", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
+		public EntitySet<TBL_ARCHIVO> TBL_ARCHIVO
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_ARCHIVO.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_ARCHIVO;
+			}
+			set
+			{
+				this._TBL_ARCHIVO.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_EVENTO_DATO", Storage="_TBL_EVENTO_DATO", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
+		public EntitySet<TBL_EVENTO_DATO> TBL_EVENTO_DATO
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_EVENTO_DATO.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_EVENTO_DATO;
+			}
+			set
+			{
+				this._TBL_EVENTO_DATO.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_HISTORIAL_INFORME", Storage="_TBL_HISTORIAL_INFORME", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
+		public EntitySet<TBL_HISTORIAL_INFORME> TBL_HISTORIAL_INFORME
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_HISTORIAL_INFORME.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_HISTORIAL_INFORME;
+			}
+			set
+			{
+				this._TBL_HISTORIAL_INFORME.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_I_PRELIMINAR_TBL_I_FINAL", Storage="_TBL_I_FINAL", ThisKey="ID_INFORME_PRELIMINAR", OtherKey="ID_INFORME_PRELIMINAR")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9, EmitDefaultValue=false)]
+		public EntitySet<TBL_I_FINAL> TBL_I_FINAL
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TBL_I_FINAL.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TBL_I_FINAL;
+			}
+			set
+			{
+				this._TBL_I_FINAL.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_EVENTO_EMPRESA_TBL_I_PRELIMINAR", Storage="_TBL_EVENTO_EMPRESA", ThisKey="ID_EVENTO_EMPRESA", OtherKey="ID_EVENTO_EMPRESA", IsForeignKey=true)]
+		public TBL_EVENTO_EMPRESA TBL_EVENTO_EMPRESA
+		{
+			get
+			{
+				return this._TBL_EVENTO_EMPRESA.Entity;
+			}
+			set
+			{
+				TBL_EVENTO_EMPRESA previousValue = this._TBL_EVENTO_EMPRESA.Entity;
+				if (((previousValue != value) 
+							|| (this._TBL_EVENTO_EMPRESA.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TBL_EVENTO_EMPRESA.Entity = null;
+						previousValue.TBL_I_PRELIMINAR.Remove(this);
+					}
+					this._TBL_EVENTO_EMPRESA.Entity = value;
+					if ((value != null))
+					{
+						value.TBL_I_PRELIMINAR.Add(this);
+						this._ID_EVENTO_EMPRESA = value.ID_EVENTO_EMPRESA;
+					}
+					else
+					{
+						this._ID_EVENTO_EMPRESA = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TBL_EVENTO_EMPRESA");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TBL_ACCION_CORRECTIVA(TBL_ACCION_CORRECTIVA entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = this;
+		}
+		
+		private void detach_TBL_ACCION_CORRECTIVA(TBL_ACCION_CORRECTIVA entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = null;
+		}
+		
+		private void attach_TBL_ARCHIVO(TBL_ARCHIVO entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = this;
+		}
+		
+		private void detach_TBL_ARCHIVO(TBL_ARCHIVO entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = null;
+		}
+		
+		private void attach_TBL_EVENTO_DATO(TBL_EVENTO_DATO entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = this;
+		}
+		
+		private void detach_TBL_EVENTO_DATO(TBL_EVENTO_DATO entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = null;
+		}
+		
+		private void attach_TBL_HISTORIAL_INFORME(TBL_HISTORIAL_INFORME entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = this;
+		}
+		
+		private void detach_TBL_HISTORIAL_INFORME(TBL_HISTORIAL_INFORME entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = null;
+		}
+		
+		private void attach_TBL_I_FINAL(TBL_I_FINAL entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = this;
+		}
+		
+		private void detach_TBL_I_FINAL(TBL_I_FINAL entity)
+		{
+			this.SendPropertyChanging();
+			entity.TBL_I_PRELIMINAR = null;
+		}
+		
+		private void Initialize()
+		{
+			this._TBL_ACCION_CORRECTIVA = new EntitySet<TBL_ACCION_CORRECTIVA>(new Action<TBL_ACCION_CORRECTIVA>(this.attach_TBL_ACCION_CORRECTIVA), new Action<TBL_ACCION_CORRECTIVA>(this.detach_TBL_ACCION_CORRECTIVA));
+			this._TBL_ARCHIVO = new EntitySet<TBL_ARCHIVO>(new Action<TBL_ARCHIVO>(this.attach_TBL_ARCHIVO), new Action<TBL_ARCHIVO>(this.detach_TBL_ARCHIVO));
+			this._TBL_EVENTO_DATO = new EntitySet<TBL_EVENTO_DATO>(new Action<TBL_EVENTO_DATO>(this.attach_TBL_EVENTO_DATO), new Action<TBL_EVENTO_DATO>(this.detach_TBL_EVENTO_DATO));
+			this._TBL_HISTORIAL_INFORME = new EntitySet<TBL_HISTORIAL_INFORME>(new Action<TBL_HISTORIAL_INFORME>(this.attach_TBL_HISTORIAL_INFORME), new Action<TBL_HISTORIAL_INFORME>(this.detach_TBL_HISTORIAL_INFORME));
+			this._TBL_I_FINAL = new EntitySet<TBL_I_FINAL>(new Action<TBL_I_FINAL>(this.attach_TBL_I_FINAL), new Action<TBL_I_FINAL>(this.detach_TBL_I_FINAL));
+			this._TBL_EVENTO_EMPRESA = default(EntityRef<TBL_EVENTO_EMPRESA>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TBL_MATRIZ")]
 	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class TBL_MATRIZ : INotifyPropertyChanging, INotifyPropertyChanged
@@ -11892,6 +11881,10 @@ namespace WCF_ENAP
 		
 		private string _GROUP_ID;
 		
+		private System.Nullable<bool> _SHOW_ON_LOGUED;
+		
+		private System.Nullable<bool> _SHOW_ON_NOLOGUED;
+		
 		private EntitySet<TBL_GRUPO_PRIVILEGIO> _TBL_GRUPO_PRIVILEGIO;
 		
 		private EntitySet<TBL_MODULO_STORE> _TBL_MODULO_STORE;
@@ -11926,6 +11919,10 @@ namespace WCF_ENAP
     partial void OnTIPO_DISPLAYChanged();
     partial void OnGROUP_IDChanging(string value);
     partial void OnGROUP_IDChanged();
+    partial void OnSHOW_ON_LOGUEDChanging(System.Nullable<bool> value);
+    partial void OnSHOW_ON_LOGUEDChanged();
+    partial void OnSHOW_ON_NOLOGUEDChanging(System.Nullable<bool> value);
+    partial void OnSHOW_ON_NOLOGUEDChanged();
     #endregion
 		
 		public TBL_NODO()
@@ -12147,8 +12144,50 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_LOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<bool> SHOW_ON_LOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_LOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_LOGUED != value))
+				{
+					this.OnSHOW_ON_LOGUEDChanging(value);
+					this.SendPropertyChanging();
+					this._SHOW_ON_LOGUED = value;
+					this.SendPropertyChanged("SHOW_ON_LOGUED");
+					this.OnSHOW_ON_LOGUEDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_NOLOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<bool> SHOW_ON_NOLOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_NOLOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_NOLOGUED != value))
+				{
+					this.OnSHOW_ON_NOLOGUEDChanging(value);
+					this.SendPropertyChanging();
+					this._SHOW_ON_NOLOGUED = value;
+					this.SendPropertyChanged("SHOW_ON_NOLOGUED");
+					this.OnSHOW_ON_NOLOGUEDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO", Storage="_TBL_GRUPO_PRIVILEGIO", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
 		public EntitySet<TBL_GRUPO_PRIVILEGIO> TBL_GRUPO_PRIVILEGIO
 		{
 			get
@@ -12167,7 +12206,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_MODULO_STORE", Storage="_TBL_MODULO_STORE", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
 		public EntitySet<TBL_MODULO_STORE> TBL_MODULO_STORE
 		{
 			get
@@ -12186,7 +12225,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_NODO", Storage="_TBL_NODO2", ThisKey="ID_NODO", OtherKey="NODO_PADRE")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
 		public EntitySet<TBL_NODO> TBL_NODO2
 		{
 			get
@@ -16251,199 +16290,199 @@ namespace WCF_ENAP
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class sp_get_privilegios_by_usuarioResult
+	public partial class sp_get_programas_anualesResult
 	{
 		
-		private string _NOMBRE_MODULO;
+		private int _ID_PROGRAMA_ANUAL;
 		
-		private System.Nullable<int> _NODO_PADRE;
+		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
 		
-		private System.Nullable<int> _ID_NODO;
+		private string _NOMBRE_PROGRAMA;
 		
-		private System.Nullable<int> _Level;
+		private int _ID_DIVISION;
 		
-		private System.Nullable<bool> _ALLOW_READ;
+		private string _NOMBRE_DIVISION;
 		
-		private System.Nullable<bool> _ALLOW_WRITE;
+		private string _OBJETIVO;
 		
-		private System.Nullable<bool> _ALLOW_EDIT;
+		private string _META;
 		
-		private System.Nullable<bool> _ALLOW_DELETE;
+		private System.Nullable<System.DateTime> _FECHA_CREACION;
 		
-		private System.Nullable<bool> _ALLOW_PRINT;
+		private System.Nullable<int> _MES_INICIO;
 		
-		private System.Nullable<bool> _ALLOW_CRUD;
+		private System.Nullable<int> _ANO_INICIO;
 		
-		public sp_get_privilegios_by_usuarioResult()
+		public sp_get_programas_anualesResult()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_MODULO", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PROGRAMA_ANUAL", DbType="Int NOT NULL")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public string NOMBRE_MODULO
+		public int ID_PROGRAMA_ANUAL
 		{
 			get
 			{
-				return this._NOMBRE_MODULO;
+				return this._ID_PROGRAMA_ANUAL;
 			}
 			set
 			{
-				if ((this._NOMBRE_MODULO != value))
+				if ((this._ID_PROGRAMA_ANUAL != value))
 				{
-					this._NOMBRE_MODULO = value;
+					this._ID_PROGRAMA_ANUAL = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NODO_PADRE", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> NODO_PADRE
+		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
 		{
 			get
 			{
-				return this._NODO_PADRE;
+				return this._ID_DEPARTAMENTO_ORGANIZACION;
 			}
 			set
 			{
-				if ((this._NODO_PADRE != value))
+				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
 				{
-					this._NODO_PADRE = value;
+					this._ID_DEPARTAMENTO_ORGANIZACION = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_NODO", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_PROGRAMA", DbType="VarChar(255)")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<int> ID_NODO
+		public string NOMBRE_PROGRAMA
 		{
 			get
 			{
-				return this._ID_NODO;
+				return this._NOMBRE_PROGRAMA;
 			}
 			set
 			{
-				if ((this._ID_NODO != value))
+				if ((this._NOMBRE_PROGRAMA != value))
 				{
-					this._ID_NODO = value;
+					this._NOMBRE_PROGRAMA = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Level]", Storage="_Level", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DIVISION", DbType="Int NOT NULL")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public System.Nullable<int> Level
+		public int ID_DIVISION
 		{
 			get
 			{
-				return this._Level;
+				return this._ID_DIVISION;
 			}
 			set
 			{
-				if ((this._Level != value))
+				if ((this._ID_DIVISION != value))
 				{
-					this._Level = value;
+					this._ID_DIVISION = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_READ", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_DIVISION", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public System.Nullable<bool> ALLOW_READ
+		public string NOMBRE_DIVISION
 		{
 			get
 			{
-				return this._ALLOW_READ;
+				return this._NOMBRE_DIVISION;
 			}
 			set
 			{
-				if ((this._ALLOW_READ != value))
+				if ((this._NOMBRE_DIVISION != value))
 				{
-					this._ALLOW_READ = value;
+					this._NOMBRE_DIVISION = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_WRITE", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OBJETIVO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public System.Nullable<bool> ALLOW_WRITE
+		public string OBJETIVO
 		{
 			get
 			{
-				return this._ALLOW_WRITE;
+				return this._OBJETIVO;
 			}
 			set
 			{
-				if ((this._ALLOW_WRITE != value))
+				if ((this._OBJETIVO != value))
 				{
-					this._ALLOW_WRITE = value;
+					this._OBJETIVO = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_EDIT", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_META", DbType="Text", UpdateCheck=UpdateCheck.Never)]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public System.Nullable<bool> ALLOW_EDIT
+		public string META
 		{
 			get
 			{
-				return this._ALLOW_EDIT;
+				return this._META;
 			}
 			set
 			{
-				if ((this._ALLOW_EDIT != value))
+				if ((this._META != value))
 				{
-					this._ALLOW_EDIT = value;
+					this._META = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_DELETE", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-		public System.Nullable<bool> ALLOW_DELETE
+		public System.Nullable<System.DateTime> FECHA_CREACION
 		{
 			get
 			{
-				return this._ALLOW_DELETE;
+				return this._FECHA_CREACION;
 			}
 			set
 			{
-				if ((this._ALLOW_DELETE != value))
+				if ((this._FECHA_CREACION != value))
 				{
-					this._ALLOW_DELETE = value;
+					this._FECHA_CREACION = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_PRINT", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_INICIO", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-		public System.Nullable<bool> ALLOW_PRINT
+		public System.Nullable<int> MES_INICIO
 		{
 			get
 			{
-				return this._ALLOW_PRINT;
+				return this._MES_INICIO;
 			}
 			set
 			{
-				if ((this._ALLOW_PRINT != value))
+				if ((this._MES_INICIO != value))
 				{
-					this._ALLOW_PRINT = value;
+					this._MES_INICIO = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_CRUD", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ANO_INICIO", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-		public System.Nullable<bool> ALLOW_CRUD
+		public System.Nullable<int> ANO_INICIO
 		{
 			get
 			{
-				return this._ALLOW_CRUD;
+				return this._ANO_INICIO;
 			}
 			set
 			{
-				if ((this._ALLOW_CRUD != value))
+				if ((this._ANO_INICIO != value))
 				{
-					this._ALLOW_CRUD = value;
+					this._ANO_INICIO = value;
 				}
 			}
 		}
@@ -16747,6 +16786,442 @@ namespace WCF_ENAP
 				if ((this._DICIEMBRE != value))
 				{
 					this._DICIEMBRE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_stores_by_nodoResult
+	{
+		
+		private int _ID_STORE;
+		
+		private int _ID_NODO;
+		
+		private int _ID_STORE1;
+		
+		private string _NOMBRE_STORE;
+		
+		public sp_get_stores_by_nodoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_STORE", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_STORE
+		{
+			get
+			{
+				return this._ID_STORE;
+			}
+			set
+			{
+				if ((this._ID_STORE != value))
+				{
+					this._ID_STORE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_NODO", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int ID_NODO
+		{
+			get
+			{
+				return this._ID_NODO;
+			}
+			set
+			{
+				if ((this._ID_NODO != value))
+				{
+					this._ID_NODO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_STORE1", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public int ID_STORE1
+		{
+			get
+			{
+				return this._ID_STORE1;
+			}
+			set
+			{
+				if ((this._ID_STORE1 != value))
+				{
+					this._ID_STORE1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_STORE", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string NOMBRE_STORE
+		{
+			get
+			{
+				return this._NOMBRE_STORE;
+			}
+			set
+			{
+				if ((this._NOMBRE_STORE != value))
+				{
+					this._NOMBRE_STORE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_privilegios_by_usuarioResult
+	{
+		
+		private int _ID_NODO;
+		
+		private System.Nullable<int> _NODO_PADRE;
+		
+		private string _NOMBRE_MODULO;
+		
+		private string _ID_COMPONENTE;
+		
+		private System.Nullable<bool> _ESTADO;
+		
+		private System.Nullable<int> _TIPO_NODO;
+		
+		private string _ICONCLS;
+		
+		private System.Nullable<int> _N_ORDER;
+		
+		private System.Nullable<int> _TIPO_DISPLAY;
+		
+		private string _GROUP_ID;
+		
+		private System.Nullable<bool> _SHOW_ON_LOGUED;
+		
+		private System.Nullable<bool> _SHOW_ON_NOLOGUED;
+		
+		private System.Nullable<bool> _ALLOW_READ;
+		
+		private System.Nullable<bool> _ALLOW_WRITE;
+		
+		private System.Nullable<bool> _ALLOW_EDIT;
+		
+		private System.Nullable<bool> _ALLOW_DELETE;
+		
+		private System.Nullable<bool> _ALLOW_PRINT;
+		
+		private System.Nullable<bool> _ALLOW_CRUD;
+		
+		public sp_get_privilegios_by_usuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_NODO", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_NODO
+		{
+			get
+			{
+				return this._ID_NODO;
+			}
+			set
+			{
+				if ((this._ID_NODO != value))
+				{
+					this._ID_NODO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NODO_PADRE", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<int> NODO_PADRE
+		{
+			get
+			{
+				return this._NODO_PADRE;
+			}
+			set
+			{
+				if ((this._NODO_PADRE != value))
+				{
+					this._NODO_PADRE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_MODULO", DbType="VarChar(100)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string NOMBRE_MODULO
+		{
+			get
+			{
+				return this._NOMBRE_MODULO;
+			}
+			set
+			{
+				if ((this._NOMBRE_MODULO != value))
+				{
+					this._NOMBRE_MODULO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_COMPONENTE", DbType="VarChar(200)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string ID_COMPONENTE
+		{
+			get
+			{
+				return this._ID_COMPONENTE;
+			}
+			set
+			{
+				if ((this._ID_COMPONENTE != value))
+				{
+					this._ID_COMPONENTE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ESTADO", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.Nullable<bool> ESTADO
+		{
+			get
+			{
+				return this._ESTADO;
+			}
+			set
+			{
+				if ((this._ESTADO != value))
+				{
+					this._ESTADO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TIPO_NODO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public System.Nullable<int> TIPO_NODO
+		{
+			get
+			{
+				return this._TIPO_NODO;
+			}
+			set
+			{
+				if ((this._TIPO_NODO != value))
+				{
+					this._TIPO_NODO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ICONCLS", DbType="VarChar(100)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string ICONCLS
+		{
+			get
+			{
+				return this._ICONCLS;
+			}
+			set
+			{
+				if ((this._ICONCLS != value))
+				{
+					this._ICONCLS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_N_ORDER", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<int> N_ORDER
+		{
+			get
+			{
+				return this._N_ORDER;
+			}
+			set
+			{
+				if ((this._N_ORDER != value))
+				{
+					this._N_ORDER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TIPO_DISPLAY", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public System.Nullable<int> TIPO_DISPLAY
+		{
+			get
+			{
+				return this._TIPO_DISPLAY;
+			}
+			set
+			{
+				if ((this._TIPO_DISPLAY != value))
+				{
+					this._TIPO_DISPLAY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GROUP_ID", DbType="VarChar(100)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public string GROUP_ID
+		{
+			get
+			{
+				return this._GROUP_ID;
+			}
+			set
+			{
+				if ((this._GROUP_ID != value))
+				{
+					this._GROUP_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_LOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<bool> SHOW_ON_LOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_LOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_LOGUED != value))
+				{
+					this._SHOW_ON_LOGUED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_NOLOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<bool> SHOW_ON_NOLOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_NOLOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_NOLOGUED != value))
+				{
+					this._SHOW_ON_NOLOGUED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_READ", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public System.Nullable<bool> ALLOW_READ
+		{
+			get
+			{
+				return this._ALLOW_READ;
+			}
+			set
+			{
+				if ((this._ALLOW_READ != value))
+				{
+					this._ALLOW_READ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_WRITE", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+		public System.Nullable<bool> ALLOW_WRITE
+		{
+			get
+			{
+				return this._ALLOW_WRITE;
+			}
+			set
+			{
+				if ((this._ALLOW_WRITE != value))
+				{
+					this._ALLOW_WRITE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_EDIT", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+		public System.Nullable<bool> ALLOW_EDIT
+		{
+			get
+			{
+				return this._ALLOW_EDIT;
+			}
+			set
+			{
+				if ((this._ALLOW_EDIT != value))
+				{
+					this._ALLOW_EDIT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_DELETE", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+		public System.Nullable<bool> ALLOW_DELETE
+		{
+			get
+			{
+				return this._ALLOW_DELETE;
+			}
+			set
+			{
+				if ((this._ALLOW_DELETE != value))
+				{
+					this._ALLOW_DELETE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_PRINT", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+		public System.Nullable<bool> ALLOW_PRINT
+		{
+			get
+			{
+				return this._ALLOW_PRINT;
+			}
+			set
+			{
+				if ((this._ALLOW_PRINT != value))
+				{
+					this._ALLOW_PRINT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_CRUD", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+		public System.Nullable<bool> ALLOW_CRUD
+		{
+			get
+			{
+				return this._ALLOW_CRUD;
+			}
+			set
+			{
+				if ((this._ALLOW_CRUD != value))
+				{
+					this._ALLOW_CRUD = value;
 				}
 			}
 		}

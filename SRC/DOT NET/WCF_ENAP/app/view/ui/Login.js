@@ -5,6 +5,7 @@
     width: 400,
     title: 'Login',
     closeAction: 'hide',
+    id: 'panel-Login',
     initComponent: function () {
         var me = this;
         me.items = [
