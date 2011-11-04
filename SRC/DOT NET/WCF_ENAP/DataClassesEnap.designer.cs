@@ -671,6 +671,13 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_search_actividad_evaluadaResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_programas_anuales")]
+		public ISingleResult<sp_get_programas_anualesResult> sp_get_programas_anuales()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<sp_get_programas_anualesResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_indicadores_all_programa_anual")]
 		public ISingleResult<sp_indicadores_all_programa_anualResult> sp_indicadores_all_programa_anual()
 		{
@@ -685,11 +692,18 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_indicadores_by_programa_anualResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_privilegios_user")]
-		public ISingleResult<sp_privilegios_userResult> sp_privilegios_user([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_stores_by_nodo")]
+		public ISingleResult<sp_get_stores_by_nodoResult> sp_get_stores_by_nodo([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_NODO", DbType="Int")] System.Nullable<int> iD_NODO)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_NODO);
+			return ((ISingleResult<sp_get_stores_by_nodoResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_privilegios_by_usuario")]
+		public ISingleResult<sp_get_privilegios_by_usuarioResult> sp_get_privilegios_by_usuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_USUARIO);
-			return ((ISingleResult<sp_privilegios_userResult>)(result.ReturnValue));
+			return ((ISingleResult<sp_get_privilegios_by_usuarioResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -11867,6 +11881,10 @@ namespace WCF_ENAP
 		
 		private string _GROUP_ID;
 		
+		private System.Nullable<bool> _SHOW_ON_LOGUED;
+		
+		private System.Nullable<bool> _SHOW_ON_NOLOGUED;
+		
 		private EntitySet<TBL_GRUPO_PRIVILEGIO> _TBL_GRUPO_PRIVILEGIO;
 		
 		private EntitySet<TBL_MODULO_STORE> _TBL_MODULO_STORE;
@@ -11901,6 +11919,10 @@ namespace WCF_ENAP
     partial void OnTIPO_DISPLAYChanged();
     partial void OnGROUP_IDChanging(string value);
     partial void OnGROUP_IDChanged();
+    partial void OnSHOW_ON_LOGUEDChanging(System.Nullable<bool> value);
+    partial void OnSHOW_ON_LOGUEDChanged();
+    partial void OnSHOW_ON_NOLOGUEDChanging(System.Nullable<bool> value);
+    partial void OnSHOW_ON_NOLOGUEDChanged();
     #endregion
 		
 		public TBL_NODO()
@@ -12122,8 +12144,50 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_LOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<bool> SHOW_ON_LOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_LOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_LOGUED != value))
+				{
+					this.OnSHOW_ON_LOGUEDChanging(value);
+					this.SendPropertyChanging();
+					this._SHOW_ON_LOGUED = value;
+					this.SendPropertyChanged("SHOW_ON_LOGUED");
+					this.OnSHOW_ON_LOGUEDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_NOLOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<bool> SHOW_ON_NOLOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_NOLOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_NOLOGUED != value))
+				{
+					this.OnSHOW_ON_NOLOGUEDChanging(value);
+					this.SendPropertyChanging();
+					this._SHOW_ON_NOLOGUED = value;
+					this.SendPropertyChanged("SHOW_ON_NOLOGUED");
+					this.OnSHOW_ON_NOLOGUEDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_GRUPO_PRIVILEGIO", Storage="_TBL_GRUPO_PRIVILEGIO", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
 		public EntitySet<TBL_GRUPO_PRIVILEGIO> TBL_GRUPO_PRIVILEGIO
 		{
 			get
@@ -12142,7 +12206,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_MODULO_STORE", Storage="_TBL_MODULO_STORE", ThisKey="ID_NODO", OtherKey="ID_NODO")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
 		public EntitySet<TBL_MODULO_STORE> TBL_MODULO_STORE
 		{
 			get
@@ -12161,7 +12225,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TBL_NODO_TBL_NODO", Storage="_TBL_NODO2", ThisKey="ID_NODO", OtherKey="NODO_PADRE")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
 		public EntitySet<TBL_NODO> TBL_NODO2
 		{
 			get
@@ -16226,6 +16290,205 @@ namespace WCF_ENAP
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_programas_anualesResult
+	{
+		
+		private int _ID_PROGRAMA_ANUAL;
+		
+		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
+		
+		private string _NOMBRE_PROGRAMA;
+		
+		private int _ID_DIVISION;
+		
+		private string _NOMBRE_DIVISION;
+		
+		private string _OBJETIVO;
+		
+		private string _META;
+		
+		private System.Nullable<System.DateTime> _FECHA_CREACION;
+		
+		private System.Nullable<int> _MES_INICIO;
+		
+		private System.Nullable<int> _ANO_INICIO;
+		
+		public sp_get_programas_anualesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PROGRAMA_ANUAL", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_PROGRAMA_ANUAL
+		{
+			get
+			{
+				return this._ID_PROGRAMA_ANUAL;
+			}
+			set
+			{
+				if ((this._ID_PROGRAMA_ANUAL != value))
+				{
+					this._ID_PROGRAMA_ANUAL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
+		{
+			get
+			{
+				return this._ID_DEPARTAMENTO_ORGANIZACION;
+			}
+			set
+			{
+				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
+				{
+					this._ID_DEPARTAMENTO_ORGANIZACION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_PROGRAMA", DbType="VarChar(255)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string NOMBRE_PROGRAMA
+		{
+			get
+			{
+				return this._NOMBRE_PROGRAMA;
+			}
+			set
+			{
+				if ((this._NOMBRE_PROGRAMA != value))
+				{
+					this._NOMBRE_PROGRAMA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DIVISION", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public int ID_DIVISION
+		{
+			get
+			{
+				return this._ID_DIVISION;
+			}
+			set
+			{
+				if ((this._ID_DIVISION != value))
+				{
+					this._ID_DIVISION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_DIVISION", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string NOMBRE_DIVISION
+		{
+			get
+			{
+				return this._NOMBRE_DIVISION;
+			}
+			set
+			{
+				if ((this._NOMBRE_DIVISION != value))
+				{
+					this._NOMBRE_DIVISION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OBJETIVO", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string OBJETIVO
+		{
+			get
+			{
+				return this._OBJETIVO;
+			}
+			set
+			{
+				if ((this._OBJETIVO != value))
+				{
+					this._OBJETIVO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_META", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string META
+		{
+			get
+			{
+				return this._META;
+			}
+			set
+			{
+				if ((this._META != value))
+				{
+					this._META = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<System.DateTime> FECHA_CREACION
+		{
+			get
+			{
+				return this._FECHA_CREACION;
+			}
+			set
+			{
+				if ((this._FECHA_CREACION != value))
+				{
+					this._FECHA_CREACION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_INICIO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public System.Nullable<int> MES_INICIO
+		{
+			get
+			{
+				return this._MES_INICIO;
+			}
+			set
+			{
+				if ((this._MES_INICIO != value))
+				{
+					this._MES_INICIO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ANO_INICIO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public System.Nullable<int> ANO_INICIO
+		{
+			get
+			{
+				return this._ANO_INICIO;
+			}
+			set
+			{
+				if ((this._ANO_INICIO != value))
+				{
+					this._ANO_INICIO = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class sp_indicadores_all_programa_anualResult
 	{
 		
@@ -16529,7 +16792,92 @@ namespace WCF_ENAP
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class sp_privilegios_userResult
+	public partial class sp_get_stores_by_nodoResult
+	{
+		
+		private int _ID_STORE;
+		
+		private int _ID_NODO;
+		
+		private int _ID_STORE1;
+		
+		private string _NOMBRE_STORE;
+		
+		public sp_get_stores_by_nodoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_STORE", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_STORE
+		{
+			get
+			{
+				return this._ID_STORE;
+			}
+			set
+			{
+				if ((this._ID_STORE != value))
+				{
+					this._ID_STORE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_NODO", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int ID_NODO
+		{
+			get
+			{
+				return this._ID_NODO;
+			}
+			set
+			{
+				if ((this._ID_NODO != value))
+				{
+					this._ID_NODO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_STORE1", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public int ID_STORE1
+		{
+			get
+			{
+				return this._ID_STORE1;
+			}
+			set
+			{
+				if ((this._ID_STORE1 != value))
+				{
+					this._ID_STORE1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_STORE", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string NOMBRE_STORE
+		{
+			get
+			{
+				return this._NOMBRE_STORE;
+			}
+			set
+			{
+				if ((this._NOMBRE_STORE != value))
+				{
+					this._NOMBRE_STORE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_privilegios_by_usuarioResult
 	{
 		
 		private int _ID_NODO;
@@ -16538,11 +16886,23 @@ namespace WCF_ENAP
 		
 		private string _NOMBRE_MODULO;
 		
-		private int _ID_GRUPO;
-		
-		private int _ID_NODO1;
+		private string _ID_COMPONENTE;
 		
 		private System.Nullable<bool> _ESTADO;
+		
+		private System.Nullable<int> _TIPO_NODO;
+		
+		private string _ICONCLS;
+		
+		private System.Nullable<int> _N_ORDER;
+		
+		private System.Nullable<int> _TIPO_DISPLAY;
+		
+		private string _GROUP_ID;
+		
+		private System.Nullable<bool> _SHOW_ON_LOGUED;
+		
+		private System.Nullable<bool> _SHOW_ON_NOLOGUED;
 		
 		private System.Nullable<bool> _ALLOW_READ;
 		
@@ -16556,7 +16916,7 @@ namespace WCF_ENAP
 		
 		private System.Nullable<bool> _ALLOW_CRUD;
 		
-		public sp_privilegios_userResult()
+		public sp_get_privilegios_by_usuarioResult()
 		{
 		}
 		
@@ -16611,42 +16971,25 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_GRUPO", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_COMPONENTE", DbType="VarChar(200)")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public int ID_GRUPO
+		public string ID_COMPONENTE
 		{
 			get
 			{
-				return this._ID_GRUPO;
+				return this._ID_COMPONENTE;
 			}
 			set
 			{
-				if ((this._ID_GRUPO != value))
+				if ((this._ID_COMPONENTE != value))
 				{
-					this._ID_GRUPO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_NODO1", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public int ID_NODO1
-		{
-			get
-			{
-				return this._ID_NODO1;
-			}
-			set
-			{
-				if ((this._ID_NODO1 != value))
-				{
-					this._ID_NODO1 = value;
+					this._ID_COMPONENTE = value;
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ESTADO", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public System.Nullable<bool> ESTADO
 		{
 			get
@@ -16662,8 +17005,127 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_READ", DbType="Bit")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TIPO_NODO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public System.Nullable<int> TIPO_NODO
+		{
+			get
+			{
+				return this._TIPO_NODO;
+			}
+			set
+			{
+				if ((this._TIPO_NODO != value))
+				{
+					this._TIPO_NODO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ICONCLS", DbType="VarChar(100)")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string ICONCLS
+		{
+			get
+			{
+				return this._ICONCLS;
+			}
+			set
+			{
+				if ((this._ICONCLS != value))
+				{
+					this._ICONCLS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_N_ORDER", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<int> N_ORDER
+		{
+			get
+			{
+				return this._N_ORDER;
+			}
+			set
+			{
+				if ((this._N_ORDER != value))
+				{
+					this._N_ORDER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TIPO_DISPLAY", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public System.Nullable<int> TIPO_DISPLAY
+		{
+			get
+			{
+				return this._TIPO_DISPLAY;
+			}
+			set
+			{
+				if ((this._TIPO_DISPLAY != value))
+				{
+					this._TIPO_DISPLAY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GROUP_ID", DbType="VarChar(100)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public string GROUP_ID
+		{
+			get
+			{
+				return this._GROUP_ID;
+			}
+			set
+			{
+				if ((this._GROUP_ID != value))
+				{
+					this._GROUP_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_LOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<bool> SHOW_ON_LOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_LOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_LOGUED != value))
+				{
+					this._SHOW_ON_LOGUED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHOW_ON_NOLOGUED", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<bool> SHOW_ON_NOLOGUED
+		{
+			get
+			{
+				return this._SHOW_ON_NOLOGUED;
+			}
+			set
+			{
+				if ((this._SHOW_ON_NOLOGUED != value))
+				{
+					this._SHOW_ON_NOLOGUED = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_READ", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
 		public System.Nullable<bool> ALLOW_READ
 		{
 			get
@@ -16680,7 +17142,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_WRITE", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
 		public System.Nullable<bool> ALLOW_WRITE
 		{
 			get
@@ -16697,7 +17159,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_EDIT", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
 		public System.Nullable<bool> ALLOW_EDIT
 		{
 			get
@@ -16714,7 +17176,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_DELETE", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
 		public System.Nullable<bool> ALLOW_DELETE
 		{
 			get
@@ -16731,7 +17193,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_PRINT", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
 		public System.Nullable<bool> ALLOW_PRINT
 		{
 			get
@@ -16748,7 +17210,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ALLOW_CRUD", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
 		public System.Nullable<bool> ALLOW_CRUD
 		{
 			get

@@ -53,8 +53,11 @@ namespace WCF_ENAP
                 if (userLogin != null)
                 {
                     user = new EnapUser();
+                    List<sp_get_privilegios_by_usuarioResult> privilegios = bd.sp_get_privilegios_by_usuario(USERNAME).ToList();
+                    
                     user.Username = USERNAME;
                     user.IsLogued = true;
+                    user.Privilegios = privilegios;
                     userLogin.IS_LOGUED = true;
                     user.Name = userLogin.NOMBRES + " " + userLogin.APELLIDO_PATERNO + " " + userLogin.APELLIDO_MATERNO;
                     bd.SubmitChanges(); 

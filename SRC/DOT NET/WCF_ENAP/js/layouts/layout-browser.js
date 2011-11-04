@@ -48,14 +48,32 @@ Ext.onReady(function () {
             contentEl: 'start-div'  // pull existing content from the page
         }]
     };
-
+    Ext.define('Node', {
+        extend: 'Ext.data.Model',
+        idProperty: 'ID_NODE',
+        fields: [
+        { "name": "ID_NODO", "type": "int", "useNull": true },
+        { "name": "text", "type": "string", mapping: 'NOMBRE_MODULO' },
+        { "name": "ID_COMPONENTE", "type": "string" },
+        { "name": "iconCls", "type": "string", mapping: 'ICONCLS' },
+        { "name": "TIPO_NODO", "type": "int" },
+        { "name": "TIPO_DISPLAY", "type": "int" },
+        { "name": "NODO_PADRE", "type": "int" },
+        { "name": "N_ORDER", "type": "int" },
+        { "name": 'stores', mapping: "STORE_LIST_TEXT" },
+        { name: 'iswin', type: 'bool' },
+        { name: 'id', type: 'string', mapping: 'ID_COMPONENTE' }
+    ]
+    });
     var store = Ext.create('Ext.data.TreeStore', {
         root: {
             expanded: true
         },
+        model: 'Node',
         proxy: {
             type: 'ajax',
-            url: '/js/tree-data.json'
+            /*url: '/js/tree-data.json'*/
+            url: '/TreeData/'
         }
     });
 
@@ -75,53 +93,112 @@ Ext.onReady(function () {
 
     // Assign the changeLayout function to be called on tree node click.
     treePanel.getSelectionModel().on('select', function (selModel, record) {
-        if (record.get('leaf')) {
-            //console.log(record.raw.stores);
-            if (!Ext.Array.contains(panelsArray, record.getId())) {
-                Ext.application({
-                    name: 'WCF_ENAP',
-                    stores: record.raw.stores,
-                    launch: function () {
-                        Ext.getCmp('content-panel').setLoading(true);
-                        Ext.QuickTips.init();
-                        var cmp = Ext.create('WCF_ENAP.view.' + record.getId(), {});
+        console.log();
+        switch (record.get('TIPO_NODO')) {
+            case 1:
+                /*Modulo*/
+                break;
+            case 2:
+                /*Componente*/
+                /*Panel  Window*/
+                var id = record.get('id');
 
-                        if (record.raw.iswin != true) {
-                            panelsArray.push(record.getId());
-                            Ext.getCmp('content-panel').add(cmp);
-                            Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
-
-                        } else {
-                            treePanel.getSelectionModel().deselectAll();
+                console.log(record);
+                if (record.get('TIPO_DISPLAY') == 3) {
+                    Ext.Ajax.request({
+                        url: '/LoginUser/',
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (response) {
+                            var o = Ext.JSON.decode(response.responseText);
+                            if (o.success) {
+                                window.location = "/";
+                            } else {
+                                Ext.Msg.alert('Error en Conexión', 'Ups, no se pudo conectar con el servidor.');
+                            }
                         }
-                        Ext.getCmp('content-panel').setLoading(false);
-                        cmp.show();
-                    }
-                });
-            } else {
+                    });
+                } else {
+                    if (!Ext.Array.contains(panelsArray, id)) {
+                        Ext.application({
+                            name: 'WCF_ENAP',
+                            stores: record.get('stores'),
+                            launch: function () {
 
-                Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
-                Ext.getCmp('panel-' + record.getId()).show();
-                console.log("EXISTE");
-            }
-
-        } else {
-            Ext.Ajax.request({
-                url: '/LoginUser/',
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                success: function (response) {
-                    var o = Ext.JSON.decode(response.responseText);
-                    if (o.success) {
-                        window.location = "/";
+                                Ext.getCmp('content-panel').setLoading(true);
+                                Ext.QuickTips.init();
+                                var cmp = Ext.create('WCF_ENAP.view.' + id, {});
+                                panelsArray.push(id);
+                                if (record.get('TIPO_DISPLAY') == 1) {
+                                    Ext.getCmp('content-panel').add(cmp);
+                                    Ext.getCmp('content-panel').layout.setActiveItem('panel-' + id);
+                                } else if (record.get('TIPO_DISPLAY') == 2) {
+                                    Ext.getCmp('content-panel').add(cmp);
+                                }
+                                Ext.getCmp('content-panel').setLoading(false);
+                                cmp.show();
+                            }
+                        });
                     } else {
-                        Ext.Msg.alert('Error en Conexión', 'Ups, no se pudo conectar con el servidor.');
+                        Ext.getCmp('content-panel').layout.setActiveItem('panel-' + id);
+                        Ext.getCmp('panel-' + id).show();
                     }
                 }
-            });
+
+                break;
+            case 3:
+                break;
         }
+        /*
+        if (record.get('leaf')) {
+        //console.log(record.raw.stores);
+        if (!Ext.Array.contains(panelsArray, record.getId())) {
+        Ext.application({
+        name: 'WCF_ENAP',
+        stores: record.raw.stores,
+        launch: function () {
+        Ext.getCmp('content-panel').setLoading(true);
+        Ext.QuickTips.init();
+        var cmp = Ext.create('WCF_ENAP.view.' + record.getId(), {});
+
+        if (record.raw.iswin != true) {
+        panelsArray.push(record.getId());
+        Ext.getCmp('content-panel').add(cmp);
+        Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
+
+        } else {
+        treePanel.getSelectionModel().deselectAll();
+        }
+        Ext.getCmp('content-panel').setLoading(false);
+        cmp.show();
+        }
+        });
+        } else {
+
+        Ext.getCmp('content-panel').layout.setActiveItem('panel-' + record.getId());
+        Ext.getCmp('panel-' + record.getId()).show();
+        console.log("EXISTE");
+        }
+
+        } else {
+        Ext.Ajax.request({
+        url: '/LoginUser/',
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        success: function (response) {
+        var o = Ext.JSON.decode(response.responseText);
+        if (o.success) {
+        window.location = "/";
+        } else {
+        Ext.Msg.alert('Error en Conexión', 'Ups, no se pudo conectar con el servidor.');
+        }
+        }
+        });
+        }*/
     });
 
     // This is the Details panel that contains the description for each example layout.

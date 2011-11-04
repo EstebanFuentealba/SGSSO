@@ -27,9 +27,9 @@ namespace WCF_ENAP
 			bd = new DataClassesEnapDataContext();
 		}
 		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<TBL_PROGRAMA_ANUAL>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        public JSONCollection<List<sp_get_programas_anualesResult>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
         {
-            JSONCollection<List<TBL_PROGRAMA_ANUAL>> objJSON = new JSONCollection<List<TBL_PROGRAMA_ANUAL>>();
+            JSONCollection<List<sp_get_programas_anualesResult>> objJSON = new JSONCollection<List<sp_get_programas_anualesResult>>();
             try
             {
                 if (_dir == null)
@@ -45,8 +45,8 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_PROGRAMA_ANUAL.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
-                List<TBL_PROGRAMA_ANUAL> results = query.ToList();
+                var query = bd.sp_get_programas_anuales().Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                List<sp_get_programas_anualesResult> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count<TBL_PROGRAMA_ANUAL>();
                 objJSON.success = true;
@@ -58,9 +58,9 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_PROGRAMA_ANUAL> Create(int ID_DEPARTAMENTO_ORGANIZACION, int ID_DIVISION, string OBJETIVO, string META, string FECHA_CREACION, string NOMBRE_PROGRAMA,int MES_INICIO,int ANO_INICIO)
+        public JSONCollection<sp_get_programas_anualesResult> Create(int ID_DEPARTAMENTO_ORGANIZACION, string NOMBRE_DIVISION, int ID_DIVISION, string OBJETIVO, string META, string FECHA_CREACION, string NOMBRE_PROGRAMA, int MES_INICIO, int ANO_INICIO)
 		{
-            JSONCollection<TBL_PROGRAMA_ANUAL> objJSON = new JSONCollection<TBL_PROGRAMA_ANUAL>();
+            JSONCollection<sp_get_programas_anualesResult> objJSON = new JSONCollection<sp_get_programas_anualesResult>();
             try
             {
                 TBL_PROGRAMA_ANUAL nuevo = new TBL_PROGRAMA_ANUAL()
@@ -76,8 +76,20 @@ namespace WCF_ENAP
                 };
                 bd.TBL_PROGRAMA_ANUAL.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
-			
-                objJSON.items = nuevo;
+                sp_get_programas_anualesResult temp = new sp_get_programas_anualesResult()
+                {
+                    NOMBRE_PROGRAMA = nuevo.NOMBRE_PROGRAMA,
+                    ID_PROGRAMA_ANUAL =nuevo.ID_PROGRAMA_ANUAL,
+                    ID_DEPARTAMENTO_ORGANIZACION = nuevo.ID_DEPARTAMENTO_ORGANIZACION,
+                    ID_DIVISION = (int)nuevo.ID_DIVISION,
+                    NOMBRE_DIVISION = NOMBRE_DIVISION,
+                    OBJETIVO = nuevo.OBJETIVO,
+                    META = nuevo.META,
+                    FECHA_CREACION = nuevo.FECHA_CREACION,
+                    MES_INICIO = nuevo.MES_INICIO,
+                    ANO_INICIO = nuevo.ANO_INICIO
+                };
+                objJSON.items = temp;
                 objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count();
                 objJSON.success = true;
             }
