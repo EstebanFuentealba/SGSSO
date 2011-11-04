@@ -7,8 +7,14 @@
     id: 'panel-ProgramaAnual',
     initComponent: function () {
         var me = this,
-            winActividadProgramaAnual;
+            winActividadProgramaAnual,
+            yearsList = [],
+            yearStep = 4,
+            yearNow = (new Date()).getFullYear();
 
+        for (var yInicio = (yearNow + yearStep); yInicio > (yearNow - yearStep); yInicio--) {
+            yearsList.push([yInicio]);
+        }
         Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged', function (store, opts) {
             Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load();
         });
@@ -133,7 +139,7 @@
                             itemdblclick: function (view, record, item, index, e, options) {
                                 var idProgramaAnual = record.get("ID_PROGRAMA_ANUAL");
 
-                                //if(!winActividadProgramaAnual){
+                                
                                 var gridProgramaAnual = Ext.create('WCF_ENAP.view.ui.ProgramaAnualPrevencion', {
                                     recordParent: record
                                 });
@@ -144,19 +150,9 @@
                                     title: record.get('NOMBRE_PROGRAMA'),
                                     items: [gridProgramaAnual]
                                 });
-                                //}
                                 var formulario = winActividadProgramaAnual.getComponent('form_programa_anual');
                                 var form = formulario.getForm();
-
-                                /*Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').load({
-                                params: { 'ID_PROGRAMA_ANUAL': idProgramaAnual },
-                                callback: function (records, operation, success) {
-                                //console.log(records);
-                                }
-                                });*/
                                 form.loadRecord(record);
-                                //formulario.setColumns(record.get('MES_INICIO'));
-                                //console.log(record);
                                 winActividadProgramaAnual.show();
 
                             }
@@ -200,7 +196,7 @@
                                             xtype: 'combobox',
                                             store: Ext.create('Ext.data.ArrayStore', {
                                                 fields: ['ANO'],
-                                                data: [[2004], [2005], [2006], [2007], [2008], [2009], [2010], [2011], [2012]]
+                                                data: yearsList
                                             }),
                                             margin: '0 0 0 5',
                                             fieldLabel: 'Año',

@@ -66,18 +66,18 @@ namespace WCF_ENAP
             char TURNO,
             int MES_INICIO,
             int ANO_INICIO,
-            int ENERO_E,
-            int FEBRERO_E,
-            int MARZO_E,
-            int ABRIL_E,
-            int MAYO_E,
-            int JUNIO_E,
-            int JULIO_E,
-            int AGOSTO_E,
-            int SEPTIEMBRE_E,
-            int OCTUBRE_E,
-            int NOVIEMBRE_E,
-            int DICIEMBRE_E)
+            bool ENERO_E,
+            bool FEBRERO_E,
+            bool MARZO_E,
+            bool ABRIL_E,
+            bool MAYO_E,
+            bool JUNIO_E,
+            bool JULIO_E,
+            bool AGOSTO_E,
+            bool SEPTIEMBRE_E,
+            bool OCTUBRE_E,
+            bool NOVIEMBRE_E,
+            bool DICIEMBRE_E)
         {
             JSONCollection<TBL_ACTIVIDAD> objJSON = new JSONCollection<TBL_ACTIVIDAD>();
             //try {
@@ -158,14 +158,14 @@ namespace WCF_ENAP
                 else if (TIPO_FRECUENCIA == 4)
                 {
                     /*Anual*/
-                    if (ENERO_E == 0) {
+                    if (!ENERO_E) {
                         nuevo.ENERO_E = false;
                     } else
                     {
                         nuevo.ENERO_E = true;
                         nuevo.ENERO_P = 1;
                     }
-                    if (FEBRERO_E == 0)
+                    if (!FEBRERO_E)
                     {
                         nuevo.FEBRERO_E = false;
                         
@@ -175,7 +175,7 @@ namespace WCF_ENAP
                         nuevo.FEBRERO_E = true;
                         nuevo.FEBRERO_P = 1;
                     }
-                    if (MARZO_E == 0)
+                    if (!MARZO_E)
                     {
                         nuevo.MARZO_E = false;
                         
@@ -185,7 +185,7 @@ namespace WCF_ENAP
                         nuevo.MARZO_E = true;
                         nuevo.MARZO_P = 1;
                     }
-                    if (ABRIL_E == 0)
+                    if (!ABRIL_E)
                     {
                         nuevo.ABRIL_E = false;
                         
@@ -195,7 +195,7 @@ namespace WCF_ENAP
                         nuevo.ABRIL_E = true;
                         nuevo.ABRIL_P = 1;
                     }
-                    if (MAYO_E == 0)
+                    if (!MAYO_E)
                     {
                         nuevo.MAYO_E = false;
                         
@@ -205,7 +205,7 @@ namespace WCF_ENAP
                         nuevo.MAYO_E = true;
                         nuevo.MAYO_P = 1;
                     }
-                    if (JUNIO_E == 0)
+                    if (!JUNIO_E)
                     {
                         nuevo.JUNIO_E = false;
                         
@@ -215,7 +215,7 @@ namespace WCF_ENAP
                         nuevo.JUNIO_E = true;
                         nuevo.JUNIO_P = 1;
                     }
-                    if (JULIO_E == 0)
+                    if (!JULIO_E)
                     {
                         nuevo.JULIO_E = false;
                         
@@ -225,7 +225,7 @@ namespace WCF_ENAP
                         nuevo.JULIO_E = true;
                         nuevo.JULIO_P = 1;
                     }
-                    if (AGOSTO_E == 0)
+                    if (!AGOSTO_E)
                     {
                         nuevo.AGOSTO_E = false;
                         
@@ -235,7 +235,7 @@ namespace WCF_ENAP
                         nuevo.AGOSTO_E = true;
                         nuevo.AGOSTO_P = 1;
                     }
-                    if (SEPTIEMBRE_E == 0)
+                    if (!SEPTIEMBRE_E)
                     {
                         nuevo.SEPTIEMBRE_E = false;
                         
@@ -245,7 +245,7 @@ namespace WCF_ENAP
                         nuevo.SEPTIEMBRE_E = true;
                         nuevo.SEPTIEMBRE_P = 1;
                     }
-                    if (OCTUBRE_E == 0)
+                    if (!OCTUBRE_E)
                     {
                         nuevo.OCTUBRE_E = false;
                     }
@@ -254,7 +254,7 @@ namespace WCF_ENAP
                         nuevo.OCTUBRE_E = true;
                         nuevo.OCTUBRE_P = 1;
                     }
-                    if (NOVIEMBRE_E == 0)
+                    if (!NOVIEMBRE_E)
                     {
                         nuevo.NOVIEMBRE_E = false;
                     }
@@ -263,7 +263,7 @@ namespace WCF_ENAP
                         nuevo.NOVIEMBRE_E = true;
                         nuevo.NOVIEMBRE_P = 1;
                     }
-                    if (DICIEMBRE_E == 0)
+                    if (!DICIEMBRE_E)
                     {
                         nuevo.DICIEMBRE_E = false;
                     }

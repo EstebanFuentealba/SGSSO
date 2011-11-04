@@ -287,12 +287,10 @@
     <Type Name="TBL_EVENTO">
       <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="OCURRIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FECHA_HORA_EVENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="LAT_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="LNG_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="TIPO_EVENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="LUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="DESCRIPCION_GENERAL" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="TBL_EVENTO_TBL_EVENTO_EMPRESA" Member="TBL_EVENTO_EMPRESA" ThisKey="ID_EVENTO" OtherKey="ID_EVENTO" Type="TBL_EVENTO_EMPRESA" />
@@ -757,6 +755,19 @@
       <Column Name="ALLOW_DELETE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ALLOW_PRINT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_eventos_list" Method="sp_get_eventos_list">
+    <ElementType Name="sp_get_eventos_listResult">
+      <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_HORA_EVENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LAT_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LNG_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DESCRIPCION_GENERAL" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

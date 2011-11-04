@@ -219,20 +219,20 @@
                                                                         listeners : {
                                                                             change: function( field ,  newValue,  oldValue,  eOpts ) {
                                                                                 var record = Ext.getCmp('form_actividad_programa_anual').getForm().getRecord();
-                                                                                record.set('ENERO_E',0);
-                                                                                record.set('FEBRERO_E',0);
-                                                                                record.set('MARZO_E',0);
-                                                                                record.set('ABRIL_E',0);
-                                                                                record.set('MAYO_E',0);
-                                                                                record.set('JUNIO_E',0);
-                                                                                record.set('JULIO_E',0);
-                                                                                record.set('AGOSTO_E',0);
-                                                                                record.set('SEPTIEMBRE_E',0);
-                                                                                record.set('OCTUBRE_E',0);
-                                                                                record.set('NOVIEMBRE_E',0);
-                                                                                record.set('DICIEMBRE_E',0);
+                                                                                record.set('ENERO_E',false);
+                                                                                record.set('FEBRERO_E',false);
+                                                                                record.set('MARZO_E',false);
+                                                                                record.set('ABRIL_E',false);
+                                                                                record.set('MAYO_E',false);
+                                                                                record.set('JUNIO_E',false);
+                                                                                record.set('JULIO_E',false);
+                                                                                record.set('AGOSTO_E',false);
+                                                                                record.set('SEPTIEMBRE_E',false);
+                                                                                record.set('OCTUBRE_E',false);
+                                                                                record.set('NOVIEMBRE_E',false);
+                                                                                record.set('DICIEMBRE_E',false);
                                                                                 Ext.each(Ext.getCmp('chk_group_month_selected').getChecked(),function(checkbox) {
-                                                                                    record.set(checkbox.name, ((checkbox.value) ?1 :0));  
+                                                                                    record.set(checkbox.name, checkbox.value);  
                                                                                 });
                                                                                 Ext.getCmp('form_actividad_programa_anual').getForm().loadRecord(record);
                                                                             }
