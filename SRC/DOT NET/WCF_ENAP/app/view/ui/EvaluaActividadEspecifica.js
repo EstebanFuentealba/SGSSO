@@ -23,14 +23,18 @@
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
             if (name == 'Create') {
-                Ext.getCmp('cmb_evalua_actividad_especifica').select(record);
+                try {
+                    Ext.getCmp('cmb_evalua_actividad_especifica').select(record);
+                } catch (e) { /*Cannot call method 'addCls' of null*/ }
             }
         });
         Ext.StoreManager.lookup('dsCargo').on('write', function (store, operation, index, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
             if (name == 'Create') {
-                Ext.getCmp('cmb_matriz_cargo').select(record);
+                try {
+                    Ext.getCmp('cmb_matriz_cargo').select(record);
+                } catch (e) { /*Cannot call method 'addCls' of null*/ }
             }
         });
 
@@ -148,14 +152,18 @@
 		                    text: 'P',
 		                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 		                        switch (value.toString()) {
+		                            case '1':
+		                                return "<span style='display: block; background-color:green;'>B</span>";
+		                                break;
 		                            case '2':
 		                                return "<span style='display: block; background-color:yellow;'>M</span>";
 		                                break;
 		                            case '3':
 		                                return "<span style='display: block; background-color:red;'>A</span>";
 		                                break;
+
 		                            default:
-		                                return "<span style='display: block; background-color:green;'>B</span>";
+		                                return "";
 		                                break;
 		                        }
 		                    }
@@ -166,6 +174,9 @@
 			                text: 'C',
 			                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 			                    switch (value.toString()) {
+			                        case '1':
+			                            return "<span style='display: block; background-color:green;'>B</span>";
+			                            break;
 			                        case '2':
 			                            return "<span style='display: block; background-color:yellow;'>M</span>";
 			                            break;
@@ -173,7 +184,7 @@
 			                            return "<span style='display: block; background-color:red;'>A</span>";
 			                            break;
 			                        default:
-			                            return "<span style='display: block; background-color:green;'>B</span>";
+			                            return "";
 			                            break;
 			                    }
 			                }
@@ -186,15 +197,17 @@
 			                    TODO: CALCULO DE LA MAGNITUD DE RIESGO
 			                    */
 			                    var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
-			                    if (indicador_riesgo_controlado < 3) {
+			                    if (indicador_riesgo_controlado > 0 && indicador_riesgo_controlado < 3) {
 			                        /* GREEN */
 			                        return "<span style='display: block; background-color:green;'>B</span>";
 			                    } else if (indicador_riesgo_controlado > 5) {
 			                        /* RED */
 			                        return "<span style='display: block; background-color:red;'>B</span>";
-			                    } else {
+			                    } else if (indicador_riesgo_controlado >= 3 && indicador_riesgo_controlado <= 5) {
 			                        /* YELLOW */
 			                        return "<span style='display: block; background-color:yellow;'>B</span>";
+			                    } else {
+			                        return "";
 			                    }
 			                }
 			            }
@@ -281,12 +294,14 @@
                                     'change': function (cmb, newValue, oldValue, eOpts) {
                                         var cmbDepto = Ext.getCmp('organizacion_departamento');
                                         cmbDepto.clearValue();
-                                        Ext.data.StoreManager.lookup('dsDepartamento').load({
-                                            params: { 'ID_ORGANIZACION': newValue },
-                                            callback: function (records, operation, success) {
-                                                cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
-                                            }
-                                        });
+                                        if (newValue != null) {
+                                            Ext.data.StoreManager.lookup('dsDepartamento').load({
+                                                params: { 'ID_ORGANIZACION': newValue },
+                                                callback: function (records, operation, success) {
+                                                    cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                }
+                                            });
+                                        }
 
                                     }
                                 }
@@ -314,12 +329,14 @@
                                             'change': function (cmb, newValue, oldValue, eOpts) {
                                                 var cmbDiv = Ext.getCmp('organizacion_division');
                                                 cmbDiv.clearValue();
-                                                Ext.data.StoreManager.lookup('dsDivision').load({
-                                                    params: { 'ID_DEPARTAMENTO': newValue },
-                                                    callback: function (records, operation, success) {
-                                                        cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
-                                                    }
-                                                });
+                                                if (newValue != null) {
+                                                    Ext.data.StoreManager.lookup('dsDivision').load({
+                                                        params: { 'ID_DEPARTAMENTO': newValue },
+                                                        callback: function (records, operation, success) {
+                                                            cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                        }
+                                                    });
+                                                }
                                             }
                                         }
                                     },
@@ -346,14 +363,16 @@
                                             'change': function (cmb, newValue, oldValue, eOpts) {
                                                 var cmbArea = Ext.getCmp('organizacion_area');
                                                 cmbArea.clearValue();
-                                                Ext.data.StoreManager.lookup('dsArea').load({
-                                                    params: { 'ID_DIVISION': newValue },
-                                                    callback: function (records, operation, success) {
-                                                        if (Ext.isArray(records) && records.length > 0) {
-                                                            cmbArea.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                if (newValue != null) {
+                                                    Ext.data.StoreManager.lookup('dsArea').load({
+                                                        params: { 'ID_DIVISION': newValue },
+                                                        callback: function (records, operation, success) {
+                                                            if (Ext.isArray(records) && records.length > 0) {
+                                                                cmbArea.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                                            }
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                }
                                             }
                                         }
                                     },
@@ -1008,7 +1027,6 @@
                             },
                             fieldLabel: 'Probabilidad',
                             labelAlign: 'top',
-                            allowBlank: false,
                             items: [
                                 {
                                     xtype: 'radiofield',
@@ -1038,7 +1056,6 @@
                                 type: 'anchor'
                             },
                             fieldLabel: 'Consecuencia',
-                            allowBlank: false,
                             labelAlign: 'top',
                             items: [
                                 {
@@ -1097,7 +1114,7 @@
                             Ext.getCmp('grid-medidas-de-control').getSelectionModel().deselectAll();
                             Ext.getCmp('form_evalua_peligro').getForm().reset();
                             Ext.getCmp('form_re_evaluacion').getForm().reset();
-
+                            Ext.getCmp('cmb_peligro_evalua').reset();
                         } else {
                             form.markInvalid(errors);
                         }
@@ -1161,6 +1178,12 @@
                                     xtype: 'button',
                                     margin: '0 0 0 5',
                                     text: 'Matriz de Riesgo',
+                                    /* disabled: function () {
+                                    if (record.get('MEDIDA_VALORACION_CONSECUENCIA') == 0 || record.get('MEDIDA_VALORACION_PROBABILIDAD') == 0) {
+                                    return true;
+                                    }
+                                    return false;
+                                    },*/
                                     columnWidth: 0.5,
                                     iconCls: 'matriz-icon',
                                     handler: function () {

@@ -27,9 +27,9 @@ namespace WCF_ENAP
 			bd = new DataClassesEnapDataContext();
 		}
 		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<TBL_EVENTO>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir)
         {
-            JSONCollection<List<TBL_EVENTO>> objJSON = new JSONCollection<List<TBL_EVENTO>>();
+            JSONCollection<List<sp_get_eventos_listResult>> objJSON = new JSONCollection<List<sp_get_eventos_listResult>>();
             try
             {
                 if (_dir == null)
@@ -45,8 +45,9 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_EVENTO.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
-                List<TBL_EVENTO> results = query.ToList();
+
+                var query = bd.sp_get_eventos_list().Skip(_start).Take(_limit).Select(r => r);
+                List<sp_get_eventos_listResult> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_EVENTO.Count<TBL_EVENTO>();
                 objJSON.success = true;
@@ -58,20 +59,17 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_EVENTO> Create(string ID_DEPARTAMENTO_ORGANIZACION, string OCURRIO, string FECHA_HORA_EVENTO, string FECHA_INGRESO, string LAT_EVENTO, string LNG_EVENTO, string TIPO_EVENTO, string LUGAR_EXACTO)
+        public JSONCollection<TBL_EVENTO> Create(string ID_DEPARTAMENTO_ORGANIZACION, string OCURRIO, string FECHA_HORA_EVENTO, string HORA_EVENTO, string LAT_EVENTO, string LNG_EVENTO, string LUGAR_EXACTO)
 		{
             JSONCollection<TBL_EVENTO> objJSON = new JSONCollection<TBL_EVENTO>();
-            try
-            {
+            //try{
                 TBL_EVENTO nuevo = new TBL_EVENTO()
                 {
-                    ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION), 
-					OCURRIO = int.Parse(OCURRIO), 
-					FECHA_HORA_EVENTO = DateTime.Parse(FECHA_HORA_EVENTO), 
-					FECHA_INGRESO = DateTime.Parse(FECHA_INGRESO), 
+                    ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
+                    FECHA_HORA_EVENTO = DateTime.Parse(FECHA_HORA_EVENTO), 
+					FECHA_INGRESO = DateTime.Now, 
 					LAT_EVENTO = double.Parse(LAT_EVENTO), 
 					LNG_EVENTO = double.Parse(LNG_EVENTO), 
-					TIPO_EVENTO = int.Parse(TIPO_EVENTO), 
 					LUGAR_EXACTO = LUGAR_EXACTO
                 };
                 bd.TBL_EVENTO.InsertOnSubmit(nuevo);
@@ -80,11 +78,7 @@ namespace WCF_ENAP
                 objJSON.items = nuevo;
                 objJSON.totalCount = bd.TBL_EVENTO.Count();
                 objJSON.success = true;
-            }
-            catch (Exception e)
-            {
-                objJSON.success = false;
-            }
+            //} catch (Exception e) { objJSON.success = false; }
             return objJSON;
 		}
 
@@ -116,12 +110,10 @@ namespace WCF_ENAP
                               where variable.ID_EVENTO == int.Parse(id)
                               select variable).Single();
                 objeto.ID_DEPARTAMENTO_ORGANIZACION = nuevo.ID_DEPARTAMENTO_ORGANIZACION;
-				objeto.OCURRIO = nuevo.OCURRIO;
 				objeto.FECHA_HORA_EVENTO = nuevo.FECHA_HORA_EVENTO;
 				objeto.FECHA_INGRESO = nuevo.FECHA_INGRESO;
 				objeto.LAT_EVENTO = nuevo.LAT_EVENTO;
 				objeto.LNG_EVENTO = nuevo.LNG_EVENTO;
-				objeto.TIPO_EVENTO = nuevo.TIPO_EVENTO;
 				objeto.LUGAR_EXACTO = nuevo.LUGAR_EXACTO;
                 bd.SubmitChanges();
                 objJSON.items = objeto;

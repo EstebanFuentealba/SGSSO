@@ -3,9 +3,12 @@ Ext.define('WCF_ENAP.model.Evento', {
     idProperty: 'ID_EVENTO',
     fields: [
         { "name": "ID_EVENTO", "type": "int", "useNull": true },
-        { "name": "ID_ORGANIZACION", "type": "int" },
-        { "name": "ID_DEPARTAMENTO", "type": "int" },
-        { "name": "FECHA_EVENTO", "type": "date" },
+        { "name": "ID_DEPARTAMENTO_ORGANIZACION", "type": "int" },
+        { "name": "FECHA_HORA_EVENTO", "type": "date", "convert": function (v, record) {
+                return (Ext.JSON.decode({ 'd': v })).d;
+            }
+        },
+        { "name": "NOMBRE_DEPARTAMENTO", "type": "string" },
         { "name": "HORA_EVENTO", "type": "string" },
         { "name": "LAT_EVENTO", "type": "float" },
         { "name": "LNG_EVENTO", "type": "float" },

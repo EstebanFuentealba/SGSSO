@@ -73,6 +73,7 @@
     <Content Include="app\store\dsStores.js" />
     <Content Include="app\view\ActividadProgramaAnualPrevencion.js" />
     <Content Include="app\view\EventoList.js" />
+    <Content Include="app\view\ImportPlanilla.js" />
     <Content Include="app\view\Login.js" />
     <Content Include="app\view\MenuGenerator.js" />
     <Content Include="app\view\MisEvaluaciones.js" />
@@ -80,10 +81,13 @@
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
     <Content Include="app\view\ui\e0063.js" />
+    <Content Include="app\view\ui\EvaluaActividadEspecifica.js" />
     <Content Include="app\view\ui\EventoList.js" />
+    <Content Include="app\view\ui\ImportPlanilla.js" />
     <Content Include="app\view\ui\Login.js" />
     <Content Include="app\view\ui\MenuGenerator.js" />
     <Content Include="app\view\ui\MisEvaluaciones.js" />
+    <Content Include="app\view\ui\NuevoEvento.js" />
     <Content Include="app\view\ui\ProgramaAnual.js" />
     <Content Include="app\view\ui\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\ui\RegistraNuevoEvento.js" />
@@ -1534,6 +1538,7 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
+    <Compile Include="WS\ImportExcel.cs" />
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -1574,6 +1579,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="utils\import\temp\" />
     <Folder Include="utils\temp\" />
   </ItemGroup>
   <ItemGroup>

@@ -40,7 +40,7 @@
             var varName = meses[i].name.toLowerCase();
             var renderFunction = eval("(function(value, metaData, record, rowIdx, colIdx, store, view) { var x = Math.round(((record.get('" + varName.toLocaleUpperCase() + "_R') * 1)/ record.get('" + varName.toLocaleUpperCase() + "_P'))*100); return '<b>'+(isNaN(x)?0:x)+'%</b>'; })");
             var sumaryTypeFunction = eval("(function(records){ var total = 0; Ext.each(records, function (record) { var programado = 0, realizado = 0; try { programado = record.get('" + varName.toLocaleUpperCase() + "_P'); } catch (ex) { }; try { realizado = record.get('" + varName.toLocaleUpperCase() + "_R'); } catch (ex) { }; if (programado != 0 || realizado != 0) { total += Math.round(((realizado * 1) / programado) * 100); } }); var x = ((total / records.length)); return (isNaN(x) ? 0 : x); })");
-            
+
             objMes.header = meses[i].name + ' / ' + x;
             objMes.columns = [{
                 text: 'P',
@@ -51,7 +51,7 @@
                 }
             }, {
                 text: 'R',
-                width:40,
+                width: 40,
                 dataIndex: varName.toLocaleUpperCase() + '_R',
                 editor: {
                     xtype: 'numberfield'
@@ -155,6 +155,12 @@
                     plugins: [
                     Ext.create('Ext.grid.plugin.CellEditing', {
                         listeners: {
+                            beforeedit: function (event, eOpts) {
+                                var enabled = event.record.get(event.field.replace('_P', '_E').replace('_R', '_E'));
+                                if (!enabled) {
+                                    event.column.getEditor(event.record, event.field).setDisabled(true);
+                                }
+                            },
                             edit: function () {
                                 Ext.getCmp('grid_programa_anual').getView().refresh();
                             }
@@ -179,6 +185,18 @@
                                     handler: function () {
                                         var form = this.up('form').getForm();
                                         var record = form.getRecord();
+                                        record.set('ENERO_E', true);
+                                        record.set('FEBRERO_E', true);
+                                        record.set('MARZO_E', true);
+                                        record.set('ABRIL_E', true);
+                                        record.set('MAYO_E', true);
+                                        record.set('JUNIO_E', true);
+                                        record.set('JULIO_E', true);
+                                        record.set('AGOSTO_E', true);
+                                        record.set('SEPTIEMBRE_E', true);
+                                        record.set('OCTUBRE_E', true);
+                                        record.set('NOVIEMBRE_E', true);
+                                        record.set('DICIEMBRE_E', true);
                                         winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion", {
                                             recordParent: record
                                         });
