@@ -65,8 +65,8 @@ namespace WCF_ENAP
             {
                 TBL_ACCION_CORRECTIVA nuevo = new TBL_ACCION_CORRECTIVA()
                 {
-                    ID_USUARIO = ID_USUARIO, 
-					ID_INFORME = int.Parse(ID_INFORME), 
+                    ID_USUARIO = ID_USUARIO,
+                    ID_INFORME_PRELIMINAR = int.Parse(ID_INFORME), 
 					ID_ACCION = int.Parse(ID_ACCION), 
 					FECHA_PLAZO = DateTime.Parse(FECHA_PLAZO), 
 					FECHA_REALIZACION = DateTime.Parse(FECHA_REALIZACION), 
@@ -116,7 +116,7 @@ namespace WCF_ENAP
                               where variable.ID_ACCION_CORRECTIVA == int.Parse(id)
                               select variable).Single();
                 objeto.ID_USUARIO = nuevo.ID_USUARIO;
-				objeto.ID_INFORME = nuevo.ID_INFORME;
+                objeto.ID_INFORME_PRELIMINAR = nuevo.ID_INFORME_PRELIMINAR;
 				objeto.ID_ACCION = nuevo.ID_ACCION;
 				objeto.FECHA_PLAZO = nuevo.FECHA_PLAZO;
 				objeto.FECHA_REALIZACION = nuevo.FECHA_REALIZACION;

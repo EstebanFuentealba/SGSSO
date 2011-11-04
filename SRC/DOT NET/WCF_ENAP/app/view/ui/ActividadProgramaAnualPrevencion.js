@@ -2,10 +2,12 @@
     extend: 'Ext.window.Window',
     modal: true,
     /*closeAction: 'hide',*/
-    height: 319,
+    height: 359,
     title: 'Agrega Actividad',
     width: 858,
+    id: 'window-ActividadProgramaAnualPrevencion',
     recordParent: null,
+    layout: 'anchor',
     initComponent: function () {
         var me = this, winAddCargo, winAddEvidencia;
 
@@ -410,12 +412,55 @@
                                     boxLabel: 'Evaluar por Separado',
                                     name: 'ALL_TURNO',
                                     inputValue: 1,
+                                    listeners: {
+                                        change:function(field, newValue, oldValue, eOpts ){
+                                            Ext.getCmp('chk_group_turno_list').setVisible(newValue);
+                                            Ext.getCmp('window-ActividadProgramaAnualPrevencion').doLayout();
+                                            
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'radiofield',
                                     boxLabel: 'Evaluar a todos Juntos',
                                     name: 'ALL_TURNO',
-                                    inputValue: 2,
+                                    inputValue: 2
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'checkboxgroup',
+                            hidden: true,
+                            id: 'chk_group_turno_list',
+                            fieldLabel: 'Turnos',
+                            items: [
+                                {
+                                    xtype: 'checkboxfield',
+                                    name: 'chk_turno',
+                                    boxLabel: 'A',
+                                    checked: true,
+                                    inputValue: 'A'
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    name: 'chk_turno',
+                                    boxLabel: 'B',
+                                    checked: true,
+                                    inputValue: 'B'
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    boxLabel: 'C',
+                                    name: 'chk_turno',
+                                    checked: true,
+                                    inputValue: 'C'
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    name: 'chk_turno',
+                                    boxLabel: 'D',
+                                    checked: true,
+                                    inputValue: 'D'
                                 }
                             ]
                         }
@@ -439,7 +484,8 @@
                                 this.disable(true);
                                 if(tipo_turno == 1) {
                                     var records=[];
-                                    Ext.each(['A','B','C','D'],function(name, index, turnoSelf){
+                                    var chks = Ext.getCmp('chk_group_turno_list').getValue();
+                                    Ext.each(chks.chk_turno,function(name, index, turnoSelf){
                                         var c_new_object = Ext.create('WCF_ENAP.model.ActividadProgramaAnualPrevencion', form.getValues());
                                         c_new_object.set('TURNO',name);
                                         records.push(c_new_object);

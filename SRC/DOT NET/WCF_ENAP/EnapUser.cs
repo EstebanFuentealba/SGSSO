@@ -19,9 +19,17 @@ namespace WCF_ENAP
     }
     public class EnapUser
     {
+        private List<sp_get_privilegios_by_usuarioResult> privilegios;
+
+        public List<sp_get_privilegios_by_usuarioResult> Privilegios
+        {
+            get { return privilegios; }
+            set { privilegios = value; }
+        }
         public EnapUser()
         {
             this.Memberof = new List<string>();
+            this.privilegios = new List<sp_get_privilegios_by_usuarioResult>();
         }
         private string name;
 

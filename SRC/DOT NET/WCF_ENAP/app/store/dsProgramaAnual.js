@@ -5,6 +5,7 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "ID_PROGRAMA_ANUAL", "type": "int", "useNull": true },
         { "name": "ID_DEPARTAMENTO_ORGANIZACION", "type": "int" },
         { "name": "ID_DIVISION", "type": "int" },
+        { "name": "NOMBRE_DIVISION", "type": "string" },
         { "name": "OBJETIVO", "type": "string" },
         { "name": "META", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date" },

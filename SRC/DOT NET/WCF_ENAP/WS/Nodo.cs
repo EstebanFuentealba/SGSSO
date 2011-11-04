@@ -18,8 +18,10 @@ namespace WCF_ENAP
 {
     public class NodoJSON
     {
-        public int[] STORE_LIST;
+        public int[] STORE_LIST; 
+        public string[] STORE_LIST_TEXT;
         public int TIPO_NODO;
+        public int TIPO_DISPLAY;
         public int ID_NODO;
         public int N_ORDER;
         public int NODO_PADRE;
@@ -30,6 +32,8 @@ namespace WCF_ENAP
         public string NOMBRE_MODULO;
         public bool expanded;
         public List<NodoJSON> children;
+        public bool leaf = false;
+        public bool iswin = false;
     }
 	[ServiceContract]
 	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -73,7 +77,14 @@ namespace WCF_ENAP
             List<NodoJSON> ret = new List<NodoJSON>();
             foreach (var nodo in results)
             {
-                List<int> stores = bd.TBL_MODULO_STORE.Where(w => w.ID_NODO == nodo.ID_NODO).Select(s => s.ID_STORE).ToList<int>();
+                List<sp_get_stores_by_nodoResult> stores = bd.sp_get_stores_by_nodo(nodo.ID_NODO).ToList();
+                List<int> stores_ids = new List<int>();
+                List<string> stores_str = new List<string>();
+                foreach (sp_get_stores_by_nodoResult st in stores)
+                {
+                    stores_ids.Add(st.ID_STORE);
+                    stores_str.Add(st.NOMBRE_STORE);
+                }
                 NodoJSON nodoJSON = new NodoJSON();
                 nodoJSON.text = nodo.NOMBRE_MODULO;
                 nodoJSON.iconCls = nodo.ICONCLS;
@@ -85,7 +96,8 @@ namespace WCF_ENAP
                 nodoJSON.NOMBRE_MODULO = nodo.NOMBRE_MODULO;
                 nodoJSON.ID_COMPONENTE = nodo.ID_COMPONENTE;
                 nodoJSON.N_ORDER = (int)((nodo.N_ORDER == null) ? 1 : nodo.N_ORDER);
-                nodoJSON.STORE_LIST = stores.ToArray();
+                nodoJSON.STORE_LIST = stores_ids.ToArray();
+                nodoJSON.STORE_LIST_TEXT = stores_str.ToArray();
                 if (nodo.NODO_PADRE != 0)
                 {
                     int idPadre = int.Parse(nodo.NODO_PADRE.ToString());
@@ -121,7 +133,14 @@ namespace WCF_ENAP
                 
                 foreach (var nodo in results)
                 {
-                    List<int> stores = bd.TBL_MODULO_STORE.Where(w => w.ID_NODO == nodo.ID_NODO).Select(s => s.ID_STORE).ToList<int>();
+                    List<sp_get_stores_by_nodoResult> stores = bd.sp_get_stores_by_nodo(nodo.ID_NODO).ToList();
+                    List<int> stores_ids = new List<int>();
+                    List<string> stores_str = new List<string>();
+                    foreach (sp_get_stores_by_nodoResult st in stores)
+                    {
+                        stores_ids.Add(st.ID_STORE);
+                        stores_str.Add(st.NOMBRE_STORE);
+                    } 
                     NodoJSON nodoJSON = new NodoJSON();
                     nodoJSON.text = nodo.NOMBRE_MODULO;
                     nodoJSON.iconCls = nodo.ICONCLS;
@@ -133,7 +152,8 @@ namespace WCF_ENAP
                     nodoJSON.NOMBRE_MODULO = nodo.NOMBRE_MODULO;
                     nodoJSON.ID_COMPONENTE = nodo.ID_COMPONENTE;
                     nodoJSON.N_ORDER = (int)((nodo.N_ORDER == null) ? 1 : nodo.N_ORDER);
-                    nodoJSON.STORE_LIST = stores.ToArray();
+                    nodoJSON.STORE_LIST = stores_ids.ToArray();
+                    nodoJSON.STORE_LIST_TEXT = stores_str.ToArray();
                     nodos.Add(nodo.ID_NODO, nodoJSON);
                     if (nodo.NODO_PADRE != 0)
                     {

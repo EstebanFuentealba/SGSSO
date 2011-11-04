@@ -10,6 +10,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using WCF_ENAP.WS;
 using System.DirectoryServices;
+using System.Security.Cryptography;
 
 /**
   *NameSpace.
@@ -27,94 +28,119 @@ namespace WCF_ENAP
         {
             bd = new DataClassesEnapDataContext();
         }
-
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = MD5CryptoServiceProvider.Create();
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] stream = null;
+            StringBuilder sb = new StringBuilder();
+            stream = md5.ComputeHash(encoding.GetBytes(str));
+            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            return sb.ToString();
+        }
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         public JSONCollection<EnapUser> LogIn(string USERNAME, string PASSWORD)
         {
             JSONCollection<EnapUser> objJSON = new JSONCollection<EnapUser>();
             try{
                 EnapUser user;
-                
-                SearchResult rs = LDAP.IsInActiveDirectory(USERNAME, PASSWORD);
-                if (rs != null)
+                TBL_USUARIO userLogin = null;
+                try{
+                    userLogin = (from variable in bd.TBL_USUARIO
+                                  where variable.ID_USUARIO == USERNAME && variable.PASSWORD == LoginUser.GetMD5(PASSWORD)
+                                  select variable).Single<TBL_USUARIO>();
+                }catch(Exception ex){}
+                if (userLogin != null)
                 {
                     user = new EnapUser();
-                    List<string> groups = LDAP.GetGroupsMember(USERNAME, PASSWORD);
-                    user.Memberof = groups;
-                    user.Username = USERNAME;
-                    /*
-                    List<sp_get_privilegios_by_usuarioResult> privilegios = bd.sp_get_privilegios_by_usuario(user.Username).ToList<sp_get_privilegios_by_usuarioResult>();
-                    foreach (sp_get_privilegios_by_usuarioResult privilegio in privilegios)
-                    {
-                        
-                    }*/
-                    user.IsLogued = true;
-                    try
-                    {
-                        user.Name = rs.Properties["name"][0].ToString();
-                    }
-                    catch (Exception ex) { }
-                    TBL_USUARIO user_update = null;
-                    var objeto = (from variable in bd.TBL_USUARIO
-                                  where variable.ID_USUARIO == USERNAME
-                                  select variable).ToList<TBL_USUARIO>();
+                    List<sp_get_privilegios_by_usuarioResult> privilegios = bd.sp_get_privilegios_by_usuario(USERNAME).ToList();
                     
-                    if (objeto.Count == 0)
+                    user.Username = USERNAME;
+                    user.IsLogued = true;
+                    user.Privilegios = privilegios;
+                    userLogin.IS_LOGUED = true;
+                    user.Name = userLogin.NOMBRES + " " + userLogin.APELLIDO_PATERNO + " " + userLogin.APELLIDO_MATERNO;
+                    bd.SubmitChanges(); 
+                    objJSON.items = user;
+                    objJSON.success = true;
+                    Session["enap-log"] = user;
+                }else{
+                    SearchResult rs = LDAP.IsInActiveDirectory(USERNAME, PASSWORD);
+                    if (rs != null)
                     {
-                        user_update = new TBL_USUARIO()
+                        user = new EnapUser();
+                        List<string> groups = LDAP.GetGroupsMember(USERNAME, PASSWORD);
+                        user.Memberof = groups;
+                        user.Username = USERNAME;
+                        user.IsLogued = true;
+                        try
                         {
-                            ID_USUARIO = user.Username,
-                            NOMBRES = user.Name
-                        };
+                            user.Name = rs.Properties["name"][0].ToString();
+                        }
+                        catch (Exception ex) { }
+                        TBL_USUARIO user_update = null;
+                        var objeto = (from variable in bd.TBL_USUARIO
+                                      where variable.ID_USUARIO == USERNAME
+                                      select variable).ToList<TBL_USUARIO>();
+                    
+                        if (objeto.Count == 0)
+                        {
+                            user_update = new TBL_USUARIO()
+                            {
+                                ID_USUARIO = user.Username,
+                                NOMBRES = user.Name
+                            };
 
-                        bd.TBL_USUARIO.InsertOnSubmit(user_update);
-                        bd.SubmitChanges();
+                            bd.TBL_USUARIO.InsertOnSubmit(user_update);
+                            bd.SubmitChanges();
+                        }
+                        else
+                        {
+                            user_update = objeto[0];
+                        }
+                        user_update.IS_LOGUED = true;
+                        foreach (string nombre_grupo in user.Memberof)
+                        {
+                            try
+                            {
+                                TBL_GRUPO nuevo_grupo = null;
+                                var lista = (from variable in bd.TBL_GRUPO
+                                             where variable.NOMBRE_GRUPO.Equals(nombre_grupo)
+                                             select variable).ToList<TBL_GRUPO>();
+                                if (lista.Count == 0)
+                                {
+                                    nuevo_grupo = new TBL_GRUPO()
+                                    {
+                                        NOMBRE_GRUPO = nombre_grupo
+                                    };
+                                    bd.TBL_GRUPO.InsertOnSubmit(nuevo_grupo);
+                                    bd.SubmitChanges();
+                                }
+                                else
+                                {
+                                    nuevo_grupo = lista[0];
+                                }
+                                TBL_USUARIO_GRUPO usuario_grupo = new TBL_USUARIO_GRUPO()
+                                {
+                                    ID_USUARIO = user_update.ID_USUARIO,
+                                    ID_GRUPO = nuevo_grupo.ID_GRUPO
+                                };
+                                bd.TBL_USUARIO_GRUPO.InsertOnSubmit(usuario_grupo);
+                                bd.SubmitChanges();
+                            }
+                            catch (Exception ex) { }
+                        }
+                        objJSON.items = user;
+                        objJSON.success = true;
+
+                        Session["enap-log"] = user;
                     }
                     else
                     {
-                        user_update = objeto[0];
+                        objJSON.success = false;
                     }
-                    user_update.IS_LOGUED = true;
-                    foreach (string nombre_grupo in user.Memberof)
-                    {
-                        try
-                        {
-                            TBL_GRUPO nuevo_grupo = null;
-                            var lista = (from variable in bd.TBL_GRUPO
-                                         where variable.NOMBRE_GRUPO.Equals(nombre_grupo)
-                                         select variable).ToList<TBL_GRUPO>();
-                            if (lista.Count == 0)
-                            {
-                                nuevo_grupo = new TBL_GRUPO()
-                                {
-                                    NOMBRE_GRUPO = nombre_grupo
-                                };
-                                bd.TBL_GRUPO.InsertOnSubmit(nuevo_grupo);
-                                bd.SubmitChanges();
-                            }
-                            else
-                            {
-                                nuevo_grupo = lista[0];
-                            }
-                            TBL_USUARIO_GRUPO usuario_grupo = new TBL_USUARIO_GRUPO()
-                            {
-                                ID_USUARIO = user_update.ID_USUARIO,
-                                ID_GRUPO = nuevo_grupo.ID_GRUPO
-                            };
-                            bd.TBL_USUARIO_GRUPO.InsertOnSubmit(usuario_grupo);
-                            bd.SubmitChanges();
-                        }
-                        catch (Exception ex) { }
-                    }
-                    objJSON.items = user;
-                    objJSON.success = true;
-
-                    Session["enap-log"] = user;
                 }
-                else
-                {
-                    objJSON.success = false;
-                }
+                
                 
             } catch (Exception e) { objJSON.success = false; }
             return objJSON;
@@ -129,6 +155,7 @@ namespace WCF_ENAP
                                       where variable.ID_USUARIO == user.Username
                                       select variable).Single<TBL_USUARIO>();
                 objeto.IS_LOGUED = false;
+                bd.SubmitChanges();
             }
             catch (Exception ex) { }
             Session["enap-log"] = null; 

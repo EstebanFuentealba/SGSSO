@@ -161,10 +161,16 @@
                                                     }
                                                 },
                                                 {
-                                                    xtype: 'booleancolumn',
+                                                    xtype: 'gridcolumn',
                                                     dataIndex: 'ALLOW_WRITE',
                                                     flex: 0.1,
                                                     text: 'Crear',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
                                                     field: {
                                                         xtype: 'checkboxfield',
                                                         anchor: '100%',
@@ -172,10 +178,16 @@
                                                     }
                                                 },
                                                 {
-                                                    xtype: 'booleancolumn',
+                                                    xtype: 'gridcolumn',
                                                     dataIndex: 'ALLOW_EDIT',
                                                     flex: 0.1,
                                                     text: 'Modificar',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
                                                     field: {
                                                         xtype: 'checkboxfield',
                                                         anchor: '100%',
@@ -183,10 +195,16 @@
                                                     }
                                                 },
                                                 {
-                                                    xtype: 'booleancolumn',
+                                                    xtype: 'gridcolumn',
                                                     dataIndex: 'ALLOW_DELETE',
                                                     flex: 0.1,
                                                     text: 'Eliminar',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
                                                     field: {
                                                         xtype: 'checkboxfield',
                                                         anchor: '100%',
@@ -194,10 +212,16 @@
                                                     }
                                                 },
                                                 {
-                                                    xtype: 'booleancolumn',
+                                                    xtype: 'gridcolumn',
                                                     dataIndex: 'ALLOW_PRINT',
                                                     flex: 0.1,
                                                     text: 'Imprimir',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
                                                     field: {
                                                         xtype: 'checkboxfield',
                                                         anchor: '100%',
@@ -205,10 +229,16 @@
                                                     }
                                                 },
                                                 {
-                                                    xtype: 'booleancolumn',
+                                                    xtype: 'gridcolumn',
                                                     dataIndex: 'ALLOW_CRUD',
                                                     flex: 0.1,
                                                     text: 'Mantener',
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        if (value) {
+                                                            return "<span style='display: block; background-color:green;'><center><b>SI</b></center></span>";
+                                                        }
+                                                        return "<span style='display: block; background-color:red;'><center><b>NO</b></center></span>";
+                                                    },
                                                     field: {
                                                         xtype: 'checkboxfield',
                                                         anchor: '100%',
@@ -376,6 +406,26 @@
                                 {
                                     xtype: 'radiofield',
                                     boxLabel: 'Ext.window.Window',
+                                    name: 'TIPO_DISPLAY',
+                                    inputValue: 2
+                                }
+                            ]
+                            },
+                        {
+                            xtype: 'radiogroup',
+                            fieldLabel: 'Tipo de Elemento',
+                            anchor: '100%',
+                            id: 'radio_tipo_display',
+                            items: [
+                                {
+                                    xtype: 'radiofield',
+                                    name: 'TIPO_DISPLAY',
+                                    boxLabel: 'Panel',
+                                    inputValue: 1
+                                },
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Window',
                                     name: 'TIPO_DISPLAY',
                                     inputValue: 2
                                 }

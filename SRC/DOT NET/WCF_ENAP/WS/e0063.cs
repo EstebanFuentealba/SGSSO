@@ -58,14 +58,22 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+<<<<<<< HEAD
         public JSONCollection<TBL_I_PRELIMINAR> Create(string ID_INFORME_PRELIMINAR, string ID_EVENTO_EMPRESA, string FECHA_INGRESO, string CLASIFICACION)
+=======
+        public JSONCollection<TBL_I_PRELIMINAR> Create(string E00_ID_INFORME, string ID_EVENTO_EMPRESA, string FECHA_INGRESO, string CLASIFICACION)
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 		{
             JSONCollection<TBL_I_PRELIMINAR> objJSON = new JSONCollection<TBL_I_PRELIMINAR>();
             try
             {
                 TBL_I_PRELIMINAR nuevo = new TBL_I_PRELIMINAR()
                 {
+<<<<<<< HEAD
                     ID_INFORME_PRELIMINAR = int.Parse(ID_INFORME_PRELIMINAR), 
+=======
+                    ID_INFORME_PRELIMINAR = int.Parse(E00_ID_INFORME), 
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 					ID_EVENTO_EMPRESA = int.Parse(ID_EVENTO_EMPRESA), 
 					FECHA_INGRESO = DateTime.Parse(FECHA_INGRESO), 
 					CLASIFICACION = int.Parse(CLASIFICACION)
@@ -135,7 +143,11 @@ namespace WCF_ENAP
                           where variable.ID_INFORME_PRELIMINAR == int.Parse(id)
 							select variable).First();
 
+<<<<<<< HEAD
             bd.TBL_I_PRELIMINAR.DeleteOnSubmit(objeto);
+=======
+			bd.TBL_I_PRELIMINAR.DeleteOnSubmit(objeto);
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 			bd.SubmitChanges();
 		}
 		string orderBy(string _sort)
@@ -144,7 +156,11 @@ namespace WCF_ENAP
 			{
                 if (_sort.Equals("ID_INFORME_PRELIMINAR"))
                 {
+<<<<<<< HEAD
                     return "ID_INFORME_PRELIMINAR";
+=======
+					return "E00_ID_INFORME";
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 				}
 				if (_sort.Equals("ID_EVENTO_EMPRESA")){
 					return "ID_EVENTO_EMPRESA";
@@ -157,7 +173,7 @@ namespace WCF_ENAP
 				}
 
 			}
-			return "ID_INFORME";
+            return "ID_INFORME_PRELIMINAR";
 		}
 	}
 }

@@ -27,9 +27,15 @@ namespace WCF_ENAP
 			bd = new DataClassesEnapDataContext();
 		}
 		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
+<<<<<<< HEAD
         public JSONCollection<List<TBL_I_PRELIMINAR>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
         {
             JSONCollection<List<TBL_I_PRELIMINAR>> objJSON = new JSONCollection<List<TBL_I_PRELIMINAR>>();
+=======
+        public JSONCollection<List<TBL_I_FINAL>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        {
+            JSONCollection<List<TBL_I_FINAL>> objJSON = new JSONCollection<List<TBL_I_FINAL>>();
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
             try
             {
                 if (_dir == null)
@@ -45,10 +51,17 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
+<<<<<<< HEAD
                 var query = bd.TBL_I_PRELIMINAR.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                 List<TBL_I_PRELIMINAR> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count<TBL_I_PRELIMINAR>();
+=======
+                var query = bd.TBL_I_FINAL.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                List<TBL_I_FINAL> results = query.ToList();
+                objJSON.items = results;
+                objJSON.totalCount = bd.TBL_I_FINAL.Count<TBL_I_FINAL>();
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
                 objJSON.success = true;
             }
             catch (Exception ex) {
@@ -58,6 +71,7 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+<<<<<<< HEAD
         public JSONCollection<TBL_I_PRELIMINAR> Create(string ID_INFORME_FINAL, string DESCRIPCION_INCIDENTE, string ANTECEDENTES, string RELATO_DE_HECHO, string COMENTARIO, string FECHA_CREACION)
 		{
             JSONCollection<TBL_I_PRELIMINAR> objJSON = new JSONCollection<TBL_I_PRELIMINAR>();
@@ -66,17 +80,35 @@ namespace WCF_ENAP
                 TBL_I_PRELIMINAR nuevo = new TBL_I_PRELIMINAR()
                 {
                     ID_INFORME_FINAL = int.Parse(ID_INFORME_FINAL), 
+=======
+        public JSONCollection<TBL_I_FINAL> Create(string E00_ID_INFORME, string DESCRIPCION_INCIDENTE, string ANTECEDENTES, string RELATO_DE_HECHO, string COMENTARIO, string FECHA_CREACION)
+		{
+            JSONCollection<TBL_I_FINAL> objJSON = new JSONCollection<TBL_I_FINAL>();
+            try
+            {
+                TBL_I_FINAL nuevo = new TBL_I_FINAL()
+                {
+                    ID_INFORME_FINAL = int.Parse(E00_ID_INFORME), 
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 					DESCRIPCION_INCIDENTE = DESCRIPCION_INCIDENTE, 
 					ANTECEDENTES = ANTECEDENTES, 
 					RELATO_DE_HECHO = RELATO_DE_HECHO, 
 					COMENTARIO = COMENTARIO, 
 					FECHA_CREACION = DateTime.Parse(FECHA_CREACION)
                 };
+<<<<<<< HEAD
                 bd.TBL_I_PRELIMINAR.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
 			
                 objJSON.items = nuevo;
                 objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count();
+=======
+                bd.TBL_I_FINAL.InsertOnSubmit(nuevo);
+                bd.SubmitChanges();
+			
+                objJSON.items = nuevo;
+                objJSON.totalCount = bd.TBL_I_FINAL.Count();
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
                 objJSON.success = true;
             }
             catch (Exception e)
@@ -87,6 +119,7 @@ namespace WCF_ENAP
 		}
 
 		[WebGet(UriTemplate = "{id}")]
+<<<<<<< HEAD
         public JSONCollection<TBL_I_PRELIMINAR> Get(string id)
 		{
             JSONCollection<TBL_I_PRELIMINAR> objJSON = new JSONCollection<TBL_I_PRELIMINAR>();
@@ -94,6 +127,15 @@ namespace WCF_ENAP
             {
                 objJSON.items = (from variable in bd.TBL_I_PRELIMINAR where variable.ID_INFORME_FINAL == int.Parse(id) select variable).Single();
                 objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count();
+=======
+        public JSONCollection<TBL_I_FINAL> Get(string id)
+		{
+            JSONCollection<TBL_I_FINAL> objJSON = new JSONCollection<TBL_I_FINAL>();
+            try
+            {
+                objJSON.items = (from variable in bd.TBL_I_FINAL where variable.ID_INFORME_FINAL == int.Parse(id) select variable).Single();
+                objJSON.totalCount = bd.TBL_I_FINAL.Count();
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
                 objJSON.success = true;
             }
             catch (Exception ex)
@@ -104,6 +146,7 @@ namespace WCF_ENAP
 		}
 
 		[WebInvoke(UriTemplate = "{id}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
+<<<<<<< HEAD
         public JSONCollection<TBL_I_PRELIMINAR> Update(string id, TBL_I_PRELIMINAR nuevo)
 		{
 
@@ -111,6 +154,15 @@ namespace WCF_ENAP
             try
             {
                 var objeto = (from variable in bd.TBL_I_PRELIMINAR
+=======
+        public JSONCollection<TBL_I_FINAL> Update(string id, TBL_I_FINAL nuevo)
+		{
+
+            JSONCollection<TBL_I_FINAL> objJSON = new JSONCollection<TBL_I_FINAL>();
+            try
+            {
+                var objeto = (from variable in bd.TBL_I_FINAL
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
                               where variable.ID_INFORME_FINAL == int.Parse(id)
                               select variable).Single();
                 objeto.ID_INFORME_FINAL = nuevo.ID_INFORME_FINAL;
@@ -121,7 +173,11 @@ namespace WCF_ENAP
 				objeto.FECHA_CREACION = nuevo.FECHA_CREACION;
                 bd.SubmitChanges();
                 objJSON.items = objeto;
+<<<<<<< HEAD
                 objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count();
+=======
+                objJSON.totalCount = bd.TBL_I_FINAL.Count();
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
                 objJSON.success = true;
             }
             catch (Exception ex)
@@ -135,11 +191,19 @@ namespace WCF_ENAP
 		[WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]
 		public void Delete(string id)
 		{
+<<<<<<< HEAD
             var objeto = (from variable in bd.TBL_I_PRELIMINAR
                           where variable.ID_INFORME_FINAL == int.Parse(id)
 							select variable).First();
 
             bd.TBL_I_PRELIMINAR.DeleteOnSubmit(objeto);
+=======
+			var objeto = (from variable in bd.TBL_I_FINAL
+                          where variable.ID_INFORME_FINAL == int.Parse(id)
+							select variable).First();
+
+			bd.TBL_I_FINAL.DeleteOnSubmit(objeto);
+>>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
 			bd.SubmitChanges();
 		}
 		string orderBy(string _sort)
