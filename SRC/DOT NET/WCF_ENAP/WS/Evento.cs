@@ -59,7 +59,7 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_EVENTO> Create(string ID_DEPARTAMENTO_ORGANIZACION, string OCURRIO, string FECHA_HORA_EVENTO, string HORA_EVENTO, string LAT_EVENTO, string LNG_EVENTO, string LUGAR_EXACTO)
+        public JSONCollection<TBL_EVENTO> Create(string ID_DEPARTAMENTO_ORGANIZACION, string OCURRIO, string FECHA_HORA_EVENTO, string HORA_EVENTO, double LAT_EVENTO, double LNG_EVENTO, string LUGAR_EXACTO)
 		{
             JSONCollection<TBL_EVENTO> objJSON = new JSONCollection<TBL_EVENTO>();
             //try{
@@ -68,8 +68,8 @@ namespace WCF_ENAP
                     ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
                     FECHA_HORA_EVENTO = DateTime.Parse(FECHA_HORA_EVENTO), 
 					FECHA_INGRESO = DateTime.Now, 
-					LAT_EVENTO = double.Parse(LAT_EVENTO), 
-					LNG_EVENTO = double.Parse(LNG_EVENTO), 
+					LAT_EVENTO = LAT_EVENTO, 
+					LNG_EVENTO = LNG_EVENTO, 
 					LUGAR_EXACTO = LUGAR_EXACTO
                 };
                 bd.TBL_EVENTO.InsertOnSubmit(nuevo);
