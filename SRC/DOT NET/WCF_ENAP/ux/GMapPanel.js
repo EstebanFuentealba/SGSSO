@@ -310,7 +310,7 @@ markers: [{
                           this.lastCenter = point;  
                       }
                       if (typeof this.setCenter.marker === 'object' && typeof point === 'object') {
-                          this.addMarker(point, this.setCenter.marker, this.setCenter.marker.clear);
+                          this.addMarker(point, this.setCenter.marker, this.setCenter.marker.clear,null,this.setCenter.marker.listeners);
                       }
                   }
                   if (this.gmapType === 'panorama'){

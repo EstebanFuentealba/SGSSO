@@ -1561,28 +1561,16 @@ go
 create table TBL_EVENTO (
    ID_EVENTO            int                  identity,
    ID_DEPARTAMENTO_ORGANIZACION int                  null,
-   OCURRIO              int                  null
-      constraint CKC_OCURRIO_TBL_EVEN check (OCURRIO is null or (OCURRIO between 1 and 3 and OCURRIO in (1,2,3))),
    FECHA_HORA_EVENTO    datetime             null,
    FECHA_INGRESO        datetime             null,
    LAT_EVENTO           double precision     null,
    LNG_EVENTO           double precision     null,
-   TIPO_EVENTO          int                  null
-      constraint CKC_TIPO_EVENTO_TBL_EVEN check (TIPO_EVENTO is null or (TIPO_EVENTO between 1 and 6 and TIPO_EVENTO in (1,2,3,4,5,6))),
    LUGAR_EXACTO         varchar(200)         null,
    DESCRIPCION_GENERAL  text                 null,
    constraint PK_TBL_EVENTO primary key nonclustered (ID_EVENTO)
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '1 = CAMINO A
-   2 = EN
-   3 = DE VUELTA DE',
-   'user', @CurrentUser, 'table', 'TBL_EVENTO', 'column', 'OCURRIO'
-go
 
 /*==============================================================*/
 /* Table: TBL_EVENTO_DATO                                       */
