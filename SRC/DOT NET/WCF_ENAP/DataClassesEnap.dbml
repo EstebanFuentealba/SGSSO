@@ -1,9 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="enap_v3" Class="DataClassesEnapDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-<<<<<<< HEAD
   <Connection Mode="WebSettings" ConnectionString="Data Source=ALVAREZ-PC\SQLEXPRESS;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
-=======
-  <Connection Mode="WebSettings" ConnectionString="Data Source=ESTEBAN-HP\SQLEXPRESS;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
->>>>>>> 2ef980ec12d7594fc6269c8567c8f7cdaf32a0ef
   <Table Name="dbo.MATRIZ_EMPRESA" Member="MATRIZ_EMPRESA">
     <Type Name="MATRIZ_EMPRESA">
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -676,6 +672,29 @@
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_get_privilegios_by_usuario" Method="sp_get_privilegios_by_usuario">
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.String" DbType="VarChar(200)" />
+    <ElementType Name="sp_get_privilegios_by_usuarioResult">
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NODO_PADRE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ID_COMPONENTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TIPO_NODO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ICONCLS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="N_ORDER" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TIPO_DISPLAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GROUP_ID" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="SHOW_ON_LOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SHOW_ON_NOLOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_READ" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_WRITE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_EDIT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_DELETE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_PRINT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.sp_get_programas_anuales" Method="sp_get_programas_anuales">
     <ElementType Name="sp_get_programas_anualesResult">
       <Column Name="ID_PROGRAMA_ANUAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -688,6 +707,15 @@
       <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="MES_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ANO_INICIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_stores_by_nodo" Method="sp_get_stores_by_nodo">
+    <Parameter Name="ID_NODO" Parameter="iD_NODO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_get_stores_by_nodoResult">
+      <Column Name="ID_STORE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STORE1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_STORE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.sp_indicadores_all_programa_anual" Method="sp_indicadores_all_programa_anual">
@@ -714,30 +742,15 @@
       <Column Name="DICIEMBRE" Type="System.Decimal" DbType="Decimal(38,16)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_get_stores_by_nodo" Method="sp_get_stores_by_nodo">
-    <Parameter Name="ID_NODO" Parameter="iD_NODO" Type="System.Int32" DbType="Int" />
-    <ElementType Name="sp_get_stores_by_nodoResult">
-      <Column Name="ID_STORE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ID_STORE1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="NOMBRE_STORE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.sp_get_privilegios_by_usuario" Method="sp_get_privilegios_by_usuario">
+  <Function Name="dbo.sp_privilegios_user" Method="sp_privilegios_user">
     <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.String" DbType="VarChar(200)" />
-    <ElementType Name="sp_get_privilegios_by_usuarioResult">
+    <ElementType Name="sp_privilegios_userResult">
       <Column Name="ID_NODO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NODO_PADRE" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NOMBRE_MODULO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="ID_COMPONENTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_GRUPO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NODO1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="TIPO_NODO" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ICONCLS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="N_ORDER" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="TIPO_DISPLAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="GROUP_ID" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="SHOW_ON_LOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="SHOW_ON_NOLOGUED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ALLOW_READ" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ALLOW_WRITE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ALLOW_EDIT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
