@@ -713,6 +713,13 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_privilegios_userResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_insert_evento")]
+		public int sp_insert_evento([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_DEPARTAMENTO_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_EVENTO", DbType="Date")] System.Nullable<System.DateTime> fECHA_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="HORA_EVENTO", DbType="Time")] System.Nullable<System.TimeSpan> hORA_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LAT_EVENTO", DbType="Float")] System.Nullable<double> lAT_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LNG_EVENTO", DbType="Float")] System.Nullable<double> lNG_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LUGAR_EXACTO", DbType="VarChar(200)")] string lUGAR_EXACTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DESCRIPCION_GENERAL", DbType="Text")] string dESCRIPCION_GENERAL)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_DEPARTAMENTO_ORGANIZACION, fECHA_EVENTO, hORA_EVENTO, lAT_EVENTO, lNG_EVENTO, lUGAR_EXACTO, dESCRIPCION_GENERAL);
+			return ((int)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_list")]
 		public ISingleResult<sp_get_eventos_listResult> sp_get_eventos_list()
 		{
@@ -17434,12 +17441,6 @@ namespace WCF_ENAP
 		
 		private int _ID_EVENTO;
 		
-		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
-		
-		private System.Nullable<System.DateTime> _FECHA_HORA_EVENTO;
-		
-		private System.Nullable<System.DateTime> _FECHA_INGRESO;
-		
 		private System.Nullable<double> _LAT_EVENTO;
 		
 		private System.Nullable<double> _LNG_EVENTO;
@@ -17447,6 +17448,12 @@ namespace WCF_ENAP
 		private string _LUGAR_EXACTO;
 		
 		private string _DESCRIPCION_GENERAL;
+		
+		private string _HORA_EVENTO;
+		
+		private string _FECHA_HORA_EVENTO;
+		
+		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
 		
 		private string _NOMBRE_DEPARTAMENTO;
 		
@@ -17471,59 +17478,8 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
-		{
-			get
-			{
-				return this._ID_DEPARTAMENTO_ORGANIZACION;
-			}
-			set
-			{
-				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
-				{
-					this._ID_DEPARTAMENTO_ORGANIZACION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<System.DateTime> FECHA_HORA_EVENTO
-		{
-			get
-			{
-				return this._FECHA_HORA_EVENTO;
-			}
-			set
-			{
-				if ((this._FECHA_HORA_EVENTO != value))
-				{
-					this._FECHA_HORA_EVENTO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_INGRESO", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public System.Nullable<System.DateTime> FECHA_INGRESO
-		{
-			get
-			{
-				return this._FECHA_INGRESO;
-			}
-			set
-			{
-				if ((this._FECHA_INGRESO != value))
-				{
-					this._FECHA_INGRESO = value;
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LAT_EVENTO", DbType="Float")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public System.Nullable<double> LAT_EVENTO
 		{
 			get
@@ -17540,7 +17496,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LNG_EVENTO", DbType="Float")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public System.Nullable<double> LNG_EVENTO
 		{
 			get
@@ -17557,7 +17513,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LUGAR_EXACTO", DbType="VarChar(200)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public string LUGAR_EXACTO
 		{
 			get
@@ -17574,7 +17530,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_GENERAL", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public string DESCRIPCION_GENERAL
 		{
 			get
@@ -17586,6 +17542,57 @@ namespace WCF_ENAP
 				if ((this._DESCRIPCION_GENERAL != value))
 				{
 					this._DESCRIPCION_GENERAL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HORA_EVENTO", DbType="VarChar(5)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string HORA_EVENTO
+		{
+			get
+			{
+				return this._HORA_EVENTO;
+			}
+			set
+			{
+				if ((this._HORA_EVENTO != value))
+				{
+					this._HORA_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="VarChar(8)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string FECHA_HORA_EVENTO
+		{
+			get
+			{
+				return this._FECHA_HORA_EVENTO;
+			}
+			set
+			{
+				if ((this._FECHA_HORA_EVENTO != value))
+				{
+					this._FECHA_HORA_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
+		{
+			get
+			{
+				return this._ID_DEPARTAMENTO_ORGANIZACION;
+			}
+			set
+			{
+				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
+				{
+					this._ID_DEPARTAMENTO_ORGANIZACION = value;
 				}
 			}
 		}

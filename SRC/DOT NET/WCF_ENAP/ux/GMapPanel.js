@@ -431,6 +431,10 @@ markers: [{
 		}
 		return result;
 	},
+	addSingleMarker : function(marker) {
+		var mkr_point = new google.maps.LatLng(marker.lat, marker.lng);
+		this.addMarker(mkr_point, marker.marker, false);
+	},
     /**
      * Creates markers from the array that is passed in. Each marker must consist of at least
      * <code>lat</code> and <code>lng</code> properties or a <code>geoCodeAddr</code>.

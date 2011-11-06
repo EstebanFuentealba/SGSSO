@@ -757,16 +757,26 @@
       <Column Name="ALLOW_CRUD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_insert_evento" Method="sp_insert_evento">
+    <Parameter Name="ID_DEPARTAMENTO_ORGANIZACION" Parameter="iD_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FECHA_EVENTO" Parameter="fECHA_EVENTO" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="HORA_EVENTO" Parameter="hORA_EVENTO" Type="System.TimeSpan" DbType="Time" />
+    <Parameter Name="LAT_EVENTO" Parameter="lAT_EVENTO" Type="System.Double" DbType="Float" />
+    <Parameter Name="LNG_EVENTO" Parameter="lNG_EVENTO" Type="System.Double" DbType="Float" />
+    <Parameter Name="LUGAR_EXACTO" Parameter="lUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="DESCRIPCION_GENERAL" Parameter="dESCRIPCION_GENERAL" Type="System.String" DbType="Text" />
+    <Return Type="System.Int32" />
+  </Function>
   <Function Name="dbo.sp_get_eventos_list" Method="sp_get_eventos_list">
     <ElementType Name="sp_get_eventos_listResult">
       <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FECHA_HORA_EVENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="LAT_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="LNG_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="LUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="DESCRIPCION_GENERAL" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="HORA_EVENTO" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="FECHA_HORA_EVENTO" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </ElementType>
   </Function>
