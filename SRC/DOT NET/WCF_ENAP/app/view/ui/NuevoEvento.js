@@ -243,6 +243,14 @@
                                 }
                             }
                         }
+                    },
+                    {
+                        xtype: 'textfield',
+                        labelAlign: 'top',
+                        margin: '5 5 5 5',
+                        name: 'LUGAR_EXACTO',
+                        fieldLabel: 'Lugar Exacto donde Ocurrió',
+                        anchor: '100%'
                     }
                 ]
 			}

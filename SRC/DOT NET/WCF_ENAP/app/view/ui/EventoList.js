@@ -9,49 +9,18 @@
     initComponent: function () {
 
         var me = this, eventsMarkers = [];
-        var fnCreateMarkerFromRecord = function (record) {
-            return {
-                lat: record.get('LAT_EVENTO'),
-                lng: record.get('LNG_EVENTO'),
-                marker: {
-                    title: record.get('NOMBRE_DEPARTAMENTO'),
-                    infoWindow: {
-                        content: '<h1>Hola</h1><p>' + record.get('DESCRIPCION_GENERAL') + '</p>'
-                    }
-                }
-            };
-        };
         Ext.data.StoreManager.lookup('dsEvento').on('write', function (store, operation, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
             if (name == 'Create') {
                 try {
-                    var nuevo_marker = fnCreateMarkerFromRecord(record);
-                    Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
+                    //var nuevo_marker = fnCreateMarkerFromRecord(record);
+                    //Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
                 } catch (e) { }
             }
         });
         Ext.StoreManager.lookup('dsEvento').on('load', function (store, records, successful, operation, eOpts) {
             //console.log(1);
-            Ext.each(records, function (record) {
-                if (record.get('LAT_EVENTO') != null && record.get('LNG_EVENTO') != null) {
-                    eventsMarkers.push(fnCreateMarkerFromRecord(record));
-                }
-                // console.log(2);
-            });
-            var gmapPanel = Ext.create('Ext.ux.GMapPanel', {
-                id: 'gmapid',
-                zoomLevel: 14,
-                gmapType: 'map',
-                mapConfOpts: ['enableScrollWheelZoom', 'enableDoubleClickZoom', 'enableDragging'],
-                mapControls: ['GSmallMapControl', 'GMapTypeControl'],
-                setCenter: {
-                    lat: -36.779860,
-                    lng: -73.125072
-                },
-                markers: eventsMarkers
-            });
-            Ext.getCmp('pnl_gmap').add(gmapPanel);
         });
         Ext.applyIf(me, {
             items: [
@@ -122,6 +91,9 @@
                                     if (records[0]) {
                                         rec = records[0];
                                         var idEvento = rec.get('ID_EVENTO');
+                                        var gmp = Ext.getCmp('gmapid').getMap();
+                                        Ext.getCmp('gmapid').hideMarkers();
+                                        Ext.getCmp('gmapid').getMarkerById(idEvento);
                                         //console.log(Ext.getCmp('gmapid').getMarkerById(idEvento));
                                     }
                                 }
@@ -209,7 +181,18 @@
                                 type: 'fit'
                             },
                             items: [
-
+                                Ext.create('Ext.ux.GMapPanel', {
+                                    id: 'gmapid',
+                                    zoomLevel: 14,
+                                    gmapType: 'map',
+                                    store: 'dsEvento',
+                                    mapConfOpts: ['enableScrollWheelZoom', 'enableDoubleClickZoom', 'enableDragging'],
+                                    mapControls: ['GSmallMapControl', 'GMapTypeControl'],
+                                    setCenter: {
+                                        lat: -36.779860,
+                                        lng: -73.125072
+                                    }
+                                })
                             ]
                         }
                     ]

@@ -64,9 +64,9 @@ namespace WCF_ENAP
             JSONCollection<sp_get_eventos_listResult> objJSON = new JSONCollection<sp_get_eventos_listResult>();
             //try{
             DateTime _fech_hora_evento = DateTime.Parse(FECHA_HORA_EVENTO);
-            TimeSpan _hora_evento = TimeSpan.Parse(HORA_EVENTO);
+            TimeSpan _hora_evento = TimeSpan.Parse(HORA_EVENTO+":00");
             DateTime fecha_hora_evento = _fech_hora_evento;
-            fecha_hora_evento.Add(_hora_evento);
+            fecha_hora_evento = fecha_hora_evento.Add(_hora_evento);
             TBL_EVENTO inserted = new TBL_EVENTO(){
                 ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
                 LAT_EVENTO = LAT_EVENTO,

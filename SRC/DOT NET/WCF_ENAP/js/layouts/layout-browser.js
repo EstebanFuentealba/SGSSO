@@ -121,7 +121,7 @@ Ext.onReady(function () {
                             var record = findChildRecursively(Ext.getCmp('tree-panel').getRootNode(), 'id', hash);
                             if (record) {
                                 showContent(hash, record.get('stores'));
-                            }
+                            }   
                         }
                     },
                     'select': function (selModel, record) {
