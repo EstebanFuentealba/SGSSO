@@ -59,23 +59,41 @@ namespace WCF_ENAP
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_EVENTO> Create(string ID_DEPARTAMENTO_ORGANIZACION, string OCURRIO, string FECHA_HORA_EVENTO, string HORA_EVENTO, string LAT_EVENTO, string LNG_EVENTO, string LUGAR_EXACTO)
+        public JSONCollection<sp_get_eventos_listResult> Create(string ID_DEPARTAMENTO_ORGANIZACION, string DESCRIPCION_GENERAL, string FECHA_HORA_EVENTO, string HORA_EVENTO, double LAT_EVENTO, double LNG_EVENTO, string LUGAR_EXACTO, string NOMBRE_DEPARTAMENTO)
 		{
-            JSONCollection<TBL_EVENTO> objJSON = new JSONCollection<TBL_EVENTO>();
+            JSONCollection<sp_get_eventos_listResult> objJSON = new JSONCollection<sp_get_eventos_listResult>();
             //try{
-                TBL_EVENTO nuevo = new TBL_EVENTO()
-                {
+            DateTime _fech_hora_evento = DateTime.Parse(FECHA_HORA_EVENTO);
+            TimeSpan _hora_evento = TimeSpan.Parse(HORA_EVENTO+":00");
+            DateTime fecha_hora_evento = _fech_hora_evento;
+            fecha_hora_evento = fecha_hora_evento.Add(_hora_evento);
+            TBL_EVENTO inserted = new TBL_EVENTO(){
+                ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
+                LAT_EVENTO = LAT_EVENTO,
+                LNG_EVENTO = LNG_EVENTO, 
+                LUGAR_EXACTO = LUGAR_EXACTO,
+                DESCRIPCION_GENERAL = DESCRIPCION_GENERAL,
+                FECHA_HORA_EVENTO = fecha_hora_evento
+            };
+            
+                    bd.TBL_EVENTO.InsertOnSubmit(inserted);
+                    bd.SubmitChanges();
+                sp_get_eventos_listResult nuevo = new sp_get_eventos_listResult()
+                { 
+                    ID_EVENTO = inserted.ID_EVENTO,
                     ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
-                    FECHA_HORA_EVENTO = DateTime.Parse(FECHA_HORA_EVENTO), 
-					FECHA_INGRESO = DateTime.Now, 
-					LAT_EVENTO = double.Parse(LAT_EVENTO), 
-					LNG_EVENTO = double.Parse(LNG_EVENTO), 
-					LUGAR_EXACTO = LUGAR_EXACTO
+                    LAT_EVENTO = LAT_EVENTO,
+                    LNG_EVENTO = LNG_EVENTO,
+                    LUGAR_EXACTO = LUGAR_EXACTO,
+                    DESCRIPCION_GENERAL = DESCRIPCION_GENERAL,
+                    FECHA_HORA_EVENTO = FECHA_HORA_EVENTO,
+                    HORA_EVENTO = HORA_EVENTO,
+                    NOMBRE_DEPARTAMENTO = NOMBRE_DEPARTAMENTO
                 };
-                bd.TBL_EVENTO.InsertOnSubmit(nuevo);
-                bd.SubmitChanges();
-			
+                
+
                 objJSON.items = nuevo;
+            
                 objJSON.totalCount = bd.TBL_EVENTO.Count();
                 objJSON.success = true;
             //} catch (Exception e) { objJSON.success = false; }

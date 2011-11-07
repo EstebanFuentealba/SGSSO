@@ -1,5 +1,8 @@
 ﻿Ext.define('WCF_ENAP.view.ui.EvaluaActividadEspecifica', {
     extend: 'Ext.form.Panel',
+    requires : [
+        'Ext.ux.grid.FiltersFeature'
+    ],
     bodyPadding: 10,
     autoScroll: true,
     title: 'Evaluar Matriz',

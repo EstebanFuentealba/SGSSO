@@ -12,10 +12,10 @@
     <meta http-equiv="Pragma" CONTENT="no-cache">
     <link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
-	<link href="/ux/css/data-view.css" rel="stylesheet" type="text/css" />
+	<!--<link href="/ux/css/data-view.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/CenterLayout.css" rel="stylesheet" type="text/css" />
-    
-    <script src="/ext-4.0.2a/ext-all-debug.js" type="text/javascript"></script>
+    -->
+    <script src="/ext-4.0.2a/ext-all.js" type="text/javascript"></script>
 	<script src="/ext-4.0.2a/locale/ext-lang-es.js"></script>
     
 
@@ -54,12 +54,7 @@
     }
     </style>
     <script type="text/javascript">
-        Ext.require([
-            'Ext.ux.grid.FiltersFeature',
-            'Ext.ux.form.MultiSelect',
-            'Ext.ux.form.ItemSelector'
-            /*,'Ext.ux.grid.LockingGridGroupSummary'*/
-        ]);
+        
         
         /**
         * Rewrite of Ext.util.JSON to support .NET dates

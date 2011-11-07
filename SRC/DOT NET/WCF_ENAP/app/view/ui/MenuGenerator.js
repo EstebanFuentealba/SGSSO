@@ -1,6 +1,9 @@
 ﻿Ext.define('WCF_ENAP.view.ui.MenuGenerator', {
     extend: 'Ext.panel.Panel',
-
+    requires: [
+        'Ext.ux.form.MultiSelect',
+        'Ext.ux.form.ItemSelector'
+    ],
     height: 600,
     layout: {
         type: 'column'
@@ -38,16 +41,19 @@
                         var form = Ext.getCmp('form_datos_nodo').getForm();
                         form.reset();
                         Ext.getCmp('STORE_LIST').removeAll();
-                        try {
-                            var storeNode = Ext.data.StoreManager.lookup('dsNode');
-                            var idx = storeNode.find('ID_NODO', recordAction.raw.ID_NODO);
-                            var recordNode = storeNode.getAt(idx);
+                        var storeNode, 
+                            recordNode,
+                            idx;
+                         try {
+                            storeNode = Ext.data.StoreManager.lookup('dsNode');
+                            idx = storeNode.find('ID_NODO', recordAction.raw.ID_NODO);
+                            recordNode = storeNode.getAt(idx);
                             Ext.getCmp('cmb_parent_node').select(recordNode.get('ID_NODO'));
                             Ext.getCmp('btn_action_submit').setText('Agregar');
                         } catch (ex) {
-                            var storeNode = Ext.data.StoreManager.lookup('dsNode');
-                            var idx = storeNode.find('ID_NODO', 1);
-                            var recordNode = storeNode.getAt(idx);
+                            storeNode = Ext.data.StoreManager.lookup('dsNode');
+                            idx = storeNode.find('ID_NODO', 1);
+                            recordNode = storeNode.getAt(idx);
                             Ext.getCmp('cmb_parent_node').select(recordNode.get('ID_NODO'));
                             Ext.getCmp('btn_action_submit').setText('Agregar');
 
@@ -297,23 +303,9 @@
                         storeGrupoPrivilegio.load({
                             params: { 'ID_NODO': recordAction.raw.ID_NODO },
                             callback: function (records, operation, success) {
-                                console.log(recordAction.raw.ID_NODO);
                                 Ext.getCmp('cmb_asigna_privilegio_nodo').select(recordAction.raw.ID_NODO);
                             }
                         });
-                        /*try {
-                        var storeNode = Ext.data.StoreManager.lookup('dsNode');
-                        var idx = storeNode.find('ID_NODO', recordAction.raw.ID_NODO);
-                        var recordNode = storeNode.getAt(idx);
-                        winPrivilegios.getComponent('form_asigna_privilegios').loadRecord(recordNode);
-                            
-                        } catch (ex) {
-                        var storeNode = Ext.data.StoreManager.lookup('dsNode');
-                        var idx = storeNode.find('ID_NODO', 1);
-                        var recordNode = storeNode.getAt(idx);
-                        winPrivilegios.getComponent('form_asigna_privilegios').loadRecord(recordNode);
-
-                        }*/
                     }
                 }
             ]
@@ -406,26 +398,6 @@
                                 {
                                     xtype: 'radiofield',
                                     boxLabel: 'Ext.window.Window',
-                                    name: 'TIPO_DISPLAY',
-                                    inputValue: 2
-                                }
-                            ]
-                            },
-                        {
-                            xtype: 'radiogroup',
-                            fieldLabel: 'Tipo de Elemento',
-                            anchor: '100%',
-                            id: 'radio_tipo_display',
-                            items: [
-                                {
-                                    xtype: 'radiofield',
-                                    name: 'TIPO_DISPLAY',
-                                    boxLabel: 'Panel',
-                                    inputValue: 1
-                                },
-                                {
-                                    xtype: 'radiofield',
-                                    boxLabel: 'Window',
                                     name: 'TIPO_DISPLAY',
                                     inputValue: 2
                                 }
