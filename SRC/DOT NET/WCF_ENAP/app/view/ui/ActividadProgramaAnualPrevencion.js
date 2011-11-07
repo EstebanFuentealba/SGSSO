@@ -311,7 +311,6 @@
 
                                                             form = this.up('form').getForm();
                                                             new_object = Ext.create('WCF_ENAP.model.Evidencia', form.getValues());
-                                                            console.log(new_object);
                                                             errors = new_object.validate();
 
                                                             if (errors.isValid() && form.isValid()) {
@@ -347,7 +346,7 @@
                                     store: 'dsCargo',
                                     valueField: 'ID_CARGO',
                                     columnWidth: 0.94,
-                                    name: 'ID_CARGO',
+                                    name: 'ID_CARGO'
                                 },
                                 {
                                     xtype: 'button',
@@ -490,11 +489,9 @@
                                         c_new_object.set('TURNO',name);
                                         records.push(c_new_object);
                                     });
-                                    console.log(records);
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, records);
                                 } else {
                                     new_object.set('TURNO','0');
-                                    console.log(new_object);
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, new_object);
                                 }  
                                 form.reset();

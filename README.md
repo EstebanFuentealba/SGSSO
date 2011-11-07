@@ -4,7 +4,7 @@ SGSSO
 TODO
 --------------------------------------
 * Agregar visibilidad de Cada Grupo (Usuario)
-* [Menu] 						Modificar Forma de Cargar Ventanas (tree-data - layout-browser)
+* [Menu] 						~~Modificar Forma de Cargar Ventanas (tree-data - layout-browser)~~
 * [Matriz de Riesgo] 		Mostrar las Medidas de Control / Editar
 * [Crear Matriz de Riesgo] 	~~Agregar Exportar Matriz,Planilla a la Tabla Agregar Matriz~~
 * [Crear Matriz de Riesgo] 	~~Boton Borrar Actual~~

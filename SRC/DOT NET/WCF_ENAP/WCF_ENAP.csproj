@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx" />
     <Content Include="app\model\dsBuscaMatriz.js" />
+    <Content Include="app\store\dsSearchMarker.js" />
     <Content Include="app\store\dsActividadProgramaAnualPrevencion.js" />
     <Content Include="app\store\dsBuscaMatriz.js" />
     <Content Include="app\store\dsFrecuencia.js" />
@@ -1226,6 +1227,7 @@
     <Content Include="app\view\ui\ParteCorporal.js" />
     <Content Include="app\view\ui\PuntoGeografico.js" />
     <Content Include="app\view\ui\RecursoComprometido.js" />
+    <Content Include="js\distancewidget.js" />
     <Content Include="js\layouts\layout-browser.js" />
     <Content Include="js\matriz\app\store\dsActividadEspecificaEvaluada.js" />
     <Content Include="js\matriz\app\store\dsPeligroMedida.js" />
@@ -1518,6 +1520,11 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="WS\ImportExcel.cs" />
+    <Compile Include="WS\SearchMarker.cs" />
+>>>>>>> d28c8f09eebefdc3d3fd6ce69ec759f8bdf4d525
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

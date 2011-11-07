@@ -5,7 +5,7 @@ CREATE PROCEDURE sp_search_point
 AS
 	SET NOCOUNT ON
 	DECLARE @intMilesModifier int
-	SET @intMilesModifier = 3959  -- If using kilometers, use 6371 instead of 3959
+	SET @intMilesModifier = 6371  -- If using kilometers, use 6371 instead of 3959
 
 	-- Select locations that are near the parameters based on distance formula on a sphere
 	SELECT ID_EVENTO, LAT_EVENTO, LNG_EVENTO,

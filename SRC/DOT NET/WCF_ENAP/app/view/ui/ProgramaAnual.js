@@ -27,57 +27,58 @@
                 height: 170,
                 layout: 'fit',
                 margin: '5 10 5 10',
-                items: [{
-                    xtype: 'chart',
-                    store: 'dsGraphAvanceProgramaAnual',
-                    flex: 1,
-                    shadow: true,
-                    animate: true,
-                    axes: [
-            {
-                type: 'Category',
-                fields: [
-            'NOMBRE_PROGRAMA'
-            ],
-                position: 'bottom',
-                title: 'Programas',
-                label: {
-                    renderer: function (v) {
-                        return Ext.String.ellipsis(v, 15, false);
-                    },
-                    font: '9px Arial'
-                }
-            },
-            {
-                type: 'Numeric',
-                fields: [
-            'PERCENT_TOTAL'
-            ],
-                position: 'left',
-                title: '% Avance',
-                maximum: 100,
-                minimum: 0
-            }
-            ],
-                    series: [
-            {
-                type: 'column',
-                label: {
-                    contrast: true,
-                    display: 'insideEnd',
-                    field: 'PERCENT_TOTAL',
-                    color: '#000',
-                    orientation: 'vertical',
-                    'text-anchor': 'middle'
+                items: [
+                    {
+                        xtype: 'chart',
+                        store: 'dsGraphAvanceProgramaAnual',
+                        flex: 1,
+                        shadow: true,
+                        animate: true,
+                        axes: [
+                {
+                    type: 'Category',
+                    fields: [
+                'NOMBRE_PROGRAMA'
+                ],
+                    position: 'bottom',
+                    title: 'Programas',
+                    label: {
+                        renderer: function (v) {
+                            return Ext.String.ellipsis(v, 15, false);
+                        },
+                        font: '9px Arial'
+                    }
                 },
-                xField: 'NOMBRE_PROGRAMA',
-                yField: [
-            'PERCENT_TOTAL'
-            ]
-            }
-            ]
-                }]
-            },
+                {
+                    type: 'Numeric',
+                    fields: [
+                'PERCENT_TOTAL'
+                ],
+                    position: 'left',
+                    title: '% Avance',
+                    maximum: 100,
+                    minimum: 0
+                }
+                ],
+                        series: [
+                {
+                    type: 'column',
+                    label: {
+                        contrast: true,
+                        display: 'insideEnd',
+                        field: 'PERCENT_TOTAL',
+                        color: '#000',
+                        orientation: 'vertical',
+                        'text-anchor': 'middle'
+                    },
+                    xField: 'NOMBRE_PROGRAMA',
+                    yField: [
+                'PERCENT_TOTAL'
+                ]
+                }
+                ]
+                    }]
+                },
                 {
                     xtype: 'panel',
                     height: 562,
