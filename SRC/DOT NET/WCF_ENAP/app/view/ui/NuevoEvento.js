@@ -237,8 +237,8 @@
                                 draggable: true,
                                 listeners: {
                                     dragend: function (e) {
-                                        Ext.getCmp('form_lat_evento').setValue(e.latLng.Na);
-                                        Ext.getCmp('form_lng_evento').setValue(e.latLng.Oa);
+                                        Ext.getCmp('form_lat_evento').setValue(e.latLng.lat());
+                                        Ext.getCmp('form_lng_evento').setValue(e.latLng.lng());
                                     }
                                 }
                             }

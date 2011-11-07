@@ -15,8 +15,8 @@
                 name = Ext.String.capitalize(operation.action);
             if (name == 'Create') {
                 try {
-                    //var nuevo_marker = fnCreateMarkerFromRecord(record);
-                    //Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
+                    var nuevo_marker = fnCreateMarkerFromRecord(record);
+                    Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
                 } catch (e) { }
             }
         });
@@ -113,7 +113,7 @@
                                                     store: 'dsSearchMarker',
                                                     listeners: {
                                                         dragEnd: function (point, radio, store) {
-                                                            cmp.hideMarkers();
+                                                            
                                                             var search = Ext.data.StoreManager.lookup('dsSearchMarker');
                                                             search.load({
                                                                 params: {
@@ -122,7 +122,8 @@
                                                                     'RADIO': radio
                                                                 },
                                                                 callback: function (records, operation, success) {
-                                                                    /* Remover el record que es igual al marker */
+                                                                    cmp.hideMarkers();
+                                                                     /* Remover el record que es igual al marker */
                                                                     cmp.recoresToMarkers(records, true);
                                                                 }
                                                             });
@@ -135,8 +136,21 @@
                                                 });
                                                 marker.circleRadio = circleRadio;
                                                 lastMarker = marker;
+                                            } else {
+                                                if (lastMarker != null) {
+
+                                                    if (lastMarker.circleRadio.dragMarker != null) {
+                                                        lastMarker.circleRadio.dragMarker.setMap(null);
+                                                        lastMarker.circleRadio.dragMarker = null;
+                                                    }
+                                                    if (lastMarker.circleRadio.circle != null) {
+                                                        lastMarker.circleRadio.circle.setMap(null);
+                                                        lastMarker.circleRadio.circle = null;
+                                                    }
+                                                    lastMarker.setMap(null);
+                                                }
                                             }
-                                        }
+                                        } 
                                     }
                                 }
                             },
@@ -207,7 +221,23 @@
                                     xtype: 'pagingtoolbar',
                                     store: 'dsEvento',
                                     displayInfo: true,
-                                    dock: 'bottom'
+                                    dock: 'bottom',
+                                    listeners: {
+                                        beforechange: function (paging, page, eOpts) {
+                                            if (lastMarker != null) {
+
+                                                if (lastMarker.circleRadio.dragMarker != null) {
+                                                    lastMarker.circleRadio.dragMarker.setMap(null);
+                                                    lastMarker.circleRadio.dragMarker = null;
+                                                }
+                                                if (lastMarker.circleRadio.circle != null) {
+                                                    lastMarker.circleRadio.circle.setMap(null);
+                                                    lastMarker.circleRadio.circle = null;
+                                                }
+                                                lastMarker.setMap(null);
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                     },
@@ -233,7 +263,7 @@
                                         lat: -36.779860,
                                         lng: -73.125072
                                     }
-                            })
+                                })
                             ],
                             dockedItems: [{
                                 xtype: 'toolbar',
@@ -253,8 +283,9 @@
                                                 lastMarker.circleRadio.circle.setMap(null);
                                                 lastMarker.circleRadio.circle = null;
                                             }
+                                            lastMarker.setMap(null);
                                         }
-                                        lastMarker.setMap(null);
+
                                         cmp.deleteOverlays(false);
                                         cmp.getMap().setZoom(14);
 
