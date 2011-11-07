@@ -1518,7 +1518,6 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
-    <Compile Include="WS\ImportExcel.cs" />
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -1526,7 +1525,6 @@
     <Compile Include="WS\Departamento.cs" />
     <Compile Include="WS\Division.cs" />
     <Compile Include="WS\Empresa.cs" />
-    <Compile Include="WS\Evento.cs" />
     <Compile Include="WS\EventoEmpresa.cs" />
     <Compile Include="WS\EventoTrabajador.cs" />
     <Compile Include="WS\Evidencia.cs" />

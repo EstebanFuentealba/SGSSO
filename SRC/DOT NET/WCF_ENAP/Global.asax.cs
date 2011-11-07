@@ -22,8 +22,8 @@ namespace WCF_ENAP
 			//RouteTable.Routes.Add(new ServiceRoute("historialInforme", new WebServiceHostFactory(), typeof(historialInforme)));
 
             RouteTable.Routes.Add(new ServiceRoute("TreeData", new WebServiceHostFactory(), typeof(TreeData)));
-            RouteTable.Routes.Add(new ServiceRoute("e0063", new WebServiceHostFactory(), typeof(e0063)));
-			RouteTable.Routes.Add(new ServiceRoute("e0064", new WebServiceHostFactory(), typeof(e0064)));
+           // RouteTable.Routes.Add(new ServiceRoute("e0063", new WebServiceHostFactory(), typeof(e0063)));
+			//RouteTable.Routes.Add(new ServiceRoute("e0064", new WebServiceHostFactory(), typeof(e0064)));
 
 			RouteTable.Routes.Add(new ServiceRoute("matrizHistorial", new WebServiceHostFactory(), typeof(matrizHistorial)));
 			RouteTable.Routes.Add(new ServiceRoute("Accion", new WebServiceHostFactory(), typeof(Accion)));
@@ -46,7 +46,7 @@ namespace WCF_ENAP
 			RouteTable.Routes.Add(new ServiceRoute("Departamento", new WebServiceHostFactory(), typeof(Departamento)));
 			RouteTable.Routes.Add(new ServiceRoute("Division", new WebServiceHostFactory(), typeof(Division)));
 			RouteTable.Routes.Add(new ServiceRoute("Empresa", new WebServiceHostFactory(), typeof(Empresa)));
-			RouteTable.Routes.Add(new ServiceRoute("Evento", new WebServiceHostFactory(), typeof(Evento)));
+			//RouteTable.Routes.Add(new ServiceRoute("Evento", new WebServiceHostFactory(), typeof(Evento)));
 			RouteTable.Routes.Add(new ServiceRoute("EventoEmpresa", new WebServiceHostFactory(), typeof(EventoEmpresa)));
 			RouteTable.Routes.Add(new ServiceRoute("EventoTrabajador", new WebServiceHostFactory(), typeof(EventoTrabajador)));
 			RouteTable.Routes.Add(new ServiceRoute("Evidencia", new WebServiceHostFactory(), typeof(Evidencia)));
