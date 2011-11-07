@@ -10,8 +10,7 @@ Ext.define('WCF_ENAP.model.Evento', {
         { "name": "LAT_EVENTO", "type": "float" },
         { "name": "LNG_EVENTO", "type": "float" },
         { "name": "LUGAR_EXACTO", "type": "string" },
-        { "name": "DESCRIPCION_GENERAL", "type": "string" },
-        { "name": "MARKER" }
+        { "name": "DESCRIPCION_GENERAL", "type": "string" }
     ]
 });
 Ext.define('WCF_ENAP.store.dsEvento', {

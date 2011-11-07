@@ -780,4 +780,21 @@
       <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_search_point" Method="sp_search_point">
+    <Parameter Name="PointLat" Parameter="pointLat" Type="System.Decimal" DbType="Decimal(10,7)" />
+    <Parameter Name="PointLng" Parameter="pointLng" Type="System.Decimal" DbType="Decimal(10,7)" />
+    <Parameter Name="intRadius" Type="System.Decimal" DbType="Decimal(10,7)" />
+    <ElementType Name="sp_search_pointResult">
+      <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LAT_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LNG_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DESCRIPCION_GENERAL" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="HORA_EVENTO" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="FECHA_HORA_EVENTO" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DISTANCE" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

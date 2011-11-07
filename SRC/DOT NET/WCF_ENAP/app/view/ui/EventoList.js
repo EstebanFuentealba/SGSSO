@@ -8,7 +8,8 @@
     id: 'panel-EventoList',
     initComponent: function () {
 
-        var me = this, eventsMarkers = [];
+        var me = this,
+            lastMarker = null;
         Ext.data.StoreManager.lookup('dsEvento').on('write', function (store, operation, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
@@ -18,9 +19,6 @@
                     //Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
                 } catch (e) { }
             }
-        });
-        Ext.StoreManager.lookup('dsEvento').on('load', function (store, records, successful, operation, eOpts) {
-            //console.log(1);
         });
         Ext.applyIf(me, {
             items: [
@@ -87,37 +85,80 @@
                             columnWidth: 0.5,
                             listeners: {
                                 selectionchange: function (model, records) {
-                                    var rec;
+                                    var rec,
+                                        gmp,
+                                        cmp;
                                     if (records[0]) {
                                         rec = records[0];
+                                        cmp = Ext.getCmp('gmapid');
                                         var idEvento = rec.get('ID_EVENTO');
-                                        var gmp = Ext.getCmp('gmapid').getMap();
-                                        Ext.getCmp('gmapid').hideMarkers();
-                                        Ext.getCmp('gmapid').getMarkerById(idEvento);
-                                        //console.log(Ext.getCmp('gmapid').getMarkerById(idEvento));
+                                        gmp = cmp.getMap();
+                                        cmp.hideMarkers();
+                                        var marker = cmp.getMarkerById(idEvento);
+                                        if (marker) {
+                                            if (marker.getPosition().lat() != 0 && marker.getPosition().lng() != 0) {
+                                                if (lastMarker != null) {
+                                                    if (lastMarker.circleRadio.dragMarker != null) {
+                                                        lastMarker.circleRadio.dragMarker.setMap(null);
+                                                        lastMarker.circleRadio.dragMarker = null;
+                                                    }
+                                                    if (lastMarker.circleRadio.circle != null) {
+                                                        lastMarker.circleRadio.circle.setMap(null);
+                                                        lastMarker.circleRadio.circle = null;
+                                                    }
+                                                }
+                                                gmp.panTo(marker.getPosition());
+                                                var circleRadio = cmp.addCircleMarker({
+                                                    marker: marker,
+                                                    store: 'dsSearchMarker',
+                                                    listeners: {
+                                                        dragEnd: function (point, radio, store) {
+                                                            cmp.hideMarkers();
+                                                            var search = Ext.data.StoreManager.lookup('dsSearchMarker');
+                                                            search.load({
+                                                                params: {
+                                                                    'LAT': point.lat(),
+                                                                    'LNG': point.lng(),
+                                                                    'RADIO': radio
+                                                                },
+                                                                callback: function (records, operation, success) {
+                                                                    /* Remover el record que es igual al marker */
+                                                                    cmp.recoresToMarkers(records, true);
+                                                                }
+                                                            });
+                                                        },
+                                                        load: function (store, records, successful, operation, eOpts) {
+                                                            console.log("CARGO LA WEA ");
+                                                            console.log(records);
+                                                        }
+                                                    }
+                                                });
+                                                marker.circleRadio = circleRadio;
+                                                lastMarker = marker;
+                                            }
+                                        }
                                     }
                                 }
                             },
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
-                                    dataIndex: 'ID_EVENTO',
-                                    text: 'ID'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
                                     dataIndex: 'NOMBRE_DEPARTAMENTO',
-                                    text: 'Departamento'
+                                    text: 'Departamento',
+                                    flex: 0.6
                                 },
                                 {
                                     xtype: 'datecolumn',
                                     dataIndex: 'FECHA_HORA_EVENTO',
-                                    text: 'Fecha'
+                                    text: 'Fecha',
+                                    flex: 0.2
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'HORA_EVENTO',
-                                    text: 'Hora'
+                                    text: 'Hora',
+                                    flex: 0.2
+
                                 }
                             ],
                             viewConfig: {
@@ -172,7 +213,7 @@
                     },
                         {
                             xtype: 'panel',
-                            height: 350,
+                            height: 500,
                             id: 'pnl_gmap',
                             margin: '5 5 5 5',
                             title: 'Geo Localización de Incidentes',
@@ -192,8 +233,35 @@
                                         lat: -36.779860,
                                         lng: -73.125072
                                     }
-                                })
-                            ]
+                            })
+                            ],
+                            dockedItems: [{
+                                xtype: 'toolbar',
+                                dock: 'top',
+                                items: [{
+                                    xtype: 'button',
+                                    text: 'Mostrar Todos',
+                                    handler: function () {
+                                        var cmp = Ext.getCmp('gmapid');
+                                        if (lastMarker != null) {
+
+                                            if (lastMarker.circleRadio.dragMarker != null) {
+                                                lastMarker.circleRadio.dragMarker.setMap(null);
+                                                lastMarker.circleRadio.dragMarker = null;
+                                            }
+                                            if (lastMarker.circleRadio.circle != null) {
+                                                lastMarker.circleRadio.circle.setMap(null);
+                                                lastMarker.circleRadio.circle = null;
+                                            }
+                                        }
+                                        lastMarker.setMap(null);
+                                        cmp.deleteOverlays(false);
+                                        cmp.getMap().setZoom(14);
+
+                                        cmp.showMarkers();
+                                    }
+                                }]
+                            }]
                         }
                     ]
                 }

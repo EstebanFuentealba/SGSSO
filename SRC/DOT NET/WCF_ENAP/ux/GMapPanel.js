@@ -237,6 +237,9 @@ markers: [{
     mapDefined: false,
     // private
     mapDefinedGMap: false,
+	radius: 0.2, /* KM */
+	min_radius: 0.1, 
+	max_radius: 0.7, 
     initComponent : function(){
         
         this.addEvents(
@@ -255,15 +258,14 @@ markers: [{
         );
         
         Ext.applyIf(this,{
-          cache: {
-              marker: [],
-              polyline: [],
-              infowindow: []
-          },
-		  
-		  store : null,
-		  dataMarker : null
-        });
+			cache: {
+				marker: [],
+				polyline: [],
+				infowindow: []
+			},
+			store : null,
+			dataMarker : null
+		});
         this.dataMarker = Ext.create('Ext.util.HashMap',{});
         Ext.ux.GMapPanel.superclass.initComponent.call(this);        
 
@@ -380,7 +382,7 @@ markers: [{
 	// private
 	onLoad: function(store, records, successful, operation, eOpts ) {
 		var me = this;
-		me.deleteOverlays();
+		me.deleteOverlays(true);
 		me.dataMarker.clear();
 		me.recoresToMarkers(records);
 		me.setLoading(false);
@@ -397,15 +399,23 @@ markers: [{
         var me = this;
 		//me.recoresToMarkers(records);
     },
-	deleteOverlays: function() {
+	deleteOverlays: function(removeMarkers) {
 		var me = this;
 		if (me.dataMarker) {
 			me.dataMarker.each(function(key,value,length) {
-				value.setMap(null);
+				if(value.circleRadio.dragMarker != null){
+					value.circleRadio.dragMarker.setMap(null);
+				}
+				if(value.circleRadio.circle != null) {
+					value.circleRadio.circle.setMap(null);
+				}
+				if(removeMarkers){
+					value.setMap(null);
+				}
 			});
 		}
 	},
-	recoresToMarkers: function(records) {
+	recoresToMarkers: function(records,searched) {
 		var me = this,
 			startIndex = 0,
 			endIndex = (records.length - 1);
@@ -413,7 +423,13 @@ markers: [{
         for(var i = startIndex; i <= endIndex; i++){
 			var rec = records[i];
 			var marker = me.addSingleMarker(me.createMarkerFromRecord(rec));
-			me.dataMarker.add(rec.get('ID_EVENTO'),marker);
+			me.dataMarker.add(rec.get('ID_EVENTO'),Ext.applyIf(marker,{
+				circleRadio: {
+					idSearched: searched,
+					dragMarker: null,
+					circle: null
+				}
+			}));
         }
 		
 	},
@@ -621,6 +637,103 @@ markers: [{
         return infoWindow;
 
     },
+	distanceBetweenPoints : function(p1, p2) {
+		if (!p1 || !p2) {
+			return 0;
+		}
+		var R = 6371000; // Radius of the Earth in km
+		var dLat = (p2.lat() - p1.lat()) * Math.PI / 180;
+		var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
+		var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) *
+		Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		var d = R * c;
+		return d;
+	},
+	getLatLngDragMarkerCircle:function(center, new_radius) {
+		var me = this,
+			latConv,
+			lngConv,
+			step,
+			counter = 0,
+			CirclePoints,
+			nodes = new_radius * 40; 
+		if(new_radius < 1) {
+			nodes = 40;
+		}
+		latConv = (me.distanceBetweenPoints(center, new google.maps.LatLng(center.lat() + 0.1, center.lng())) / 100);
+		lngConv = (me.distanceBetweenPoints(center, new google.maps.LatLng(center.lat(), center.lng() + 0.1))) / 100;
+		
+		var cLat = center.lat() + (new_radius / latConv * Math.cos(90 * Math.PI / 180)); 
+		var cLng = center.lng() + (new_radius / lngConv * Math.sin(90 * Math.PI / 180));
+		return new google.maps.LatLng(cLat,cLng);
+	},
+	addCircleMarker : function(conf) {
+		var me = this, 
+			circle,
+			markerDragable,
+			circleStore;
+		markerDragable = new google.maps.Marker({
+			icon: '/icons/resize-off.png',
+			flat: true,
+			draggable: true,
+			title: 'Arrastra para aumentar el Radio',
+			position: me.getLatLngDragMarkerCircle(conf.marker.getPosition(),me.radius)
+		});
+        markerDragable.setMap(me.getMap());
+		circle = new google.maps.Circle({
+			map: me.getMap(),
+			radius: (me.radius * 1000),
+			strokeWeight: 1
+		});
+		google.maps.event.addListener(markerDragable, 'dragstart', function(point) {
+			circle.set('fillColor', '#59b');
+			markerDragable.set('icon','/icons/resize.png');
+		});
+		google.maps.event.addListener(markerDragable, 'drag', function(point) {
+			var mapCenter = conf.marker.getPosition();
+			var latLng 		= new google.maps.LatLng(mapCenter.lat() , markerDragable.getPosition().lng());
+			markerDragable.setPosition(latLng);
+			var new_radius 	= (me.distanceBetweenPoints(latLng,mapCenter) / 1000);
+			if (new_radius < me.min_radius) {
+				new_radius = me.min_radius;
+				markerDragable.setPosition(me.getLatLngDragMarkerCircle(mapCenter,me.min_radius));
+			}
+			if (new_radius > me.max_radius) {
+				new_radius = me.max_radius;
+				markerDragable.setPosition(me.getLatLngDragMarkerCircle(mapCenter,me.max_radius));
+			}
+			if(markerDragable.getPosition().lng() < mapCenter.lng()) {
+				markerDragable.setPosition(me.getLatLngDragMarkerCircle(mapCenter,me.min_radius));
+			}else {
+				circle.set('radius', (new_radius * 1000));
+			}
+		});
+		
+		google.maps.event.addListener(markerDragable, 'dragend', function(point) {
+			circle.set('fillColor', '#00AAFF');
+			markerDragable.set('icon','/icons/resize-off.png');
+			if(conf.listeners != null && Ext.isFunction(conf.listeners.dragEnd)) {
+				conf.listeners.dragEnd(conf.marker.getPosition(),circle.get('radius'),circleStore);
+			}			
+		});
+		circle.bindTo('center', conf.marker, 'position');
+		/* Store Search */
+		if (conf.store) {
+            conf.store = Ext.data.StoreManager.lookup(conf.store);
+        }
+        circleStore = conf.store;
+        if (conf.store && (conf.store.getCount())) {
+            /*Refresh*/
+        }
+		
+		return {
+			circle: circle,
+			dragMarker: markerDragable,
+			store: circleStore
+		};
+	},
     // private
     hideAllInfoWindows : function(){
         for (var i = 0; i < this.cache.infowindow.length; i++) {
@@ -636,15 +749,21 @@ markers: [{
     },
     // private
     hideMarkers : function(){
-        Ext.each(this.cache.marker, function(mrk){
-            mrk.setMap(null);
-        });
+		var me = this;
+		if (me.dataMarker) {
+			me.dataMarker.each(function(key,value,length) {
+				value.setMap(null);
+			});
+		}
     },
     // private
     showMarkers : function(){
-        Ext.each(this.cache.marker, function(mrk){
-            mrk.setMap(this.getMap());
-        },this);
+		var me = this;
+		if (me.dataMarker) {
+			me.dataMarker.each(function(key,value,length) {
+				value.setMap(me.getMap());
+			});
+		}
     },
     // private
     addMapControls : function(){
