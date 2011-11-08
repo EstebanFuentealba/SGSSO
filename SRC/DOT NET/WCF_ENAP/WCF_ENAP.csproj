@@ -1228,6 +1228,7 @@
     <Content Include="app\view\ui\PuntoGeografico.js" />
     <Content Include="app\view\ui\RecursoComprometido.js" />
     <Content Include="js\distancewidget.js" />
+    <Content Include="js\ext-utils-koala.js" />
     <Content Include="js\layouts\layout-browser.js" />
     <Content Include="js\matriz\app\store\dsActividadEspecificaEvaluada.js" />
     <Content Include="js\matriz\app\store\dsPeligroMedida.js" />

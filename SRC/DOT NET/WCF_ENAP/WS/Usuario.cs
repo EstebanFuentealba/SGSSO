@@ -45,7 +45,7 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_USUARIO.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.TBL_USUARIO.Skip(_start).Take(_limit).Select(r => r);
                 List<TBL_USUARIO> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_USUARIO.Count<TBL_USUARIO>();

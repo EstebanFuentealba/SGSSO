@@ -82,6 +82,7 @@
                             store: 'dsEvento',
                             margin: '5 5 5 5',
                             title: 'Listado de Incidentes Reportados',
+                            id: 'grid_eventos_list',
                             columnWidth: 0.5,
                             listeners: {
                                 selectionchange: function (model, records) {
@@ -113,7 +114,7 @@
                                                     store: 'dsSearchMarker',
                                                     listeners: {
                                                         dragEnd: function (point, radio, store) {
-                                                            
+
                                                             var search = Ext.data.StoreManager.lookup('dsSearchMarker');
                                                             search.load({
                                                                 params: {
@@ -123,7 +124,7 @@
                                                                 },
                                                                 callback: function (records, operation, success) {
                                                                     cmp.hideMarkers();
-                                                                     /* Remover el record que es igual al marker */
+                                                                    /* Remover el record que es igual al marker */
                                                                     cmp.recoresToMarkers(records, true);
                                                                 }
                                                             });
@@ -150,7 +151,7 @@
                                                     lastMarker.setMap(null);
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                             },
@@ -159,7 +160,7 @@
                                     xtype: 'gridcolumn',
                                     dataIndex: 'NOMBRE_DEPARTAMENTO',
                                     text: 'Departamento',
-                                    flex: 0.6
+                                    flex: 0.5
                                 },
                                 {
                                     xtype: 'datecolumn',
@@ -171,8 +172,28 @@
                                     xtype: 'gridcolumn',
                                     dataIndex: 'HORA_EVENTO',
                                     text: 'Hora',
-                                    flex: 0.2
+                                    flex: 0.1
 
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'T',
+                                    flex: 0.05,
+                                    dataIndex: 'COUNT_TRABAJADORES',
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        return '<b>' + value + '</b> <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="  class="x-tree-icon x-tree-icon-parent grupo-icon">'
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'I',
+                                    flex: 0.05,
+                                    dataIndex: 'COUNT_IPRELIMINAR',
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        return '<b>'+value + '</b> <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="x-tree-icon x-tree-icon-parent informe-icon">'
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'S',
+                                    flex: 0.1
                                 }
                             ],
                             viewConfig: {
@@ -220,6 +241,7 @@
                                 {
                                     xtype: 'pagingtoolbar',
                                     store: 'dsEvento',
+                                    id: 'grid_pagintoolbar_eventos_list',
                                     displayInfo: true,
                                     dock: 'bottom',
                                     listeners: {
@@ -272,24 +294,8 @@
                                     xtype: 'button',
                                     text: 'Mostrar Todos',
                                     handler: function () {
-                                        var cmp = Ext.getCmp('gmapid');
-                                        if (lastMarker != null) {
-
-                                            if (lastMarker.circleRadio.dragMarker != null) {
-                                                lastMarker.circleRadio.dragMarker.setMap(null);
-                                                lastMarker.circleRadio.dragMarker = null;
-                                            }
-                                            if (lastMarker.circleRadio.circle != null) {
-                                                lastMarker.circleRadio.circle.setMap(null);
-                                                lastMarker.circleRadio.circle = null;
-                                            }
-                                            lastMarker.setMap(null);
-                                        }
-
-                                        cmp.deleteOverlays(false);
-                                        cmp.getMap().setZoom(14);
-
-                                        cmp.showMarkers();
+                                        Ext.getCmp('grid_pagintoolbar_eventos_list').doRefresh();
+                                        Ext.getCmp('grid_eventos_list').getSelectionModel().deselectAll();
                                     }
                                 }]
                             }]
