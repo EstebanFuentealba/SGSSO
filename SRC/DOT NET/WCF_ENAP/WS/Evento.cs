@@ -9,12 +9,19 @@ using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
 using WCF_ENAP.WS;
+using System.Globalization;
+using System.Web.Script.Serialization;
 
 /**
   *NameSpace.
   */
 namespace WCF_ENAP
 {
+    public class ExtJSSort {
+        public string property;
+        public string direction;
+        public ExtJSSort() { }
+    }
 	[ServiceContract]
 	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
@@ -26,15 +33,33 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_ORGANIZACION={ID_ORGANIZACION}&ANO={ANO}")]
+        public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page, 
+            int _start, 
+            int _limit, 
+            string _sort,
+            int ID_ORGANIZACION,
+            int ANO)
         {
-            JSONCollection<List<sp_get_eventos_listResult>> objJSON = new JSONCollection<List<sp_get_eventos_listResult>>();
-            try
+            ExtJSSort sort = null;
+            if (_sort != null)
             {
-                if (_dir == null)
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                sort = ser.Deserialize<ExtJSSort>(_sort.Replace("[","").Replace("]",""));
+            }
+            JSONCollection<List<sp_get_eventos_listResult>> objJSON = new JSONCollection<List<sp_get_eventos_listResult>>();
+            //try{
+            if (ID_ORGANIZACION == 0)
+            {
+                ID_ORGANIZACION = 1;
+            }
+            if (ANO == 0)
+            {
+                ANO = DateTime.Now.Year;
+            }
+                if (sort != null && sort.direction == null)
                 {
-                    _dir = "DESC";
+                    sort.direction = "DESC";
                 }
                 if (_page == 0)
                 {
@@ -46,29 +71,42 @@ namespace WCF_ENAP
                 }
                 _start = (_page * _limit) - _limit;
 
-                var query = bd.sp_get_eventos_list().Skip(_start).Take(_limit).Select(r => r);
+                var query = bd.sp_get_eventos_list(_start, _limit, ID_ORGANIZACION, ANO).OrderBy(orderBy(sort));
+                
+                query = query.Select(r => r);
                 List<sp_get_eventos_listResult> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_EVENTO.Count<TBL_EVENTO>();
                 objJSON.success = true;
-            }
-            catch (Exception ex) {
-                objJSON.success = false;
-            }
+            //} catch (Exception ex) { objJSON.success = false; }
             return objJSON;
         }
 
 		[WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<sp_get_eventos_listResult> Create(string ID_DEPARTAMENTO_ORGANIZACION, string DESCRIPCION_GENERAL, string FECHA_HORA_EVENTO, string HORA_EVENTO, double LAT_EVENTO, double LNG_EVENTO, string LUGAR_EXACTO, string NOMBRE_DEPARTAMENTO)
+        public JSONCollection<sp_get_eventos_listResult> Create(int ID_DEPARTAMENTO_ORGANIZACION,
+                int ID_EMPRESA,
+                string DESCRIPCION_GENERAL, 
+                string FECHA_HORA_EVENTO, 
+                string HORA_EVENTO, 
+                double LAT_EVENTO, 
+                double LNG_EVENTO, 
+                string LUGAR_EXACTO, 
+                string NOMBRE_DEPARTAMENTO)
 		{
+            if (ID_EMPRESA == 0)
+            {
+                /* ENAP */
+                ID_EMPRESA = 1;
+            }
             JSONCollection<sp_get_eventos_listResult> objJSON = new JSONCollection<sp_get_eventos_listResult>();
-            //try{
+            //try
             DateTime _fech_hora_evento = DateTime.Parse(FECHA_HORA_EVENTO);
             TimeSpan _hora_evento = TimeSpan.Parse(HORA_EVENTO+":00");
             DateTime fecha_hora_evento = _fech_hora_evento;
             fecha_hora_evento = fecha_hora_evento.Add(_hora_evento);
+
             TBL_EVENTO inserted = new TBL_EVENTO(){
-                ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
+                ID_DEPARTAMENTO_ORGANIZACION = ID_DEPARTAMENTO_ORGANIZACION,
                 LAT_EVENTO = LAT_EVENTO,
                 LNG_EVENTO = LNG_EVENTO, 
                 LUGAR_EXACTO = LUGAR_EXACTO,
@@ -78,10 +116,21 @@ namespace WCF_ENAP
             
                     bd.TBL_EVENTO.InsertOnSubmit(inserted);
                     bd.SubmitChanges();
+                    TBL_EVENTO_EMPRESA eventoEmpresa = new TBL_EVENTO_EMPRESA()
+                    {
+                        ID_EMPRESA = ID_EMPRESA,
+                        ESTADO=true,
+                        ID_EVENTO = inserted.ID_EVENTO
+                    };
+                    bd.TBL_EVENTO_EMPRESA.InsertOnSubmit(eventoEmpresa);
+                    bd.SubmitChanges();
+
+                    
+
                 sp_get_eventos_listResult nuevo = new sp_get_eventos_listResult()
                 { 
                     ID_EVENTO = inserted.ID_EVENTO,
-                    ID_DEPARTAMENTO_ORGANIZACION = int.Parse(ID_DEPARTAMENTO_ORGANIZACION),
+                    ID_DEPARTAMENTO_ORGANIZACION = ID_DEPARTAMENTO_ORGANIZACION,
                     LAT_EVENTO = LAT_EVENTO,
                     LNG_EVENTO = LNG_EVENTO,
                     LUGAR_EXACTO = LUGAR_EXACTO,
@@ -156,37 +205,63 @@ namespace WCF_ENAP
 			bd.TBL_EVENTO.DeleteOnSubmit(objeto);
 			bd.SubmitChanges();
 		}
-		string orderBy(string _sort)
+		string orderBy(ExtJSSort _sort)
 		{
 			if (_sort != null)
 			{
-				if (_sort.Equals("ID_DEPARTAMENTO_ORGANIZACION")){
-					return "ID_DEPARTAMENTO_ORGANIZACION";
+                if (_sort.property.Equals("NOMBRE_DEPARTAMENTO"))
+                {
+                    return "NOMBRE_DEPARTAMENTO " + _sort.direction;
+                }
+                if (_sort.property.Equals("HORA_EVENTO"))
+                {
+                    return "HORA_EVENTO " + _sort.direction;
+                }
+				if (_sort.property.Equals("ID_DEPARTAMENTO_ORGANIZACION")){
+                    return "ID_DEPARTAMENTO_ORGANIZACION " + _sort.direction;
 				}
-				if (_sort.Equals("OCURRIO")){
-					return "OCURRIO";
+                if (_sort.property.Equals("OCURRIO"))
+                {
+                    return "OCURRIO " + _sort.direction;
 				}
-				if (_sort.Equals("FECHA_HORA_EVENTO")){
-					return "FECHA_HORA_EVENTO";
+                if (_sort.property.Equals("FECHA_HORA_EVENTO"))
+                {
+                    return "FECHA_HORA_EVENTO " + _sort.direction;
 				}
-				if (_sort.Equals("FECHA_INGRESO")){
-					return "FECHA_INGRESO";
+                if (_sort.property.Equals("FECHA_INGRESO"))
+                {
+                    return "FECHA_INGRESO " + _sort.direction;
 				}
-				if (_sort.Equals("LAT_EVENTO")){
-					return "LAT_EVENTO";
+                if (_sort.property.Equals("LAT_EVENTO"))
+                {
+                    return "LAT_EVENTO " + _sort.direction;
 				}
-				if (_sort.Equals("LNG_EVENTO")){
-					return "LNG_EVENTO";
+                if (_sort.property.Equals("LNG_EVENTO"))
+                {
+                    return "LNG_EVENTO " + _sort.direction;
 				}
-				if (_sort.Equals("TIPO_EVENTO")){
-					return "TIPO_EVENTO";
+                if (_sort.property.Equals("TIPO_EVENTO"))
+                {
+                    return "TIPO_EVENTO " + _sort.direction;
 				}
-				if (_sort.Equals("LUGAR_EXACTO")){
-					return "LUGAR_EXACTO";
+                if (_sort.property.Equals("LUGAR_EXACTO"))
+                {
+                    return "LUGAR_EXACTO " + _sort.direction;
 				}
-
+                if (_sort.property.Equals("COUNT_TRABAJADORES"))
+                {
+                    return "COUNT_TRABAJADORES " + _sort.direction;
+                }
+                if (_sort.property.Equals("COUNT_IPRELIMINAR"))
+                {
+                    return "COUNT_IPRELIMINAR " + _sort.direction;
+                }
+                if (_sort.property.Equals("ID_EVENTO"))
+                {
+                    return "ID_EVENTO " + _sort.direction;
+                }
 			}
-			return "ID_EVENTO";
+            return "FECHA_HORA_EVENTO DESC";
 		}
 	}
 }

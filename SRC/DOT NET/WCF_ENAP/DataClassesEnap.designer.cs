@@ -657,18 +657,18 @@ namespace WCF_ENAP
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_search_point")]
+		public ISingleResult<sp_search_pointResult> sp_search_point([global::System.Data.Linq.Mapping.ParameterAttribute(Name="PointLat", DbType="Decimal(10,7)")] System.Nullable<decimal> pointLat, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PointLng", DbType="Decimal(10,7)")] System.Nullable<decimal> pointLng, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(10,7)")] System.Nullable<decimal> intRadius)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pointLat, pointLng, intRadius);
+			return ((ISingleResult<sp_search_pointResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_matriz_by_id")]
 		public ISingleResult<sp_get_matriz_by_idResult> sp_get_matriz_by_id([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_MATRIZ", DbType="Int")] System.Nullable<int> iD_MATRIZ)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_MATRIZ);
 			return ((ISingleResult<sp_get_matriz_by_idResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_search_actividad_evaluada")]
-		public ISingleResult<sp_search_actividad_evaluadaResult> sp_search_actividad_evaluada([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_DEPARTAMENTO_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DIVISION", DbType="Int")] System.Nullable<int> iD_DIVISION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_AREA", DbType="Int")] System.Nullable<int> iD_AREA, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ACTIVIDAD_GENERAL", DbType="Int")] System.Nullable<int> iD_ACTIVIDAD_GENERAL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NOMBRE_ACTIVIDAD_ESPECIFICA", DbType="NVarChar(100)")] string nOMBRE_ACTIVIDAD_ESPECIFICA, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_CARGO", DbType="Int")] System.Nullable<int> iD_CARGO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CONDICION", DbType="Int")] System.Nullable<int> cONDICION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_INICIO", DbType="DateTime")] System.Nullable<System.DateTime> fECHA_INICIO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_TERMINO", DbType="DateTime")] System.Nullable<System.DateTime> fECHA_TERMINO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_ORGANIZACION, iD_DEPARTAMENTO_ORGANIZACION, iD_DIVISION, iD_AREA, iD_ACTIVIDAD_GENERAL, nOMBRE_ACTIVIDAD_ESPECIFICA, iD_CARGO, cONDICION, fECHA_INICIO, fECHA_TERMINO, iD_USUARIO);
-			return ((ISingleResult<sp_search_actividad_evaluadaResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_privilegios_by_usuario")]
@@ -713,25 +713,25 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_privilegios_userResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_insert_evento")]
-		public int sp_insert_evento([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_DEPARTAMENTO_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_EVENTO", DbType="Date")] System.Nullable<System.DateTime> fECHA_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="HORA_EVENTO", DbType="Time")] System.Nullable<System.TimeSpan> hORA_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LAT_EVENTO", DbType="Float")] System.Nullable<double> lAT_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LNG_EVENTO", DbType="Float")] System.Nullable<double> lNG_EVENTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LUGAR_EXACTO", DbType="VarChar(200)")] string lUGAR_EXACTO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DESCRIPCION_GENERAL", DbType="Text")] string dESCRIPCION_GENERAL)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_search_actividad_evaluada")]
+		public ISingleResult<sp_search_actividad_evaluadaResult> sp_search_actividad_evaluada([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_DEPARTAMENTO_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_DIVISION", DbType="Int")] System.Nullable<int> iD_DIVISION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_AREA", DbType="Int")] System.Nullable<int> iD_AREA, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ACTIVIDAD_GENERAL", DbType="Int")] System.Nullable<int> iD_ACTIVIDAD_GENERAL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NOMBRE_ACTIVIDAD_ESPECIFICA", DbType="NVarChar(100)")] string nOMBRE_ACTIVIDAD_ESPECIFICA, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_CARGO", DbType="Int")] System.Nullable<int> iD_CARGO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CONDICION", DbType="Int")] System.Nullable<int> cONDICION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_INICIO", DbType="DateTime")] System.Nullable<System.DateTime> fECHA_INICIO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FECHA_TERMINO", DbType="DateTime")] System.Nullable<System.DateTime> fECHA_TERMINO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="VarChar(200)")] string iD_USUARIO)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_DEPARTAMENTO_ORGANIZACION, fECHA_EVENTO, hORA_EVENTO, lAT_EVENTO, lNG_EVENTO, lUGAR_EXACTO, dESCRIPCION_GENERAL);
-			return ((int)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_ORGANIZACION, iD_DEPARTAMENTO_ORGANIZACION, iD_DIVISION, iD_AREA, iD_ACTIVIDAD_GENERAL, nOMBRE_ACTIVIDAD_ESPECIFICA, iD_CARGO, cONDICION, fECHA_INICIO, fECHA_TERMINO, iD_USUARIO);
+			return ((ISingleResult<sp_search_actividad_evaluadaResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_departamento_by_organizacion")]
+		public ISingleResult<sp_get_eventos_departamento_by_organizacionResult> sp_get_eventos_departamento_by_organizacion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ANO", DbType="Int")] System.Nullable<int> aNO, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p0, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p1)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_ORGANIZACION, aNO, p0, p1);
+			return ((ISingleResult<sp_get_eventos_departamento_by_organizacionResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_list")]
-		public ISingleResult<sp_get_eventos_listResult> sp_get_eventos_list()
+		public ISingleResult<sp_get_eventos_listResult> sp_get_eventos_list([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p0, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p1, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ANO", DbType="Int")] System.Nullable<int> aNO)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), p0, p1, iD_ORGANIZACION, aNO);
 			return ((ISingleResult<sp_get_eventos_listResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_search_point")]
-		public ISingleResult<sp_search_pointResult> sp_search_point([global::System.Data.Linq.Mapping.ParameterAttribute(Name="PointLat", DbType="Decimal(10,7)")] System.Nullable<decimal> pointLat, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PointLng", DbType="Decimal(10,7)")] System.Nullable<decimal> pointLng, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(10,7)")] System.Nullable<decimal> intRadius)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pointLat, pointLng, intRadius);
-			return ((ISingleResult<sp_search_pointResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -15509,6 +15509,205 @@ namespace WCF_ENAP
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_search_pointResult
+	{
+		
+		private int _ID_EVENTO;
+		
+		private System.Nullable<double> _LAT_EVENTO;
+		
+		private System.Nullable<double> _LNG_EVENTO;
+		
+		private string _LUGAR_EXACTO;
+		
+		private string _DESCRIPCION_GENERAL;
+		
+		private string _HORA_EVENTO;
+		
+		private string _FECHA_HORA_EVENTO;
+		
+		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
+		
+		private string _NOMBRE_DEPARTAMENTO;
+		
+		private System.Nullable<double> _DISTANCE;
+		
+		public sp_search_pointResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int ID_EVENTO
+		{
+			get
+			{
+				return this._ID_EVENTO;
+			}
+			set
+			{
+				if ((this._ID_EVENTO != value))
+				{
+					this._ID_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LAT_EVENTO", DbType="Float")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Nullable<double> LAT_EVENTO
+		{
+			get
+			{
+				return this._LAT_EVENTO;
+			}
+			set
+			{
+				if ((this._LAT_EVENTO != value))
+				{
+					this._LAT_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LNG_EVENTO", DbType="Float")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.Nullable<double> LNG_EVENTO
+		{
+			get
+			{
+				return this._LNG_EVENTO;
+			}
+			set
+			{
+				if ((this._LNG_EVENTO != value))
+				{
+					this._LNG_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LUGAR_EXACTO", DbType="VarChar(200)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string LUGAR_EXACTO
+		{
+			get
+			{
+				return this._LUGAR_EXACTO;
+			}
+			set
+			{
+				if ((this._LUGAR_EXACTO != value))
+				{
+					this._LUGAR_EXACTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_GENERAL", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string DESCRIPCION_GENERAL
+		{
+			get
+			{
+				return this._DESCRIPCION_GENERAL;
+			}
+			set
+			{
+				if ((this._DESCRIPCION_GENERAL != value))
+				{
+					this._DESCRIPCION_GENERAL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HORA_EVENTO", DbType="VarChar(5)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string HORA_EVENTO
+		{
+			get
+			{
+				return this._HORA_EVENTO;
+			}
+			set
+			{
+				if ((this._HORA_EVENTO != value))
+				{
+					this._HORA_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="VarChar(8)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string FECHA_HORA_EVENTO
+		{
+			get
+			{
+				return this._FECHA_HORA_EVENTO;
+			}
+			set
+			{
+				if ((this._FECHA_HORA_EVENTO != value))
+				{
+					this._FECHA_HORA_EVENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
+		{
+			get
+			{
+				return this._ID_DEPARTAMENTO_ORGANIZACION;
+			}
+			set
+			{
+				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
+				{
+					this._ID_DEPARTAMENTO_ORGANIZACION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_DEPARTAMENTO", DbType="VarChar(200)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public string NOMBRE_DEPARTAMENTO
+		{
+			get
+			{
+				return this._NOMBRE_DEPARTAMENTO;
+			}
+			set
+			{
+				if ((this._NOMBRE_DEPARTAMENTO != value))
+				{
+					this._NOMBRE_DEPARTAMENTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DISTANCE", DbType="Float")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public System.Nullable<double> DISTANCE
+		{
+			get
+			{
+				return this._DISTANCE;
+			}
+			set
+			{
+				if ((this._DISTANCE != value))
+				{
+					this._DISTANCE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class sp_get_matriz_by_idResult
 	{
 		
@@ -15911,357 +16110,6 @@ namespace WCF_ENAP
 				if ((this._NOMBRE_DIVISION != value))
 				{
 					this._NOMBRE_DIVISION = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class sp_search_actividad_evaluadaResult
-	{
-		
-		private int _ID_ACTIVIDAD_EVALUADA;
-		
-		private System.Nullable<int> _ID_ACTIVIDAD_GENERAL;
-		
-		private System.Nullable<int> _ID_DIVISION;
-		
-		private System.Nullable<int> _ID_ACTIVIDAD_ESPECIFICA;
-		
-		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
-		
-		private System.Nullable<int> _ID_PELIGRO;
-		
-		private System.Nullable<int> _ID_AREA;
-		
-		private System.Nullable<int> _ID_CARGO;
-		
-		private System.Nullable<bool> _ESTADO;
-		
-		private System.Nullable<int> _VALORACION_CONSECUENCIA;
-		
-		private System.Nullable<int> _VALORACION_PROBABILIDAD;
-		
-		private System.Nullable<int> _MEDIDA_VALORACION_CONSECUENCIA;
-		
-		private System.Nullable<int> _MEDIDA_VALORACION_PROBABILIDAD;
-		
-		private System.Nullable<System.DateTime> _FECHA_CREACION;
-		
-		private System.Nullable<int> _CONDICION;
-		
-		private int _ID_MATRIZ;
-		
-		private string _NOM_ACTIVIDAD_ESPECIFICA;
-		
-		private string _NOMBRE_MATRIZ;
-		
-		public sp_search_actividad_evaluadaResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_EVALUADA", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_ACTIVIDAD_EVALUADA
-		{
-			get
-			{
-				return this._ID_ACTIVIDAD_EVALUADA;
-			}
-			set
-			{
-				if ((this._ID_ACTIVIDAD_EVALUADA != value))
-				{
-					this._ID_ACTIVIDAD_EVALUADA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_GENERAL", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<int> ID_ACTIVIDAD_GENERAL
-		{
-			get
-			{
-				return this._ID_ACTIVIDAD_GENERAL;
-			}
-			set
-			{
-				if ((this._ID_ACTIVIDAD_GENERAL != value))
-				{
-					this._ID_ACTIVIDAD_GENERAL = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DIVISION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<int> ID_DIVISION
-		{
-			get
-			{
-				return this._ID_DIVISION;
-			}
-			set
-			{
-				if ((this._ID_DIVISION != value))
-				{
-					this._ID_DIVISION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_ESPECIFICA", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public System.Nullable<int> ID_ACTIVIDAD_ESPECIFICA
-		{
-			get
-			{
-				return this._ID_ACTIVIDAD_ESPECIFICA;
-			}
-			set
-			{
-				if ((this._ID_ACTIVIDAD_ESPECIFICA != value))
-				{
-					this._ID_ACTIVIDAD_ESPECIFICA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
-		{
-			get
-			{
-				return this._ID_DEPARTAMENTO_ORGANIZACION;
-			}
-			set
-			{
-				if ((this._ID_DEPARTAMENTO_ORGANIZACION != value))
-				{
-					this._ID_DEPARTAMENTO_ORGANIZACION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PELIGRO", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public System.Nullable<int> ID_PELIGRO
-		{
-			get
-			{
-				return this._ID_PELIGRO;
-			}
-			set
-			{
-				if ((this._ID_PELIGRO != value))
-				{
-					this._ID_PELIGRO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_AREA", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public System.Nullable<int> ID_AREA
-		{
-			get
-			{
-				return this._ID_AREA;
-			}
-			set
-			{
-				if ((this._ID_AREA != value))
-				{
-					this._ID_AREA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_CARGO", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-		public System.Nullable<int> ID_CARGO
-		{
-			get
-			{
-				return this._ID_CARGO;
-			}
-			set
-			{
-				if ((this._ID_CARGO != value))
-				{
-					this._ID_CARGO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ESTADO", DbType="Bit")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-		public System.Nullable<bool> ESTADO
-		{
-			get
-			{
-				return this._ESTADO;
-			}
-			set
-			{
-				if ((this._ESTADO != value))
-				{
-					this._ESTADO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VALORACION_CONSECUENCIA", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-		public System.Nullable<int> VALORACION_CONSECUENCIA
-		{
-			get
-			{
-				return this._VALORACION_CONSECUENCIA;
-			}
-			set
-			{
-				if ((this._VALORACION_CONSECUENCIA != value))
-				{
-					this._VALORACION_CONSECUENCIA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VALORACION_PROBABILIDAD", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
-		public System.Nullable<int> VALORACION_PROBABILIDAD
-		{
-			get
-			{
-				return this._VALORACION_PROBABILIDAD;
-			}
-			set
-			{
-				if ((this._VALORACION_PROBABILIDAD != value))
-				{
-					this._VALORACION_PROBABILIDAD = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MEDIDA_VALORACION_CONSECUENCIA", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
-		public System.Nullable<int> MEDIDA_VALORACION_CONSECUENCIA
-		{
-			get
-			{
-				return this._MEDIDA_VALORACION_CONSECUENCIA;
-			}
-			set
-			{
-				if ((this._MEDIDA_VALORACION_CONSECUENCIA != value))
-				{
-					this._MEDIDA_VALORACION_CONSECUENCIA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MEDIDA_VALORACION_PROBABILIDAD", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
-		public System.Nullable<int> MEDIDA_VALORACION_PROBABILIDAD
-		{
-			get
-			{
-				return this._MEDIDA_VALORACION_PROBABILIDAD;
-			}
-			set
-			{
-				if ((this._MEDIDA_VALORACION_PROBABILIDAD != value))
-				{
-					this._MEDIDA_VALORACION_PROBABILIDAD = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
-		public System.Nullable<System.DateTime> FECHA_CREACION
-		{
-			get
-			{
-				return this._FECHA_CREACION;
-			}
-			set
-			{
-				if ((this._FECHA_CREACION != value))
-				{
-					this._FECHA_CREACION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CONDICION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
-		public System.Nullable<int> CONDICION
-		{
-			get
-			{
-				return this._CONDICION;
-			}
-			set
-			{
-				if ((this._CONDICION != value))
-				{
-					this._CONDICION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_MATRIZ", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
-		public int ID_MATRIZ
-		{
-			get
-			{
-				return this._ID_MATRIZ;
-			}
-			set
-			{
-				if ((this._ID_MATRIZ != value))
-				{
-					this._ID_MATRIZ = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOM_ACTIVIDAD_ESPECIFICA", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
-		public string NOM_ACTIVIDAD_ESPECIFICA
-		{
-			get
-			{
-				return this._NOM_ACTIVIDAD_ESPECIFICA;
-			}
-			set
-			{
-				if ((this._NOM_ACTIVIDAD_ESPECIFICA != value))
-				{
-					this._NOM_ACTIVIDAD_ESPECIFICA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_MATRIZ", DbType="VarChar(436)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
-		public string NOMBRE_MATRIZ
-		{
-			get
-			{
-				return this._NOMBRE_MATRIZ;
-			}
-			set
-			{
-				if ((this._NOMBRE_MATRIZ != value))
-				{
-					this._NOMBRE_MATRIZ = value;
 				}
 			}
 		}
@@ -17443,152 +17291,119 @@ namespace WCF_ENAP
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class sp_get_eventos_listResult
+	public partial class sp_search_actividad_evaluadaResult
 	{
 		
-		private int _ID_EVENTO;
+		private int _ID_ACTIVIDAD_EVALUADA;
 		
-		private System.Nullable<double> _LAT_EVENTO;
+		private System.Nullable<int> _ID_ACTIVIDAD_GENERAL;
 		
-		private System.Nullable<double> _LNG_EVENTO;
+		private System.Nullable<int> _ID_DIVISION;
 		
-		private string _LUGAR_EXACTO;
-		
-		private string _DESCRIPCION_GENERAL;
-		
-		private string _HORA_EVENTO;
-		
-		private string _FECHA_HORA_EVENTO;
+		private System.Nullable<int> _ID_ACTIVIDAD_ESPECIFICA;
 		
 		private System.Nullable<int> _ID_DEPARTAMENTO_ORGANIZACION;
 		
-		private string _NOMBRE_DEPARTAMENTO;
+		private System.Nullable<int> _ID_PELIGRO;
 		
-		public sp_get_eventos_listResult()
+		private System.Nullable<int> _ID_AREA;
+		
+		private System.Nullable<int> _ID_CARGO;
+		
+		private System.Nullable<bool> _ESTADO;
+		
+		private System.Nullable<int> _VALORACION_CONSECUENCIA;
+		
+		private System.Nullable<int> _VALORACION_PROBABILIDAD;
+		
+		private System.Nullable<int> _MEDIDA_VALORACION_CONSECUENCIA;
+		
+		private System.Nullable<int> _MEDIDA_VALORACION_PROBABILIDAD;
+		
+		private System.Nullable<System.DateTime> _FECHA_CREACION;
+		
+		private System.Nullable<int> _CONDICION;
+		
+		private int _ID_MATRIZ;
+		
+		private string _NOM_ACTIVIDAD_ESPECIFICA;
+		
+		private string _NOMBRE_MATRIZ;
+		
+		public sp_search_actividad_evaluadaResult()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_EVALUADA", DbType="Int NOT NULL")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int ID_EVENTO
+		public int ID_ACTIVIDAD_EVALUADA
 		{
 			get
 			{
-				return this._ID_EVENTO;
+				return this._ID_ACTIVIDAD_EVALUADA;
 			}
 			set
 			{
-				if ((this._ID_EVENTO != value))
+				if ((this._ID_ACTIVIDAD_EVALUADA != value))
 				{
-					this._ID_EVENTO = value;
+					this._ID_ACTIVIDAD_EVALUADA = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LAT_EVENTO", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_GENERAL", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Nullable<double> LAT_EVENTO
+		public System.Nullable<int> ID_ACTIVIDAD_GENERAL
 		{
 			get
 			{
-				return this._LAT_EVENTO;
+				return this._ID_ACTIVIDAD_GENERAL;
 			}
 			set
 			{
-				if ((this._LAT_EVENTO != value))
+				if ((this._ID_ACTIVIDAD_GENERAL != value))
 				{
-					this._LAT_EVENTO = value;
+					this._ID_ACTIVIDAD_GENERAL = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LNG_EVENTO", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DIVISION", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Nullable<double> LNG_EVENTO
+		public System.Nullable<int> ID_DIVISION
 		{
 			get
 			{
-				return this._LNG_EVENTO;
+				return this._ID_DIVISION;
 			}
 			set
 			{
-				if ((this._LNG_EVENTO != value))
+				if ((this._ID_DIVISION != value))
 				{
-					this._LNG_EVENTO = value;
+					this._ID_DIVISION = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LUGAR_EXACTO", DbType="VarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ACTIVIDAD_ESPECIFICA", DbType="Int")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public string LUGAR_EXACTO
+		public System.Nullable<int> ID_ACTIVIDAD_ESPECIFICA
 		{
 			get
 			{
-				return this._LUGAR_EXACTO;
+				return this._ID_ACTIVIDAD_ESPECIFICA;
 			}
 			set
 			{
-				if ((this._LUGAR_EXACTO != value))
+				if ((this._ID_ACTIVIDAD_ESPECIFICA != value))
 				{
-					this._LUGAR_EXACTO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_GENERAL", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public string DESCRIPCION_GENERAL
-		{
-			get
-			{
-				return this._DESCRIPCION_GENERAL;
-			}
-			set
-			{
-				if ((this._DESCRIPCION_GENERAL != value))
-				{
-					this._DESCRIPCION_GENERAL = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HORA_EVENTO", DbType="VarChar(5)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public string HORA_EVENTO
-		{
-			get
-			{
-				return this._HORA_EVENTO;
-			}
-			set
-			{
-				if ((this._HORA_EVENTO != value))
-				{
-					this._HORA_EVENTO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="VarChar(8)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public string FECHA_HORA_EVENTO
-		{
-			get
-			{
-				return this._FECHA_HORA_EVENTO;
-			}
-			set
-			{
-				if ((this._FECHA_HORA_EVENTO != value))
-				{
-					this._FECHA_HORA_EVENTO = value;
+					this._ID_ACTIVIDAD_ESPECIFICA = value;
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
 		{
 			get
@@ -17604,27 +17419,318 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_DEPARTAMENTO", DbType="VarChar(200)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-		public string NOMBRE_DEPARTAMENTO
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PELIGRO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public System.Nullable<int> ID_PELIGRO
 		{
 			get
 			{
-				return this._NOMBRE_DEPARTAMENTO;
+				return this._ID_PELIGRO;
 			}
 			set
 			{
-				if ((this._NOMBRE_DEPARTAMENTO != value))
+				if ((this._ID_PELIGRO != value))
 				{
-					this._NOMBRE_DEPARTAMENTO = value;
+					this._ID_PELIGRO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_AREA", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public System.Nullable<int> ID_AREA
+		{
+			get
+			{
+				return this._ID_AREA;
+			}
+			set
+			{
+				if ((this._ID_AREA != value))
+				{
+					this._ID_AREA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_CARGO", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public System.Nullable<int> ID_CARGO
+		{
+			get
+			{
+				return this._ID_CARGO;
+			}
+			set
+			{
+				if ((this._ID_CARGO != value))
+				{
+					this._ID_CARGO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ESTADO", DbType="Bit")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public System.Nullable<bool> ESTADO
+		{
+			get
+			{
+				return this._ESTADO;
+			}
+			set
+			{
+				if ((this._ESTADO != value))
+				{
+					this._ESTADO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VALORACION_CONSECUENCIA", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public System.Nullable<int> VALORACION_CONSECUENCIA
+		{
+			get
+			{
+				return this._VALORACION_CONSECUENCIA;
+			}
+			set
+			{
+				if ((this._VALORACION_CONSECUENCIA != value))
+				{
+					this._VALORACION_CONSECUENCIA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VALORACION_PROBABILIDAD", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<int> VALORACION_PROBABILIDAD
+		{
+			get
+			{
+				return this._VALORACION_PROBABILIDAD;
+			}
+			set
+			{
+				if ((this._VALORACION_PROBABILIDAD != value))
+				{
+					this._VALORACION_PROBABILIDAD = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MEDIDA_VALORACION_CONSECUENCIA", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<int> MEDIDA_VALORACION_CONSECUENCIA
+		{
+			get
+			{
+				return this._MEDIDA_VALORACION_CONSECUENCIA;
+			}
+			set
+			{
+				if ((this._MEDIDA_VALORACION_CONSECUENCIA != value))
+				{
+					this._MEDIDA_VALORACION_CONSECUENCIA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MEDIDA_VALORACION_PROBABILIDAD", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public System.Nullable<int> MEDIDA_VALORACION_PROBABILIDAD
+		{
+			get
+			{
+				return this._MEDIDA_VALORACION_PROBABILIDAD;
+			}
+			set
+			{
+				if ((this._MEDIDA_VALORACION_PROBABILIDAD != value))
+				{
+					this._MEDIDA_VALORACION_PROBABILIDAD = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_CREACION", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+		public System.Nullable<System.DateTime> FECHA_CREACION
+		{
+			get
+			{
+				return this._FECHA_CREACION;
+			}
+			set
+			{
+				if ((this._FECHA_CREACION != value))
+				{
+					this._FECHA_CREACION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CONDICION", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+		public System.Nullable<int> CONDICION
+		{
+			get
+			{
+				return this._CONDICION;
+			}
+			set
+			{
+				if ((this._CONDICION != value))
+				{
+					this._CONDICION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_MATRIZ", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+		public int ID_MATRIZ
+		{
+			get
+			{
+				return this._ID_MATRIZ;
+			}
+			set
+			{
+				if ((this._ID_MATRIZ != value))
+				{
+					this._ID_MATRIZ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOM_ACTIVIDAD_ESPECIFICA", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+		public string NOM_ACTIVIDAD_ESPECIFICA
+		{
+			get
+			{
+				return this._NOM_ACTIVIDAD_ESPECIFICA;
+			}
+			set
+			{
+				if ((this._NOM_ACTIVIDAD_ESPECIFICA != value))
+				{
+					this._NOM_ACTIVIDAD_ESPECIFICA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_MATRIZ", DbType="VarChar(436)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+		public string NOMBRE_MATRIZ
+		{
+			get
+			{
+				return this._NOMBRE_MATRIZ;
+			}
+			set
+			{
+				if ((this._NOMBRE_MATRIZ != value))
+				{
+					this._NOMBRE_MATRIZ = value;
 				}
 			}
 		}
 	}
 	
 	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class sp_search_pointResult
+	public partial class sp_get_eventos_departamento_by_organizacionResult
 	{
+		
+		private System.Nullable<long> _ROW_NUMBER;
+		
+		private int _MES_ID;
+		
+		private string _MES_NAME;
+		
+		private System.Nullable<int> _COUNT_EVENTOS;
+		
+		public sp_get_eventos_departamento_by_organizacionResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ROW_NUMBER", DbType="BigInt")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<long> ROW_NUMBER
+		{
+			get
+			{
+				return this._ROW_NUMBER;
+			}
+			set
+			{
+				if ((this._ROW_NUMBER != value))
+				{
+					this._ROW_NUMBER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_ID", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int MES_ID
+		{
+			get
+			{
+				return this._MES_ID;
+			}
+			set
+			{
+				if ((this._MES_ID != value))
+				{
+					this._MES_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_NAME", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string MES_NAME
+		{
+			get
+			{
+				return this._MES_NAME;
+			}
+			set
+			{
+				if ((this._MES_NAME != value))
+				{
+					this._MES_NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COUNT_EVENTOS", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public System.Nullable<int> COUNT_EVENTOS
+		{
+			get
+			{
+				return this._COUNT_EVENTOS;
+			}
+			set
+			{
+				if ((this._COUNT_EVENTOS != value))
+				{
+					this._COUNT_EVENTOS = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_eventos_listResult
+	{
+		
+		private System.Nullable<long> _ROW_NUMBER;
 		
 		private int _ID_EVENTO;
 		
@@ -17644,14 +17750,33 @@ namespace WCF_ENAP
 		
 		private string _NOMBRE_DEPARTAMENTO;
 		
-		private System.Nullable<double> _DISTANCE;
+		private System.Nullable<int> _COUNT_TRABAJADORES;
 		
-		public sp_search_pointResult()
+		private System.Nullable<int> _COUNT_IPRELIMINAR;
+		
+		public sp_get_eventos_listResult()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ROW_NUMBER", DbType="BigInt")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<long> ROW_NUMBER
+		{
+			get
+			{
+				return this._ROW_NUMBER;
+			}
+			set
+			{
+				if ((this._ROW_NUMBER != value))
+				{
+					this._ROW_NUMBER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_EVENTO", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public int ID_EVENTO
 		{
 			get
@@ -17668,7 +17793,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LAT_EVENTO", DbType="Float")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public System.Nullable<double> LAT_EVENTO
 		{
 			get
@@ -17685,7 +17810,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LNG_EVENTO", DbType="Float")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public System.Nullable<double> LNG_EVENTO
 		{
 			get
@@ -17702,7 +17827,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LUGAR_EXACTO", DbType="VarChar(200)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public string LUGAR_EXACTO
 		{
 			get
@@ -17719,7 +17844,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPCION_GENERAL", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
 		public string DESCRIPCION_GENERAL
 		{
 			get
@@ -17736,7 +17861,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HORA_EVENTO", DbType="VarChar(5)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
 		public string HORA_EVENTO
 		{
 			get
@@ -17752,8 +17877,8 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="VarChar(8)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FECHA_HORA_EVENTO", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
 		public string FECHA_HORA_EVENTO
 		{
 			get
@@ -17770,7 +17895,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_DEPARTAMENTO_ORGANIZACION", DbType="Int")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
 		public System.Nullable<int> ID_DEPARTAMENTO_ORGANIZACION
 		{
 			get
@@ -17787,7 +17912,7 @@ namespace WCF_ENAP
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_DEPARTAMENTO", DbType="VarChar(200)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
 		public string NOMBRE_DEPARTAMENTO
 		{
 			get
@@ -17803,19 +17928,36 @@ namespace WCF_ENAP
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DISTANCE", DbType="Float")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-		public System.Nullable<double> DISTANCE
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COUNT_TRABAJADORES", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<int> COUNT_TRABAJADORES
 		{
 			get
 			{
-				return this._DISTANCE;
+				return this._COUNT_TRABAJADORES;
 			}
 			set
 			{
-				if ((this._DISTANCE != value))
+				if ((this._COUNT_TRABAJADORES != value))
 				{
-					this._DISTANCE = value;
+					this._COUNT_TRABAJADORES = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COUNT_IPRELIMINAR", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<int> COUNT_IPRELIMINAR
+		{
+			get
+			{
+				return this._COUNT_IPRELIMINAR;
+			}
+			set
+			{
+				if ((this._COUNT_IPRELIMINAR != value))
+				{
+					this._COUNT_IPRELIMINAR = value;
 				}
 			}
 		}

@@ -78,6 +78,12 @@
                     }
                 },
                 {
+                    text: 'Elimina Nodo',
+                    iconCls: 'btn-delete',
+                    handler: function (widget, event) {
+                    }
+                },
+                {
                     text: 'Asignar Permisos al Nodo',
                     iconCls: 'btn-edit',
                     handler: function (widget, event) {

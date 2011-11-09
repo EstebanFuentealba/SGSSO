@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx" />
     <Content Include="app\model\dsBuscaMatriz.js" />
+    <Content Include="app\store\dsGraphEventosOrganizacion.js" />
     <Content Include="app\store\dsSearchMarker.js" />
     <Content Include="app\store\dsActividadProgramaAnualPrevencion.js" />
     <Content Include="app\store\dsBuscaMatriz.js" />
@@ -1228,6 +1229,7 @@
     <Content Include="app\view\ui\PuntoGeografico.js" />
     <Content Include="app\view\ui\RecursoComprometido.js" />
     <Content Include="js\distancewidget.js" />
+    <Content Include="js\ext-utils-koala.js" />
     <Content Include="js\layouts\layout-browser.js" />
     <Content Include="js\matriz\app\store\dsActividadEspecificaEvaluada.js" />
     <Content Include="js\matriz\app\store\dsPeligroMedida.js" />
@@ -1540,6 +1542,7 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
+    <Compile Include="WS\GraphEventosOrganizacion.cs" />
     <Compile Include="WS\ImportExcel.cs" />
     <Compile Include="WS\SearchMarker.cs" />
     <Compile Include="WS\TreeData.cs">
