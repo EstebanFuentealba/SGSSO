@@ -33,8 +33,13 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}")]
-        public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page, int _start, int _limit, string _sort)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_ORGANIZACION={ID_ORGANIZACION}&ANO={ANO}")]
+        public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page, 
+            int _start, 
+            int _limit, 
+            string _sort,
+            int ID_ORGANIZACION,
+            int ANO)
         {
             ExtJSSort sort = null;
             if (_sort != null)
@@ -44,6 +49,14 @@ namespace WCF_ENAP
             }
             JSONCollection<List<sp_get_eventos_listResult>> objJSON = new JSONCollection<List<sp_get_eventos_listResult>>();
             //try{
+            if (ID_ORGANIZACION == 0)
+            {
+                ID_ORGANIZACION = 1;
+            }
+            if (ANO == 0)
+            {
+                ANO = DateTime.Now.Year;
+            }
                 if (sort != null && sort.direction == null)
                 {
                     sort.direction = "DESC";
@@ -58,7 +71,7 @@ namespace WCF_ENAP
                 }
                 _start = (_page * _limit) - _limit;
 
-                var query = bd.sp_get_eventos_list(_start, _limit).OrderBy(orderBy(sort));
+                var query = bd.sp_get_eventos_list(_start, _limit, ID_ORGANIZACION, ANO).OrderBy(orderBy(sort));
                 
                 query = query.Select(r => r);
                 List<sp_get_eventos_listResult> results = query.ToList();
@@ -86,10 +99,8 @@ namespace WCF_ENAP
                 ID_EMPRESA = 1;
             }
             JSONCollection<sp_get_eventos_listResult> objJSON = new JSONCollection<sp_get_eventos_listResult>();
-            //try{
-            IFormatProvider culture = new CultureInfo("es-ES", true);
-
-            DateTime _fech_hora_evento = DateTime.ParseExact(FECHA_HORA_EVENTO, "dd/mm/yyyy", culture);
+            //try
+            DateTime _fech_hora_evento = DateTime.Parse(FECHA_HORA_EVENTO);
             TimeSpan _hora_evento = TimeSpan.Parse(HORA_EVENTO+":00");
             DateTime fecha_hora_evento = _fech_hora_evento;
             fecha_hora_evento = fecha_hora_evento.Add(_hora_evento);
@@ -245,8 +256,12 @@ namespace WCF_ENAP
                 {
                     return "COUNT_IPRELIMINAR " + _sort.direction;
                 }
+                if (_sort.property.Equals("ID_EVENTO"))
+                {
+                    return "ID_EVENTO " + _sort.direction;
+                }
 			}
-			return "ID_EVENTO DESC";
+            return "FECHA_HORA_EVENTO DESC";
 		}
 	}
 }

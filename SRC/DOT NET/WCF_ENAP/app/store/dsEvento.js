@@ -22,7 +22,7 @@ Ext.define('WCF_ENAP.store.dsEvento', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             autoSync: true,
             storeId: 'dsEvento',
             pageSize: 10,

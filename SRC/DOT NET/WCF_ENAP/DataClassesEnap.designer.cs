@@ -720,10 +720,17 @@ namespace WCF_ENAP
 			return ((ISingleResult<sp_search_actividad_evaluadaResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_list")]
-		public ISingleResult<sp_get_eventos_listResult> sp_get_eventos_list([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p0, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p1)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_departamento_by_organizacion")]
+		public ISingleResult<sp_get_eventos_departamento_by_organizacionResult> sp_get_eventos_departamento_by_organizacion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ANO", DbType="Int")] System.Nullable<int> aNO, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p0, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p1)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), p0, p1);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_ORGANIZACION, aNO, p0, p1);
+			return ((ISingleResult<sp_get_eventos_departamento_by_organizacionResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_eventos_list")]
+		public ISingleResult<sp_get_eventos_listResult> sp_get_eventos_list([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p0, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> p1, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_ORGANIZACION", DbType="Int")] System.Nullable<int> iD_ORGANIZACION, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ANO", DbType="Int")] System.Nullable<int> aNO)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), p0, p1, iD_ORGANIZACION, aNO);
 			return ((ISingleResult<sp_get_eventos_listResult>)(result.ReturnValue));
 		}
 	}
@@ -17629,6 +17636,91 @@ namespace WCF_ENAP
 				if ((this._NOMBRE_MATRIZ != value))
 				{
 					this._NOMBRE_MATRIZ = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class sp_get_eventos_departamento_by_organizacionResult
+	{
+		
+		private System.Nullable<long> _ROW_NUMBER;
+		
+		private int _MES_ID;
+		
+		private string _MES_NAME;
+		
+		private System.Nullable<int> _COUNT_EVENTOS;
+		
+		public sp_get_eventos_departamento_by_organizacionResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ROW_NUMBER", DbType="BigInt")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<long> ROW_NUMBER
+		{
+			get
+			{
+				return this._ROW_NUMBER;
+			}
+			set
+			{
+				if ((this._ROW_NUMBER != value))
+				{
+					this._ROW_NUMBER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_ID", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int MES_ID
+		{
+			get
+			{
+				return this._MES_ID;
+			}
+			set
+			{
+				if ((this._MES_ID != value))
+				{
+					this._MES_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MES_NAME", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string MES_NAME
+		{
+			get
+			{
+				return this._MES_NAME;
+			}
+			set
+			{
+				if ((this._MES_NAME != value))
+				{
+					this._MES_NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_COUNT_EVENTOS", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public System.Nullable<int> COUNT_EVENTOS
+		{
+			get
+			{
+				return this._COUNT_EVENTOS;
+			}
+			set
+			{
+				if ((this._COUNT_EVENTOS != value))
+				{
+					this._COUNT_EVENTOS = value;
 				}
 			}
 		}

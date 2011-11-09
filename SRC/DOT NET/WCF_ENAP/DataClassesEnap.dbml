@@ -774,9 +774,23 @@
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_get_eventos_departamento_by_organizacion" Method="sp_get_eventos_departamento_by_organizacion">
+    <Parameter Name="ID_ORGANIZACION" Parameter="iD_ORGANIZACION" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANO" Parameter="aNO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="p0" Type="System.Int32" DbType="Int" />
+    <Parameter Name="p1" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_get_eventos_departamento_by_organizacionResult">
+      <Column Name="ROW_NUMBER" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MES_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MES_NAME" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="COUNT_EVENTOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.sp_get_eventos_list" Method="sp_get_eventos_list">
     <Parameter Name="p0" Type="System.Int32" DbType="Int" />
     <Parameter Name="p1" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_ORGANIZACION" Parameter="iD_ORGANIZACION" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANO" Parameter="aNO" Type="System.Int32" DbType="Int" />
     <ElementType Name="sp_get_eventos_listResult">
       <Column Name="ROW_NUMBER" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
