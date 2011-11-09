@@ -5,10 +5,27 @@
         type: 'anchor'
     },
     title: 'Incidentes Ocurridos',
+    autoScroll: true,
     id: 'panel-EventoList',
+    contextMenuYear: null,
     initComponent: function () {
+<<<<<<< HEAD
              var me = this,
             lastMarker = null;
+=======
+
+        var me = this,
+            lastMarker = null,
+            yearsList = [],
+            yearStep = 4,
+            yearNow = (new Date()).getFullYear();
+
+
+        for (var yInicio = (yearNow); yInicio > (yearNow - yearStep); yInicio--) {
+            yearsList.push([yInicio]);
+        }
+
+>>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
         Ext.data.StoreManager.lookup('dsEvento').on('write', function (store, operation, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
@@ -19,52 +36,121 @@
                 } catch (e) { }
             }
         });
+        me.contextMenuYear = Ext.create('Ext.menu.Menu', {
+            items: [
+		        {
+		            xtype: 'combobox',
+		            store: Ext.create('Ext.data.ArrayStore', {
+		                fields: ['ANO'],
+		                data: yearsList
+		            }),
+		            margin: '0 0 0 5',
+		            fieldLabel: 'Año',
+		            height: 50,
+		            valueField: 'ANO',
+		            displayField: 'ANO',
+		            name: 'ANO_INICIO',
+		            listeners: {
+		                change: function ( field, newValue, oldValue, eOpts ) {
+		                    console.log("INICIO");
+		                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
+		                    Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
+		                        params: {
+		                            'ANO': newValue
+		                        },
+		                        callback: function (records, operation, success) {
+		                            Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
+		                        }
+		                    });
+		                    Ext.data.StoreManager.lookup('dsEvento').load({
+		                        params: {
+		                            'ANO': newValue
+		                        },
+		                        callback: function (records, operation, success) {
+		                        }
+		                    });
+		                    this.up('menu').hide();
+		                }
+		            }
+		        }
+	        ]
+        });
         Ext.applyIf(me, {
             items: [
                 {
                     xtype: 'panel',
-                    margin: '5 5 0 5',
+                    title: 'Gráfico de Incidentes por Mes',
+                    id: 'pnl_graph_incidentes_mes',
+                    collapsible: true,
+                    margin: '5 5 5 5',
                     layout: {
                         type: 'fit'
                     },
                     border: 0,
+                    tools: [{
+                        type: 'gear',
+                        handler: function (e, target, panelHeader, tool) {
+                            me.contextMenuYear.showAt(e.getXY());
+                        }
+                    }],
                     items: [
-                    /*{
-                    xtype: 'chart',
-                    height: 200,
-                    margin: '5 5 0 5',
-                    width: 400,
-                    animate: true,
-                    insetPadding: 20,
-                    axes: [
-                    {
-                    type: 'Category',
-                    fields: [
-                    'x'
-                    ],
-                    position: 'bottom',
-                    title: 'Category Axis'
-                    },
-                    {
-                    type: 'Numeric',
-                    fields: [
-                    'y'
-                    ],
-                    position: 'left',
-                    title: 'Numeric Axis'
-                    }
-                    ],
-                    series: [
-                    {
-                    type: 'line',
-                    xField: 'x',
-                    yField: [
-                    'y'
-                    ],
-                    smooth: 3
-                    }
-                    ]
-                    }*/
+                        {
+                            xtype: 'chart',
+                            store: 'dsGraphEventosOrganizacion',
+                            height: 150,
+                            width: 500,
+                            margin: '5 0 0 0',
+                            animate: true,
+                            axes: [
+                                {
+                                    type: 'Numeric',
+                                    fields: [
+                                        'COUNT_EVENTOS'
+                                    ],
+                                    minorTickSteps: 1,
+                                    minimum: 0,
+                                    position: 'left',
+                                    title: 'Incidentes'
+                                },
+                                {
+                                    type: 'Category',
+                                    fields: [
+                                        'MES_NAME'
+                                    ],
+                                    position: 'bottom',
+                                    title: 'Meses',
+                                    label: {
+                                        font: '9px Arial'
+                                    }
+                                }
+                            ],
+                            series: [
+                                {
+                                    type: 'line',
+                                    highlight: {
+                                        size: 7,
+                                        radius: 7
+                                    },
+                                    fill: true,
+                                    axis: 'left',
+                                    xField: 'MES_NAME',
+                                    yField: 'COUNT_EVENTOS',
+                                    markerConfig: {
+                                        type: 'cross',
+                                        size: 4,
+                                        radius: 4,
+                                        'stroke-width': 0
+                                    },
+                                    tips: {
+                                        trackMouse: true,
+                                        width: 110,
+                                        renderer: function (storeItem, item) {
+                                            this.setTitle(storeItem.get('COUNT_EVENTOS') + ' Incidentes en ' + storeItem.get('MES_NAME'));
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
@@ -79,8 +165,9 @@
                             xtype: 'gridpanel',
                             height: 500,
                             store: 'dsEvento',
-                            margin: '5 5 5 5',
+                            margin: '0 5 5 5',
                             title: 'Listado de Incidentes Reportados',
+                            id: 'grid_eventos_list',
                             columnWidth: 0.5,
                             listeners: {
                                 selectionchange: function (model, records) {
@@ -153,15 +240,27 @@
                                     }
                                 }
                             },
+                            tools: [{
+                                type: 'gear',
+                                handler: function (e, target, panelHeader, tool) {
+                                    me.contextMenuYear.showAt(e.getXY());
+                                }
+                            }],
                             columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'ID_EVENTO',
+                                    text: 'ID',
+                                    flex: 0.05
+                                },
                                 {
                                     xtype: 'gridcolumn',
                                     dataIndex: 'NOMBRE_DEPARTAMENTO',
                                     text: 'Departamento',
-                                    flex: 0.6
+                                    flex: 0.5
                                 },
                                 {
-                                    xtype: 'datecolumn',
+                                    xtype: 'gridcolumn',
                                     dataIndex: 'FECHA_HORA_EVENTO',
                                     text: 'Fecha',
                                     flex: 0.2
@@ -170,8 +269,28 @@
                                     xtype: 'gridcolumn',
                                     dataIndex: 'HORA_EVENTO',
                                     text: 'Hora',
-                                    flex: 0.2
+                                    flex: 0.1
 
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'T',
+                                    flex: 0.05,
+                                    dataIndex: 'COUNT_TRABAJADORES',
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        return '<b>' + value + '</b> <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="  class="x-tree-icon x-tree-icon-parent grupo-icon">'
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'I',
+                                    flex: 0.05,
+                                    dataIndex: 'COUNT_IPRELIMINAR',
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        return '<b>' + value + '</b> <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="x-tree-icon x-tree-icon-parent informe-icon">'
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn', text: 'S',
+                                    flex: 0.05
                                 }
                             ],
                             viewConfig: {
@@ -277,6 +396,7 @@
                                 {
                                     xtype: 'pagingtoolbar',
                                     store: 'dsEvento',
+                                    id: 'grid_pagintoolbar_eventos_list',
                                     displayInfo: true,
                                     dock: 'bottom',
                                     listeners: {
@@ -302,7 +422,7 @@
                             xtype: 'panel',
                             height: 500,
                             id: 'pnl_gmap',
-                            margin: '5 5 5 5',
+                            margin: '0 5 5 5',
                             title: 'Geo Localización de Incidentes',
                             columnWidth: 0.5,
                             layout: {
@@ -329,24 +449,8 @@
                                     xtype: 'button',
                                     text: 'Mostrar Todos',
                                     handler: function () {
-                                        var cmp = Ext.getCmp('gmapid');
-                                        if (lastMarker != null) {
-
-                                            if (lastMarker.circleRadio.dragMarker != null) {
-                                                lastMarker.circleRadio.dragMarker.setMap(null);
-                                                lastMarker.circleRadio.dragMarker = null;
-                                            }
-                                            if (lastMarker.circleRadio.circle != null) {
-                                                lastMarker.circleRadio.circle.setMap(null);
-                                                lastMarker.circleRadio.circle = null;
-                                            }
-                                            lastMarker.setMap(null);
-                                        }
-
-                                        cmp.deleteOverlays(false);
-                                        cmp.getMap().setZoom(14);
-
-                                        cmp.showMarkers();
+                                        Ext.getCmp('grid_pagintoolbar_eventos_list').doRefresh();
+                                        Ext.getCmp('grid_eventos_list').getSelectionModel().deselectAll();
                                     }
                                 }]
                             }]
@@ -357,5 +461,10 @@
         });
 
         me.callParent(arguments);
+
+    },
+    afterRender: function () {
+        this.contextMenuYear.getComponent(0).select((new Date()).getFullYear());
+        this.contextMenuYear.getComponent(0).checkChange();
     }
 });

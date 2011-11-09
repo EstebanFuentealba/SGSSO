@@ -10,7 +10,9 @@ Ext.define('WCF_ENAP.model.Evento', {
         { "name": "LAT_EVENTO", "type": "float" },
         { "name": "LNG_EVENTO", "type": "float" },
         { "name": "LUGAR_EXACTO", "type": "string" },
-        { "name": "DESCRIPCION_GENERAL", "type": "string" }
+        { "name": "DESCRIPCION_GENERAL", "type": "string" },
+        { "name": "COUNT_IPRELIMINAR", "type": "int" },
+        { "name": "COUNT_TRABAJADORES", "type": "int" }
     ]
 });
 Ext.define('WCF_ENAP.store.dsEvento', {
@@ -20,7 +22,7 @@ Ext.define('WCF_ENAP.store.dsEvento', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             autoSync: true,
             storeId: 'dsEvento',
             pageSize: 10,

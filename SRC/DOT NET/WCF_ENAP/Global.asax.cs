@@ -14,6 +14,7 @@ namespace WCF_ENAP
 
         private void RegisterRoutes()
         {
+            RouteTable.Routes.Add(new ServiceRoute("GraphEventosOrganizacion", new WebServiceHostFactory(), typeof(GraphEventosOrganizacion)));
             RouteTable.Routes.Add(new ServiceRoute("SearchMarker", new WebServiceHostFactory(), typeof(SearchMarker)));
             RouteTable.Routes.Add(new ServiceRoute("LoginUser", new WebServiceHostFactory(), typeof(LoginUser)));
             RouteTable.Routes.Add(new ServiceRoute("TreeData", new WebServiceHostFactory(), typeof(TreeData)));

@@ -692,6 +692,9 @@ markers: [{
 			circle.set('fillColor', '#59b');
 			markerDragable.set('icon','/icons/resize.png');
 		});
+		google.maps.event.addListener(markerDragable, 'dblclick', function(point) {
+			Ext.Msg.alert({title: 'Its fine', text: 'and its art.'});
+		});
 		google.maps.event.addListener(markerDragable, 'drag', function(point) {
 			var mapCenter = conf.marker.getPosition();
 			var latLng 		= new google.maps.LatLng(mapCenter.lat() , markerDragable.getPosition().lng());

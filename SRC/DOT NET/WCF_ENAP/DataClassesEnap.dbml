@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="enap_v3" Class="DataClassesEnapDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+<<<<<<< HEAD
   <Connection Mode="WebSettings" ConnectionString="Data Source=ALVAREZ-PC\SQLEXPRESS;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.THL_HERRAMIENTA_TRABAJADOR" Member="THL_HERRAMIENTA_TRABAJADOR">
     <Type Name="THL_HERRAMIENTA_TRABAJADOR">
@@ -8,6 +9,9 @@
       <Association Name="TBL_TRABAJADOR_THL_HERRAMIENTA_TRABAJADOR" Member="TBL_TRABAJADOR" ThisKey="ID_TRABAJADOR" OtherKey="ID_TRABAJADOR" Type="TBL_TRABAJADOR" IsForeignKey="true" />
     </Type>
   </Table>
+=======
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ESTEBAN-HP\SQLEXPRESS2005;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
+>>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
   <Table Name="dbo.MATRIZ_EMPRESA" Member="MATRIZ_EMPRESA">
     <Type Name="MATRIZ_EMPRESA">
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -628,6 +632,7 @@
       <Column Name="DISTANCE" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
+<<<<<<< HEAD
   <Function Name="dbo.sp_get_eventos_list" Method="sp_get_eventos_list">
     <ElementType Name="sp_get_eventos_listResult">
       <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -641,6 +646,8 @@
       <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </ElementType>
   </Function>
+=======
+>>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
   <Function Name="dbo.sp_get_matriz_by_id" Method="sp_get_matriz_by_id">
     <Parameter Name="ID_MATRIZ" Parameter="iD_MATRIZ" Type="System.Int32" DbType="Int" />
     <ElementType Name="sp_get_matriz_by_idResult">
@@ -771,6 +778,7 @@
       <Column Name="ID_ACTIVIDAD_GENERAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_DIVISION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_ACTIVIDAD_ESPECIFICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+<<<<<<< HEAD
       <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ID_AREA" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -785,6 +793,54 @@
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
+=======
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PELIGRO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CARGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MEDIDA_VALORACION_CONSECUENCIA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MEDIDA_VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CONDICION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_eventos_departamento_by_organizacion" Method="sp_get_eventos_departamento_by_organizacion">
+    <Parameter Name="ID_ORGANIZACION" Parameter="iD_ORGANIZACION" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANO" Parameter="aNO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="p0" Type="System.Int32" DbType="Int" />
+    <Parameter Name="p1" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_get_eventos_departamento_by_organizacionResult">
+      <Column Name="ROW_NUMBER" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MES_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MES_NAME" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="COUNT_EVENTOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_eventos_list" Method="sp_get_eventos_list">
+    <Parameter Name="p0" Type="System.Int32" DbType="Int" />
+    <Parameter Name="p1" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_ORGANIZACION" Parameter="iD_ORGANIZACION" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANO" Parameter="aNO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_get_eventos_listResult">
+      <Column Name="ROW_NUMBER" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ID_EVENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LAT_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LNG_EVENTO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LUGAR_EXACTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DESCRIPCION_GENERAL" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="HORA_EVENTO" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="FECHA_HORA_EVENTO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ID_DEPARTAMENTO_ORGANIZACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_DEPARTAMENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="COUNT_TRABAJADORES" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="COUNT_IPRELIMINAR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+>>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
     </ElementType>
   </Function>
 </Database>
