@@ -46,7 +46,7 @@
 		            displayField: 'ANO',
 		            name: 'ANO_INICIO',
 		            listeners: {
-		                change: function ( field, newValue, oldValue, eOpts ) {
+		                change: function (field, newValue, oldValue, eOpts) {
 		                    console.log("INICIO");
 		                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
 		                    Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
@@ -206,6 +206,8 @@
                                                                     cmp.hideMarkers();
                                                                     /* Remover el record que es igual al marker */
                                                                     cmp.recoresToMarkers(records, true);
+                                                                    Ext.getCmp('grid_eventos_list').getStore().loadRecords(records);
+
                                                                 }
                                                             });
                                                         },
