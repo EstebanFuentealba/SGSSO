@@ -77,8 +77,6 @@
             autoSync: false,
             pageSize: 50
         })
-
-
         me.items = [
 		                {
 		                    xtype: 'form',

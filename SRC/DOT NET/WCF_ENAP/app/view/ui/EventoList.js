@@ -7,8 +7,7 @@
     title: 'Incidentes Ocurridos',
     id: 'panel-EventoList',
     initComponent: function () {
-
-        var me = this,
+             var me = this,
             lastMarker = null;
         Ext.data.StoreManager.lookup('dsEvento').on('write', function (store, operation, eOpts) {
             var record = operation.getRecords()[0],
