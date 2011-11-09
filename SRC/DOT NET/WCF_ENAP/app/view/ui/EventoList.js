@@ -9,11 +9,6 @@
     id: 'panel-EventoList',
     contextMenuYear: null,
     initComponent: function () {
-<<<<<<< HEAD
-             var me = this,
-            lastMarker = null;
-=======
-
         var me = this,
             lastMarker = null,
             yearsList = [],
@@ -25,7 +20,6 @@
             yearsList.push([yInicio]);
         }
 
->>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
         Ext.data.StoreManager.lookup('dsEvento').on('write', function (store, operation, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
@@ -51,7 +45,7 @@
 		            displayField: 'ANO',
 		            name: 'ANO_INICIO',
 		            listeners: {
-		                change: function ( field, newValue, oldValue, eOpts ) {
+		                change: function (field, newValue, oldValue, eOpts) {
 		                    console.log("INICIO");
 		                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
 		                    Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
@@ -211,6 +205,8 @@
                                                                     cmp.hideMarkers();
                                                                     /* Remover el record que es igual al marker */
                                                                     cmp.recoresToMarkers(records, true);
+                                                                    Ext.getCmp('grid_eventos_list').getStore().loadRecords(records);
+
                                                                 }
                                                             });
                                                         },

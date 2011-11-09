@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="enap_v3" Class="DataClassesEnapDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=ALVAREZ-PC\SQLEXPRESS;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ESTEBAN-HP\SQLEXPRESS2005;Initial Catalog=enap_v3;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="enap_v1ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.MATRIZ_EMPRESA" Member="MATRIZ_EMPRESA">
     <Type Name="MATRIZ_EMPRESA">
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
