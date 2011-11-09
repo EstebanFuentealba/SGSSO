@@ -190,7 +190,7 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: 
+                                                    stores:
                                                             [
                                                                 'dsOrganizacion',
                                                                 'dsDepartamento',
@@ -220,7 +220,7 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: 
+                                                    stores:
                                                             [
                                                                 'dsTrabajador',
                                                                 'dsCargo',
@@ -249,7 +249,7 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: 
+                                                    stores:
                                                             [
 
                                                                 'dsTrabajador',

@@ -81,22 +81,22 @@
 
         me.items = [
 		                {
-                                xtype: 'form',
-                                margin: '5 5 5 5',
-                                bodyPadding: 10,
-                                collapsible: true,
-                                layout: 'column',
-                                id: 'panel-DatosTipoIncidente',
-                                title: 'no personas',
-                                 items: [
+		                    xtype: 'form',
+		                    margin: '5 5 5 5',
+		                    bodyPadding: 10,
+		                    collapsible: true,
+		                    layout: 'column',
+		                    id: 'panel-DatosTipoIncidente',
+		                    title: 'no personas',
+		                    items: [
                                             {
-				                                xtype: 'tabpanel',
-				                                margin: '0 5 0 0',
-				                                bodyPadding: 10,
-								                columnWidth: 0.5,
-				                                title: 'Datos Trabajador',
-				                                items: [
-                                                
+                                                xtype: 'tabpanel',
+                                                margin: '0 5 0 0',
+                                                bodyPadding: 10,
+                                                columnWidth: 0.5,
+                                                title: 'Datos Trabajador',
+                                                items: [
+
                                                     {
                                                         xtype: 'panel',
                                                         title: 'Tipo de Incidente a Patrimonio Proceso Medio Ambiente',
@@ -154,7 +154,7 @@
                                                                                 ]
                                                                     }
                                                               ]
-                                    
+
                                                     },
                                                     {
                                                         xtype: 'panel',
@@ -293,7 +293,7 @@
                                                                                     }
                                                                                 ]
                                                                     }
-                                                                    
+
                                                               ]
 
                                                     },
@@ -371,27 +371,27 @@
 																					                                        }
 
 																				                                        ],
-																		                                                  buttons: [{
-																		                                                      text: 'Agregar',
-																		                                                      handler: function () {
-																		                                                          var new_object,
+																		                                          buttons: [{
+																		                                              text: 'Agregar',
+																		                                              handler: function () {
+																		                                                  var new_object,
 																							                                                errors,
 																							                                                form;
 
-																		                                                          form = this.up('form').getForm();
-																		                                                          new_object = Ext.create('WCF_ENAP.model.Accion', form.getValues());
-																		                                                          errors = new_object.validate();
+																		                                                  form = this.up('form').getForm();
+																		                                                  new_object = Ext.create('WCF_ENAP.model.Accion', form.getValues());
+																		                                                  errors = new_object.validate();
 
-																		                                                          if (errors.isValid() && form.isValid()) {
-																		                                                              this.disable(true);
-																		                                                              Ext.data.StoreManager.lookup('dsAccion').insert(0, new_object);
-																		                                                              form.reset();
-																		                                                          } else {
-																		                                                              form.markInvalid(errors);
-																		                                                          }
-																		                                                          this.enable(true);
-																		                                                      }
-																		                                                  }]
+																		                                                  if (errors.isValid() && form.isValid()) {
+																		                                                      this.disable(true);
+																		                                                      Ext.data.StoreManager.lookup('dsAccion').insert(0, new_object);
+																		                                                      form.reset();
+																		                                                  } else {
+																		                                                      form.markInvalid(errors);
+																		                                                  }
+																		                                                  this.enable(true);
+																		                                              }
+																		                                          }]
 																		                                      }
 																	                                        ]
 		                                                                                                });
@@ -462,27 +462,27 @@
                                                                                         anchor: '100%'
                                                                                     }
 						                                                        ],
-                                                                                  buttons: [{
-                                                                                      text: 'Agregar',
-                                                                                      handler: function () {
-                                                                                          var new_object,
+                                                                      buttons: [{
+                                                                          text: 'Agregar',
+                                                                          handler: function () {
+                                                                              var new_object,
                                                                                                                 errors,
                                                                                                                 form;
 
-                                                                                          form = this.up('form').getForm();
-                                                                                          new_object = Ext.create('WCF_ENAP.model.AccionCorrectiva', form.getValues());
-                                                                                          errors = new_object.validate();
+                                                                              form = this.up('form').getForm();
+                                                                              new_object = Ext.create('WCF_ENAP.model.AccionCorrectiva', form.getValues());
+                                                                              errors = new_object.validate();
 
-                                                                                          if (errors.isValid() && form.isValid()) {
-                                                                                              this.disable(true);
-                                                                                              Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
-                                                                                              form.reset();
-                                                                                          } else {
-                                                                                              form.markInvalid(errors);
-                                                                                          }
-                                                                                          this.enable(true);
-                                                                                      }
-                                                                                  }]
+                                                                              if (errors.isValid() && form.isValid()) {
+                                                                                  this.disable(true);
+                                                                                  Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
+                                                                                  form.reset();
+                                                                              } else {
+                                                                                  form.markInvalid(errors);
+                                                                              }
+                                                                              this.enable(true);
+                                                                          }
+                                                                      }]
 
                                                                   }
 
@@ -490,41 +490,41 @@
                                                     }
 
                                                     ],
-                                                    listeners: {
-                                                        tabchange: function(tabPanel, newCard, oldCard, options ){
-                                                            if (newCard.getId() == 'panel_Tipo_Incidente_PPMA') {
-                                                                dsPeligroListaTipoIncidentePatrimonio.load();
-                                                            }
-                                                            if (newCard.getId() == 'panel_Causas_Inmediatas_Condiciones') {
-                                                                dsCausaListaCondcion.load();
-                                                            }
-                                                            if (newCard.getId() == 'panel_Causa_Basicas_Factores_del_Trabajo') {
-                                                                dsCausaListaFactoresIngInadecuada.load();
-                                                                dsCausaListaFactoresComprasInadecuadas.load();
-                                                                dsCausaListaFactoresMantenimientoInadecuado.load();
-                                                                dsCausaListaFactoresEstTrabajoInadecuado.load();
-                                                                dsCausaListaFactoresHerrEquioInadecuado.load();
-                                                                dsCausaListaFactoresUsoDesgaste.load();
-                                                                dsCausaListaFactoresAbuso.load();
-                                                                dsCausaListaFactoresErrores.load();
-                                                            }
-                                                            
+                                                listeners: {
+                                                    tabchange: function (tabPanel, newCard, oldCard, options) {
+                                                        if (newCard.getId() == 'panel_Tipo_Incidente_PPMA') {
+                                                            dsPeligroListaTipoIncidentePatrimonio.load();
                                                         }
+                                                        if (newCard.getId() == 'panel_Causas_Inmediatas_Condiciones') {
+                                                            dsCausaListaCondcion.load();
+                                                        }
+                                                        if (newCard.getId() == 'panel_Causa_Basicas_Factores_del_Trabajo') {
+                                                            dsCausaListaFactoresIngInadecuada.load();
+                                                            dsCausaListaFactoresComprasInadecuadas.load();
+                                                            dsCausaListaFactoresMantenimientoInadecuado.load();
+                                                            dsCausaListaFactoresEstTrabajoInadecuado.load();
+                                                            dsCausaListaFactoresHerrEquioInadecuado.load();
+                                                            dsCausaListaFactoresUsoDesgaste.load();
+                                                            dsCausaListaFactoresAbuso.load();
+                                                            dsCausaListaFactoresErrores.load();
+                                                        }
+
                                                     }
+                                                }
                                             }//,
-                                            /*{
-                                                xtype: 'gridpanel',
-                                                margin: '0 0 0 5',
-                                                title: 'Listado ...',
-                                                columnWidth: 0.5,
-                                                store: '',
-                                                columns: [
+		                    /*{
+		                    xtype: 'gridpanel',
+		                    margin: '0 0 0 5',
+		                    title: 'Listado ...',
+		                    columnWidth: 0.5,
+		                    store: '',
+		                    columns: [
                                                             
                     
-                                                        ]
-                                           }    */
-                                       ] 
-                            }   
+		                    ]
+		                    }    */
+                                       ]
+		                }
 			];
         me.callParent(arguments);
     }
