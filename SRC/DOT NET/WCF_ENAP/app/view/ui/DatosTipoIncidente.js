@@ -12,7 +12,6 @@
     initComponent: function () {
         var me = this,
         winAcciones,
-
         dsPeligroListaTipoIncidentePatrimonio,
         dsCausaListaCondcion,
         dsCausaListaFactoresIngInadecuada,

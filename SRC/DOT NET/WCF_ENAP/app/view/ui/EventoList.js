@@ -248,6 +248,7 @@
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
                                                     stores: [
+
                                                         'dsTrabajador',
                                                         'dsPeligro',
                                                         'dsCausa',

@@ -12,7 +12,6 @@
     initComponent: function () {
         var me = this,
         winAcciones,
-
         //tipo incidente persona
         dsPeligroLista,
         //causas inmediatas acciones
