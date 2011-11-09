@@ -37,6 +37,7 @@ var dataConsecuencia = [
 ];
 
     Ext.define('WCF_ENAP.view.ui.BuscaMatrizRiesgo', {
+        requires: ['Ext.ux.grid.feature.CheckGrouping'],
         extend: 'Ext.panel.Panel',
         maximizable: true,
         modal: true,
@@ -48,7 +49,7 @@ var dataConsecuencia = [
 
             var me = this;
             var sm = Ext.create('Ext.selection.CheckboxModel', { checkOnly: true });
-            var groupingFeature = Ext.create('Ext.grid.feature.CheckGrouping', {
+            var groupingFeature = Ext.create('Ext.ux.grid.feature.CheckGrouping', {
                 selectionMode: "SINGLE"
             });
             me.items = [
