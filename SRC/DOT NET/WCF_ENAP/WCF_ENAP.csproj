@@ -82,6 +82,8 @@
     <Content Include="app\view\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
+    <Content Include="app\view\ui\DatosTipoIncidente.js" />
+    <Content Include="app\view\ui\DatosTrabajador.js" />
     <Content Include="app\view\ui\e0063.js" />
     <Content Include="app\view\ui\EvaluaActividadEspecifica.js" />
     <Content Include="app\view\ui\EventoList.js" />
@@ -1449,8 +1451,40 @@
     <Content Include="js\ux\RowExpander.js" />
     <Content Include="utils\Export-Planilla.aspx" />
     <Content Include="utils\Export-Matriz.aspx" />
+    <Content Include="ux\CheckboxGroupData.js" />
+    <Content Include="ux\css\CenterLayout.css" />
+    <Content Include="ux\css\data-view.css" />
+    <Content Include="ux\css\images\bottom2.gif" />
+    <Content Include="ux\css\images\down2 %281%29.gif" />
+    <Content Include="ux\css\images\down2.gif" />
+    <Content Include="ux\css\images\left2.gif" />
+    <Content Include="ux\css\images\right2.gif" />
+    <Content Include="ux\css\images\top2.gif" />
+    <Content Include="ux\css\images\up2.gif" />
+    <Content Include="ux\css\ItemSelector.css" />
+    <Content Include="ux\DataView\DragSelector.js" />
+    <Content Include="ux\DataView\LabelEditor.js" />
     <Content Include="ux\form\SearchField.js" />
     <Content Include="ux\GMapPanel.js" />
+    <Content Include="ux\grid\FiltersFeature.js" />
+    <Content Include="ux\grid\filter\BooleanFilter.js" />
+    <Content Include="ux\grid\feature\CheckGrouping.js" />
+    <Content Include="ux\grid\filter\DateFilter.js" />
+    <Content Include="ux\grid\filter\Filter.js" />
+    <Content Include="ux\grid\filter\ListFilter.js" />
+    <Content Include="ux\grid\filter\NumericFilter.js" />
+    <Content Include="ux\grid\filter\StringFilter.js" />
+    <Content Include="ux\grid\LockingGridGroupSummary.js" />
+    <Content Include="ux\grid\LockingGridView.js" />
+    <Content Include="ux\grid\LockingGroupingGridView.js" />
+    <Content Include="ux\grid\menu\ListMenu.js" />
+    <Content Include="ux\grid\menu\RangeMenu.js" />
+    <Content Include="ux\JSONP.js" />
+    <Content Include="ux\layout\Center.js" />
+    <Content Include="ux\layout\component\form\ItemSelector.js" />
+    <Content Include="ux\layout\component\form\MultiSelect.js" />
+    <Content Include="ux\listado-eventos.js" />
+    <Content Include="ux\RowExpander.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1461,8 +1495,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Default.aspx" />
-    <Content Include="WebForm2.aspx" />
-    <Content Include="WebForm3.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app\aspx\view\ui\BuscaMatrizRiesgo.aspx.cs">
@@ -1497,9 +1529,6 @@
       <DependentUpon>Export-Planilla.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="utils\Export-Planilla.aspx.designer.cs">
-      <DependentUpon>Export-Planilla.aspx</DependentUpon>
-    </Compile>
     <Compile Include="utils\XLSActividadEvaluada.cs" />
     <Compile Include="utils\Export-Matriz.aspx.cs">
       <DependentUpon>Export-Matriz.aspx</DependentUpon>
@@ -1515,20 +1544,6 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm3.aspx.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm3.aspx.designer.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WS\Accion.cs" />
     <Compile Include="WS\AccionCorrectiva.cs" />
     <Compile Include="WS\ActividadEspecifica.cs" />
@@ -1542,8 +1557,10 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
+    <Compile Include="WS\e0063.cs" />
+    <Compile Include="WS\e0064.cs" />
+    <Compile Include="WS\Evento.cs" />
     <Compile Include="WS\GraphEventosOrganizacion.cs" />
-    <Compile Include="WS\ImportExcel.cs" />
     <Compile Include="WS\SearchMarker.cs" />
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -1551,10 +1568,7 @@
     <Compile Include="WS\DatoEvento.cs" />
     <Compile Include="WS\Departamento.cs" />
     <Compile Include="WS\Division.cs" />
-    <Compile Include="WS\e0063.cs" />
-    <Compile Include="WS\e0064.cs" />
     <Compile Include="WS\Empresa.cs" />
-    <Compile Include="WS\Evento.cs" />
     <Compile Include="WS\EventoEmpresa.cs" />
     <Compile Include="WS\EventoTrabajador.cs" />
     <Compile Include="WS\Evidencia.cs" />

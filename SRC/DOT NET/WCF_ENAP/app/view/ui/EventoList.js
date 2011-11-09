@@ -9,7 +9,6 @@
     id: 'panel-EventoList',
     contextMenuYear: null,
     initComponent: function () {
-
         var me = this,
             lastMarker = null,
             yearsList = [],
@@ -305,13 +304,14 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: [
-                                                        'dsOrganizacion',
-                                                        'dsDepartamento',
-                                                        'dsDivision',
-                                                        'dsArea',
-                                                        'dsEvento'
-                                                    ],
+                                                    stores:
+                                                            [
+                                                                'dsOrganizacion',
+                                                                'dsDepartamento',
+                                                                'dsDivision',
+                                                                'dsArea',
+                                                                'dsEvento'
+                                                            ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.NuevoEvento', {
@@ -328,7 +328,64 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Agregar Información a Seleccionado'
+                                            text: 'Agregar datos Trabajador',
+                                            handler: function () {
+                                                var me = this;
+                                                Ext.getCmp('pnl_gmap').hide();
+                                                Ext.application({
+                                                    name: 'WCF_ENAP',
+                                                    stores:
+                                                            [
+                                                                'dsTrabajador',
+                                                                'dsCargo',
+                                                                'dsAccion',
+                                                                'dsAccionCorrectiva'
+                                                            ],
+                                                    launch: function () {
+                                                        Ext.QuickTips.init();
+                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTrabajador', {
+                                                            cmpPadre: me
+                                                        });
+                                                        addEvento.show();
+                                                        addEvento.on('destroy', function () {
+                                                            Ext.getCmp('pnl_gmap').show();
+                                                        });
+                                                    }
+                                                });
+
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            text: 'Agregar datos PATRIMONIO / PROCESOS / MEDIO AMBIENTE',
+                                            handler: function () {
+                                                var me = this;
+                                                Ext.getCmp('pnl_gmap').hide();
+                                                Ext.application({
+                                                    name: 'WCF_ENAP',
+                                                    stores:
+                                                            [
+
+                                                                'dsTrabajador',
+                                                                'dsPeligro',
+                                                                'dsCausa',
+                                                                'dsCargo',
+                                                                'dsAccion',
+                                                                'dsAccionCorrectiva'
+                                                            ],
+                                                    launch: function () {
+                                                        Ext.QuickTips.init();
+                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {
+                                                            cmpPadre: me
+                                                        });
+                                                        addEvento.show();
+                                                        addEvento.on('destroy', function () {
+                                                            Ext.getCmp('pnl_gmap').show();
+                                                        });
+                                                    }
+                                                });
+
+                                            }
                                         }
                                     ]
                                 },

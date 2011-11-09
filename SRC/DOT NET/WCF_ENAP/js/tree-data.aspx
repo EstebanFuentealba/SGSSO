@@ -22,7 +22,7 @@
             children:[
                 {"text":"Lista Eventos","id":"EventoList","leaf":true,iconCls: "add-evento-icon","stores":['dsEvento']},
 				{"text":"Ingreso de Evento","id":"e0063","leaf":true,iconCls: "add-evento-icon","stores":[
-                 'dse0063',
+                    'dse0063',
                     'dsEmpresa',
                     'dsPeligro',
                     'dsCargo',
@@ -40,7 +40,8 @@
                     'dsPeligroMedida',
                     'dsAccion',
                     'dsAccionCorrectiva',
-                    'dsHerramienta'
+                    'dsHerramienta',
+                    'dsPersonaPeligroTipoIncidente'
                 ]},
 				{"text":"Seguimiento","id":"SeguimientoEvento","leaf":true,iconCls: "seguimiento-icon","stores":[]},
 				{"text":"Busqueda","id":"BusquedaEvento","leaf":true,iconCls: "buscar-icon","stores":[]}
