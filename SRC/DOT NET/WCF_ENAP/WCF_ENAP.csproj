@@ -81,6 +81,8 @@
     <Content Include="app\view\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
+    <Content Include="app\view\ui\DatosTipoIncidente.js" />
+    <Content Include="app\view\ui\DatosTrabajador.js" />
     <Content Include="app\view\ui\e0063.js" />
     <Content Include="app\view\ui\EvaluaActividadEspecifica.js" />
     <Content Include="app\view\ui\EventoList.js" />
@@ -1509,6 +1511,7 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="WS\Accion.cs" />
+    <Compile Include="WS\AccionCorrectiva.cs" />
     <Compile Include="WS\ActividadEspecifica.cs" />
     <Compile Include="WS\ActividadEvaluada.cs" />
     <Compile Include="WS\ActividadGeneral.cs" />
@@ -1520,11 +1523,10 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
-<<<<<<< HEAD
-=======
-    <Compile Include="WS\ImportExcel.cs" />
+    <Compile Include="WS\e0063.cs" />
+    <Compile Include="WS\e0064.cs" />
+    <Compile Include="WS\Evento.cs" />
     <Compile Include="WS\SearchMarker.cs" />
->>>>>>> d28c8f09eebefdc3d3fd6ce69ec759f8bdf4d525
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

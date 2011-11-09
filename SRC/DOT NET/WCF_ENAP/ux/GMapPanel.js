@@ -416,10 +416,11 @@ markers: [{
 		}
 	},
 	recoresToMarkers: function(records,searched) {
+		if(Ext.isArray(records)){
 		var me = this,
 			startIndex = 0,
 			endIndex = (records.length - 1);
-			
+		
         for(var i = startIndex; i <= endIndex; i++){
 			var rec = records[i];
 			var marker = me.addSingleMarker(me.createMarkerFromRecord(rec));
@@ -431,7 +432,7 @@ markers: [{
 				}
 			}));
         }
-		
+		}
 	},
 	getMarkerById: function(id){
 		var me = this;

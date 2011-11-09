@@ -15,6 +15,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                 winPeligros, 
                 winHerramientas,
                 storeCargo = Ext.data.StoreManager.lookup('dsCargo'),
+                
                 dsPeligroLista = Ext.create('WCF_ENAP.store.dsPeligro', {
                     autoLoad: false,
                     autoSync: false,
@@ -35,37 +36,42 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+               // dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                //dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresCapMental = Ext.create('WCF_ENAP.store.dsCausa', {
+               // dsCausaListaFactoresCapMental = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresTencionMental = Ext.create('WCF_ENAP.store.dsCausa', {
+               // dsCausaListaFactoresTencionMental = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresFaltaConocimiento = Ext.create('WCF_ENAP.store.dsCausa', {
+                //dsCausaListaFactoresFaltaConocimiento = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresFaltaHabilidad = Ext.create('WCF_ENAP.store.dsCausa', {
+               // dsCausaListaFactoresFaltaHabilidad = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresMotivacionInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+              //  dsCausaListaFactoresMotivacionInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50
+                }),
+                // dsCausaListaFactoresAutocuidado = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
                     pageSize: 50
@@ -110,11 +116,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
                     autoSync: false,
                     pageSize: 50
                 }),
-                dsCausaListaFactoresAutocuidado = Ext.create('WCF_ENAP.store.dsCausa', {
-                    autoLoad: false,
-                    autoSync: false,
-                    pageSize: 50
-                }),
+               
                 dsCausaListaFactoresErrores = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,

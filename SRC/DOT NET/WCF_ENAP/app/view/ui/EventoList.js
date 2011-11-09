@@ -113,7 +113,7 @@
                                                     store: 'dsSearchMarker',
                                                     listeners: {
                                                         dragEnd: function (point, radio, store) {
-                                                            
+
                                                             var search = Ext.data.StoreManager.lookup('dsSearchMarker');
                                                             search.load({
                                                                 params: {
@@ -123,7 +123,7 @@
                                                                 },
                                                                 callback: function (records, operation, success) {
                                                                     cmp.hideMarkers();
-                                                                     /* Remover el record que es igual al marker */
+                                                                    /* Remover el record que es igual al marker */
                                                                     cmp.recoresToMarkers(records, true);
                                                                 }
                                                             });
@@ -150,7 +150,7 @@
                                                     lastMarker.setMap(null);
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                             },
@@ -213,7 +213,61 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Agregar Información a Seleccionado'
+                                            text: 'Agregar datos Trabajador',
+                                            handler: function () {
+                                                var me = this;
+                                                Ext.getCmp('pnl_gmap').hide();
+                                                Ext.application({
+                                                    name: 'WCF_ENAP',
+                                                    stores: [
+                                                        'dsTrabajador',
+                                                        'dsCargo',
+                                                        'dsAccion',
+                                                        'dsAccionCorrectiva'
+                                                    ],
+                                                    launch: function () {
+                                                        Ext.QuickTips.init();
+                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTrabajador', {
+                                                            cmpPadre: me
+                                                        });
+                                                        addEvento.show();
+                                                        addEvento.on('destroy', function () {
+                                                            Ext.getCmp('pnl_gmap').show();
+                                                        });
+                                                    }
+                                                });
+
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            text: 'Agregar datos PATRIMONIO / PROCESOS / MEDIO AMBIENTE',
+                                            handler: function () {
+                                                var me = this;
+                                                Ext.getCmp('pnl_gmap').hide();
+                                                Ext.application({
+                                                    name: 'WCF_ENAP',
+                                                    stores: [
+                                                        'dsTrabajador',
+                                                        'dsPeligro',
+                                                        'dsCausa',
+                                                        'dsCargo',
+                                                        'dsAccion',
+                                                        'dsAccionCorrectiva'
+                                                    ],
+                                                    launch: function () {
+                                                        Ext.QuickTips.init();
+                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {
+                                                            cmpPadre: me
+                                                        });
+                                                        addEvento.show();
+                                                        addEvento.on('destroy', function () {
+                                                            Ext.getCmp('pnl_gmap').show();
+                                                        });
+                                                    }
+                                                });
+
+                                            }
                                         }
                                     ]
                                 },
