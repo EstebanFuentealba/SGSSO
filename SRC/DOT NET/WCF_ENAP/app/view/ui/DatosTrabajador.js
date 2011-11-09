@@ -81,7 +81,6 @@
         })
         //causas basicas factores de la persona
         //fin
-
         me.items = [
 		{
                 xtype: 'form',
@@ -212,8 +211,6 @@
                                                                 this.enable(true);
                                                             }
                                                 }]
-
-
 				                    },
                                     {
                                         xtype: 'panel',
@@ -244,7 +241,6 @@
 		                                            }
                                         
                                               ]
-                                    
                                     },
                                     {
                                         xtype: 'panel',
@@ -275,7 +271,6 @@
                                                    }
                                         
                                               ]
-                                    
                                     },
                                     {
                                         xtype: 'panel',
@@ -605,11 +600,9 @@
                                                                                 this.enable(true);
                                                                             }
                                                                         }]
-				                
 				                                    }
                                         
                                               ]
-                                    
                                     }
 
                                     ],

@@ -190,13 +190,14 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: [
-                                                        'dsOrganizacion',
-                                                        'dsDepartamento',
-                                                        'dsDivision',
-                                                        'dsArea',
-                                                        'dsEvento'
-                                                    ],
+                                                    stores: 
+                                                            [
+                                                                'dsOrganizacion',
+                                                                'dsDepartamento',
+                                                                'dsDivision',
+                                                                'dsArea',
+                                                                'dsEvento'
+                                                            ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.NuevoEvento', {
@@ -219,12 +220,13 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: [
-                                                        'dsTrabajador',
-                                                        'dsCargo',
-                                                        'dsAccion',
-                                                        'dsAccionCorrectiva'
-                                                    ],
+                                                    stores: 
+                                                            [
+                                                                'dsTrabajador',
+                                                                'dsCargo',
+                                                                'dsAccion',
+                                                                'dsAccionCorrectiva'
+                                                            ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTrabajador', {
@@ -247,15 +249,16 @@
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
-                                                    stores: [
+                                                    stores: 
+                                                            [
 
-                                                        'dsTrabajador',
-                                                        'dsPeligro',
-                                                        'dsCausa',
-                                                        'dsCargo',
-                                                        'dsAccion',
-                                                        'dsAccionCorrectiva'
-                                                    ],
+                                                                'dsTrabajador',
+                                                                'dsPeligro',
+                                                                'dsCausa',
+                                                                'dsCargo',
+                                                                'dsAccion',
+                                                                'dsAccionCorrectiva'
+                                                            ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {

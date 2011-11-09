@@ -22,7 +22,6 @@
         dsCausaListaFactoresUsoDesgaste,
         dsCausaListaFactoresAbuso,
         dsCausaListaFactoresErrores;
-
         dsPeligroListaTipoIncidentePatrimonio = Ext.create('WCF_ENAP.store.dsPeligro', {
             autoLoad: false,
             autoSync: false,
@@ -126,7 +125,6 @@
                                                                                 ]
                                                                     }
                                                               ]
-                                    
                                                     },
                                                     {
                                                         xtype: 'panel',
