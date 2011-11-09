@@ -1525,14 +1525,10 @@
     <Compile Include="WS\Causa.cs" />
     <Compile Include="WS\Consecuencia.cs" />
     <Compile Include="WS\Consecuencias.cs" />
-<<<<<<< HEAD
     <Compile Include="WS\e0063.cs" />
     <Compile Include="WS\e0064.cs" />
     <Compile Include="WS\Evento.cs" />
-=======
     <Compile Include="WS\GraphEventosOrganizacion.cs" />
-    <Compile Include="WS\ImportExcel.cs" />
->>>>>>> dd2b0c2c20021d5cf6f97edd97cfbadc143216c9
     <Compile Include="WS\SearchMarker.cs" />
     <Compile Include="WS\TreeData.cs">
       <SubType>ASPXCodeBehind</SubType>
