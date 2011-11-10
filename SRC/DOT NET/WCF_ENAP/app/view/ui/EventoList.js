@@ -27,6 +27,14 @@
                 try {
                     var nuevo_marker = fnCreateMarkerFromRecord(record);
                     Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
+                    /*Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
+                        params: {
+                            'ANO': newValue
+                        },
+                        callback: function (records, operation, success) {
+                            Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
+                        }
+                    });*/
                 } catch (e) { }
             }
         });
