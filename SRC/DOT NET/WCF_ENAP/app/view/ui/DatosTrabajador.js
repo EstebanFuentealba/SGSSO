@@ -29,20 +29,23 @@
         dsPeligroLista  = Ext.create('WCF_ENAP.store.dsPeligro', {
             autoLoad: false,
             autoSync: false,
-            pageSize: 50
+            pageSize: 50,
+            
         }),
         //causas inmediatas acciones
         dsCausaListaAccion = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
-                    pageSize: 50
+                    pageSize: 50,
+            
         }),
         //inicio
         //causas basicas factores de la persona
         dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
                     autoLoad: false,
                     autoSync: false,
-                    pageSize: 50
+                    pageSize: 50,
+           
          }),
         dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
             autoLoad: false,

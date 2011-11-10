@@ -9,12 +9,9 @@
     id: 'panel-EventoList',
     contextMenuYear: null,
     initComponent: function () {
-<<<<<<< HEAD
              var me = this,
             lastMarker = null;
 
-=======
->>>>>>> 8c7ccd09af66087b7338719ac64ed818068837a6
         var me = this,
             lastMarker = null,
             yearsList = [],
