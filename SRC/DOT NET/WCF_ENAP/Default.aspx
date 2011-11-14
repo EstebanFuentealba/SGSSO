@@ -10,6 +10,7 @@
     <!-- [CSS] -->
     <link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
+    <link href="/ux/css/ClearButton.css" rel="stylesheet" type="text/css" />
     <!-- [/CSS] -->
     <!-- [JS] -->
     <script src="/ext-4.0.2a/ext-all.js" type="text/javascript"></script>
@@ -18,6 +19,17 @@
 	<script src="/js/layouts/layout-browser.js" type="text/javascript"></script>
     <!-- [/JS] -->
     <style type="text/css">
+        .x-livesearch-match {
+    font-weight: bold;
+    background-color: yellow;
+}
+
+.x-toolbar .x-form-cb-wrap {
+    line-height: 22px;
+}
+.x-toolbar .x-form-checkbox {
+    vertical-align: 0;
+}
     .evento-icon{background:transparent url(/icons/application_form.png) 0 0 no-repeat !important;}
     .add-evento-icon{background:transparent url(/icons/application_form_add.png) 0 0 no-repeat !important;}
     .seguimiento-icon{background:transparent url(/icons/arrow_divide.png) 0 0 no-repeat !important;}

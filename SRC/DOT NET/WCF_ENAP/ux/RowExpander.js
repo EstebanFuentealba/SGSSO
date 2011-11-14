@@ -1,3 +1,17 @@
+/*
+
+This file is part of Ext JS 4
+
+Copyright (c) 2011 Sencha Inc
+
+Contact:  http://www.sencha.com/contact
+
+GNU General Public License Usage
+This file may be used under the terms of the GNU General Public License version 3.0 as published by the Free Software Foundation and appearing in the file LICENSE included in the packaging of this file.  Please review the following information to ensure the GNU General Public License version 3.0 requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+
+If you are unsure which license is appropriate for your use, please contact the sales department at http://www.sencha.com/contact.
+
+*/
 // feature idea to enable Ajax loading and then the content
 // cache would actually make sense. Should we dictate that they use
 // data or support raw html as well?
@@ -13,9 +27,16 @@
  */
 Ext.define('Ext.ux.RowExpander', {
     extend: 'Ext.AbstractPlugin',
+
+    requires: [
+        'Ext.grid.feature.RowBody',
+        'Ext.grid.feature.RowWrap'
+    ],
+
     alias: 'plugin.rowexpander',
 
     rowBodyTpl: null,
+	tpl: null,
 
     /**
      * @cfg {Boolean} expandOnEnter
@@ -91,15 +112,24 @@ Ext.define('Ext.ux.RowExpander', {
             },{
                 ftype: 'rowwrap'
             }];
-
+		this.tpl = rowBodyTpl;
         if (grid.features) {
             grid.features = features.concat(grid.features);
         } else {
             grid.features = features;
         }
 
-        grid.columns.unshift(this.getHeaderConfig());
-        grid.on('afterlayout', this.onGridAfterLayout, this, {single: true});
+        // NOTE: features have to be added before init (before Table.initComponent)
+    },
+
+    init: function(grid) {
+        this.callParent(arguments);
+
+        // Columns have to be added in init (after columns has been used to create the
+        // headerCt). Otherwise, shared column configs get corrupted, e.g., if put in the
+        // prototype.
+        grid.headerCt.insert(0, this.getHeaderConfig());
+        grid.on('render', this.bindView, this, {single: true});
     },
 
     getHeaderId: function() {
@@ -123,16 +153,14 @@ Ext.define('Ext.ux.RowExpander', {
         return o;
     },
 
-    onGridAfterLayout: function() {
-        var grid = this.getCmp(),
-            view, viewEl;
+    bindView: function() {
+        var view = this.getCmp().getView(),
+            viewEl;
 
-        if (!grid.hasView) {
-            this.getCmp().on('afterlayout', this.onGridAfterLayout, this, {single: true});
+        if (!view.rendered) {
+            view.on('render', this.bindView, this, {single: true});
         } else {
-            view = grid.down('gridview');
             viewEl = view.getEl();
-
             if (this.expandOnEnter) {
                 this.keyNav = Ext.create('Ext.KeyNav', viewEl, {
                     'enter' : this.onEnter,
@@ -165,7 +193,8 @@ Ext.define('Ext.ux.RowExpander', {
         var rowNode = this.view.getNode(rowIdx),
             row = Ext.get(rowNode),
             nextBd = Ext.get(row).down(this.rowBodyTrSelector),
-            record = this.view.getRecord(rowNode);
+            record = this.view.getRecord(rowNode),
+            grid = this.getCmp();
 
         if (row.hasCls(this.rowCollapsedCls)) {
             row.removeCls(this.rowCollapsedCls);
@@ -177,6 +206,12 @@ Ext.define('Ext.ux.RowExpander', {
             nextBd.addCls(this.rowBodyHiddenCls);
             this.recordsExpanded[record.internalId] = false;
             this.view.fireEvent('collapsebody', rowNode, record, nextBd.dom);
+        }
+
+
+        // If Grid is auto-heighting itself, then perform a component layhout to accommodate the new height
+        if (!grid.isFixedHeight()) {
+            grid.doComponentLayout();
         }
         this.view.up('gridpanel').invalidateScroller();
     },
@@ -195,7 +230,7 @@ Ext.define('Ext.ux.RowExpander', {
             id: this.getHeaderId(),
             width: 24,
             sortable: false,
-            fixed: true,
+            resizable: false,
             draggable: false,
             hideable: false,
             menuDisabled: true,
@@ -215,3 +250,4 @@ Ext.define('Ext.ux.RowExpander', {
         };
     }
 });
+

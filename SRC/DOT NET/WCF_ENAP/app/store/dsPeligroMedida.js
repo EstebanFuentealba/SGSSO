@@ -20,7 +20,7 @@ Ext.define('WCF_ENAP.store.dsPeligroMedida', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             autoLoad: false,
-            autoSync: true,
+            autoSync: false,
             storeId: 'dsPeligroMedida',
             pageSize: 10,
             remoteSort: true,

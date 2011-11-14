@@ -37,28 +37,31 @@ namespace WCF_ENAP
         public JSONCollection<List<DepartamentoJSON>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _id_organizacion)
         {
             JSONCollection<List<DepartamentoJSON>> objJSON = new JSONCollection<List<DepartamentoJSON>>();
-
-            try
+            if (_id_organizacion != 0)
             {
-                var results = (from departamento in bd.TBL_DEPARTAMENTO
-                               join organizacion in bd.TBL_DEPARTAMENTO_ORGANIZACION on departamento.ID_DEPARTAMENTO equals organizacion.ID_DEPARTAMENTO
-                               where organizacion.ID_ORGANIZACION == _id_organizacion
-                               orderby departamento.NOMBRE_DEPARTAMENTO descending
-                               select new DepartamentoJSON
-                               ()
-                               {
-                                   ID_DEPARTAMENTO = departamento.ID_DEPARTAMENTO,
-                                   NOMBRE_DEPARTAMENTO = departamento.NOMBRE_DEPARTAMENTO,
-                                   ID_ORGANIZACION = organizacion.ID_ORGANIZACION,
-                                   ID_DEPARTAMENTO_ORGANIZACION = organizacion.ID_DEPARTAMENTO_ORGANIZACION
-                               }).ToList<DepartamentoJSON>();
+                try
+                {
+                    var results = (from departamento in bd.TBL_DEPARTAMENTO
+                                   join organizacion in bd.TBL_DEPARTAMENTO_ORGANIZACION on departamento.ID_DEPARTAMENTO equals organizacion.ID_DEPARTAMENTO
+                                   where organizacion.ID_ORGANIZACION == _id_organizacion
+                                   orderby departamento.NOMBRE_DEPARTAMENTO descending
+                                   select new DepartamentoJSON
+                                   ()
+                                   {
+                                       ID_DEPARTAMENTO = departamento.ID_DEPARTAMENTO,
+                                       NOMBRE_DEPARTAMENTO = departamento.NOMBRE_DEPARTAMENTO,
+                                       ID_ORGANIZACION = organizacion.ID_ORGANIZACION,
+                                       ID_DEPARTAMENTO_ORGANIZACION = organizacion.ID_DEPARTAMENTO_ORGANIZACION
+                                   }).ToList<DepartamentoJSON>();
 
-                objJSON.items = results;
-                objJSON.totalCount = results.Count;
-                objJSON.success = true;
-            }
-            catch (Exception ex) {
-                objJSON.success = false;
+                    objJSON.items = results;
+                    objJSON.totalCount = results.Count;
+                    objJSON.success = true;
+                }
+                catch (Exception ex)
+                {
+                    objJSON.success = false;
+                }
             }
             return objJSON;
         }
