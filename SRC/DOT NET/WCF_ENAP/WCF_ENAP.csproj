@@ -13,6 +13,7 @@
     <RootNamespace>WCF_ENAP</RootNamespace>
     <AssemblyName>WCF_ENAP</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +83,8 @@
     <Content Include="app\view\ProgramaAnualPrevencion.js" />
     <Content Include="app\view\RegistraNuevoEvento.js" />
     <Content Include="app\view\ui\ActividadProgramaAnualPrevencion.js" />
+    <Content Include="app\view\ui\DatosAcionesCorrectivas.js" />
+    <Content Include="app\view\ui\DatosSeguimiento.js" />
     <Content Include="app\view\ui\DatosTipoIncidente.js" />
     <Content Include="app\view\ui\DatosTrabajador.js" />
     <Content Include="app\view\ui\e0063.js" />
