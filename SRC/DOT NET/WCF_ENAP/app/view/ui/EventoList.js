@@ -9,6 +9,9 @@
     id: 'panel-EventoList',
     contextMenuYear: null,
     initComponent: function () {
+             var me = this,
+            lastMarker = null;
+
         var me = this,
             lastMarker = null,
             yearsList = [],

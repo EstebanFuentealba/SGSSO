@@ -29,20 +29,37 @@
         dsPeligroLista = Ext.create('WCF_ENAP.store.dsPeligro', {
             autoLoad: false,
             autoSync: false,
-            pageSize: 50
+            pageSize: 50,
+            
         }),
         //causas inmediatas acciones
         dsCausaListaAccion = Ext.create('WCF_ENAP.store.dsCausa', {
+<<<<<<< HEAD
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50,
+            
+=======
             autoLoad: false,
             autoSync: false,
             pageSize: 50,
         params: { 'TIPO_PELIGRO': 2 },
         callback: function (records, operation, success) {
         }
+>>>>>>> dd63ec208cb0eb3fc81002e1efdbb83e4349dad5
         }),
         //inicio
         //causas basicas factores de la persona
         dsCausaListaFactoresCapFisicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+<<<<<<< HEAD
+                    autoLoad: false,
+                    autoSync: false,
+                    pageSize: 50,
+           
+         }),
+        dsCausaListaFactoresCapPsicologicaInadecuada = Ext.create('WCF_ENAP.store.dsCausa', {
+=======
+>>>>>>> dd63ec208cb0eb3fc81002e1efdbb83e4349dad5
             autoLoad: false,
             autoSync: false,
             pageSize: 50,
