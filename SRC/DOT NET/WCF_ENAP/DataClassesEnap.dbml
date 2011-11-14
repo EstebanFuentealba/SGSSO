@@ -801,6 +801,7 @@
       <Column Name="MEDIDA_VALORACION_PROBABILIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="CONDICION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOM_PELIGRO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="ID_MATRIZ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOM_ACTIVIDAD_ESPECIFICA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="NOMBRE_MATRIZ" Type="System.String" DbType="VarChar(436)" CanBeNull="true" />

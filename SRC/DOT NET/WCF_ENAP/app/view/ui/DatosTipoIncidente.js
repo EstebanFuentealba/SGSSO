@@ -7,7 +7,7 @@
     modal: true,
     width: 850,
     maximizable: true,
-    cmpPadre: null,
+    cmpPadre: null,   
     title: 'Agregar Datos Tipo Incidente',
     initComponent: function () {
         var me = this,

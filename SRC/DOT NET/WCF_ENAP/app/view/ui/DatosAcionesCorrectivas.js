@@ -12,7 +12,6 @@
     initComponent: function () {
         var me = this,
         winAcciones;
-
         me.items = [
 					    {
 					        xtype: 'form',

@@ -13,8 +13,6 @@
         var me = this,
         winAcciones;
 
-
-
         me.items = [
                         {
                         xtype: 'gridpanel',
