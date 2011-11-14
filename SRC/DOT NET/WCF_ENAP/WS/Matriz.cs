@@ -82,8 +82,8 @@ namespace WCF_ENAP
             bd.SubmitChanges();
             foreach (ActividadJSONPOST nueva_actividad in list)
             {
-
-                TBL_ACTIVIDAD_EVALUADA nuevo = new TBL_ACTIVIDAD_EVALUADA()
+                
+                /*TBL_ACTIVIDAD_EVALUADA nuevo = new TBL_ACTIVIDAD_EVALUADA()
                 {
                     ID_ACTIVIDAD_GENERAL = nueva_actividad.ID_ACTIVIDAD_GENERAL,
                     ID_CARGO = nueva_actividad.ID_CARGO,
@@ -119,11 +119,11 @@ namespace WCF_ENAP
                     };
                     bd.TBL_PELIGRO_MEDIDA.InsertOnSubmit(nuevo_peligro_medida);
                     bd.SubmitChanges();
-                }
+                }*/
                 TBL_MATRIZ_ACTIVIDAD matriz_actividad = new TBL_MATRIZ_ACTIVIDAD()
                 {
                     FECHA_CREACION = DateTime.Now,
-                    ID_ACTIVIDAD_EVALUADA = nuevo.ID_ACTIVIDAD_EVALUADA,
+                    ID_ACTIVIDAD_EVALUADA = nueva_actividad.ID_ACTIVIDAD_EVALUADA,
                     ID_MATRIZ = nueva_matriz.ID_MATRIZ
                 };
                 bd.TBL_MATRIZ_ACTIVIDAD.InsertOnSubmit(matriz_actividad);

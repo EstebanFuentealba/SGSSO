@@ -57,7 +57,6 @@
 		            name: 'ANO_INICIO',
 		            listeners: {
 		                change: function (field, newValue, oldValue, eOpts) {
-		                    console.log("INICIO");
 		                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
 		                    Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
 		                        params: {

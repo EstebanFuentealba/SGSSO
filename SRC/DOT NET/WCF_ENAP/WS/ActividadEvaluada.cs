@@ -27,9 +27,11 @@ namespace WCF_ENAP
         public int ID_ACTIVIDAD_EVALUADA;
         public int ID_ACTIVIDAD_GENERAL;
         public int ID_ACTIVIDAD_ESPECIFICA;
+        public string NOM_ACTIVIDAD_ESPECIFICA;
         public int ID_CARGO;
         public int ID_DEPARTAMENTO_ORGANIZACION;
         public int ID_PELIGRO;
+        public string NOM_PELIGRO;
         public int ID_AREA;
         public int ID_DIVISION;
         public int[] MEDIDAS;
@@ -66,21 +68,20 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&action={_ACTION}")]
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_PELIGRO={_ID_PELIGRO}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&ID_ACTIVIDAD_ESPECIFICA={_ID_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}")]
         public JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>> GetCollection(int _page, 
                                                                             int _start, 
                                                                             int _limit, 
                                                                             string _sort, 
-                                                                            string _dir, 
-                                                                            int _ID_ORGANIZACION, 
+                                                                            string _dir,  
                                                                             int _ID_DEPARTAMENTO_ORGANIZACION, 
                                                                             int _ID_DIVISION,
                                                                             int _ID_AREA, 
                                                                             int _ID_ACTIVIDAD_GENERAL,
-                                                                            string _NOM_ACTIVIDAD_ESPECIFICA, 
+                                                                            int _ID_ACTIVIDAD_ESPECIFICA, 
                                                                             int _ID_CARGO,
                                                                             int _CONDICION,
-                                                                            string _ACTION)
+                                                                            int _ID_PELIGRO)
         {
             JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>> objJSON = new JSONCollection<List<TBL_ACTIVIDAD_EVALUADA>>();
             try
@@ -88,10 +89,6 @@ namespace WCF_ENAP
                 if (_dir == null)
                 {
                     _dir = "DESC";
-                }
-                if (_ACTION == null)
-                {
-                    _ACTION = "list";
                 }
                 if (_page == 0)
                 {
@@ -102,7 +99,19 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                    var query = bd.TBL_ACTIVIDAD_EVALUADA.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.TBL_ACTIVIDAD_EVALUADA.Skip(_start).Take(_limit);
+                if ((_ID_PELIGRO != 0) && (_ID_DEPARTAMENTO_ORGANIZACION != 0) && (_ID_DIVISION != 0) && (_ID_AREA != 0) && (_ID_ACTIVIDAD_GENERAL != 0) && (_ID_ACTIVIDAD_ESPECIFICA != 0) && (_ID_CARGO != 0) && (_CONDICION != 0))
+                {
+                    query = query.Where(s => s.ID_DEPARTAMENTO_ORGANIZACION == (int)_ID_DEPARTAMENTO_ORGANIZACION 
+                        && s.ID_DIVISION == (int)_ID_DIVISION
+                        && s.ID_AREA == (int)_ID_AREA
+                        && s.ID_ACTIVIDAD_GENERAL == _ID_ACTIVIDAD_GENERAL
+                        && s.ID_ACTIVIDAD_ESPECIFICA == _ID_ACTIVIDAD_ESPECIFICA
+                        && s.ID_CARGO == _ID_CARGO
+                        && s.CONDICION == _CONDICION
+                        && s.ID_PELIGRO == _ID_PELIGRO);
+                }
+                    query = query.OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                     List<TBL_ACTIVIDAD_EVALUADA> results = query.ToList();
 
                     objJSON.items = results;
@@ -116,8 +125,99 @@ namespace WCF_ENAP
         }
 
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<ActividadJSONPOST> Create(int ID_ACTIVIDAD_GENERAL, int ID_CARGO, int ID_DIVISION, int ID_ACTIVIDAD_ESPECIFICA, int ID_DEPARTAMENTO_ORGANIZACION, int ID_PELIGRO, int ID_AREA,  int VALORACION_CONSECUENCIA, int VALORACION_PROBABILIDAD, int MEDIDA_VALORACION_CONSECUENCIA, int MEDIDA_VALORACION_PROBABILIDAD, int CONDICION, int[] MEDIDAS)
+        public JSONCollection<ActividadJSONPOST> Create(int ID_ACTIVIDAD_GENERAL, 
+            int ID_CARGO, 
+            int ID_DIVISION, 
+            int ID_ACTIVIDAD_ESPECIFICA, 
+            int ID_DEPARTAMENTO_ORGANIZACION, 
+            int ID_PELIGRO, 
+            int ID_AREA,  
+            int VALORACION_CONSECUENCIA, 
+            int VALORACION_PROBABILIDAD, 
+            int MEDIDA_VALORACION_CONSECUENCIA, 
+            int MEDIDA_VALORACION_PROBABILIDAD, 
+            int CONDICION, 
+            int[] MEDIDAS,
+            string NOM_PELIGRO,
+            string NOM_ACTIVIDAD_ESPECIFICA)
         {
+            JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
+
+            List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null)
+            {
+                HttpContext.Current.Session["TempActividadEvaluada"] = new List<ActividadJSONPOST>();
+                list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
+            }
+            TBL_ACTIVIDAD_EVALUADA nuevo = new TBL_ACTIVIDAD_EVALUADA()
+            {
+                ID_ACTIVIDAD_GENERAL = ID_ACTIVIDAD_GENERAL,
+                ID_CARGO = ID_CARGO,
+                ID_ACTIVIDAD_ESPECIFICA = ID_ACTIVIDAD_ESPECIFICA,
+                ID_DEPARTAMENTO_ORGANIZACION = ID_DEPARTAMENTO_ORGANIZACION,
+                ID_PELIGRO = ID_PELIGRO,
+                VALORACION_CONSECUENCIA = VALORACION_CONSECUENCIA,
+                VALORACION_PROBABILIDAD = VALORACION_PROBABILIDAD,
+                MEDIDA_VALORACION_CONSECUENCIA = MEDIDA_VALORACION_CONSECUENCIA,
+                MEDIDA_VALORACION_PROBABILIDAD = MEDIDA_VALORACION_PROBABILIDAD,
+                CONDICION = CONDICION,
+                FECHA_CREACION = DateTime.Now
+            };
+            
+
+            ActividadJSONPOST json_return = new ActividadJSONPOST();
+            if (ID_DIVISION != 0)
+            {
+                nuevo.ID_DIVISION = ID_DIVISION;
+                json_return.ID_DIVISION = (int)nuevo.ID_DIVISION;
+            }
+            if (ID_AREA != 0)
+            {
+                nuevo.ID_AREA = ID_AREA;
+                json_return.ID_AREA = (int)nuevo.ID_AREA;
+            }
+            bd.TBL_ACTIVIDAD_EVALUADA.InsertOnSubmit(nuevo);
+            bd.SubmitChanges();
+            for (int i = 0; i < MEDIDAS.Length; i++)
+            {
+                TBL_PELIGRO_MEDIDA nuevo_peligro_medida = new TBL_PELIGRO_MEDIDA()
+                {
+                    ID_ACTIVIDAD_EVALUADA = nuevo.ID_ACTIVIDAD_EVALUADA,
+                    ID_MEDIDAS_DE_CONTROL = MEDIDAS[i],
+                    FECHA_CREACION = DateTime.Now
+
+                };
+                bd.TBL_PELIGRO_MEDIDA.InsertOnSubmit(nuevo_peligro_medida);
+                bd.SubmitChanges();
+            }
+
+            json_return.ID_ACTIVIDAD_EVALUADA = (int)nuevo.ID_ACTIVIDAD_EVALUADA;
+            
+            json_return.ID_ACTIVIDAD_GENERAL = (int)nuevo.ID_ACTIVIDAD_GENERAL;
+            json_return.ID_CARGO = (int)nuevo.ID_CARGO;
+
+            json_return.ID_ACTIVIDAD_ESPECIFICA = (int)nuevo.ID_ACTIVIDAD_ESPECIFICA;
+            json_return.NOM_ACTIVIDAD_ESPECIFICA = NOM_ACTIVIDAD_ESPECIFICA; 
+            json_return.ID_DEPARTAMENTO_ORGANIZACION = (int)nuevo.ID_DEPARTAMENTO_ORGANIZACION;
+            json_return.ID_PELIGRO = (int)nuevo.ID_PELIGRO;
+            json_return.NOM_PELIGRO = NOM_PELIGRO; 
+
+            json_return.VALORACION_CONSECUENCIA = (int)nuevo.VALORACION_CONSECUENCIA;
+            json_return.VALORACION_PROBABILIDAD = (int)nuevo.VALORACION_PROBABILIDAD;
+            json_return.MEDIDA_VALORACION_CONSECUENCIA = (int)nuevo.MEDIDA_VALORACION_CONSECUENCIA;
+            json_return.MEDIDA_VALORACION_PROBABILIDAD = (int)nuevo.MEDIDA_VALORACION_PROBABILIDAD;
+            json_return.CONDICION = (int)nuevo.CONDICION;
+            json_return.FECHA_CREACION = (DateTime)nuevo.FECHA_CREACION;
+
+            json_return.MEDIDAS = MEDIDAS;
+            list.Add(json_return);
+            objJSON.items = json_return;
+            objJSON.totalCount = list.Count;
+            objJSON.success = true;
+            HttpContext.Current.Session["TempActividadEvaluada"] = list;
+            return objJSON;
+
+
             /*
             JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
             List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
@@ -207,47 +307,9 @@ namespace WCF_ENAP
 		}
 
 		[WebInvoke(UriTemplate = "{id}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
-        public JSONCollection<sp_search_actividad_evaluadaResult> Update(string id, sp_search_actividad_evaluadaResult nuevo)
+        public JSONCollection<TBL_ACTIVIDAD_EVALUADA> Update(string id, ActividadJSONPOST obj)
 		{
-
-            JSONCollection<sp_search_actividad_evaluadaResult> objJSON = new JSONCollection<sp_search_actividad_evaluadaResult>();
-            try {
-                var objeto = (from variable in bd.TBL_ACTIVIDAD_EVALUADA
-                              where variable.ID_ACTIVIDAD_EVALUADA == int.Parse(id)
-                              select variable).Single();
-                if (nuevo.ID_AREA == 0)
-                {
-                    nuevo.ID_AREA = null;
-                }
-                if (nuevo.ID_DIVISION == 0)
-                {
-                    nuevo.ID_DIVISION = null;
-                }
-
-                /*objeto.ID_ACTIVIDAD_GENERAL = nuevo.ID_ACTIVIDAD_GENERAL;
-				objeto.ID_CARGO = nuevo.ID_CARGO;
-				objeto.ID_DIVISION = nuevo.ID_DIVISION;
-				objeto.ID_ACTIVIDAD_ESPECIFICA = nuevo.ID_ACTIVIDAD_ESPECIFICA;
-				objeto.ID_DEPARTAMENTO_ORGANIZACION = nuevo.ID_DEPARTAMENTO_ORGANIZACION;
-				objeto.ID_PELIGRO = nuevo.ID_PELIGRO;
-				objeto.ID_AREA = nuevo.ID_AREA;*/
-				objeto.VALORACION_CONSECUENCIA = nuevo.VALORACION_CONSECUENCIA;
-				objeto.VALORACION_PROBABILIDAD = nuevo.VALORACION_PROBABILIDAD;
-				objeto.MEDIDA_VALORACION_CONSECUENCIA = nuevo.MEDIDA_VALORACION_CONSECUENCIA;
-				objeto.MEDIDA_VALORACION_PROBABILIDAD = nuevo.MEDIDA_VALORACION_PROBABILIDAD;
-				//objeto.FECHA_CREACION = nuevo.FECHA_CREACION;
-				objeto.CONDICION = nuevo.CONDICION;
-                bd.SubmitChanges();
-
-                objJSON.items = nuevo;
-                objJSON.totalCount = bd.GetChangeSet().Updates.Count;
-                objJSON.success = true;
-            }
-            catch (Exception ex)
-            {
-                objJSON.success = false;
-            }
-            return objJSON;
+            throw new Exception("NO IMPLEMENTADO");
 					   
 		}
 		
