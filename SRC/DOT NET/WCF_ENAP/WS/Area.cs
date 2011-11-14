@@ -36,27 +36,30 @@ namespace WCF_ENAP
         public JSONCollection<List<AreaJSON>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _id_division)
         {
             JSONCollection<List<AreaJSON>> objJSON = new JSONCollection<List<AreaJSON>>();
-            try
+            if (_id_division != 0)
             {
-                var results = (from area in bd.TBL_AREA
-                               join division in bd.TBL_DIVISION on area.ID_DIVISION equals division.ID_DIVISION
-                               where area.ID_DIVISION == _id_division
-                               orderby area.NOMBRE_AREA descending
-                               select new AreaJSON
-                               ()
-                               {
-                                   ID_AREA = area.ID_AREA,
-                                   NOMBRE_AREA = area.NOMBRE_AREA,
-                                   ID_DIVISION = division.ID_DIVISION
-                               }).ToList<AreaJSON>();
+                try
+                {
+                    var results = (from area in bd.TBL_AREA
+                                   join division in bd.TBL_DIVISION on area.ID_DIVISION equals division.ID_DIVISION
+                                   where area.ID_DIVISION == _id_division
+                                   orderby area.NOMBRE_AREA descending
+                                   select new AreaJSON
+                                   ()
+                                   {
+                                       ID_AREA = area.ID_AREA,
+                                       NOMBRE_AREA = area.NOMBRE_AREA,
+                                       ID_DIVISION = division.ID_DIVISION
+                                   }).ToList<AreaJSON>();
 
-                objJSON.items = results;
-                objJSON.totalCount = results.Count;
-                objJSON.success = true;
-            }
-            catch (Exception ex)
-            {
-                objJSON.success = false;
+                    objJSON.items = results;
+                    objJSON.totalCount = results.Count;
+                    objJSON.success = true;
+                }
+                catch (Exception ex)
+                {
+                    objJSON.success = false;
+                }
             }
             return objJSON;
         }

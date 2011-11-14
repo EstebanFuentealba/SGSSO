@@ -296,7 +296,51 @@ var dataConsecuencia = [
 		                params: values,
 		                callback: function (records, operation, success) {
 		                    /*TODO*/
-		                    console.log(records);
+                            if(records.length==0){
+                                Ext.MessageBox.confirm('Confirm', 'No existe ninguna Matriz con esos Datos, ¿Desea Crearla?', function(btn){
+                                    if(btn=="yes"){
+                                        console.log("CREA MATRIZ");
+                                        Ext.application({
+                                            name: 'WCF_ENAP',
+                                            stores: [
+                                                'dsActividadEspecifica',
+                                                'dsActividadEvaluada',
+                                                'dsActividadGeneral',
+                                                'dsArea',
+                                                'dsCargo',
+                                                'dsDepartamento',
+                                                'dsDivision',
+                                                'dsMatrizRiesgo',
+                                                'dsMedidaDeControl',
+                                                'dsOrganizacion',
+                                                'dsPeligro',
+                                                'dsPeligroMedida',
+                                                'dsTempActividadEvaluada'
+                                            ],
+                                            launch: function () {
+                                                Ext.QuickTips.init();
+                                                var addMatriz = Ext.create('WCF_ENAP.view.ui.EvaluaActividadEspecifica', {
+                                                    cmpPadre: me,
+                                                    margin: '5 5 5 5'
+                                                });
+                                                addMatriz.show();
+                                                var winAddMatriz = Ext.create('Ext.window.Window', {
+												    width: '70%',
+                                                    maximizable: true,
+												    title: 'Ingresa una nueva Matriz',
+												    modal: true,
+												    items: [
+                                                        addMatriz
+                                                    ]
+                                                });
+                                                winAddMatriz.show();
+                                            }
+                                        });
+
+
+                                    }
+                                });
+		                    }
 		                }
 		            });
 

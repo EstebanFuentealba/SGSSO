@@ -36,28 +36,30 @@ namespace WCF_ENAP
         public JSONCollection<List<DivisionJSON>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _id_departamento)
         {
             JSONCollection<List<DivisionJSON>> objJSON = new JSONCollection<List<DivisionJSON>>();
-
-            try
+            if (_id_departamento != 0)
             {
-                var results = (from division in bd.TBL_DIVISION
-                               join departamento in bd.TBL_DEPARTAMENTO_ORGANIZACION on division.ID_DEPARTAMENTO_ORGANIZACION equals departamento.ID_DEPARTAMENTO_ORGANIZACION
-                               where departamento.ID_DEPARTAMENTO == _id_departamento
-                               orderby division.NOMBRE_DIVISION descending
-                               select new DivisionJSON
-                               ()
-                               {
-                                   ID_DIVISION = division.ID_DIVISION,
-                                   NOMBRE_DIVISION = division.NOMBRE_DIVISION,
-                                   ID_DEPARTAMENTO = departamento.ID_DEPARTAMENTO
-                               }).ToList<DivisionJSON>();
+                try
+                {
+                    var results = (from division in bd.TBL_DIVISION
+                                   join departamento in bd.TBL_DEPARTAMENTO_ORGANIZACION on division.ID_DEPARTAMENTO_ORGANIZACION equals departamento.ID_DEPARTAMENTO_ORGANIZACION
+                                   where departamento.ID_DEPARTAMENTO == _id_departamento
+                                   orderby division.NOMBRE_DIVISION descending
+                                   select new DivisionJSON
+                                   ()
+                                   {
+                                       ID_DIVISION = division.ID_DIVISION,
+                                       NOMBRE_DIVISION = division.NOMBRE_DIVISION,
+                                       ID_DEPARTAMENTO = departamento.ID_DEPARTAMENTO
+                                   }).ToList<DivisionJSON>();
 
-                objJSON.items = results;
-                objJSON.totalCount = results.Count;
-                objJSON.success = true;
-            }
-            catch (Exception ex)
-            {
-                objJSON.success = false;
+                    objJSON.items = results;
+                    objJSON.totalCount = results.Count;
+                    objJSON.success = true;
+                }
+                catch (Exception ex)
+                {
+                    objJSON.success = false;
+                }
             }
             return objJSON;
         }

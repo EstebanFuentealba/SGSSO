@@ -26,8 +26,13 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<TBL_MEDIDA_DE_CONTROL>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ACTIVIDAD_EVALUADA={ID_ACTIVIDAD_EVALUADA}")]
+        public JSONCollection<List<TBL_MEDIDA_DE_CONTROL>> GetCollection(int _page,
+            int _start, 
+            int _limit,
+            string _sort, 
+            string _dir,
+            int ID_ACTIVIDAD_EVALUADA)
         {
             JSONCollection<List<TBL_MEDIDA_DE_CONTROL>> objJSON = new JSONCollection<List<TBL_MEDIDA_DE_CONTROL>>();
             try
@@ -45,8 +50,17 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.TBL_MEDIDA_DE_CONTROL.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
-                List<TBL_MEDIDA_DE_CONTROL> results = query.ToList();
+                List<TBL_MEDIDA_DE_CONTROL> results;
+                if(ID_ACTIVIDAD_EVALUADA == 0) {
+                    var query = bd.TBL_MEDIDA_DE_CONTROL.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                    results = query.ToList();
+                } else {
+                var query = (from m in bd.TBL_MEDIDA_DE_CONTROL
+                            join em in bd.TBL_PELIGRO_MEDIDA on m.ID_MEDIDAS_DE_CONTROL equals em.ID_MEDIDAS_DE_CONTROL
+                            where em.ID_ACTIVIDAD_EVALUADA == (int)ID_ACTIVIDAD_EVALUADA
+                            select m);
+                    results = query.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r).ToList <TBL_MEDIDA_DE_CONTROL>();
+                }
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_MEDIDA_DE_CONTROL.Count<TBL_MEDIDA_DE_CONTROL>();
                 objJSON.success = true;

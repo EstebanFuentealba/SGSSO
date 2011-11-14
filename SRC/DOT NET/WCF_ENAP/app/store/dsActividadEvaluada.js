@@ -25,27 +25,29 @@ Ext.define('WCF_ENAP.model.ActividadEvaluada', {
     extend: 'Ext.data.Model',
     idProperty: 'ID_ACTIVIDAD_EVALUADA',
     fields: [
-        { "name": "ID_MATRIZ", "type": "int" },
+        { "name": "ID_MATRIZ", "type": "int", "useNull": true },
         { "name": "NOMBRE_MATRIZ", "type": "string" },
         { "name": "NOM_ACTIVIDAD_ESPECIFICA", "type": "string" },
-        { "name": "ID_ACTIVIDAD_EVALUADA", "type": "int" },
+        { "name": "ID_ACTIVIDAD_EVALUADA", "type": "int", "useNull": true },
         { "name": "ID_ACTIVIDAD_GENERAL", "type": "int" },
         { "name": "ID_CARGO", "type": "int" },
         { "name": "ID_DIVISION", "type": "int" },
         { "name": "ID_ACTIVIDAD_ESPECIFICA", "type": "int" },
-        { "name": "ID_DEPARTAMENTO_ORGANIZACION", "type": "int" },
+        { "name": "ID_DEPARTAMENTO_ORGANIZACION", "type": "int",defaultValue: 0 },
         { "name": "ID_PELIGRO", "type": "int" },
+        { "name": "NOM_PELIGRO", "type": "string" },
         { "name": "ID_AREA", "type": "int" },
         { "name": "VALORACION_CONSECUENCIA", "type": "int" },
         { "name": "VALORACION_PROBABILIDAD", "type": "int" },
         { "name": "MEDIDA_VALORACION_CONSECUENCIA", "type": "int" },
         { "name": "MEDIDA_VALORACION_PROBABILIDAD", "type": "int" },
         { "name": "FECHA_CREACION", "type": "date", "convert": function (v, record) {
-                return (Ext.JSON.decode({ 'd': v })).d;
-            }
+            return (Ext.JSON.decode({ 'd': v })).d;
+        }
         },
         { "name": "CONDICION", "type": "int" },
-        { "name": "MEDIDAS" }
+        { "name": "MEDIDAS" },
+        {"name":"MEDIDAS_NAME"}
     ]
 });
 Ext.define('WCF_ENAP.store.dsActividadEvaluada', {
@@ -56,7 +58,7 @@ Ext.define('WCF_ENAP.store.dsActividadEvaluada', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             autoLoad: false,
-            autoSync: true,
+            autoSync: false,
             storeId: 'dsActividadEvaluada',
             groupField: 'NOMBRE_MATRIZ',
             pageSize: 10,
@@ -69,7 +71,8 @@ Ext.define('WCF_ENAP.store.dsActividadEvaluada', {
                     create: '/ActividadEvaluada/',
                     read: '/ActividadEvaluada/search',
                     update: '/ActividadEvaluada/',
-                    destroy: '/ActividadEvaluada/'
+                    destroy: '/ActividadEvaluada/',
+                    findBy: '/ActividadEvaluada/'
                 },
                 reader: {
                     type: 'json',

@@ -204,7 +204,7 @@
                                             errors = new_object.validate();
                                             if (errors.isValid() && form.isValid()) {
                                                 this.disable(true);
-                                                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
+                                                Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
                                                 this.up('tabpanel').setActiveTab(1);
                                                 //form.reset();
                                             }
