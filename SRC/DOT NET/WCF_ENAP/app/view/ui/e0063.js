@@ -138,7 +138,7 @@ Ext.define('WCF_ENAP.view.ui.e0063', {
             }
         });
         dsCausaListaAccion.load({
-            params: { 'TIPO_CAUSA': 2 },
+            params: { 'TIPO_CAUSA': 2 }, 
             callback: function (records, operation, success) {
             }
         });
