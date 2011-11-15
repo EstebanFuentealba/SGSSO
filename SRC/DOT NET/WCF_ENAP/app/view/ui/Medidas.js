@@ -18,14 +18,16 @@
     initComponent: function () {
         var me = this,
             winMedida;
+
         me.items = [
-        Ext.create('Ext.ux.LiveSearchGridPanel', {
-            height: 400,
-            autoScroll: true,
-            store: 'dsMedidaDeControl',
-            margin: '5 5 5 5',
-            title: 'Selecciona las Medidas a tomar',
-            columns: [
+            {
+                xtype: 'livesearchgrid',
+                height: 400,
+                autoScroll: true,
+                store: 'dsMedidaDeControl',
+                margin: '5 5 5 5',
+                title: 'Selecciona las Medidas a tomar',
+                columns: [
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
@@ -34,33 +36,38 @@
                     filter: true
                 }
             ],
-            viewConfig: {
+                viewConfig: {
 
-        },
-        listeners: {
-            afterrender: function (component, eOpts) {
-                this.getSelectionModel().select(me.cmpPadre.getSelectionModel().getSelection());
             },
-            beforeclose: function (panel, eOpts) {
-                this.getSelectionModel().deselectAll();
-            }
-        },
-        selModel: Ext.create('Ext.selection.CheckboxModel', {
-            checkOnly: true,
-            allowDeselect: true,
             listeners: {
-                selectionchange: function (sm, selections) {
-                    var cmp = me.cmpPadre.next('panel');
-                    if (selections.length == 0) {
-                        cmp.setDisabled(true);
-                    } else {
-                        cmp.setDisabled(false);
+                afterrender: function (component, eOpts) {
+                    var meGrid = this;
+                    if (me.cmpPadre.getSelectionModel().getCount() > 0) {
+                        meGrid.getSelectionModel().select(Ext.Array.map(me.cmpPadre.getSelectionModel().getSelection(), function (record) {
+                            return meGrid.getView().getStore().getById(record.getId())
+                        }));
                     }
-                    me.cmpPadre.getStore().loadData(selections);
+                },
+                beforeclose: function (panel, eOpts) {
+                    this.getSelectionModel().deselectAll();
                 }
-            }
-        }),
-        dockedItems: [
+            },
+            selModel: Ext.create('Ext.selection.CheckboxModel', {
+                checkOnly: true,
+                allowDeselect: true,
+                listeners: {
+                    selectionchange: function (sm, selections) {
+                        var cmp = me.cmpPadre.next('panel');
+                        if (selections.length == 0) {
+                            cmp.setDisabled(true);
+                        } else {
+                            cmp.setDisabled(false);
+                        }
+                        me.cmpPadre.getStore().loadData(selections);
+                    }
+                }
+            }),
+            dockedItems: [
                     {
                         xtype: 'toolbar',
                         dock: 'top',
@@ -127,8 +134,8 @@
                         ]
                     }
                 ]
-    })
+        }
         ];
-    me.callParent(arguments);
-}
+        me.callParent(arguments);
+    }
 });

@@ -1,4 +1,11 @@
-﻿Ext.define('WCF_ENAP.view.ui.EV2', {
+﻿Ext.define('ActividadEvaluada', {
+    extend: 'WCF_ENAP.model.ActividadEvaluada',
+    proxy: {
+        type: 'rest',
+        url: '/ActividadEvaluada/'
+    }
+});
+Ext.define('WCF_ENAP.view.ui.EV2', {
     requires: [
         'Ext.ux.grid.feature.CheckGrouping',
         'Ext.ux.RowExpander'
@@ -223,11 +230,13 @@
             /* [EVALUACION PELIGRO] */
             {
             xtype: 'hiddenfield',
-            name: 'NOM_PELIGRO'
+            name: 'NOM_PELIGRO',
+            itemId: 'hdd_nombre_peligro'
         },
             {
                 xtype: 'hiddenfield',
-                name: 'ID_ACTIVIDAD_EVALUADA'
+                name: 'ID_ACTIVIDAD_EVALUADA',
+                itemId: 'hdd_actividad_evaluada_id'
             },
             {
                 xtype: 'combobox',
@@ -250,48 +259,51 @@
                             formPrincipal,
                             values,
                             record;
+                        if (newValue != null) {
+                            record = this.store.getById(newValue);
 
-                        record = this.store.getById(newValue);
+                            formPrincipal = this.up('form').up('form');
+                            pnlPeligro = this.up('form');
+                            pnlEvRiesg = pnlPeligro.down('form');
+                            pnlMedida = pnlEvRiesg.next('gridpanel');
+                            pnlReEvRiesg = pnlMedida.next('form');
 
-                        formPrincipal = this.up('form');
-                        pnlPeligro = this.up('form');
-                        pnlEvRiesg = pnlPeligro.down('form');
-                        pnlMedida = pnlEvRiesg.next('gridpanel');
-                        pnlReEvRiesg = pnlMedida.next('form');
-
-                        pnlEvRiesg.setDisabled(false);
+                            pnlPeligro.down('#btn_add_update_actividad_evaluada').setText('Agrega Evaluación');
+                            pnlPeligro.down('#hdd_nombre_peligro').setValue(record.get('NOM_PELIGRO'));
 
 
-                        values = pnlPeligro.up('form').getForm().getValues();
 
-                        Ext.data.StoreManager.lookup('dsActividadEvaluada').load({
-                            url: '/ActividadEvaluada/',
-                            params: values,
-                            callback: function (records, operation, success) {
-                                if (records.length > 0) {
-                                    var record = records[0];
-                                    Ext.Msg.alert('Ya Existe una Evaluación', 'Ya existe una evaluación para éstos datos.');
+                            pnlEvRiesg.setDisabled(false);
 
-                                    Ext.StoreManager.lookup('dsMedidaDeControl').load({
-                                        params: { 'ID_ACTIVIDAD_EVALUADA': record.get('ID_ACTIVIDAD_EVALUADA') },
-                                        callback: function (records, operation, success) {
-                                            Ext.StoreManager.lookup('dsPeligroMedida').loadRecords(records);
-                                        }
-                                    });
+                            values = pnlPeligro.up('form').getForm().getValues();
 
-                                    pnlPeligro.loadRecord(record);
-                                    pnlEvRiesg.loadRecord(record);
-                                    pnlReEvRiesg.loadRecord(record);
+                            Ext.data.StoreManager.lookup('dsActividadEvaluada').load({
+                                url: '/ActividadEvaluada/',
+                                params: values,
+                                callback: function (records, operation, success) {
+                                    if (records.length > 0) {
+                                        pnlPeligro.down('#btn_add_update_actividad_evaluada').setText('Actualiza y Agrega Evaluación');
+                                        var record = records[0];
+                                        Ext.Msg.alert('Ya Existe una Evaluación', 'Ya existe una evaluación para éstos datos.');
+                                        pnlPeligro.down('#hdd_actividad_evaluada_id').setValue(record.get('ID_ACTIVIDAD_EVALUADA'));
 
-                                    pnlEvRiesg.setDisabled(false);
-                                    pnlMedida.setDisabled(false);
-                                    pnlReEvRiesg.setDisabled(false);
+                                        Ext.create('WCF_ENAP.store.dsMedidaDeControl').load({
+                                            params: { 'ID_ACTIVIDAD_EVALUADA': record.get('ID_ACTIVIDAD_EVALUADA') },
+                                            callback: function (records, operation, success) {
+                                                Ext.StoreManager.lookup('dsPeligroMedida').loadRecords(records);
+                                            }
+                                        });
 
-                                    pnlPeligro.down('hiddenfield').setValue(record.get('NOM_PELIGRO'));
+                                        pnlEvRiesg.loadRecord(record);
+                                        pnlReEvRiesg.loadRecord(record);
+
+                                        pnlEvRiesg.setDisabled(false);
+                                        pnlMedida.setDisabled(false);
+                                        pnlReEvRiesg.setDisabled(false);
+                                    }
                                 }
-                            }
-                        });
-                        pnlPeligro.down('hiddenfield').setValue(record.get('NOM_PELIGRO'));
+                            });
+                        }
                     }
                 }
             },
@@ -394,7 +406,8 @@
                     {
                     xtype: 'gridpanel',
                     store: 'dsPeligroMedida',
-                    disabled: true,
+                    itemId: 'grid_medidas_seleccionadas',
+                    disabled: false,
                     height: 239,
                     margin: '3 3 3 3',
                     autoScroll: true,
@@ -428,8 +441,9 @@
                                     iconCls: 'btn-add',
                                     handler: function () {
                                         /* [SELECT MEDIDA] */
-                                        var me = this.up('gridpanel');
-                                        me.getSelectionModel().selectAll();
+                                        var meGrid = this.up('gridpanel');
+                                        meGrid.getSelectionModel().selectAll();
+
                                         Ext.application({
                                             name: 'WCF_ENAP',
                                             stores: ['dsMedidaDeControl'],
@@ -437,9 +451,8 @@
                                                 Ext.QuickTips.init();
                                                 Ext.StoreManager.lookup('dsMedidaDeControl').load();
                                                 var addMedidas = Ext.create('WCF_ENAP.view.ui.Medidas', {
-                                                    cmpPadre: me
+                                                    cmpPadre: meGrid
                                                 });
-                                                //this.getSelectionModel().select(me.cmpPadre.getSelectionModel().getSelection());
                                                 addMedidas.show();
                                             }
                                         });
@@ -536,40 +549,57 @@
         }
         ],
         buttons: [{
-            text: 'Guardar Evaluación',
+            xtype: 'button',
+            itemId: 'btn_add_update_actividad_evaluada',
+            text: 'Agregar Evaluación',
             iconCls: 'btn-add-save',
             handler: function () {
                 var new_object,
 					errors,
 					form,
+                    pnlPeligro,
+                    pnlEvRiesg,
+                    pnlMedida,
+                    pnlReEvRiesg,
                     grid;
 
                 grid = this.up('form').down('gridpanel');
-                form = this.up('form').up('form').getForm();
+                pnlPeligro = this.up('form');
+                pnlEvRiesg = pnlPeligro.down('form');
+                pnlMedida = pnlEvRiesg.next('gridpanel');
+                pnlReEvRiesg = pnlMedida.next('form');
+                form = pnlPeligro.up('form').getForm();
 
                 new_object = Ext.create('WCF_ENAP.model.ActividadEvaluada', Ext.apply({ "MEDIDAS": Ext.Array.map(grid.getStore().getRange(), function (model) { return model.get("ID_MEDIDAS_DE_CONTROL"); }) }, form.getValues()));
                 errors = new_object.validate();
-
+                console.log(new_object);
                 if (errors.isValid() && form.isValid()) {
                     this.disable(true);
                     var storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada');
                     if (new_object.get("ID_ACTIVIDAD_EVALUADA") != null && new_object.get("ID_ACTIVIDAD_EVALUADA") != 0) {
 
-                        Ext.Ajax.request({
-                            url: '/ActividadEvaluada/' + new_object.get("ID_ACTIVIDAD_EVALUADA"),
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            params: Ext.JSON.encode(Ext.apply({ "MEDIDAS": Ext.Array.map(grid.getStore().getRange(), function (model) { return model.get("ID_MEDIDAS_DE_CONTROL"); }) }, form.getValues())),
-                            success: function (result, request) {
-                                console.log(result);
+                        var actividadEvaluada = Ext.create('ActividadEvaluada', Ext.apply({ "MEDIDAS": Ext.Array.map(grid.getStore().getRange(), function (model) { return model.get("ID_MEDIDAS_DE_CONTROL"); }) }, form.getValues()));
+                        actividadEvaluada.save({
+                            success: function (record) {
+                                var tmpStore = Ext.data.StoreManager.lookup('dsTempActividadEvaluada');
+                                var tmpRecord = tmpStore.getById(record.getId());
+                                if (tmpRecord) {
+                                    tmpStore.remove(tmpRecord);
+                                }
+                                tmpStore.insert(0, record);
+                                pnlPeligro.getForm().reset();
+                                pnlPeligro.down('combobox').clearValue();
+                                pnlMedida.getStore().removeAll();
+                                console.log(pnlPeligro.down('#hdd_nombre_peligro').getValue());
+                                console.log(pnlPeligro.down('#hdd_actividad_evaluada_id').getValue());
                             }
                         });
-
                     } else {
                         storeActividadEvaluada.insert(0, new_object);
                         storeActividadEvaluada.sync();
+                        pnlPeligro.getForm().reset();
+                        pnlMedida.getStore().removeAll();
+                        pnlMedida.doLayout();
                     }
 
                 } else {
@@ -585,9 +615,9 @@
 		{
 		xtype: 'gridpanel',
 		collapsible: true,
-		height: 430,
 		title: 'Actividades Evaluadas',
 		anchor: '100%',
+		height: 400,
 		store: 'dsTempActividadEvaluada',
 		autoScroll: true,
 		plugins: [
@@ -595,7 +625,7 @@
                 ptype: 'rowexpander',
                 pluginId: 'rowexpander',
                 rowBodyTpl: [
-                    '<div style="margin-left: 15px; margin-bottom: 10px;"><div style="margin-left: 15px; float:left;">		<h3>Medidas de Control:</h3><ol><tpl for="MEDIDAS_NAME">			<li style="margin-left: 15px">{#}. {NOM_MEDIDA_DE_CONTROL}</li>			</tpl>		</ol>	</div></div>'
+                    '<div style="margin-left: 15px;"><div style="margin-left: 15px; float:left;">		<h3>Medidas de Control:</h3><ol><tpl for="MEDIDAS_NAME">			<li style="margin-left: 15px">{#}. {NOM_MEDIDA_DE_CONTROL}</li>			</tpl>		</ol><br />	</div></div>'
                 ]
             }
         ],
@@ -604,7 +634,9 @@
 		        var me = this,
                     plugin = component.getPlugin('rowexpander'),
                     view = plugin.view;
-
+		        this.getView().on('resize', function () {
+		            me.doLayout();
+		        });
 		        view.on('collapsebody', function (rowNode, record, nextBd) {
 		            me.doLayout();
 		        });

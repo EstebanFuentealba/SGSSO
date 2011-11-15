@@ -2,6 +2,7 @@
 *Imports.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -40,7 +41,7 @@ namespace WCF_ENAP
         public int MEDIDA_VALORACION_CONSECUENCIA;
         public int MEDIDA_VALORACION_PROBABILIDAD;
         public int CONDICION;
-        public DateTime FECHA_CREACION;
+        public string FECHA_CREACION;
         public bool ESTADO;
     }
     public class ActividadJSONGETGROUP
@@ -143,11 +144,12 @@ namespace WCF_ENAP
         {
             JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
 
-            List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
-            if (list == null)
+            Hashtable list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null || list.Count == 0)
             {
-                HttpContext.Current.Session["TempActividadEvaluada"] = new List<ActividadJSONPOST>();
-                list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
+
+                HttpContext.Current.Session["TempActividadEvaluada"] = new Hashtable();
+                list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
             }
             TBL_ACTIVIDAD_EVALUADA nuevo = new TBL_ACTIVIDAD_EVALUADA()
             {
@@ -207,10 +209,14 @@ namespace WCF_ENAP
             json_return.MEDIDA_VALORACION_CONSECUENCIA = (int)nuevo.MEDIDA_VALORACION_CONSECUENCIA;
             json_return.MEDIDA_VALORACION_PROBABILIDAD = (int)nuevo.MEDIDA_VALORACION_PROBABILIDAD;
             json_return.CONDICION = (int)nuevo.CONDICION;
-            json_return.FECHA_CREACION = (DateTime)nuevo.FECHA_CREACION;
+            json_return.FECHA_CREACION = nuevo.FECHA_CREACION.ToString();
 
             json_return.MEDIDAS = MEDIDAS;
-            list.Add(json_return);
+            if (list.Contains(json_return.ID_ACTIVIDAD_EVALUADA))
+            {
+                list.Remove(json_return.ID_ACTIVIDAD_EVALUADA);
+            }
+            list.Add(json_return.ID_ACTIVIDAD_EVALUADA, json_return);
             objJSON.items = json_return;
             objJSON.totalCount = list.Count;
             objJSON.success = true;
@@ -286,7 +292,6 @@ namespace WCF_ENAP
             objJSON.success = true;
             return objJSON;
             */
-            throw new Exception("No Implementado");
         }
 
 		[WebGet(UriTemplate = "{id}")]
@@ -307,10 +312,55 @@ namespace WCF_ENAP
 		}
 
 		[WebInvoke(UriTemplate = "{id}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
-        public JSONCollection<TBL_ACTIVIDAD_EVALUADA> Update(string id, ActividadJSONPOST obj)
+        public ActividadJSONPOST Update(string id, ActividadJSONPOST obj)
 		{
-            throw new Exception("NO IMPLEMENTADO");
-					   
+            Hashtable list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null || list.Count == 0)
+            {
+                //HttpContext.Current.Session["TempActividadEvaluada"] = new Hashtable();
+                list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            }
+            JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
+            var aev = (from variable in bd.TBL_ACTIVIDAD_EVALUADA
+                          where variable.ID_ACTIVIDAD_EVALUADA == int.Parse(id)
+                          select variable).Single();
+            
+                aev.VALORACION_PROBABILIDAD = obj.VALORACION_PROBABILIDAD;
+                aev.VALORACION_CONSECUENCIA = obj.VALORACION_CONSECUENCIA;
+                aev.MEDIDA_VALORACION_PROBABILIDAD = obj.MEDIDA_VALORACION_PROBABILIDAD;
+                aev.MEDIDA_VALORACION_CONSECUENCIA = obj.MEDIDA_VALORACION_CONSECUENCIA;
+                
+                bd.SubmitChanges();
+                
+                var deleteMedidas = (from variable in bd.TBL_PELIGRO_MEDIDA
+                           where variable.ID_ACTIVIDAD_EVALUADA == int.Parse(id)
+                           select variable).ToList();
+                bd.TBL_PELIGRO_MEDIDA.DeleteAllOnSubmit(deleteMedidas);
+                bd.SubmitChanges();
+
+                for (int i = 0; i < obj.MEDIDAS.Length; i++)
+                {
+                    TBL_PELIGRO_MEDIDA nuevo_peligro_medida = new TBL_PELIGRO_MEDIDA()
+                    {
+                        ID_ACTIVIDAD_EVALUADA = aev.ID_ACTIVIDAD_EVALUADA,
+                        ID_MEDIDAS_DE_CONTROL = obj.MEDIDAS[i],
+                        FECHA_CREACION = DateTime.Now
+
+                    };
+                    bd.TBL_PELIGRO_MEDIDA.InsertOnSubmit(nuevo_peligro_medida);
+                    bd.SubmitChanges();
+                }
+                if (list.Contains(obj.ID_ACTIVIDAD_EVALUADA))
+                {
+                    list.Remove(obj.ID_ACTIVIDAD_ESPECIFICA);
+                }
+                list.Add(obj.ID_ACTIVIDAD_EVALUADA, obj);
+
+                objJSON.items = obj;
+                objJSON.totalCount = bd.TBL_NODO.Count();
+                objJSON.success = true;
+
+                return obj; 
 		}
 		
 		[WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]

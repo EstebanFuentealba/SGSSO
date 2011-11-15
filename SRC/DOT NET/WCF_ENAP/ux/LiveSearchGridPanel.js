@@ -26,7 +26,7 @@ Ext.define('Ext.ux.LiveSearchGridPanel', {
         'Ext.form.field.Text',
         'Ext.ux.statusbar.StatusBar'
     ],
-	alias: 'plugin.livesearchgrid',
+	alias: 'widget.livesearchgrid',
     /**
      * @private
      * search value initialization

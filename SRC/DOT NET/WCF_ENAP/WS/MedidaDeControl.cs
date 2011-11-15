@@ -58,7 +58,7 @@ namespace WCF_ENAP
                 var query = (from m in bd.TBL_MEDIDA_DE_CONTROL
                             join em in bd.TBL_PELIGRO_MEDIDA on m.ID_MEDIDAS_DE_CONTROL equals em.ID_MEDIDAS_DE_CONTROL
                             where em.ID_ACTIVIDAD_EVALUADA == (int)ID_ACTIVIDAD_EVALUADA
-                            select m);
+                             select m);
                     results = query.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r).ToList <TBL_MEDIDA_DE_CONTROL>();
                 }
                 objJSON.items = results;

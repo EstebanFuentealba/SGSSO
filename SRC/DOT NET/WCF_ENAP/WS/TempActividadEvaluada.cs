@@ -2,6 +2,7 @@
 *Imports.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -44,14 +45,19 @@ namespace WCF_ENAP
                                                                             int _CONDICION)
         {
             JSONCollection<List<ActividadJSONPOST>> objJSON = new JSONCollection<List<ActividadJSONPOST>>();
-            List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
-            if (list == null)
+            Hashtable list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null || list.Count == 0)
             {
-                HttpContext.Current.Session["TempActividadEvaluada"] = new List<ActividadJSONPOST>();
-                list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
+                HttpContext.Current.Session["TempActividadEvaluada"] = new Hashtable();
+                list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
             }
-            objJSON.items = list;
-            objJSON.totalCount = list.Count;
+            List<ActividadJSONPOST> returnData = new List<ActividadJSONPOST>();
+            foreach (ActividadJSONPOST ajspos in list.Values)
+            {
+                returnData.Add(ajspos);
+            }
+            objJSON.items = returnData;
+            objJSON.totalCount = returnData.Count;
             objJSON.success = true;
             return objJSON;
             
@@ -63,7 +69,7 @@ namespace WCF_ENAP
             JSONCollection<ActividadJSONPOST> objJSON = new JSONCollection<ActividadJSONPOST>();
 
             List<ActividadJSONPOST> list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
-            if (list == null)
+            if (list == null || list.Count == 0)
             {
                 HttpContext.Current.Session["TempActividadEvaluada"] = new List<ActividadJSONPOST>();
                 list = (List<ActividadJSONPOST>)HttpContext.Current.Session["TempActividadEvaluada"];
@@ -107,7 +113,7 @@ namespace WCF_ENAP
             json_return.MEDIDA_VALORACION_CONSECUENCIA = (int)nuevo.MEDIDA_VALORACION_CONSECUENCIA;
             json_return.MEDIDA_VALORACION_PROBABILIDAD = (int)nuevo.MEDIDA_VALORACION_PROBABILIDAD;
             json_return.CONDICION = (int)nuevo.CONDICION;
-            json_return.FECHA_CREACION = (DateTime)nuevo.FECHA_CREACION;
+            json_return.FECHA_CREACION = nuevo.FECHA_CREACION.ToString();
 
             json_return.MEDIDAS = MEDIDAS;
             list.Add(json_return);
