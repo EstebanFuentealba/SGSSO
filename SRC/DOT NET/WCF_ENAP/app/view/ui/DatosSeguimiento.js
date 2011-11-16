@@ -29,7 +29,7 @@
                                                 name: 'NOMBRE_DEPARTAMENTO',
                                                 // allowBlank: false,
                                                 vtype: 'alpha',
-                                                flex: 0.4,
+                                                flex: 0.2,
                                                 anchor: '100%'
                                             },
                                             text: 'Acciones Corerctivas'
@@ -42,10 +42,10 @@
                                                 name: 'FECHA_CREACION',
                                                 //allowBlank: false,
                                                 vtype: 'alpha',
-                                                flex: 0.4,
+                                                flex: 0.02,
                                                 anchor: '100%'
                                             },
-                                            text: 'Fecha Inicio'
+                                            text: 'Fecha Creacion'
                                         },
                                         {
                                             xtype: 'gridcolumn',
@@ -55,7 +55,7 @@
                                                 name: 'FECHA_REALIZACION',
                                                 allowBlank: false,
                                                 vtype: 'alpha',
-                                                flex: 0.4,
+                                                flex: 0.2,
                                                 anchor: '100%'
                                             },
                                             text: 'Fecha Realizacion'
@@ -70,7 +70,7 @@
                                                 name: 'FECHA_PLAZO',
                                                 allowBlank: false,
                                                 vtype: 'alpha',
-                                                flex: 0.4
+                                                flex: 0.2
                                             },
                                             text: 'Fecha Fin'
                                         },
@@ -87,6 +87,7 @@
                                                         valueField: 'ID_CARGO',
                                                         fieldLabel: 'Responsable',
                                                         emptyText: 'Responsable',
+                                                        flex: 0.2,
                                                         allowBlank: false
                                                     },
                                             text: 'Responsable'

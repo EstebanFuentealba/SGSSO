@@ -12,9 +12,9 @@ Ext.define('WCF_ENAP.model.AccionCorrectiva', {
                 { "name": "FECHA_CREACION", "type": "date" }
             ],
     validations: [{"field":"ID_USUARIO","type":"length","max":"11"},
-    { "field": "ID_INFORME", "type": "presence", "max": "11" },
-    { "field": "ID_ACCION", "type": "length", "max": "11" },
-    {"field":"PORCENTAJE_CUMPLIMIENTO","type":"length","max":"11"}]
+                    { "field": "ID_INFORME", "type": "presence", "max": "11" },
+                    { "field": "ID_ACCION", "type": "length", "max": "11" },
+                    {"field":"PORCENTAJE_CUMPLIMIENTO","type":"length","max":"11"}]
 });
 Ext.define('WCF_ENAP.store.dsAccionCorrectiva', {
     extend: 'Ext.data.Store',

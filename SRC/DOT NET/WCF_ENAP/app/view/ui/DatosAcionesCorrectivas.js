@@ -19,7 +19,6 @@
 					        id: 'panel_Acciones_Correctivas',
 					        anchor: '100%',
 					        layout: 'anchor',
-					        //store: 'dsAccionCorrectiva',
 					        tabIndex: 5,
 					        items: [
 								    {
@@ -115,6 +114,7 @@
 								            store: 'dsCargo',
 								            displayField: 'NOMBRE_CARGO',
 								            valueField: 'ID_CARGO',
+								            multiSelect: true,
 								            fieldLabel: 'Responsable',
 								            emptyText: 'Responsable',
 								            allowBlank: false
