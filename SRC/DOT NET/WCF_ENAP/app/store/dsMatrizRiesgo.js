@@ -13,14 +13,6 @@ Ext.define('WCF_ENAP.model.MatrizRiesgo', {
         { "name": "VALORACION_PROBABILIDAD", "type": "int" },
         { "name": "MEDIDA_VALORACION_CONSECUENCIA", "type": "int" },
         { "name": "MEDIDA_VALORACION_PROBABILIDAD", "type": "int" }
-    ],
-    validations: [
-        { "field": "ID_ACTIVIDAD_ESPECIFICA", "type": "length", "max": "11" },
-        { "field": "ID_PELIGRO", "type": "length", "max": "11" },
-        { "field": "VALORACION_CONSECUENCIA", "type": "length", "max": "11" },
-        { "field": "VALORACION_PROBABILIDAD", "type": "length", "max": "11" },
-        { "field": "MEDIDA_VALORACION_CONSECUENCIA", "type": "length", "max": "11" },
-        { "field": "MEDIDA_VALORACION_PROBABILIDAD", "type": "length", "max": "11" }
     ]
 });
 Ext.define('WCF_ENAP.store.dsMatrizRiesgo', {

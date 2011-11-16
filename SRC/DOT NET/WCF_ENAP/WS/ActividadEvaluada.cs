@@ -24,7 +24,8 @@ namespace WCF_ENAP
         public bool ESTADO;
     }
     public class ActividadJSONPOST
-    {   
+    {
+        public int ID_MATRIZ;
         public int ID_ACTIVIDAD_EVALUADA;
         public int ID_ACTIVIDAD_GENERAL;
         public int ID_ACTIVIDAD_ESPECIFICA;
@@ -420,7 +421,7 @@ namespace WCF_ENAP
 			}
 			return "ID_ACTIVIDAD_EVALUADA";
 		}
-        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}&onlyMy={_ONLYMY}")]
+        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&ID_ACTIVIDAD_ESPECIFICA={_ID_ACTIVIDAD_ESPECIFICA}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}&onlyMy={_ONLYMY}")]
         public JSONCollection<List<sp_search_actividad_evaluadaResult>> Search(int _page,
                                                                             int _start,
                                                                             int _limit,
@@ -431,6 +432,7 @@ namespace WCF_ENAP
                                                                             int _ID_DIVISION,
                                                                             int _ID_AREA,
                                                                             int _ID_ACTIVIDAD_GENERAL,
+                                                                            int _ID_ACTIVIDAD_ESPECIFICA,
                                                                             string _NOM_ACTIVIDAD_ESPECIFICA,
                                                                             int _ID_CARGO,
                                                                             int _CONDICION,
@@ -439,6 +441,13 @@ namespace WCF_ENAP
                                                                             string _ONLYMY)
         {
             JSONCollection<List<sp_search_actividad_evaluadaResult>> objJSON = new JSONCollection<List<sp_search_actividad_evaluadaResult>>();
+            HttpContext.Current.Session["TempActividadEvaluada"] = null;
+            Hashtable list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null || list.Count == 0)
+            {
+                HttpContext.Current.Session["TempActividadEvaluada"] = new Hashtable();
+                list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            }
 
             DateTime startTime;
             DateTime endTime;
@@ -483,6 +492,7 @@ namespace WCF_ENAP
                         _ID_DIVISION,
                         _ID_AREA,
                         _ID_ACTIVIDAD_GENERAL,
+                        _ID_ACTIVIDAD_ESPECIFICA,
                         _NOM_ACTIVIDAD_ESPECIFICA,
                         _ID_CARGO,
                         _CONDICION,
@@ -491,7 +501,48 @@ namespace WCF_ENAP
                         ((user!=null)?user.Username:null)
                         ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                  List<sp_search_actividad_evaluadaResult> results = query.ToList < sp_search_actividad_evaluadaResult>();
+                 if (_ID_ACTIVIDAD_ESPECIFICA != 0)
+                 {
 
+                     foreach (sp_search_actividad_evaluadaResult acEv in results)
+                     {
+                         ActividadJSONPOST obj = new ActividadJSONPOST();
+                         obj.ID_MATRIZ = acEv.ID_MATRIZ;
+                         obj.ID_DEPARTAMENTO_ORGANIZACION = (int)acEv.ID_DEPARTAMENTO_ORGANIZACION;
+                         if (acEv.ID_DIVISION != 0)
+                         {
+                             obj.ID_DIVISION = (int)acEv.ID_DIVISION;
+                         }
+                         if (acEv.ID_AREA != 0)
+                         {
+                             obj.ID_AREA = (int)acEv.ID_AREA;
+                         }
+
+                         obj.ID_ACTIVIDAD_EVALUADA = acEv.ID_ACTIVIDAD_EVALUADA;
+
+                         obj.ID_ACTIVIDAD_GENERAL = (int)acEv.ID_ACTIVIDAD_GENERAL;
+                         obj.ID_CARGO = (int)acEv.ID_CARGO;
+
+                         obj.ID_ACTIVIDAD_ESPECIFICA = (int)acEv.ID_ACTIVIDAD_ESPECIFICA;
+                         obj.NOM_ACTIVIDAD_ESPECIFICA = acEv.NOM_ACTIVIDAD_ESPECIFICA;
+                         obj.ID_DEPARTAMENTO_ORGANIZACION = (int)acEv.ID_DEPARTAMENTO_ORGANIZACION;
+                         obj.ID_PELIGRO = (int)acEv.ID_PELIGRO;
+                         obj.NOM_PELIGRO = acEv.NOM_PELIGRO;
+
+                         obj.VALORACION_CONSECUENCIA = (int)acEv.VALORACION_CONSECUENCIA;
+                         obj.VALORACION_PROBABILIDAD = (int)acEv.VALORACION_PROBABILIDAD;
+                         obj.MEDIDA_VALORACION_CONSECUENCIA = (int)acEv.MEDIDA_VALORACION_CONSECUENCIA;
+                         obj.MEDIDA_VALORACION_PROBABILIDAD = (int)acEv.MEDIDA_VALORACION_PROBABILIDAD;
+                         obj.CONDICION = (int)acEv.CONDICION;
+                         obj.FECHA_CREACION = acEv.FECHA_CREACION.ToString();
+
+                         if (list.Contains(obj.ID_ACTIVIDAD_EVALUADA))
+                         {
+                             list.Remove(obj.ID_ACTIVIDAD_ESPECIFICA);
+                         }
+                         list.Add(obj.ID_ACTIVIDAD_EVALUADA, obj);
+                     }
+                 }
                     objJSON.items = results;
                     objJSON.totalCount = bd.TBL_ACTIVIDAD_EVALUADA.Count<TBL_ACTIVIDAD_EVALUADA>();
                     objJSON.success = true;

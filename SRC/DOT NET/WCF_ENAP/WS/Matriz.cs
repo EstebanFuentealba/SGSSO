@@ -224,18 +224,36 @@ namespace WCF_ENAP
 		}
 
 		[WebInvoke(UriTemplate = "{id}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
-        public JSONCollection<TBL_MATRIZ> Update(string id, TBL_MATRIZ nuevo)
+        public JSONCollection<TBL_MATRIZ> Update(string id, sp_search_actividad_evaluadaResult nuevo)
 		{
-
+            Hashtable list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            if (list == null || list.Count == 0)
+            {
+                HttpContext.Current.Session["TempActividadEvaluada"] = new Hashtable();
+                list = (Hashtable)HttpContext.Current.Session["TempActividadEvaluada"];
+            }
             JSONCollection<TBL_MATRIZ> objJSON = new JSONCollection<TBL_MATRIZ>();
             try
             {
                 var objeto = (from variable in bd.TBL_MATRIZ
                               where variable.ID_MATRIZ == int.Parse(id)
                               select variable).Single();
-                objeto.ID_USUARIO = nuevo.ID_USUARIO;
-				objeto.FECHA_CREACION = nuevo.FECHA_CREACION;
-                bd.SubmitChanges();
+                
+                var deleteActividades = (from variable in bd.TBL_MATRIZ_ACTIVIDAD
+                                     where variable.ID_MATRIZ == int.Parse(id)
+                                     select variable).ToList();
+                bd.TBL_MATRIZ_ACTIVIDAD.DeleteAllOnSubmit(deleteActividades);
+
+                foreach(ActividadJSONPOST updateActividad in list.Values){
+                    TBL_MATRIZ_ACTIVIDAD nueva_actividad = new TBL_MATRIZ_ACTIVIDAD() {
+                        FECHA_CREACION = DateTime.Now,
+                        ID_MATRIZ = int.Parse(id),
+                        ID_ACTIVIDAD_EVALUADA = updateActividad.ID_ACTIVIDAD_EVALUADA
+                    };
+                    bd.TBL_MATRIZ_ACTIVIDAD.InsertOnSubmit(nueva_actividad);
+                    bd.SubmitChanges();
+                }
+                HttpContext.Current.Session["TempActividadEvaluada"] = null;
                 objJSON.items = objeto;
                 objJSON.totalCount = bd.TBL_MATRIZ.Count();
                 objJSON.success = true;

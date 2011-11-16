@@ -5,6 +5,14 @@
         url: '/ActividadEvaluada/'
     }
 });
+Ext.define('MatrizRiesgo', {
+    extend: 'WCF_ENAP.model.MatrizRiesgo',
+    idProperty: 'ID_MATRIZ',
+    proxy: {
+        type: 'rest',
+        url: '/Matriz/'
+    }
+});
 Ext.define('WCF_ENAP.view.ui.EV2', {
     requires: [
         'Ext.ux.grid.feature.CheckGrouping',
@@ -26,6 +34,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
             columnWidth: .5
         });
 
+
         Ext.StoreManager.lookup('dsActividadEvaluada').on('write', function (store, operation, index, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);
@@ -38,20 +47,25 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 
         me.items = [
         /* [FORMULARIO] */
+        {
+        xtype: 'hiddenfield',
+        name: 'ID_MATRIZ',
+        itemId: 'hdd_id_matriz'
+    },
 		{
-		xtype: 'panel',
-		title: 'Información Básica',
-		collapsible: true,
-		margin: '0 0 5 0',
-		layout: 'column',
-		anchor: '100%',
-		items: [
-		/* [LUGAR ACTIVIDAD] */
+		    xtype: 'form',
+		    title: 'Información Básica',
+		    collapsible: true,
+		    margin: '0 0 5 0',
+		    layout: 'column',
+		    anchor: '100%',
+		    items: [
+		    /* [LUGAR ACTIVIDAD] */
 				pnlLugar,
-		/*  	
-		[/LUGAR ACTIVIDAD]
-		[DATOS ACTIVIDAD] 
-		*/
+		    /*  	
+		    [/LUGAR ACTIVIDAD]
+		    [DATOS ACTIVIDAD] 
+		    */
 				{
 				xtype: 'panel',
 				columnWidth: 1 / 2,
@@ -183,40 +197,62 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 						    fieldLabel: 'Es <a class="tooltip" href="#" data-qtip="Es el tipo de actividad: <ul><li>Rutinaria.</li><li>No Rutinaria.</li><li>En situación de Emergencia.</li></ul>">[<b>?</b>]</a>',
 						    allowBlank: false,
 						    labelWidth: 150,
+						    name: 'CONDICION',
 						    items: [
                                     {
                                         xtype: 'radiofield',
-                                        name: 'CONDICION',
                                         boxLabel: 'Rutinario',
+                                        name: 'CONDICION',
                                         inputValue: 1
                                     },
                                     {
                                         xtype: 'radiofield',
-                                        name: 'CONDICION',
                                         boxLabel: 'No Rutinario',
+                                        name: 'CONDICION',
                                         inputValue: 2
                                     },
                                     {
                                         xtype: 'radiofield',
-                                        name: 'CONDICION',
                                         fieldLabel: '',
                                         boxLabel: 'Emergencia',
+                                        name: 'CONDICION',
                                         inputValue: 3
                                     }
                                 ],
 						    listeners: {
 						        change: function (field, newValue, oldValue, options) {
+						            if (field.getChecked().length == 1) {
+						                var values = this.up('panel').up('form').getValues();
+						                Ext.StoreManager.lookup('dsActividadEvaluada').load({
+						                    params: values,
+						                    callback: function (records, operation, success) {
+						                        if (records.length > 0) {
+						                            Ext.Msg.alert('Ya Existe una Matriz', 'Ya existe una matriz de riesgo evaluada para ésta información básica.');
+						                            Ext.StoreManager.lookup('dsTempActividadEvaluada').loadRecords(records);
+						                            Ext.each(records, function (record) {
+						                                var id_matriz = record.get('ID_MATRIZ');
+						                                if (id_matriz != 0) {
+						                                    me.down('#hdd_id_matriz').setValue(id_matriz);
+						                                    return;
+						                                }
+						                            });
+						                        }
+						                    }
+						                });
+						            }
+
 						            this.up('panel').up('panel').next('panel').down('combobox').setDisabled(false);
+
 						        }
 						    }
 						}
 					]
 }
-		/* 
-		[/DATOS ACTIVIDAD] 
-		*/
+		    /* 
+		    [/DATOS ACTIVIDAD] 
+		    */
 			]
-},
+		},
 
         {
             xtype: 'form',
@@ -256,22 +292,29 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                         var pnlEvRiesg,
                             pnlMedida,
                             pnlReEvRiesg,
-                            formPrincipal,
                             values,
                             record;
                         if (newValue != null) {
                             record = this.store.getById(newValue);
 
-                            formPrincipal = this.up('form').up('form');
                             pnlPeligro = this.up('form');
                             pnlEvRiesg = pnlPeligro.down('form');
                             pnlMedida = pnlEvRiesg.next('gridpanel');
                             pnlReEvRiesg = pnlMedida.next('form');
 
+
+                            /* Reset Forms */
+                            pnlMedida.getStore().removeAll();
+                            pnlReEvRiesg.getForm().reset();
+                            pnlEvRiesg.getForm().reset();
+
+                            /* Deshabilita */
+                            pnlMedida.setDisabled(true);
+                            pnlReEvRiesg.setDisabled(true);
+
+                            /* SET HIDDEN FIELDS */
                             pnlPeligro.down('#btn_add_update_actividad_evaluada').setText('Agrega Evaluación');
                             pnlPeligro.down('#hdd_nombre_peligro').setValue(record.get('NOM_PELIGRO'));
-
-
 
                             pnlEvRiesg.setDisabled(false);
 
@@ -407,7 +450,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                     xtype: 'gridpanel',
                     store: 'dsPeligroMedida',
                     itemId: 'grid_medidas_seleccionadas',
-                    disabled: false,
+                    disabled: true,
                     height: 239,
                     margin: '3 3 3 3',
                     autoScroll: true,
@@ -572,7 +615,6 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 
                 new_object = Ext.create('WCF_ENAP.model.ActividadEvaluada', Ext.apply({ "MEDIDAS": Ext.Array.map(grid.getStore().getRange(), function (model) { return model.get("ID_MEDIDAS_DE_CONTROL"); }) }, form.getValues()));
                 errors = new_object.validate();
-                console.log(new_object);
                 if (errors.isValid() && form.isValid()) {
                     this.disable(true);
                     var storeActividadEvaluada = Ext.data.StoreManager.lookup('dsActividadEvaluada');
@@ -590,8 +632,6 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                                 pnlPeligro.getForm().reset();
                                 pnlPeligro.down('combobox').clearValue();
                                 pnlMedida.getStore().removeAll();
-                                console.log(pnlPeligro.down('#hdd_nombre_peligro').getValue());
-                                console.log(pnlPeligro.down('#hdd_actividad_evaluada_id').getValue());
                             }
                         });
                     } else {
@@ -877,8 +917,24 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                             text: 'Confirmar & Guardar',
                             iconCls: 'btn-save',
                             handler: function () {
-                                Ext.data.StoreManager.lookup('dsMatrizRiesgo').insert(0, {});
-                                Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
+                                var existMatriz = me.down('#hdd_id_matriz').getValue();
+                                console.log(existMatriz);
+                                if (existMatriz != null && existMatriz != 0) {
+                                    var updateMatriz = Ext.create('MatrizRiesgo', {
+                                        'ID_MATRIZ': existMatriz
+                                    });
+                                    updateMatriz.save({
+                                        success: function (record) {
+                                            Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
+                                        }
+                                    });
+
+                                } else {
+
+                                    Ext.data.StoreManager.lookup('dsMatrizRiesgo').insert(0, {});
+                                    Ext.data.StoreManager.lookup('dsTempActividadEvaluada').removeAll();
+
+                                }
                             }
                         },
                         {
