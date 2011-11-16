@@ -10,6 +10,7 @@
     cmpPadre: null,   
     title: 'Agregar Datos Tipo Incidente',
     initComponent: function () {
+
         var me = this,
         winAcciones,
         dsPeligroListaTipoIncidentePatrimonio,

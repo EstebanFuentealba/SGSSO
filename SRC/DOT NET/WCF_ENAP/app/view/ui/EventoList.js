@@ -11,7 +11,6 @@
     initComponent: function () {
              var me = this,
             lastMarker = null;
-
         var me = this,
             lastMarker = null,
             yearsList = [],

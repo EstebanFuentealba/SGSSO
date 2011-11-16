@@ -10,6 +10,7 @@
     cmpPadre: null,
     title: 'Seguimiento',
     initComponent: function () {
+
         var me = this,
         winAcciones;
 

@@ -10,6 +10,7 @@
     cmpPadre: null,
     title: 'Agregar Datos Acciones Correctivase',
     initComponent: function () {
+
         var me = this,
         winAcciones;
         me.items = [

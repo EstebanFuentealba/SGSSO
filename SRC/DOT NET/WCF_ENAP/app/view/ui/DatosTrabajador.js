@@ -11,6 +11,7 @@
     cmpPadre: null,
     title: 'Agregar Datos',
     initComponent: function () {
+
         var me = this,
         winAcciones,
         //tipo incidente persona
