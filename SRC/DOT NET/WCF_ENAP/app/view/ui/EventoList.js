@@ -1,4 +1,7 @@
 ﻿Ext.define('WCF_ENAP.view.ui.EventoList', {
+    requires: [
+        'Ext.ux.RowExpander'
+    ],
     extend: 'Ext.panel.Panel',
     height: 600,
     layout: {
@@ -172,6 +175,15 @@
                             title: 'Listado de Incidentes Reportados',
                             id: 'grid_eventos_list',
                             columnWidth: 0.5,
+                            plugins: [
+                                {
+                                    ptype: 'rowexpander',
+                                    pluginId: 'rowexpander',
+                                    rowBodyTpl: [
+                                        '<div style="margin-left: 15px;"><div style="margin-left: 15px; float:left;">		<h3>Descripción:</h3><span style="margin-left: 15px;">{DESCRIPCION_GENERAL}</span><br /><br /></div></div><br />'
+                                    ]
+                                }
+                            ],
                             listeners: {
                                 selectionchange: function (model, records) {
                                     var rec,

@@ -265,7 +265,7 @@
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'VALORACION_PROBABILIDAD',
-					    text: 'P',
+					    text: 'Probabilidad',
 					    "field": {
 					        xtype: "combo",
 					        displayField: "NOMBRE_PROBABILIDAD",
@@ -301,7 +301,7 @@
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'VALORACION_CONSECUENCIA',
-					    text: 'C',
+					    text: 'Consecuencia',
 					    "field": {
 					        "xtype": "combo",
 					        "displayField": "NOMBRE_CONSECUENCIA",
@@ -336,7 +336,7 @@
 					},
 					{
 					    xtype: 'gridcolumn',
-					    text: 'MR',
+					    text: 'Magnitud del Riesgo Puro',
 					    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 					        var indicador_riesgo = parseInt(record.get('VALORACION_CONSECUENCIA')) * parseInt(record.get('VALORACION_PROBABILIDAD'));
 					        if (indicador_riesgo < 3) {
@@ -358,7 +358,7 @@
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-					    text: 'P',
+					    text: 'Probabilidad',
 					    "field": {
 					        "xtype": "combo",
 					        "displayField": "NOMBRE_PROBABILIDAD",
@@ -394,7 +394,7 @@
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
-					    text: 'C',
+					    text: 'Consecuencia',
 					    "field": {
 					        xtype: "combo",
 					        displayField: "NOMBRE_CONSECUENCIA",
@@ -429,7 +429,7 @@
 					},
 					{
 					    xtype: 'gridcolumn',
-					    text: 'MRCC',
+					    text: 'Magnitud del Riesgo con Control',
 					    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 					        var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
 					        if (indicador_riesgo_controlado < 3) {
@@ -457,49 +457,104 @@
 				    items: [
 						{
 						    xtype: 'button',
-						    text: 'Exportar Seleccionadas',
-						    iconCls: 'excel-icon',
+						    text: 'Exportar Seleccionada',
+                            iconCls: 'download-icon',
 						    menu: {
 						        xtype: 'menu',
 						        items: [
-									{
-									    xtype: 'menuitem',
-									    text: 'Planilla de Reconocimiento de Riesgo',
-									    iconCls: 'matriz-icon',
-									    handler: function () {
+            {
+                xtype: 'menuitem',
+                text: 'Planilla de Reconocimiento de Riesgo',
+                iconCls: 'matriz-icon',
+                menu: {
+                    xtype: 'menu',
+                    items: [
+                        {
+                            xtype: 'menuitem',
+                            text: 'Excel',
+                            iconCls: 'excel-icon',
+                            handler: function () {
 
-									        var grid = me.down('gridpanel'),
-                                                sm = grid.getView().getFeature('grouping').getSelectionModel();
+                                var grid = me.down('gridpanel'),
+									sm = grid.getView().getFeature('grouping').getSelectionModel();
 
-									        if (sm.getCount() == 0) {
-									            Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
-									            return;
-									        }
-									        var data = sm.getSelection();
-									        window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-									        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                if (sm.getCount() == 0) {
+                                    Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                    return;
+                                }
+                                var data = sm.getSelection();
+                                window.location = "/utils/Export-Planilla.aspx?FILE_TYPE=xls&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.'); s
+                            }
+                        },
+                        {
+                            xtype: 'menuitem',
+                            text: 'PDF',
+                            iconCls: 'pdf-icon',
+                            handler: function () {
 
-									    }
-									},
-									{
-									    xtype: 'menuitem',
-									    text: 'Matriz de Riesgo',
-									    iconCls: 'matriz-icon',
-									    handler: function () {
-									        var grid = me.down('gridpanel'),
-                                                sm = grid.getView().getFeature('grouping').getSelectionModel();
+                                var grid = me.down('gridpanel'),
+									sm = grid.getView().getFeature('grouping').getSelectionModel();
 
-									        if (sm.getCount() == 0) {
-									            Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
-									            return;
-									        }
-									        var data = sm.getSelection();
-									        window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-									        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                if (sm.getCount() == 0) {
+                                    Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                    return;
+                                }
+                                var data = sm.getSelection();
+                                window.location = "/utils/Export-Planilla.aspx?FILE_TYPE=pdf&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.'); s
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                xtype: 'menuitem',
+                text: 'Matriz de Riesgo',
+                iconCls: 'matriz-icon',
+                menu: {
+                    xtype: 'menu',
+                    items: [
+                        {
+                            xtype: 'menuitem',
+                            text: 'Excel',
+                            iconCls: 'excel-icon',
+                            handler: function () {
+                                var grid = me.down('gridpanel'),
+									sm = grid.getView().getFeature('grouping').getSelectionModel();
 
-									    }
-									}
-								]
+                                if (sm.getCount() == 0) {
+                                    Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                    return;
+                                }
+                                var data = sm.getSelection();
+                                window.location = "/utils/Export-Matriz.aspx?FILE_TYPE=xls&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+
+                            }
+                        },
+                        {
+                            xtype: 'menuitem',
+                            text: 'PDF',
+                            iconCls: 'pdf-icon',
+                            handler: function () {
+                                var grid = me.down('gridpanel'),
+									sm = grid.getView().getFeature('grouping').getSelectionModel();
+
+                                if (sm.getCount() == 0) {
+                                    Ext.Msg.alert('Advertencia', 'No ha checkeado ninguna fila');
+                                    return;
+                                }
+                                var data = sm.getSelection();
+                                window.location = "/utils/Export-Matriz.aspx?FILE_TYPE=pdf&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
 						    }
 						}
 					]

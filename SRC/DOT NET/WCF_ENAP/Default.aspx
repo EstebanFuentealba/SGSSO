@@ -52,6 +52,8 @@
     .add-programaanual-icon{background:transparent url(/icons/chart_organisation_add.png) 0 0 no-repeat !important;}
     .update-programaanual-icon{background:transparent url(/icons/chart_organisation.png) 0 0 no-repeat !important;}
     .excel-icon {background:transparent url(/icons/page_excel.png) 0 0 no-repeat !important;}
+    .pdf-icon {background:transparent url(/icons/page_pdf.png) 0 0 no-repeat !important;}
+    .download-icon {background:transparent url(/icons/arrow_down.png) 0 0 no-repeat !important;}
     .generator-editor-icon {background:transparent url(/icons/cog_edit.png) 0 0 no-repeat !important;}
     .informe-icon {background:transparent url(/icons/page.png) 0 0 no-repeat !important;}
     .tooltip

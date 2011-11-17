@@ -25,7 +25,7 @@ namespace WCF_ENAP.utils
         public static int VALORACION_CONSECUENCIA_VALUE = 10;
         public static int VALORACION_PROBABILIDAD_VALUE = 11;
         public static int MAGNITUD_RIESGO = 12;
-        public static int MEDIDAS = 14;        
+        public static int MEDIDAS = 14;
         public static int MEDIDA_VALORACION_CONSECUENCIA = 15;
         public static int MEDIDA_VALORACION_PROBABILIDAD = 16;
         public static int MEDIDA_VALORACION_CONSECUENCIA_VALUE = 17;
@@ -36,21 +36,25 @@ namespace WCF_ENAP.utils
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-            {
+            {   
                 int idMatriz = int.Parse(Request.Params["ID_MATRIZ"].ToString());
-                bd = new DataClassesEnapDataContext();
+                string fileType = Request.Params["FILE_TYPE"].ToString();
 
-                string temp_name = Guid.NewGuid() + "-" + (new Random()).Next(1, 1000) + "-planilla.xls";
-                string dir_temp_file = @"D:\temporal\" + temp_name;
+                bd = new DataClassesEnapDataContext();
+                string ticksRandom = (new Random()).Next(1, 1000).ToString();
+                string temp_name_pdf = Guid.NewGuid() + "-" + ticksRandom + "-planilla.pdf";
+                string temp_name_xls = Guid.NewGuid() + "-" + ticksRandom + "-planilla.xls";
+                string dir_temp_file_xls = @"D:\temporal\" + temp_name_xls;
+                string dir_temp_file_pdf = @"D:\temporal\" + temp_name_pdf;
                 FileStream plantilla = File.OpenRead(@"D:\temporal\E-020-00 Planilla.xls");
 
-                var fileStream = File.Create(dir_temp_file);
+                var fileStream = File.Create(dir_temp_file_xls);
                 plantilla.CopyTo(fileStream);
                 fileStream.Close();
                 plantilla.Close();
 
                 Microsoft.Office.Interop.Excel.Application app = new Application();
-                Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(dir_temp_file,
+                Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(dir_temp_file_xls,
                                                             0,
                                                             false,
                                                             5,
@@ -79,7 +83,7 @@ namespace WCF_ENAP.utils
                 XLSActividadEvaluada actividad = new XLSActividadEvaluada();
                 XLSPeligro nuevo_peligro = new XLSPeligro();
                 XLSMedidaControl medida = new XLSMedidaControl();
-                string nombre_organizacion="", nombre_departamento="", nombre_division="";
+                string nombre_organizacion = "", nombre_departamento = "", nombre_division = "";
                 #region Arma el objeto a imprimir
                 foreach (sp_get_matriz_by_idResult m in query.ToList())
                 {
@@ -163,7 +167,7 @@ namespace WCF_ENAP.utils
                 #endregion
 
                 #region Completa la información
-                
+
                 foreach (XLSActividadEvaluada ac in matriz)
                 {
                     ((Range)workSheet.Cells[55, 2]).Value2 = ac.Actividad_general;
@@ -183,29 +187,53 @@ namespace WCF_ENAP.utils
                     }
                 }
 
-                
+
                 #endregion
-                ((Range)workSheet.Cells[52, 2]).Value2 = nombre_organizacion ;
+                ((Range)workSheet.Cells[52, 2]).Value2 = nombre_organizacion;
                 ((Range)workSheet.Cells[54, 2]).Value2 = nombre_division;
-                
+
                 workSheet.PageSetup.PrintArea = "$A$50:$I$" + (rowIndex + indexRow);
-                
+
+
+                if (fileType == "pdf")
+                {
+                    workBook.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF,
+                                           dir_temp_file_pdf,
+                                           XlFixedFormatQuality.xlQualityStandard,
+                                           System.Reflection.Missing.Value,
+                                           false,
+                                           System.Reflection.Missing.Value,
+                                           System.Reflection.Missing.Value,
+                                           false,
+                                           System.Reflection.Missing.Value);
+                }
                 workBook.Save();
                 workBook.Close();
                 app.Quit();
-                
+
                 Response.ClearContent();
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.ContentEncoding = System.Text.Encoding.Unicode;
-                Response.ContentType = "application/excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.xls\"");
-                Response.WriteFile(dir_temp_file);
-                //File.Delete(dir_temp_file);
+                if (fileType == "pdf")
+                {
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.pdf\"");
+                    Response.WriteFile(dir_temp_file_pdf);
+                    File.Delete(dir_temp_file_pdf);
+                }
+                else
+                {
+                    Response.ContentType = "application/excel";
+                    Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.xls\"");
+                    Response.WriteFile(dir_temp_file_xls);
+                    File.Delete(dir_temp_file_xls);
+                }
                 Response.End();
 
-                
-            }catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
+
+            }
+            catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
         }
-        
+
     }
 }

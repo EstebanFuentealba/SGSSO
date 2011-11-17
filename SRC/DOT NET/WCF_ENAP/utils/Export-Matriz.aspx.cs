@@ -36,22 +36,25 @@ namespace WCF_ENAP.utils
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
+            //try {
                 int idMatriz = int.Parse(Request.Params["ID_MATRIZ"].ToString());
+                string fileType = Request.Params["FILE_TYPE"].ToString();
+                
                 bd = new DataClassesEnapDataContext();
-
-                string temp_name = Guid.NewGuid() + "-" + (new Random()).Next(1, 1000) + "-matriz.xls";
-                string dir_temp_file = @"D:\temporal\" + temp_name;
+                string ticksRandom = (new Random()).Next(1, 1000).ToString();
+                string temp_name_pdf = Guid.NewGuid() + "-" + ticksRandom + "-matriz.pdf";
+                string temp_name_xls = Guid.NewGuid() + "-" + ticksRandom + "-matriz.xls";
+                string dir_temp_file_xls = @"D:\temporal\" + temp_name_xls;
+                string dir_temp_file_pdf = @"D:\temporal\" + temp_name_pdf;
                 FileStream plantilla = File.OpenRead(@"D:\temporal\Matriz E-020-Plantilla.xls");
 
-                var fileStream = File.Create(dir_temp_file);
+                var fileStream = File.Create(dir_temp_file_xls);
                 plantilla.CopyTo(fileStream);
                 fileStream.Close();
                 plantilla.Close();
 
                 Microsoft.Office.Interop.Excel.Application app = new Application();
-                Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(dir_temp_file,
+                Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(dir_temp_file_xls,
                                                             0,
                                                             false,
                                                             5,
@@ -224,7 +227,20 @@ namespace WCF_ENAP.utils
                 ((Range)workSheet.Cells[59, 9]).Value2 = "Organización: " + nombre_organizacion + ". " + nombre_departamento + ".";
                 ((Range)workSheet.Cells[60, 9]).Value2 = "Sub Proceso (1): " + nombre_division;
                 workSheet.PageSetup.PrintArea = "$A$59:$T$" + (rowIndex + indexRow);
-                
+
+
+                if (fileType == "pdf")
+                {
+                    workBook.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF,
+                                           dir_temp_file_pdf,
+                                           XlFixedFormatQuality.xlQualityStandard,
+                                           System.Reflection.Missing.Value,
+                                           false,
+                                           System.Reflection.Missing.Value,
+                                           System.Reflection.Missing.Value,
+                                           false,
+                                           System.Reflection.Missing.Value);
+                }
                 workBook.Save();
                 workBook.Close();
                 app.Quit();
@@ -232,15 +248,23 @@ namespace WCF_ENAP.utils
                 Response.ClearContent();
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.ContentEncoding = System.Text.Encoding.Unicode;
-                Response.ContentType = "application/excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.xls\"");
-                Response.WriteFile(dir_temp_file);
-                //File.Delete(dir_temp_file);
-                Response.End();
-
+                if (fileType == "pdf")
+                {
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.pdf\"");
+                    Response.WriteFile(dir_temp_file_pdf);
+                    File.Delete(dir_temp_file_pdf);
+                }
+                else
+                {
+                    Response.ContentType = "application/excel";
+                    Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.xls\"");
+                    Response.WriteFile(dir_temp_file_xls);
+                    File.Delete(dir_temp_file_xls);
+                }
                 
-            }
-            catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
+                
+            //} catch (Exception ex) { Response.Write("ERROR " + DateTime.Now.Ticks); }
         }
         
     }

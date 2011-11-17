@@ -499,7 +499,12 @@ namespace WCF_ENAP
                         startTime,
                         endTime,
                         ((user!=null)?user.Username:null)
-                        ).Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                        )
+                    .Skip(_start)
+                    .Take(_limit)
+                    .OrderBy(orderBy(_sort) + " " + _dir)
+                    .Select(r => r);
+
                  List<sp_search_actividad_evaluadaResult> results = query.ToList < sp_search_actividad_evaluadaResult>();
                  if (_ID_ACTIVIDAD_ESPECIFICA != 0)
                  {
