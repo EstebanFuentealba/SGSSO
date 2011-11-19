@@ -15,13 +15,19 @@
         winAcciones;
         me.items = [
 					    {
-					        xtype: 'form',
-					        title: 'Medidas Correctivas o Preventivas',
-					        id: 'panel_Acciones_Correctivas',
-					        anchor: '100%',
-					        layout: 'anchor',
-					        tabIndex: 5,
-					        items: [
+					        xtype: 'panel',
+					        id: 'form_datos_acciones_correctivas',
+                            items: [
+                                        {
+                                            xtype: 'form',
+                                            title: 'Medidas Correctivas o Preventivas',
+                                            id: 'panel_Acciones_Correctivas',
+                                            anchor: '100%',
+                                            margin: '5 5 5 5',
+                                            bodyPadding: 10,
+                                            layout: 'anchor',
+                                            tabIndex: 5,
+                                            items: [
 								    {
 								        xtype: 'form',
 								        border: 0,
@@ -123,28 +129,15 @@
 								        {
 								            xtype: 'form',
 								            border: 0,
-								            layout: {
-								                type: 'column'
-								            },
 								            items: [
-										        {
-										            xtype: 'datefield',
-										            labelAlign: 'top',
-										            name: 'FECHA_REALIZACION',
-										            margin: '5 5 5 5',
-										            fieldLabel: 'Fecha Inicio',
-										            anchor: '100%',
-										            emptyText: 'Fecha Inicio',
-										            columnWidth: 0.5
-										        },
 										        {
 										            xtype: 'datefield',
 										            labelAlign: 'top',
 										            name: 'FECHA_PLAZO',
 										            margin: '5 5 5 5',
-										            fieldLabel: 'Fecha Plazo',
+										            fieldLabel: 'Fecha Propuesta Ejecucion',
 										            anchor: '100%',
-										            emptyText: 'Fecha Finalizacion',
+										            emptyText: 'Fecha Propuesta Ejecucion',
 										            columnWidth: 0.5
 										        }
 									        ]
@@ -160,29 +153,31 @@
 								            anchor: '100%'
 								        }
 							    ],
-					        buttons: [{
-					            text: 'Agregar',
-					            handler: function () {
-					                var new_object,
+                                            buttons: [{
+                                                text: 'Agregar',
+                                                handler: function () {
+                                                    var new_object,
 								    errors,
 								    form;
-					                form = this.up('form').getForm();
-					                console.log(form.getValues()); 
-					                new_object = Ext.create('WCF_ENAP.model.AccionCorrectiva', form.getValues());
-					                errors = new_object.validate();
-					                if (errors.isValid() && form.isValid()) {
+                                                    form = this.up('form').getForm();
+                                                    console.log(form.getValues());
+                                                    new_object = Ext.create('WCF_ENAP.model.AccionCorrectiva', form.getValues());
+                                                    errors = new_object.validate();
+                                                    if (errors.isValid() && form.isValid()) {
 
-					                    this.disable(true);
-					                    Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
-					                    console.log("pASANDO X AKI "); 
-					                    form.reset();
-					                } else {
-					                    form.markInvalid(errors);
-					                }
-					                this.enable(true);
-					            }
-					        }]
-					    }
+                                                        this.disable(true);
+                                                        Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
+                                                        console.log("pASANDO X AKI ");
+                                                        form.reset();
+                                                    } else {
+                                                        form.markInvalid(errors);
+                                                    }
+                                                    this.enable(true);
+                                                }
+                                            }]
+                                        }
+                            ]   
+                        }
 			];
         me.callParent(arguments);
     }

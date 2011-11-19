@@ -340,8 +340,8 @@
                                             xtype: 'button',
                                             text: 'Datos Trabajador',
                                             handler: function () {
-                                                var me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
+                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection( )[0] ,
+                                                    me = this;
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
                                                     stores:
@@ -354,7 +354,7 @@
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTrabajador', {
-                                                            cmpPadre: me
+                                                            cmpRecord: record
                                                         });
                                                         addEvento.show();
                                                         addEvento.on('destroy', function () {
@@ -370,7 +370,6 @@
                                             text: 'Datos PATRIMONIO...',
                                             handler: function () {
                                                 var me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
                                                     stores:
