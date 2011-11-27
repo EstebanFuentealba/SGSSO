@@ -421,7 +421,7 @@ namespace WCF_ENAP
 			}
 			return "ID_ACTIVIDAD_EVALUADA";
 		}
-        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&ID_ACTIVIDAD_ESPECIFICA={_ID_ACTIVIDAD_ESPECIFICA}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}&onlyMy={_ONLYMY}")]
+        [WebGet(UriTemplate = "search?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ID_ORGANIZACION={_ID_ORGANIZACION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}&ID_DIVISION={_ID_DIVISION}&ID_AREA={_ID_AREA}&ID_ACTIVIDAD_GENERAL={_ID_ACTIVIDAD_GENERAL}&ID_ACTIVIDAD_ESPECIFICA={_ID_ACTIVIDAD_ESPECIFICA}&NOM_ACTIVIDAD_ESPECIFICA={_NOM_ACTIVIDAD_ESPECIFICA}&ID_CARGO={_ID_CARGO}&CONDICION={_CONDICION}&startdt={_STARTDT}&enddt={_ENDDT}&onlyMy={_ONLYMY}&MRCC={_MRCC}")]
         public JSONCollection<List<sp_search_actividad_evaluadaResult>> Search(int _page,
                                                                             int _start,
                                                                             int _limit,
@@ -438,6 +438,7 @@ namespace WCF_ENAP
                                                                             int _CONDICION,
                                                                             string _STARTDT,
                                                                             string _ENDDT,
+                                                                            string _MRCC,
                                                                             string _ONLYMY)
         {
             JSONCollection<List<sp_search_actividad_evaluadaResult>> objJSON = new JSONCollection<List<sp_search_actividad_evaluadaResult>>();
@@ -451,7 +452,11 @@ namespace WCF_ENAP
 
             DateTime startTime;
             DateTime endTime;
-            EnapUser user = null; 
+            EnapUser user = null;
+            if (_MRCC == null || _MRCC =="")
+            {
+                _MRCC = "N";
+            }
                 if (_dir == null)
                 {
                     _dir = "DESC";
@@ -498,7 +503,8 @@ namespace WCF_ENAP
                         _CONDICION,
                         startTime,
                         endTime,
-                        ((user!=null)?user.Username:null)
+                        ((user!=null)?user.Username:null),
+                        _MRCC
                         )
                     .Skip(_start)
                     .Take(_limit)

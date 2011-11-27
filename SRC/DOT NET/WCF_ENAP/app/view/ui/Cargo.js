@@ -8,7 +8,14 @@ Ext.define('WCF_ENAP.view.ui.Cargo', {
     initComponent: function () {
         var me = this, rowEditingCargo = Ext.create('Ext.grid.plugin.RowEditing', {});
         me.items = [
-            { "xtype": "textfield", "fieldLabel": "Nombre Cargo", "anchor": "100%", "name": "NOMBRE_CARGO", "labelWidth": 120}
+            {
+                "xtype": "textfield",
+                "fieldLabel": "Nombre Cargo",
+                "anchor": "100%",
+                "name": "NOMBRE_CARGO",
+                "labelWidth": 120,
+                "allowBlank": false
+            }
         ];
         me.buttons = [{
 			text: 'Agregar',

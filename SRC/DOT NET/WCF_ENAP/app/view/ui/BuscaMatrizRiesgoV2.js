@@ -127,8 +127,28 @@
 								    startDateField: 'startdt'
 								}
 							]
-						}
-					]
+						},
+				{
+				    xtype: 'combobox',
+				    plugins: ['clearbutton'],
+				    fieldLabel: 'MRCC',
+				    store: Ext.create('Ext.data.Store', {
+				        fields: [
+							{ "name": "ID_PROBABILIDAD", "type": "string" },
+							{ "name": "NOMBRE_PROBABILIDAD", "type": "string" }
+						],
+				        data: [
+							{ "ID_PROBABILIDAD": 'B', "NOMBRE_PROBABILIDAD": "Bajo" },
+							{ "ID_PROBABILIDAD": 'M', "NOMBRE_PROBABILIDAD": "Medio" },
+							{ "ID_PROBABILIDAD": 'A', "NOMBRE_PROBABILIDAD": "Alto" }
+						]
+				    }),
+				    displayField: 'NOMBRE_PROBABILIDAD',
+				    valueField: 'ID_PROBABILIDAD',
+				    anchor: '100%',
+				    name: 'MRCC'
+				}
+			]
 }
 		/* 
 		[/DATOS ACTIVIDAD] 
@@ -158,26 +178,30 @@
                     callback: function (records, operation, success) {
                         if (records.length == 0) {
                             Ext.MessageBox.confirm('Confirm', 'No existe ninguna Matriz con esos Datos, ¿Desea Crearla?', function (btn) {
-                                /* [CREA MATRIZ] */
-                                Ext.application({
+                                if (btn == 'yes') {
+                                    // [CREA MATRIZ]
+                                    /*
+                                    Ext.application({
                                     name: 'WCF_ENAP',
                                     stores: [],
                                     launch: function () {
-                                        Ext.QuickTips.init();
-                                        var addMatriz = Ext.create('WCF_ENAP.view.ui.EV2', {});
-                                        var winAddMatriz = Ext.create('Ext.window.Window', {
-                                            width: '600',
-                                            maximizable: true,
-                                            title: 'Ingresa una nueva Matriz',
-                                            modal: true,
-                                            items: [
-													addMatriz
-												]
-                                        });
-                                        winAddMatriz.show();
+                                    Ext.QuickTips.init();
+                                    var addMatriz = Ext.create('WCF_ENAP.view.ui.EV2', {});
+                                    var winAddMatriz = Ext.create('Ext.window.Window', {
+                                    width: '600',
+                                    maximizable: true,
+                                    title: 'Ingresa una nueva Matriz',
+                                    modal: true,
+                                    items: [
+                                    addMatriz
+                                    ]
+                                    });
+                                    winAddMatriz.show();
                                     }
-                                });
-                                /* [/CREA MATRIZ] */
+                                    });
+                                    */
+                                    // [/CREA MATRIZ]
+                                }
                             })
                         }
                     }
@@ -198,7 +222,14 @@
 		    Ext.create('Ext.ux.grid.feature.CheckGrouping', {
 		        id: 'grouping',
 		        groupHeaderTpl: '{name}',
-		        selectionMode: "SINGLE"
+		        selectionMode: "SINGLE",
+		        initComponent: function () {
+		            this.callParent(arguments);
+		            this.view.getSelectionModel().on('selectionchange', function () {
+		                console.log("CAMBIO");
+		            });
+		        }
+
 		    })
 		],
 		plugins: [
@@ -223,7 +254,7 @@
 		            if (!Ext.isDefined(rowNode.isLoaded) || rowNode.isLoaded == false) {
 		                me.setLoading(true);
 		                /* aGREGAR DS MEDIDADECONTROL */
-		                Ext.StoreManager.lookup('dsMedidaDeControl').load({
+		                Ext.StoreManager.lookup('dsMedidaDeControlByActividad').load({
 		                    params: { 'ID_ACTIVIDAD_EVALUADA': record.get('ID_ACTIVIDAD_EVALUADA') },
 		                    callback: function (records, operation, success) {
 		                        var dsRecord = me.store.getById(record.get('ID_ACTIVIDAD_EVALUADA'));
@@ -458,7 +489,7 @@
 						{
 						    xtype: 'button',
 						    text: 'Exportar Seleccionada',
-                            iconCls: 'download-icon',
+						    iconCls: 'download-icon',
 						    menu: {
 						        xtype: 'menu',
 						        items: [
@@ -484,7 +515,7 @@
                                 }
                                 var data = sm.getSelection();
                                 window.location = "/utils/Export-Planilla.aspx?FILE_TYPE=xls&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.'); s
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                             }
                         },
                         {
@@ -502,7 +533,7 @@
                                 }
                                 var data = sm.getSelection();
                                 window.location = "/utils/Export-Planilla.aspx?FILE_TYPE=pdf&ID_MATRIZ=" + data[0].get('ID_MATRIZ');
-                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.'); s
+                                Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
                             }
                         }
                     ]

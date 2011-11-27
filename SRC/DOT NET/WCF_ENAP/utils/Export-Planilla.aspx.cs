@@ -183,6 +183,7 @@ namespace WCF_ENAP.utils
                             medidas_formato += "●" + md.Nombre_medida_control + "\r\n";
                         }
                         ((Range)workSheet.Cells[rowIndex + indexRow, 9]).Value2 = medidas_formato;
+                        ((Range)workSheet.Cells[rowIndex + indexRow, 9]).Rows.AutoFit();
                         indexRow++;
                     }
                 }
@@ -219,14 +220,14 @@ namespace WCF_ENAP.utils
                     Response.ContentType = "application/pdf";
                     Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.pdf\"");
                     Response.WriteFile(dir_temp_file_pdf);
-                    File.Delete(dir_temp_file_pdf);
+                    //File.Delete(dir_temp_file_pdf);
                 }
                 else
                 {
                     Response.ContentType = "application/excel";
                     Response.AddHeader("Content-Disposition", "attachment; filename=\"Planilla-" + DateTime.Now.Ticks + "-.xls\"");
                     Response.WriteFile(dir_temp_file_xls);
-                    File.Delete(dir_temp_file_xls);
+                    //File.Delete(dir_temp_file_xls);
                 }
                 Response.End();
 

@@ -363,7 +363,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                         disabled: true,
                         margin: '3 3 3 3',
                         bodyPadding: 10,
-                        title: 'Evaluacion del Riesgo',
+                        title: 'Evaluacion del Riesgo Puro / Evaluación del Riesgo con Medidas de Control',
                         columnWidth: 1 / 3,
                         items: [
                         {
@@ -492,7 +492,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                                             stores: ['dsMedidaDeControl'],
                                             launch: function () {
                                                 Ext.QuickTips.init();
-                                                Ext.StoreManager.lookup('dsMedidaDeControl').load();
+                                                //Ext.StoreManager.lookup('dsMedidaDeControl').load();
                                                 var addMedidas = Ext.create('WCF_ENAP.view.ui.Medidas', {
                                                     cmpPadre: meGrid
                                                 });
@@ -526,7 +526,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
                 disabled: true,
                 margin: '3 3 3 3',
                 bodyPadding: 10,
-                title: 'Re Evaluar',
+                title: 'Re Evaluar Riesgo',
                 columnWidth: 1 / 3,
                 items: [
                         {
@@ -684,7 +684,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 		            if (!Ext.isDefined(rowNode.isLoaded) || rowNode.isLoaded == false) {
 		                me.setLoading(true);
 		                /* aGREGAR DS MEDIDADECONTROL */
-		                Ext.StoreManager.lookup('dsMedidaDeControl').load({
+		                Ext.StoreManager.lookup('dsMedidaDeControlByActividad').load({
 		                    params: { 'ID_ACTIVIDAD_EVALUADA': record.get('ID_ACTIVIDAD_EVALUADA') },
 		                    callback: function (records, operation, success) {
 		                        var dsRecord = me.store.getById(record.get('ID_ACTIVIDAD_EVALUADA'));
@@ -728,7 +728,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'VALORACION_PROBABILIDAD',
-					    text: 'P',
+					    text: 'Probabilidad',
 					    "field": {
 					        xtype: "combo",
 					        displayField: "NOMBRE_PROBABILIDAD",
@@ -764,7 +764,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'VALORACION_CONSECUENCIA',
-					    text: 'C',
+					    text: 'Consecuencia',
 					    "field": {
 					        "xtype": "combo",
 					        "displayField": "NOMBRE_CONSECUENCIA",
@@ -799,7 +799,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					},
 					{
 					    xtype: 'gridcolumn',
-					    text: 'MR',
+					    text: 'Magnitud del Riesgo Puro',
 					    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 					        var indicador_riesgo = parseInt(record.get('VALORACION_CONSECUENCIA')) * parseInt(record.get('VALORACION_PROBABILIDAD'));
 					        if (indicador_riesgo < 3) {
@@ -821,7 +821,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'MEDIDA_VALORACION_PROBABILIDAD',
-					    text: 'P',
+					    text: 'Probabilidad',
 					    "field": {
 					        "xtype": "combo",
 					        "displayField": "NOMBRE_PROBABILIDAD",
@@ -857,7 +857,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					{
 					    xtype: 'gridcolumn',
 					    dataIndex: 'MEDIDA_VALORACION_CONSECUENCIA',
-					    text: 'C',
+					    text: 'Consecuencia',
 					    "field": {
 					        xtype: "combo",
 					        displayField: "NOMBRE_CONSECUENCIA",
@@ -892,7 +892,7 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
 					},
 					{
 					    xtype: 'gridcolumn',
-					    text: 'MRCC',
+					    text: 'Magnitud del Riesgo con Control',
 					    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
 					        var indicador_riesgo_controlado = parseInt(record.get('MEDIDA_VALORACION_CONSECUENCIA')) * parseInt(record.get('MEDIDA_VALORACION_PROBABILIDAD'));
 					        if (indicador_riesgo_controlado < 3) {

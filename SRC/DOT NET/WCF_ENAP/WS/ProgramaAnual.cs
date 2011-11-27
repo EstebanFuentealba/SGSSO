@@ -26,8 +26,8 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-		[WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}")]
-        public JSONCollection<List<sp_get_programas_anualesResult>> GetCollection(int _page,int _start, int _limit,string _sort, string _dir)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ANO_INICIO={_ANO_INICIO}")]
+        public JSONCollection<List<sp_get_programas_anualesResult>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _ANO_INICIO)
         {
             JSONCollection<List<sp_get_programas_anualesResult>> objJSON = new JSONCollection<List<sp_get_programas_anualesResult>>();
             try
@@ -45,7 +45,7 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.sp_get_programas_anuales().Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.sp_get_programas_anuales(_ANO_INICIO,_start,_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                 List<sp_get_programas_anualesResult> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count<TBL_PROGRAMA_ANUAL>();
@@ -83,6 +83,7 @@ namespace WCF_ENAP
                     ID_DEPARTAMENTO_ORGANIZACION = nuevo.ID_DEPARTAMENTO_ORGANIZACION,
                     ID_DIVISION = (int)nuevo.ID_DIVISION,
                     NOMBRE_DIVISION = NOMBRE_DIVISION,
+                    PROGRAMA = "["+nuevo.ANO_INICIO+"] " + NOMBRE_DIVISION,
                     OBJETIVO = nuevo.OBJETIVO,
                     META = nuevo.META,
                     FECHA_CREACION = nuevo.FECHA_CREACION,

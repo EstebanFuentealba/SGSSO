@@ -216,7 +216,7 @@ namespace WCF_ENAP.utils
                         ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_CONSECUENCIA]).Value2 = op.Medida_valoracion_consecuencia;
                         ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDA_VALORACION_PROBABILIDAD]).Value2 = op.Medida_valoracion_probabilidad;
                         ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.N_ROW]).Value2 = indexRow + 1;
-                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDAS]).Columns.AutoFit();
+                        ((Range)workSheet.Cells[rowIndex + indexRow, Export_Matriz.MEDIDAS]).Rows.AutoFit();
                         indexRow++;
                     }
                     //rowIndex++;
@@ -253,14 +253,14 @@ namespace WCF_ENAP.utils
                     Response.ContentType = "application/pdf";
                     Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.pdf\"");
                     Response.WriteFile(dir_temp_file_pdf);
-                    File.Delete(dir_temp_file_pdf);
+                    //File.Delete(dir_temp_file_pdf);
                 }
                 else
                 {
                     Response.ContentType = "application/excel";
                     Response.AddHeader("Content-Disposition", "attachment; filename=\"Matriz-" + DateTime.Now.Ticks + "-.xls\"");
                     Response.WriteFile(dir_temp_file_xls);
-                    File.Delete(dir_temp_file_xls);
+                    //File.Delete(dir_temp_file_xls);
                 }
                 
                 

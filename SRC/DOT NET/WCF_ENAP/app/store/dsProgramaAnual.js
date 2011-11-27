@@ -9,9 +9,11 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "OBJETIVO", "type": "string" },
         { "name": "META", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date" },
+        { "name": "PROGRAMA", "type": "string"},
         { "name": "NOMBRE_PROGRAMA", "type": "string" },
         { "name": "MES_INICIO", "type": "int" },
-        { "name": "ANO_INICIO", "type": "int" }
+        { "name": "ANO_INICIO", "type": "int" },
+        { "name": "PERCENT_TOTAL", "type": "int" }
 
     ]
 });
@@ -25,8 +27,9 @@ Ext.define('WCF_ENAP.store.dsProgramaAnual', {
             autoLoad: true,
             autoSync: true,
             storeId: 'dsProgramaAnual',
-            pageSize: 10,
+            pageSize: 50,
             remoteSort: true,
+            groupField: 'PROGRAMA',
             model: 'WCF_ENAP.model.ProgramaAnual',
             proxy: {
                 type: 'rest',

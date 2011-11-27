@@ -11,6 +11,7 @@
     <link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/ClearButton.css" rel="stylesheet" type="text/css" />
+    <link href="/ux/css/ProgressColumn.css" rel="stylesheet" type="text/css" />
     <!-- [/CSS] -->
     <!-- [JS] -->
     <script src="/ext-4.0.2a/ext-all.js" type="text/javascript"></script>
@@ -56,6 +57,8 @@
     .download-icon {background:transparent url(/icons/arrow_down.png) 0 0 no-repeat !important;}
     .generator-editor-icon {background:transparent url(/icons/cog_edit.png) 0 0 no-repeat !important;}
     .informe-icon {background:transparent url(/icons/page.png) 0 0 no-repeat !important;}
+    .toggle-minus-icon {background:transparent url(/icons/bullet_toggle_minus.png) 0 0 no-repeat !important;}
+    .toggle-plus-icon {background:transparent url(/icons/bullet_toggle_plus.png) 0 0 no-repeat !important;}
     .tooltip
     {
         float: right;        

@@ -49,16 +49,24 @@
         b.view.getSelectionModel().deselectAll()
     },
     toggleCheckbox: function (a, b, c) {
+		console.log(a);
+		console.log(b);
+		console.log(c);
         var d = b.classList;
         var e = Ext.get(b);
         var f;
         if (!d.contains("x-grid-row-checked")) {
             e.addCls("x-grid-row-checked");
+			
             this.deSelectAll(e);
-            f = true
+			
+            f = true;
+			this.view.getSelectionModel().fireEvent('selectionchange', e,f );
         } else {
             e.removeCls("x-grid-row-checked");
-            f = false
+			
+            f = false;
+			this.view.getSelectionModel().fireEvent('selectionchange', e ,f);
         }
         var g = c.getSelectionModel();
         var h = g.store;
