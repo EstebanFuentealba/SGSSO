@@ -1,7 +1,8 @@
 ﻿Ext.define('WCF_ENAP.view.ui.ProgramaAnual', {
     requires: [
         'Ext.ux.RowExpander',
-        'Ext.ux.grid.column.ProgressColumn'
+        'Ext.ux.grid.column.ProgressColumn',
+        'Ext.ux.form.field.ClearButton'
     ],
     extend: 'Ext.panel.Panel',
     autoScroll: true,
@@ -67,7 +68,6 @@
 		                fields: ['ANO'],
 		                data: yearsList
 		            }),
-                    height: 50,
 		            margin: '0 0 0 5',
 		            fieldLabel: 'Año',
 		            valueField: 'ANO',
@@ -83,7 +83,116 @@
 		                    this.up('menu').hide();
 		                }
 		            }
-		        }
+		        },
+                {
+                    xtype: 'combobox',
+                    plugins: ['clearbutton'],
+                    margin: '0 0 0 5',
+                    name: 'ID_ORGANIZACION',
+                    fieldLabel: 'Organización',
+                    displayField: 'NOMBRE_ORGANIZACION',
+                    store: 'dsOrganizacion',
+                    emptyText: 'Organización',
+                    valueField: 'ID_ORGANIZACION',
+                    typeAhead: true,
+                    forceSelection: true,
+                    triggerAction: 'all',
+                    queryMode: 'local',
+                    lastQuery: '',
+                    selectOnFocus: true,
+                    listeners: {
+                        'change': function (cmb, newValue, oldValue, eOpts) {
+                            var cmbDepto = this.next('combobox');
+                            cmbDepto.clearValue();
+                            if (newValue != null) {
+                                Ext.data.StoreManager.lookup('dsDepartamento').load({
+                                    params: { 'ID_ORGANIZACION': newValue },
+                                    callback: function (records, operation, success) {
+                                        cmbDepto.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                    }
+                                });
+                            }
+                        }
+                    }
+                },
+                {
+                    xtype: 'combobox',
+                    plugins: ['clearbutton'],
+                    margin: '0 0 0 5',
+                    disabled: true,
+                    name: 'ID_DEPARTAMENTO_ORGANIZACION',
+                    fieldLabel: 'Departamento',
+                    displayField: 'NOMBRE_DEPARTAMENTO',
+                    store: 'dsDepartamento',
+                    valueField: 'ID_DEPARTAMENTO_ORGANIZACION',
+                    emptyText: 'Departamento',
+                    typeAhead: true,
+                    forceSelection: true,
+                    triggerAction: 'all',
+                    queryMode: 'local',
+                    lastQuery: '',
+                    selectOnFocus: true,
+                    listeners: {
+                        'change': function (cmb, newValue, oldValue, eOpts) {
+                            var cmbDiv = this.next('combobox'); ;
+                            cmbDiv.clearValue();
+                            if (newValue != null) {
+                                Ext.data.StoreManager.lookup('dsDivision').load({
+                                    params: { 'ID_DEPARTAMENTO': newValue },
+                                    callback: function (records, operation, success) {
+                                        cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
+                                    }
+                                });
+                            }
+                        }
+                    }
+                },
+                {
+                    xtype: 'combobox',
+                    plugins: ['clearbutton'],
+                    height: 50,
+                    disabled: true,
+                    margin: '0 0 0 5',
+                    name: 'ID_DIVISION',
+                    fieldLabel: 'División',
+                    displayField: 'NOMBRE_DIVISION',
+                    store: 'dsDivision',
+                    valueField: 'ID_DIVISION',
+                    typeAhead: true,
+                    forceSelection: true,
+                    triggerAction: 'all',
+                    emptyText: 'División',
+                    queryMode: 'local',
+                    lastQuery: '',
+                    selectOnFocus: true,
+                    listeners: {
+                        'change': function (cmb, newValue, oldValue, eOpts) {
+                            var selectedYear = Ext.getCmp('panel-ProgramaAnual').contextMenuFilters.getComponent(0).getValue();
+                            if (newValue != null && Ext.isNumber(newValue)) {
+                                
+                                Ext.StoreManager.lookup('dsProgramaAnual').load({
+                                    params: {
+                                        'ANO_INICIO': selectedYear,
+                                        'ID_DIVISION': newValue
+                                    },
+                                    callback: function (records) {
+                                        //Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
+                                    }
+                                });
+                            } else {
+                                Ext.StoreManager.lookup('dsProgramaAnual').load({
+                                    params: {
+                                        'ANO_INICIO': selectedYear,
+                                        'ID_DIVISION': 0
+                                    },
+                                    callback: function (records) {
+                                        //Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
 	        ]
         });
         Ext.applyIf(me, {

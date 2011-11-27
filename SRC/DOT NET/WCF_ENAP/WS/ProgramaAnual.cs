@@ -9,6 +9,7 @@ using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
 using WCF_ENAP.WS;
+using System.Web.Script.Serialization;
 
 /**
   *NameSpace.
@@ -26,15 +27,21 @@ namespace WCF_ENAP
 		{
 			bd = new DataClassesEnapDataContext();
 		}
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ANO_INICIO={_ANO_INICIO}")]
-        public JSONCollection<List<sp_get_programas_anualesResult>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _ANO_INICIO)
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ANO_INICIO={_ANO_INICIO}&ID_DIVISION={_ID_DIVISION}")]
+        public JSONCollection<List<sp_get_programas_anualesResult>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _ANO_INICIO, int _ID_DIVISION)
         {
             JSONCollection<List<sp_get_programas_anualesResult>> objJSON = new JSONCollection<List<sp_get_programas_anualesResult>>();
             try
             {
-                if (_dir == null)
+                List<ExtJSSort> sort = null;
+                if (_sort != null)
                 {
-                    _dir = "DESC";
+                    JavaScriptSerializer ser = new JavaScriptSerializer();
+                    sort = ser.Deserialize<List<ExtJSSort>>(_sort);
+                }
+                if (sort[sort.Count - 1] != null && sort[sort.Count - 1].direction == null)
+                {
+                    sort[sort.Count - 1].direction = "DESC";
                 }
                 if (_page == 0)
                 {
@@ -45,7 +52,7 @@ namespace WCF_ENAP
                     _limit = 10;
                 }
                 _start = (_page * _limit) - _limit;
-                var query = bd.sp_get_programas_anuales(_ANO_INICIO,_start,_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                var query = bd.sp_get_programas_anuales(_ANO_INICIO, _ID_DIVISION, _start, _limit).OrderBy(orderBy(sort[sort.Count - 1])).Select(r => r);
                 List<sp_get_programas_anualesResult> results = query.ToList();
                 objJSON.items = results;
                 objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count<TBL_PROGRAMA_ANUAL>();
@@ -154,22 +161,24 @@ namespace WCF_ENAP
 			bd.TBL_PROGRAMA_ANUAL.DeleteOnSubmit(objeto);
 			bd.SubmitChanges();
 		}
-		string orderBy(string _sort)
-		{
-			if (_sort != null)
-			{
-				if (_sort.Equals("OBJETIVO")){
-					return "OBJETIVO";
-				}
-				if (_sort.Equals("META")){
-					return "META";
-				}
-				if (_sort.Equals("FECHA_CREACION")){
-					return "FECHA_CREACION";
-				}
-
-			}
-			return "ID_PROGRAMA_ANUAL";
-		}
+        string orderBy(ExtJSSort _sort)
+        {
+            if (_sort != null)
+            {
+                if (_sort.property.Equals("NOMBRE_PROGRAMA"))
+                {
+                    return "NOMBRE_PROGRAMA " + _sort.direction;
+                }
+                if (_sort.property.Equals("ID_DIVISION"))
+                {
+                    return "ID_DIVISION " + _sort.direction;
+                }
+                if (_sort.property.Equals("PERCENT_TOTAL"))
+                {
+                    return "PERCENT_TOTAL " + _sort.direction;
+                }
+            }
+            return "ID_PROGRAMA_ANUAL DESC";
+        }
 	}
 }

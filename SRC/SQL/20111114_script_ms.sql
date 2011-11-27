@@ -2475,12 +2475,29 @@ GO
 
 CREATE PROCEDURE sp_get_programas_anuales
 	@ANO_INICIO 	INT = 0,
+	@ID_DIVISION	INT = 0,
 	@p0				INT = 0,
 	@p1				INT = 10
 AS
+	DECLARE @sql nvarchar(4000)
+	
+	SELECT @sql = 'SELECT [t2].* FROM (';
+		SELECT @sql = @sql + 'SELECT [t1].* FROM (';
+			SELECT @sql = @sql + 'SELECT ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION DESC) AS [ROW_NUMBER],';
+				SELECT @sql = @sql + '''[''+CAST(PA.ANO_INICIO AS VARCHAR)+''] ''+D.NOMBRE_DIVISION AS ''PROGRAMA'',';
+				SELECT @sql = @sql + 'PA.ID_PROGRAMA_ANUAL, 				PA.ID_DEPARTAMENTO_ORGANIZACION, 				PA.NOMBRE_PROGRAMA, 				D.ID_DIVISION, 				D.NOMBRE_DIVISION, 				PA.OBJETIVO, 				PA.META, 				PA.FECHA_CREACION, 				PA.MES_INICIO, 				PA.ANO_INICIO, 				ISNULL((SELECT 						ROUND (ISNULL((((SUM(CASE  							WHEN AC.ENERO_P = 0  THEN 								CASE 									WHEN AC.ENERO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.FEBRERO_P = 0 THEN 								CASE 									WHEN AC.FEBRERO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.MARZO_P = 0 THEN 								CASE 									WHEN AC.MARZO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.ABRIL_P = 0 THEN 								CASE 									WHEN AC.ABRIL_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.MAYO_P = 0 THEN 								CASE 									WHEN AC.MAYO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.JUNIO_P = 0 THEN 								CASE 									WHEN AC.JUNIO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.JULIO_P = 0 THEN 								CASE 									WHEN AC.JULIO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.AGOSTO_P = 0 THEN 								CASE 									WHEN AC.AGOSTO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.SEPTIEMBRE_P = 0 THEN 								CASE 									WHEN AC.SEPTIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.OCTUBRE_P = 0 THEN 								CASE 									WHEN AC.OCTUBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.NOVIEMBRE_P = 0 THEN 								CASE 									WHEN AC.NOVIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.DICIEMBRE_P = 0 THEN 								CASE 									WHEN AC.DICIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*)))/12),0),2)  					FROM TBL_ACTIVIDAD AC 						INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL 					WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL 					GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS  ''PERCENT_TOTAL''  			FROM TBL_PROGRAMA_ANUAL PA 				INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION 			WHERE PA.ANO_INICIO=@ANO_INICIO';
+				IF @ID_DIVISION <> 0
+					SELECT @sql = @sql + ' AND D.ID_DIVISION = @ID_DIVISION '
+				
+		SELECT @sql = @sql + ') AS [t1] WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1';
+	SELECT @sql = @sql + ') AS [t2] ORDER BY PROGRAMA,[t2].[ROW_NUMBER] ASC';
 	IF @ANO_INICIO = 0
 		SET @ANO_INICIO = CAST(YEAR(GETDATE()) AS INT);
-	SELECT [t2].*
+	
+	EXEC sp_executesql @sql, N'@ANO_INICIO INT, @ID_DIVISION INT, @p0 INT, @p1 INT',
+								   @ANO_INICIO, @ID_DIVISION, @p0, @p1
+
+	/*SELECT [t2].*
 	FROM (
 		SELECT [t1].*
 		FROM (
@@ -2629,6 +2646,7 @@ AS
 	WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
 ) AS [t2]
 ORDER BY PROGRAMA,[t2].[ROW_NUMBER] ASC
+*/
 GO
 CREATE PROCEDURE sp_get_stores_by_nodo
 	@ID_NODO  INT
