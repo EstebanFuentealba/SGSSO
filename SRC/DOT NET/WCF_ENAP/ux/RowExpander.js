@@ -86,18 +86,11 @@ Ext.define('Ext.ux.RowExpander', {
      * @param {Ext.data.Model} record The record providing the data.
      * @param {HtmlElement} expandRow The &lt;tr> element containing the expanded data.
      */
-	initComponent : function(){
-		this.addEvents(
-            'groupcollapse',
-            'groupexpand'
-        );
-        this.callParent(arguments);
-	},
-    constructor : function(){
+
+    constructor: function() {
         this.callParent(arguments);
         var grid = this.getCmp();
         this.recordsExpanded = {};
-		
         // <debug>
         if (!this.rowBodyTpl) {
             Ext.Error.raise("The 'rowBodyTpl' config is required and is not defined.");
@@ -207,12 +200,12 @@ Ext.define('Ext.ux.RowExpander', {
             row.removeCls(this.rowCollapsedCls);
             nextBd.removeCls(this.rowBodyHiddenCls);
             this.recordsExpanded[record.internalId] = true;
-            this.view.fireEvent('groupexpand', rowNode, record, nextBd.dom);
+            this.view.fireEvent('expandbody', rowNode, record, nextBd.dom);
         } else {
             row.addCls(this.rowCollapsedCls);
             nextBd.addCls(this.rowBodyHiddenCls);
             this.recordsExpanded[record.internalId] = false;
-            this.view.fireEvent('groupcollapse', rowNode, record, nextBd.dom);
+            this.view.fireEvent('collapsebody', rowNode, record, nextBd.dom);
         }
 
 

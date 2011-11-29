@@ -94,9 +94,6 @@
                     listeners: {
                         'afterrender': function (cmp, opt) {
                             cmp.doLayout();
-                        },
-                        'selectionchange': function (selModel, selections) {
-                            this.down('#btn_delete_actividad_programa').setDisabled(selections.length === 0);
                         }
                     },
                     columns: [
@@ -200,50 +197,56 @@
                                         record.set('OCTUBRE_E', true);
                                         record.set('NOVIEMBRE_E', true);
                                         record.set('DICIEMBRE_E', true);
-                                        winActividadProgramaAnualPrevencion = Ext.create("WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion", {
-                                            recordParent: record
-                                        });
                                         var view = Ext.getCmp('grid_programa_anual').getView();
-                                        showSummary = false;
-                                        view.getFeature('groupAnual').toggleSummaryRow(showSummary);
-                                        view.refresh();
-                                        winActividadProgramaAnualPrevencion.getComponent('form_actividad_programa_anual').loadRecord(record);
-                                        winActividadProgramaAnualPrevencion.show();
+
+                                        Ext.application({
+                                            name: 'WCF_ENAP',
+                                            stores: ['dsMeses', 'dsFrecuencia', 'dsEvidencia','dsCargo'],
+                                            launch: function () {
+                                                Ext.QuickTips.init();
+                                                var winActividadProgramaAnualPrevencion = Ext.create('WCF_ENAP.view.ui.ActividadProgramaAnualPrevencion', {
+                                                    recordParent: record
+                                                })
+                                                winActividadProgramaAnualPrevencion.show();
+                                                showSummary = false;
+                                                view.getFeature('groupAnual').toggleSummaryRow(showSummary);
+                                                view.refresh();
+                                                winActividadProgramaAnualPrevencion.getComponent('form_actividad_programa_anual').loadRecord(record);
+                                                winActividadProgramaAnualPrevencion.show();
+                                            }
+                                        });
+                                        
+
+                                        
+                                        
                                     }
                                 },
                                 {
                                     xtype: 'button',
-                                    disabled: true,
-                                    itemId: 'btn_delete_actividad_programa',
                                     text: 'Remover Actividad Seleccionada',
                                     handler: function () {
-                                        var grid = Ext.getCmp('grid_programa_anual'),
-                                            store = Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion')
-                                            records = grid.getSelectionModel().getSelection();
-                                            store.remove(records);
-                                        /* var view = Ext.getCmp('grid_programa_anual').getView(),
-                                        summaryGroups = view.getFeature('groupAnual').summaryGroups,
-                                        summaryData = view.getFeature('groupAnual').generateSummaryData(),
-                                        total = [];
-                                        // Calculo Total Avance
+                                        var view = Ext.getCmp('grid_programa_anual').getView(),
+                                            summaryGroups = view.getFeature('groupAnual').summaryGroups,
+                                            summaryData = view.getFeature('groupAnual').generateSummaryData(),
+                                            total = [];
+                                        /* Calculo Total Avance */
                                         for (var i = 0, length = summaryGroups.length; i < length; ++i) {
-                                        var actividad = summaryData[summaryGroups[i].name], index = 0;
-                                        for (var percent in actividad) {
-                                        if (!total[index]) { total[index] = 0; }
-                                        total[index] = total[index] + actividad[percent];
-                                        index++;
-                                        }
+                                            var actividad = summaryData[summaryGroups[i].name], index = 0;
+                                            for (var percent in actividad) {
+                                                if (!total[index]) { total[index] = 0; }
+                                                total[index] = total[index] + actividad[percent];
+                                                index++;
+                                            }
                                         }
                                         var avance_total_mensual = [], avance_total_programa = 0;
                                         Ext.each(total, function (objeto) {
-                                        var percent_month = (objeto / summaryGroups.length);
-                                        avance_total_mensual.push(percent_month);
-                                        avance_total_programa += percent_month;
+                                            var percent_month = (objeto / summaryGroups.length);
+                                            avance_total_mensual.push(percent_month);
+                                            avance_total_programa += percent_month;
                                         });
                                         avance_total_programa = avance_total_programa / avance_total_mensual.length;
                                         //console.log(avance_total_mensual);
                                         //console.log(avance_total_programa);
-                                        */
                                     }
                                 },
                                 {

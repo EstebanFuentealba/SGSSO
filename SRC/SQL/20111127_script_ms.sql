@@ -14,6 +14,13 @@ go
 
 if exists (select 1
           from sysobjects
+          where id = object_id('TRIGGER_1')
+          and type = 'TR')
+   drop trigger TRIGGER_1
+go
+
+if exists (select 1
+          from sysobjects
           where id = object_id('TRIG_INSERT_USUARIO')
           and type = 'TR')
    drop trigger TRIG_INSERT_USUARIO
@@ -38,6 +45,27 @@ if exists (select 1
           where  id = object_id('FN_RECURSIVE_NODE')
           and type = 'P')
    drop procedure FN_RECURSIVE_NODE
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_CREATE_PROGRAMA_BY_TEMPLATE')
+          and type = 'P')
+   drop procedure SP_CREATE_PROGRAMA_BY_TEMPLATE
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_GET_EVENTOS_DEPARTAMENTO_BY_ORGANIZACION')
+          and type = 'P')
+   drop procedure SP_GET_EVENTOS_DEPARTAMENTO_BY_ORGANIZACION
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_GET_EVENTOS_LIST')
+          and type = 'P')
+   drop procedure SP_GET_EVENTOS_LIST
 go
 
 if exists (select 1
@@ -94,6 +122,13 @@ if exists (select 1
           where  id = object_id('SP_SEARCH_ACTIVIDAD_EVALUADA')
           and type = 'P')
    drop procedure SP_SEARCH_ACTIVIDAD_EVALUADA
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_SEARCH_POINT')
+          and type = 'P')
+   drop procedure SP_SEARCH_POINT
 go
 
 if exists (select 1
@@ -252,16 +287,30 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_CAUS')
-alter table TBL_CAUSA_INFORME
-   drop constraint FK_TBL_CAUS_REFERENCE_TBL_CAUS
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME_FINAL') and o.name = 'FK_TBL_CAUSA_FINAL_REFERENCE_TBL_CAUS')
+alter table TBL_CAUSA_INFORME_FINAL
+   drop constraint FK_TBL_CAUSA_FINAL_REFERENCE_TBL_CAUS
 go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_CAUSA_INFORME') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_I_FI')
-alter table TBL_CAUSA_INFORME
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME_FINAL') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_I_FI')
+alter table TBL_CAUSA_INFORME_FINAL
    drop constraint FK_TBL_CAUS_REFERENCE_TBL_I_FI
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME_PRELIMIANAR') and o.name = 'FK_TBL_CAUSA_PRELIMINAR_REFERENCE_TBL_CAUS')
+alter table TBL_CAUSA_INFORME_PRELIMIANAR
+   drop constraint FK_TBL_CAUSA_PRELIMINAR_REFERENCE_TBL_CAUS
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_CAUSA_INFORME_PRELIMIANAR') and o.name = 'FK_TBL_CAUS_REFERENCE_TBL_I_PR')
+alter table TBL_CAUSA_INFORME_PRELIMIANAR
+   drop constraint FK_TBL_CAUS_REFERENCE_TBL_I_PR
 go
 
 if exists (select 1
@@ -406,9 +455,9 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_MATRIZ_ACTIVIDAD') and o.name = 'FK_TBL_MATR_CREAN_TBL_ACTI')
+   where r.fkeyid = object_id('TBL_MATRIZ_ACTIVIDAD') and o.name = 'FK_TBL_MATR_REFERENCE_TBL_ACTI')
 alter table TBL_MATRIZ_ACTIVIDAD
-   drop constraint FK_TBL_MATR_CREAN_TBL_ACTI
+   drop constraint FK_TBL_MATR_REFERENCE_TBL_ACTI
 go
 
 if exists (select 1
@@ -416,6 +465,13 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_MATRIZ_ACTIVIDAD') and o.name = 'FK_TBL_MATR_INCLUYE_TBL_MATR')
 alter table TBL_MATRIZ_ACTIVIDAD
    drop constraint FK_TBL_MATR_INCLUYE_TBL_MATR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_MEDIDA_DE_CONTROL') and o.name = 'FK_TBL_MEDI_REFERENCE_TBL_DIVI')
+alter table TBL_MEDIDA_DE_CONTROL
+   drop constraint FK_TBL_MEDI_REFERENCE_TBL_DIVI
 go
 
 if exists (select 1
@@ -469,16 +525,30 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_PELIGRO_MEDIDA') and o.name = 'FK_TBL_PELI_SE TOMAN_TBL_MEDI')
-alter table TBL_PELIGRO_MEDIDA
-   drop constraint "FK_TBL_PELI_SE TOMAN_TBL_MEDI"
+   where r.fkeyid = object_id('TBL_PELIGRO_EVENTO_TRABAJADOR') and o.name = 'FK_TBL_PELIGRO_REFERENCE_TBL_EVENTO_TRABAJ')
+alter table TBL_PELIGRO_EVENTO_TRABAJADOR
+   drop constraint FK_TBL_PELIGRO_REFERENCE_TBL_EVENTO_TRABAJ
 go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_PELIGRO_MEDIDA') and o.name = 'FK_TBL_PELI_SE CONTRO_TBL_ACTI')
+   where r.fkeyid = object_id('TBL_PELIGRO_EVENTO_TRABAJADOR') and o.name = 'FK_TBL_PELIGRO_TRAB_REFERENCE_TBL_PELIGRO')
+alter table TBL_PELIGRO_EVENTO_TRABAJADOR
+   drop constraint FK_TBL_PELIGRO_TRAB_REFERENCE_TBL_PELIGRO
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_PELIGRO_MEDIDA') and o.name = 'FK_TBL_PELI_REFERENCE_TBL_ACTI')
 alter table TBL_PELIGRO_MEDIDA
-   drop constraint "FK_TBL_PELI_SE CONTRO_TBL_ACTI"
+   drop constraint FK_TBL_PELI_REFERENCE_TBL_ACTI
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_PELIGRO_MEDIDA') and o.name = 'FK_TBL_PELI_SE TOMAN_TBL_MEDI')
+alter table TBL_PELIGRO_MEDIDA
+   drop constraint "FK_TBL_PELI_SE TOMAN_TBL_MEDI"
 go
 
 if exists (select 1
@@ -493,6 +563,20 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_PROGRAMA_ANUAL') and o.name = 'FK_TBL_PROG_REFERENCE_TBL_DIVI')
 alter table TBL_PROGRAMA_ANUAL
    drop constraint FK_TBL_PROG_REFERENCE_TBL_DIVI
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_PROGRAMA_ANUAL') and o.name = 'FK_TBL_PROG_REFERENCE_TBL_TEMP')
+alter table TBL_PROGRAMA_ANUAL
+   drop constraint FK_TBL_PROG_REFERENCE_TBL_TEMP
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_PROGRAMA_ANUAL') and o.name = 'FK_TBL_PROG_REFERENCE_TBL_PROG')
+alter table TBL_PROGRAMA_ANUAL
+   drop constraint FK_TBL_PROG_REFERENCE_TBL_PROG
 go
 
 if exists (select 1
@@ -651,9 +735,16 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('TBL_CAUSA_INFORME')
+           where  id = object_id('TBL_CAUSA_INFORME_FINAL')
             and   type = 'U')
-   drop table TBL_CAUSA_INFORME
+   drop table TBL_CAUSA_INFORME_FINAL
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_CAUSA_INFORME_PRELIMIANAR')
+            and   type = 'U')
+   drop table TBL_CAUSA_INFORME_PRELIMIANAR
 go
 
 if exists (select 1
@@ -861,6 +952,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('TBL_PELIGRO_EVENTO_TRABAJADOR')
+            and   type = 'U')
+   drop table TBL_PELIGRO_EVENTO_TRABAJADOR
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('TBL_PELIGRO_MEDIDA')
             and   type = 'U')
    drop table TBL_PELIGRO_MEDIDA
@@ -892,6 +990,13 @@ if exists (select 1
            where  id = object_id('TBL_STORE')
             and   type = 'U')
    drop table TBL_STORE
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TBL_TEMPLATE')
+            and   type = 'U')
+   drop table TBL_TEMPLATE
 go
 
 if exists (select 1
@@ -978,6 +1083,14 @@ if exists(select 1 from systypes where name='TIPO_FRECUENCIA')
    execute sp_droptype TIPO_FRECUENCIA
 go
 
+if exists(select 1 from systypes where name='TIPO_MEDIDA')
+   execute sp_unbindrule TIPO_MEDIDA
+go
+
+if exists(select 1 from systypes where name='TIPO_MEDIDA')
+   execute sp_droptype TIPO_MEDIDA
+go
+
 if exists(select 1 from systypes where name='TIPO_NODO')
    execute sp_unbindrule TIPO_NODO
 go
@@ -1026,6 +1139,10 @@ if exists (select 1 from sysobjects where id=object_id('R_TIPO_FRECUENCIA') and 
    drop rule  R_TIPO_FRECUENCIA
 go
 
+if exists (select 1 from sysobjects where id=object_id('R_TIPO_MEDIDA') and type='R')
+   drop rule  R_TIPO_MEDIDA
+go
+
 if exists (select 1 from sysobjects where id=object_id('R_TIPO_NODO') and type='R')
    drop rule  R_TIPO_NODO
 go
@@ -1060,6 +1177,10 @@ go
 
 create rule R_TIPO_FRECUENCIA as
       @column between 1 and 7 and @column in (1,2,3,4,5,6,7)
+go
+
+create rule R_TIPO_MEDIDA as
+      @column between 1 and 2 and @column in (1,2)
 go
 
 create rule R_TIPO_NODO as
@@ -1138,6 +1259,15 @@ execute sp_addtype TIPO_FRECUENCIA, 'int'
 go
 
 execute sp_bindrule R_TIPO_FRECUENCIA, TIPO_FRECUENCIA
+go
+
+/*==============================================================*/
+/* Domain: TIPO_MEDIDA                                          */
+/*==============================================================*/
+execute sp_addtype TIPO_MEDIDA, 'int'
+go
+
+execute sp_bindrule R_TIPO_MEDIDA, TIPO_MEDIDA
 go
 
 /*==============================================================*/
@@ -1236,7 +1366,7 @@ create table TBL_ACTIVIDAD (
    ID_EVIDENCIA         int                  null,
    ID_PROGRAMA_ANUAL    int                  null,
    ID_CARGO             int                  null,
-   NOMBRE_ACTIVIDAD     TEXT         NOT null,
+   NOMBRE_ACTIVIDAD     text                 null,
    TIPO_FRECUENCIA      int                  null
       constraint CKC_TIPO_FRECUENCIA_TBL_ACTI check (TIPO_FRECUENCIA is null or (TIPO_FRECUENCIA between 1 and 7 and TIPO_FRECUENCIA in (1,2,3,4,5,6,7))),
    CANTIDAD_FRECUENCIA  int                  null,
@@ -1311,7 +1441,7 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
-   'Éste campo podra tener los siguientes valores:
+   '?ste campo podra tener los siguientes valores:
    1=Diario
    2=Semanal
    3=Mensual
@@ -1338,7 +1468,6 @@ go
 /* Table: TBL_ACTIVIDAD_EVALUADA                                */
 /*==============================================================*/
 create table TBL_ACTIVIDAD_EVALUADA (
-   ID_ACTIVIDAD_EVALUADA int                  identity,
    ID_ACTIVIDAD_GENERAL int                  null,
    ID_DIVISION          int                  null,
    ID_ACTIVIDAD_ESPECIFICA int                  null,
@@ -1354,6 +1483,7 @@ create table TBL_ACTIVIDAD_EVALUADA (
    FECHA_CREACION       datetime             null,
    CONDICION            int                  null
       constraint CKC_CONDICION_TBL_ACTI check (CONDICION is null or (CONDICION between 1 and 3 and CONDICION in (1,2,3))),
+   ID_ACTIVIDAD_EVALUADA int                  identity,
    constraint PK_TBL_ACTIVIDAD_EVALUADA primary key nonclustered (ID_ACTIVIDAD_EVALUADA)
 )
 go
@@ -1362,9 +1492,9 @@ declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Valores:
-   1 = LIGERAMENTE DAÑINO
-   2 = DAÑINO
-   3 = EXTREMADAMENTE DAÑINO',
+   1 = LIGERAMENTE DA?INO
+   2 = DA?INO
+   3 = EXTREMADAMENTE DA?INO',
    'user', @CurrentUser, 'table', 'TBL_ACTIVIDAD_EVALUADA', 'column', 'VALORACION_CONSECUENCIA'
 go
 
@@ -1466,12 +1596,22 @@ create table TBL_CAUSA (
 go
 
 /*==============================================================*/
-/* Table: TBL_CAUSA_INFORME                                     */
+/* Table: TBL_CAUSA_INFORME_FINAL                               */
 /*==============================================================*/
-create table TBL_CAUSA_INFORME (
+create table TBL_CAUSA_INFORME_FINAL (
    ID_CAUSA             int                  not null,
    ID_INFORME_FINAL     int                  not null,
-   constraint PK_TBL_CAUSA_INFORME primary key (ID_CAUSA, ID_INFORME_FINAL)
+   constraint PK_TBL_CAUSA_INFORME_FINAL primary key (ID_CAUSA, ID_INFORME_FINAL)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_CAUSA_INFORME_PRELIMIANAR                         */
+/*==============================================================*/
+create table TBL_CAUSA_INFORME_PRELIMIANAR (
+   ID_CAUSA             int                  not null,
+   ID_INFORME_PRELIMINAR int                  not null,
+   constraint PK_TBL_CAUSA_INFORME_PRELIMIAN primary key (ID_CAUSA, ID_INFORME_PRELIMINAR)
 )
 go
 
@@ -1571,7 +1711,6 @@ create table TBL_EVENTO (
 )
 go
 
-
 /*==============================================================*/
 /* Table: TBL_EVENTO_DATO                                       */
 /*==============================================================*/
@@ -1614,8 +1753,8 @@ declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '1=Musculares: Contracturas, desgarros, calambres, contusiones y hematomas, entre otras.
-   2=Tendones: Tendinopatías y tendinosis, por ejemplo.
-   3=Articulaciones: Lesiones ligamentosas, de cartílagos, luxaciones y subluxaciones, meniscopatías, bursitis, etc.
+   2=Tendones: Tendinopat?as y tendinosis, por ejemplo.
+   3=Articulaciones: Lesiones ligamentosas, de cart?lagos, luxaciones y subluxaciones, meniscopat?as, bursitis, etc.
    4=Huesos: fracturas, fisuras, periostitis, entre otras.',
    'user', @CurrentUser, 'table', 'TBL_EVENTO_TRABAJADOR', 'column', 'TIPO_LESION'
 go
@@ -1742,9 +1881,9 @@ go
 /*==============================================================*/
 create table TBL_MATRIZ_ACTIVIDAD (
    ID_MATRIZ            int                  not null,
-   ID_ACTIVIDAD_EVALUADA int                  not null,
+   ID_ACTIVIDAD_EVALUADA int                  null,
    FECHA_CREACION       datetime             null,
-   constraint PK_TBL_MATRIZ_ACTIVIDAD primary key nonclustered (ID_MATRIZ, ID_ACTIVIDAD_EVALUADA)
+   constraint PK_TBL_MATRIZ_ACTIVIDAD primary key nonclustered (ID_MATRIZ)
 )
 go
 
@@ -1753,8 +1892,11 @@ go
 /*==============================================================*/
 create table TBL_MEDIDA_DE_CONTROL (
    ID_MEDIDAS_DE_CONTROL int                  identity,
+   ID_DIVISION          int                  null,
    NOM_MEDIDA_DE_CONTROL varchar(255)         not null,
    ESTADO               bit                  null,
+   TIPO_MEDIDA          int                  null
+      constraint CKC_TIPO_MEDIDA_TBL_MEDI check (TIPO_MEDIDA is null or (TIPO_MEDIDA between 1 and 2 and TIPO_MEDIDA in (1,2))),
    constraint PK_TBL_MEDIDA_DE_CONTROL primary key nonclustered (ID_MEDIDAS_DE_CONTROL),
    constraint AK_KEY_2_TBL_MEDI unique (NOM_MEDIDA_DE_CONTROL)
 )
@@ -1848,13 +1990,23 @@ create table TBL_PELIGRO_CONSECUENCIA (
 go
 
 /*==============================================================*/
+/* Table: TBL_PELIGRO_EVENTO_TRABAJADOR                         */
+/*==============================================================*/
+create table TBL_PELIGRO_EVENTO_TRABAJADOR (
+   ID_EVENTO_TRABAJADOR int                  not null,
+   ID_PELIGRO           int                  not null,
+   constraint PK_TBL_PELIGRO_EVENTO_TRABAJAD primary key (ID_EVENTO_TRABAJADOR, ID_PELIGRO)
+)
+go
+
+/*==============================================================*/
 /* Table: TBL_PELIGRO_MEDIDA                                    */
 /*==============================================================*/
 create table TBL_PELIGRO_MEDIDA (
    ID_MEDIDAS_DE_CONTROL int                  not null,
-   ID_ACTIVIDAD_EVALUADA int                  not null,
+   ID_ACTIVIDAD_EVALUADA int                  null,
    FECHA_CREACION       datetime             null,
-   constraint PK_TBL_PELIGRO_MEDIDA primary key nonclustered (ID_MEDIDAS_DE_CONTROL, ID_ACTIVIDAD_EVALUADA)
+   constraint PK_TBL_PELIGRO_MEDIDA primary key nonclustered (ID_MEDIDAS_DE_CONTROL)
 )
 go
 
@@ -1865,13 +2017,15 @@ create table TBL_PROGRAMA_ANUAL (
    ID_PROGRAMA_ANUAL    int                  identity,
    ID_DEPARTAMENTO_ORGANIZACION int                  null,
    ID_DIVISION          int                  null,
-   OBJETIVO             text                 null,
-   META                 text                 null,
+   ID_TEMPLATE          int                  null,
+   ID_PROGRAMA_TEMPLATE int                  null,
+   OBJETIVO_META        text                 null,
    FECHA_CREACION       datetime             null,
    NOMBRE_PROGRAMA      varchar(255)         null,
    MES_INICIO           int                  null
       constraint CKC_MES_INICIO_TBL_PROG check (MES_INICIO is null or (MES_INICIO between 1 and 12 and MES_INICIO in (1,2,3,4,5,6,7,8,9,10,11,12))),
    ANO_INICIO           int                  null,
+   IS_TEMPLATE          bit                  null,
    constraint PK_TBL_PROGRAMA_ANUAL primary key nonclustered (ID_PROGRAMA_ANUAL)
 )
 go
@@ -1907,6 +2061,16 @@ create table TBL_STORE (
    NOMBRE_STORE         varchar(200)         not null,
    constraint PK_TBL_STORE primary key (ID_STORE),
    constraint AK_KEY_2_TBL_STOR unique (NOMBRE_STORE)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_TEMPLATE                                          */
+/*==============================================================*/
+create table TBL_TEMPLATE (
+   ID_TEMPLATE          int                  identity,
+   NOMBRE_TEMPLATE      varchar(255)         null,
+   constraint PK_TBL_TEMPLATE primary key (ID_TEMPLATE)
 )
 go
 
@@ -2078,14 +2242,24 @@ alter table TBL_AREA
       references TBL_DIVISION (ID_DIVISION)
 go
 
-alter table TBL_CAUSA_INFORME
-   add constraint FK_TBL_CAUS_REFERENCE_TBL_CAUS foreign key (ID_CAUSA)
+alter table TBL_CAUSA_INFORME_FINAL
+   add constraint FK_TBL_CAUSA_FINAL_REFERENCE_TBL_CAUS foreign key (ID_CAUSA)
       references TBL_CAUSA (ID_CAUSA)
 go
 
-alter table TBL_CAUSA_INFORME
+alter table TBL_CAUSA_INFORME_FINAL
    add constraint FK_TBL_CAUS_REFERENCE_TBL_I_FI foreign key (ID_INFORME_FINAL)
       references TBL_I_FINAL (ID_INFORME_FINAL)
+go
+
+alter table TBL_CAUSA_INFORME_PRELIMIANAR
+   add constraint FK_TBL_CAUSA_PRELIMINAR_REFERENCE_TBL_CAUS foreign key (ID_CAUSA)
+      references TBL_CAUSA (ID_CAUSA)
+go
+
+alter table TBL_CAUSA_INFORME_PRELIMIANAR
+   add constraint FK_TBL_CAUS_REFERENCE_TBL_I_PR foreign key (ID_INFORME_PRELIMINAR)
+      references TBL_I_PRELIMINAR (ID_INFORME_PRELIMINAR)
 go
 
 alter table TBL_CAUSA_MEDIDA_DE_CONTROL
@@ -2189,13 +2363,18 @@ alter table TBL_MATRIZ
 go
 
 alter table TBL_MATRIZ_ACTIVIDAD
-   add constraint FK_TBL_MATR_CREAN_TBL_ACTI foreign key (ID_ACTIVIDAD_EVALUADA)
+   add constraint FK_TBL_MATR_REFERENCE_TBL_ACTI foreign key (ID_ACTIVIDAD_EVALUADA)
       references TBL_ACTIVIDAD_EVALUADA (ID_ACTIVIDAD_EVALUADA)
 go
 
 alter table TBL_MATRIZ_ACTIVIDAD
    add constraint FK_TBL_MATR_INCLUYE_TBL_MATR foreign key (ID_MATRIZ)
       references TBL_MATRIZ (ID_MATRIZ)
+go
+
+alter table TBL_MEDIDA_DE_CONTROL
+   add constraint FK_TBL_MEDI_REFERENCE_TBL_DIVI foreign key (ID_DIVISION)
+      references TBL_DIVISION (ID_DIVISION)
 go
 
 alter table TBL_MODULO_STORE
@@ -2233,14 +2412,24 @@ alter table TBL_PELIGRO_CONSECUENCIA
       references TBL_CONSECUENCIA (ID_CONSECUENCIA)
 go
 
-alter table TBL_PELIGRO_MEDIDA
-   add constraint "FK_TBL_PELI_SE TOMAN_TBL_MEDI" foreign key (ID_MEDIDAS_DE_CONTROL)
-      references TBL_MEDIDA_DE_CONTROL (ID_MEDIDAS_DE_CONTROL)
+alter table TBL_PELIGRO_EVENTO_TRABAJADOR
+   add constraint FK_TBL_PELIGRO_REFERENCE_TBL_EVENTO_TRABAJ foreign key (ID_EVENTO_TRABAJADOR)
+      references TBL_EVENTO_TRABAJADOR (ID_EVENTO_TRABAJADOR)
+go
+
+alter table TBL_PELIGRO_EVENTO_TRABAJADOR
+   add constraint FK_TBL_PELIGRO_TRAB_REFERENCE_TBL_PELIGRO foreign key (ID_PELIGRO)
+      references TBL_PELIGRO (ID_PELIGRO)
 go
 
 alter table TBL_PELIGRO_MEDIDA
-   add constraint "FK_TBL_PELI_SE CONTRO_TBL_ACTI" foreign key (ID_ACTIVIDAD_EVALUADA)
+   add constraint FK_TBL_PELI_REFERENCE_TBL_ACTI foreign key (ID_ACTIVIDAD_EVALUADA)
       references TBL_ACTIVIDAD_EVALUADA (ID_ACTIVIDAD_EVALUADA)
+go
+
+alter table TBL_PELIGRO_MEDIDA
+   add constraint "FK_TBL_PELI_SE TOMAN_TBL_MEDI" foreign key (ID_MEDIDAS_DE_CONTROL)
+      references TBL_MEDIDA_DE_CONTROL (ID_MEDIDAS_DE_CONTROL)
 go
 
 alter table TBL_PROGRAMA_ANUAL
@@ -2251,6 +2440,16 @@ go
 alter table TBL_PROGRAMA_ANUAL
    add constraint FK_TBL_PROG_REFERENCE_TBL_DIVI foreign key (ID_DIVISION)
       references TBL_DIVISION (ID_DIVISION)
+go
+
+alter table TBL_PROGRAMA_ANUAL
+   add constraint FK_TBL_PROG_REFERENCE_TBL_TEMP foreign key (ID_TEMPLATE)
+      references TBL_TEMPLATE (ID_TEMPLATE)
+go
+
+alter table TBL_PROGRAMA_ANUAL
+   add constraint FK_TBL_PROG_REFERENCE_TBL_PROG foreign key (ID_PROGRAMA_TEMPLATE)
+      references TBL_PROGRAMA_ANUAL (ID_PROGRAMA_ANUAL)
 go
 
 alter table TBL_PUNTO_GEOGRAFICO
@@ -2368,6 +2567,132 @@ AS
    RETURN
 END; 
 GO
+CREATE PROCEDURE sp_create_programa_by_template
+	@ID_ORGANIZACION  INT = 1,
+	@ID_TEMPLATE INT = 0
+AS
+	DECLARE @ID_DIVISION INT; 
+	DECLARE @ID_PROGRAMA_TEMPLATE INT;
+	DECLARE @ID_DEPARTAMENTO_ORGANIZACION INT;
+	DECLARE @NOMBRE_DIVISION VARCHAR(200);
+	DECLARE @NOMBRE_PROGRAMA NVARCHAR(4000);
+	DECLARE @OBJETIVO_META NVARCHAR(4000);
+	DECLARE @MES_INICIO INT;
+	DECLARE @ANO_INICIO INT;
+    
+	DECLARE cDivisiones CURSOR LOCAL FOR
+		SELECT DV.ID_DIVISION,DV.ID_DEPARTAMENTO_ORGANIZACION,DV.NOMBRE_DIVISION
+			FROM TBL_DIVISION DV
+				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON DV.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+		WHERE DO.ID_ORGANIZACION=@ID_ORGANIZACION;
+		OPEN cDivisiones
+		FETCH NEXT FROM cDivisiones 
+			INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+		SELECT	@OBJETIVO_META = OBJETIVO_META,
+				@MES_INICIO = MES_INICIO,
+				@ANO_INICIO = ANO_INICIO,
+				@NOMBRE_PROGRAMA = NOMBRE_PROGRAMA,
+				@ID_PROGRAMA_TEMPLATE = ID_PROGRAMA_ANUAL
+		FROM TBL_PROGRAMA_ANUAL
+		WHERE ID_TEMPLATE=@ID_TEMPLATE;
+		WHILE (@@FETCH_STATUS = 0 )
+		BEGIN
+			
+			
+			INSERT INTO TBL_PROGRAMA_ANUAL (
+				ID_DEPARTAMENTO_ORGANIZACION,
+				ID_PROGRAMA_TEMPLATE,
+				ID_DIVISION,
+				ID_TEMPLATE,
+				IS_TEMPLATE,
+				OBJETIVO_META,
+				FECHA_CREACION,
+				NOMBRE_PROGRAMA,
+				MES_INICIO,
+				ANO_INICIO) 
+			VALUES(
+				@ID_DEPARTAMENTO_ORGANIZACION,
+				@ID_PROGRAMA_TEMPLATE,
+				@ID_DIVISION,
+				@ID_TEMPLATE,
+				0,
+				@OBJETIVO_META,
+				GETDATE(),
+				@NOMBRE_PROGRAMA,
+				@MES_INICIO,
+				@ANO_INICIO
+			);
+			FETCH NEXT FROM cDivisiones 
+				INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+			
+		END
+	CLOSE cDivisiones
+	DEALLOCATE cDivisiones	
+GO
+CREATE PROCEDURE sp_get_eventos_departamento_by_organizacion
+	@ID_ORGANIZACION INT,
+	@ANO INT,
+	@p0   INT = 0,
+	@p1   INT
+AS
+	SELECT [t2].*
+	FROM (
+		SELECT [t1].*
+		FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY MES.MES_ID) AS [ROW_NUMBER],
+					MES.MES_ID,
+					MES.MES_NAME,
+					(SELECT COUNT(E.ID_EVENTO)
+					FROM TBL_EVENTO E
+						INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+					WHERE MONTH(E.FECHA_HORA_EVENTO) = MES_ID AND DO.ID_ORGANIZACION = @ID_ORGANIZACION AND YEAR(E.FECHA_HORA_EVENTO) = @ANO) AS 'COUNT_EVENTOS'
+			FROM (SELECT 1 AS 'MES_ID', 'Enero' AS 'MES_NAME' UNION SELECT ALL 2,'Febrero' UNION SELECT ALL 3,'Marzo' UNION SELECT ALL 4,'Abril' UNION SELECT ALL 5,'Mayo' UNION SELECT ALL 6, 'Junio' UNION SELECT ALL 7, 'Julio' UNION SELECT ALL 8, 'Agosto' UNION SELECT ALL 9,'Septiembre' UNION SELECT ALL 10, 'Octubre' UNION SELECT ALL 11, 'Noviembre' UNION SELECT ALL 12,'Diciembre') MES
+		) AS [t1]
+		WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
+	) AS [t2]
+	ORDER BY [t2].[ROW_NUMBER]
+GO
+CREATE PROCEDURE sp_get_eventos_list
+	@p0   INT = 0,
+	@p1   INT = 10,
+	@ID_ORGANIZACION INT = 1,
+	@ANO INT
+AS
+	SELECT [t2].*
+	FROM (
+		SELECT [t1].*
+		FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY E.ID_EVENTO DESC) AS [ROW_NUMBER],
+					E.ID_EVENTO,
+					E.LAT_EVENTO,
+					E.LNG_EVENTO,
+					E.LUGAR_EXACTO,
+					E.DESCRIPCION_GENERAL,
+					CONVERT(VARCHAR(5),E.FECHA_HORA_EVENTO,108) AS 'HORA_EVENTO',
+					CONVERT(VARCHAR(10),FECHA_HORA_EVENTO,120) AS 'FECHA_HORA_EVENTO',
+					E.ID_DEPARTAMENTO_ORGANIZACION,
+					D.NOMBRE_DEPARTAMENTO,
+					(SELECT COUNT(ET.ID_EVENTO_EMPRESA)
+						FROM TBL_EVENTO EV
+							INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
+							LEFT JOIN TBL_EVENTO_TRABAJADOR ET ON EE.ID_EVENTO_EMPRESA = ET.ID_EVENTO_EMPRESA
+							WHERE EV.ID_EVENTO = E.ID_EVENTO
+						GROUP BY EV.ID_EVENTO, ET.ID_EVENTO_EMPRESA) AS 'COUNT_TRABAJADORES',
+					(SELECT COUNT(IP.ID_INFORME_PRELIMINAR)
+						FROM TBL_EVENTO EV
+							INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
+							LEFT JOIN TBL_I_PRELIMINAR IP ON EE.ID_EVENTO_EMPRESA = IP.ID_EVENTO_EMPRESA
+							WHERE EV.ID_EVENTO = E.ID_EVENTO
+						GROUP BY EV.ID_EVENTO, IP.ID_INFORME_PRELIMINAR) AS 'COUNT_IPRELIMINAR'
+			FROM TBL_EVENTO E
+				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+				INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
+			WHERE DO.ID_ORGANIZACION = @ID_ORGANIZACION AND YEAR(E.FECHA_HORA_EVENTO) = @ANO
+			) AS [t1]
+		WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
+		) AS [t2]
+	ORDER BY ID_EVENTO,[t2].[ROW_NUMBER] DESC
+GO
 CREATE PROCEDURE sp_get_matriz_by_id
 	@ID_MATRIZ   int = 0
 AS
@@ -2472,181 +2797,32 @@ WHERE ((GP.ID_GRUPO IN (SELECT UG.ID_GRUPO
 		AND GP.ALLOW_READ=1
 ORDER BY ND.NODO_PADRE, ND.N_ORDER, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC;
 GO
-
 CREATE PROCEDURE sp_get_programas_anuales
-	@ANO_INICIO 	INT = 0,
-	@ID_DIVISION	INT = 0,
-	@p0				INT = 0,
-	@p1				INT = 10
+ @ANO_INICIO INT = 0,
+ @ID_DIVISION INT = 0,
+ @TEMPLATE 		BIT = 0,
+ @p0  INT = 0,
+ @p1  INT = 10
 AS
-	DECLARE @sql nvarchar(4000)
-	
-	SELECT @sql = 'SELECT [t2].* FROM (';
-		SELECT @sql = @sql + 'SELECT [t1].* FROM (';
-			SELECT @sql = @sql + 'SELECT ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION DESC) AS [ROW_NUMBER],';
-				SELECT @sql = @sql + '''[''+CAST(PA.ANO_INICIO AS VARCHAR)+''] ''+D.NOMBRE_DIVISION AS ''PROGRAMA'',';
-				SELECT @sql = @sql + 'PA.ID_PROGRAMA_ANUAL, 				PA.ID_DEPARTAMENTO_ORGANIZACION, 				PA.NOMBRE_PROGRAMA, 				D.ID_DIVISION, 				D.NOMBRE_DIVISION, 				PA.OBJETIVO, 				PA.META, 				PA.FECHA_CREACION, 				PA.MES_INICIO, 				PA.ANO_INICIO, 				ISNULL((SELECT 						ROUND (ISNULL((((SUM(CASE  							WHEN AC.ENERO_P = 0  THEN 								CASE 									WHEN AC.ENERO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.FEBRERO_P = 0 THEN 								CASE 									WHEN AC.FEBRERO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.MARZO_P = 0 THEN 								CASE 									WHEN AC.MARZO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.ABRIL_P = 0 THEN 								CASE 									WHEN AC.ABRIL_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.MAYO_P = 0 THEN 								CASE 									WHEN AC.MAYO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.JUNIO_P = 0 THEN 								CASE 									WHEN AC.JUNIO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.JULIO_P = 0 THEN 								CASE 									WHEN AC.JULIO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.AGOSTO_P = 0 THEN 								CASE 									WHEN AC.AGOSTO_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.SEPTIEMBRE_P = 0 THEN 								CASE 									WHEN AC.SEPTIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*)) + (SUM(CASE  							WHEN AC.OCTUBRE_P = 0 THEN 								CASE 									WHEN AC.OCTUBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.NOVIEMBRE_P = 0 THEN 								CASE 									WHEN AC.NOVIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*))+ (SUM(CASE  							WHEN AC.DICIEMBRE_P = 0 THEN 								CASE 									WHEN AC.DICIEMBRE_E = 0 THEN 										100 									ELSE 										0 								END 							ELSE 								((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) 						END)/COUNT(*)))/12),0),2)  					FROM TBL_ACTIVIDAD AC 						INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL 					WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL 					GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS  ''PERCENT_TOTAL''  			FROM TBL_PROGRAMA_ANUAL PA 				INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION 			WHERE PA.ANO_INICIO=@ANO_INICIO';
-				IF @ID_DIVISION <> 0
-					SELECT @sql = @sql + ' AND D.ID_DIVISION = @ID_DIVISION '
-				
-		SELECT @sql = @sql + ') AS [t1] WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1';
-	SELECT @sql = @sql + ') AS [t2] ORDER BY PROGRAMA,[t2].[ROW_NUMBER] ASC';
-	IF @ANO_INICIO = 0
-		SET @ANO_INICIO = CAST(YEAR(GETDATE()) AS INT);
-	
-	EXEC sp_executesql @sql, N'@ANO_INICIO INT, @ID_DIVISION INT, @p0 INT, @p1 INT',
-								   @ANO_INICIO, @ID_DIVISION, @p0, @p1
-
-	/*SELECT [t2].*
-	FROM (
-		SELECT [t1].*
-		FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION DESC) AS [ROW_NUMBER],
-				'['+CAST(PA.ANO_INICIO AS VARCHAR)+'] '+D.NOMBRE_DIVISION AS 'PROGRAMA',
-				PA.ID_PROGRAMA_ANUAL,
-				PA.ID_DEPARTAMENTO_ORGANIZACION,
-				PA.NOMBRE_PROGRAMA,
-				D.ID_DIVISION,
-				D.NOMBRE_DIVISION,
-				PA.OBJETIVO,
-				PA.META,
-				PA.FECHA_CREACION,
-				PA.MES_INICIO,
-				PA.ANO_INICIO,
-				ISNULL((SELECT
-						ROUND (ISNULL((((SUM(CASE 
-							WHEN AC.ENERO_P = 0  THEN
-								CASE
-									WHEN AC.ENERO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
-						END)/COUNT(*)) + (SUM(CASE 
-							WHEN AC.FEBRERO_P = 0 THEN
-								CASE
-									WHEN AC.FEBRERO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.MARZO_P = 0 THEN
-								CASE
-									WHEN AC.MARZO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.ABRIL_P = 0 THEN
-								CASE
-									WHEN AC.ABRIL_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
-						END)/COUNT(*)) + (SUM(CASE 
-							WHEN AC.MAYO_P = 0 THEN
-								CASE
-									WHEN AC.MAYO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
-						END)/COUNT(*)) + (SUM(CASE 
-							WHEN AC.JUNIO_P = 0 THEN
-								CASE
-									WHEN AC.JUNIO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.JULIO_P = 0 THEN
-								CASE
-									WHEN AC.JULIO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.AGOSTO_P = 0 THEN
-								CASE
-									WHEN AC.AGOSTO_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
-						END)/COUNT(*)) + (SUM(CASE 
-							WHEN AC.SEPTIEMBRE_P = 0 THEN
-								CASE
-									WHEN AC.SEPTIEMBRE_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
-						END)/COUNT(*)) + (SUM(CASE 
-							WHEN AC.OCTUBRE_P = 0 THEN
-								CASE
-									WHEN AC.OCTUBRE_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.NOVIEMBRE_P = 0 THEN
-								CASE
-									WHEN AC.NOVIEMBRE_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
-						END)/COUNT(*))+ (SUM(CASE 
-							WHEN AC.DICIEMBRE_P = 0 THEN
-								CASE
-									WHEN AC.DICIEMBRE_E = 0 THEN
-										100
-									ELSE
-										0
-								END
-							ELSE
-								((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
-						END)/COUNT(*)))/12),0),2) 
-					FROM TBL_ACTIVIDAD AC
-						INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL
-					WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
-					GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS  'PERCENT_TOTAL' 
-			FROM TBL_PROGRAMA_ANUAL PA
-				INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION
-			WHERE PA.ANO_INICIO=@ANO_INICIO
-		) AS [t1]
-	WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
-) AS [t2]
-ORDER BY PROGRAMA,[t2].[ROW_NUMBER] ASC
-*/
+ DECLARE @sql nvarchar(4000)
+ SELECT @sql = 'SELECT [t2].* FROM (';
+ SELECT @sql = @sql + 'SELECT [t1].* FROM (';
+  SELECT @sql = @sql + 'SELECT ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION DESC) AS [ROW_NUMBER],';
+  SELECT @sql = @sql + 'ISNULL(''[''+CAST(PA.ANO_INICIO AS VARCHAR)+''] ''+DEP.+'' - ''+D.NOMBRE_DIVISION,TM.NOMBRE_TEMPLATE) AS ''PROGRAMA'',';
+  SELECT @sql = @sql + 'PA.ID_PROGRAMA_ANUAL, ISNULL(PA.ID_DEPARTAMENTO_ORGANIZACION,0) AS ''ID_DEPARTAMENTO_ORGANIZACION'', PA.NOMBRE_PROGRAMA, ISNULL(D.ID_DIVISION,0) AS ''ID_DIVISION'', ISNULL(D.NOMBRE_DIVISION,'' '') AS ''NOMBRE_DIVISION'', PA.OBJETIVO_META, PA.FECHA_CREACION, PA.MES_INICIO, PA.ANO_INICIO, ISNULL((SELECT  ROUND (ISNULL((((SUM(CASE   WHEN AC.ENERO_P = 0 THEN   CASE   WHEN AC.ENERO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.FEBRERO_P = 0 THEN   CASE   WHEN AC.FEBRERO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.MARZO_P = 0 THEN   CASE   WHEN AC.MARZO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.ABRIL_P = 0 THEN   CASE   WHEN AC.ABRIL_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.MAYO_P = 0 THEN   CASE   WHEN AC.MAYO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.JUNIO_P = 0 THEN   CASE   WHEN AC.JUNIO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.JULIO_P = 0 THEN   CASE   WHEN AC.JULIO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.AGOSTO_P = 0 THEN   CASE   WHEN AC.AGOSTO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.SEPTIEMBRE_P = 0 THEN   CASE   WHEN AC.SEPTIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.OCTUBRE_P = 0 THEN   CASE   WHEN AC.OCTUBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.NOVIEMBRE_P = 0 THEN   CASE   WHEN AC.NOVIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.DICIEMBRE_P = 0 THEN   CASE   WHEN AC.DICIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*)))/12),0),2)  FROM TBL_ACTIVIDAD AC  INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS ''PERCENT_TOTAL'' FROM TBL_PROGRAMA_ANUAL PA LEFT JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON D.ID_DEPARTAMENTO_ORGANIZACION=DOR.ID_DEPARTAMENTO_ORGANIZACION INNER JOIN TBL_DEPARTAMENTO DEP ON DOR.ID_DEPARTAMENTO=DEP.ID_DEPARTAMENTO LEFT JOIN TBL_TEMPLATE TM ON TM.ID_TEMPLATE=PA.ID_TEMPLATE  WHERE PA.ANO_INICIO=@ANO_INICIO';
+  IF @ID_DIVISION <> 0
+ SELECT @sql = @sql + ' AND D.ID_DIVISION = @ID_DIVISION '
+  IF @TEMPLATE = 1
+	SELECT @sql = @sql + ' AND PA.IS_TEMPLATE = 1 '
+ELSE
+	SELECT @sql = @sql + ' AND PA.IS_TEMPLATE = 0 '
+ SELECT @sql = @sql + ') AS [t1] WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1';
+ SELECT @sql = @sql + ') AS [t2] ORDER BY PROGRAMA,[t2].[ROW_NUMBER] ASC';
+ IF @ANO_INICIO = 0
+ SET @ANO_INICIO = CAST(YEAR(GETDATE()) AS INT);
+ 
+ EXEC sp_executesql @sql, N'@ANO_INICIO INT, @ID_DIVISION INT, @p0 INT, @p1 INT',
+  @ANO_INICIO, @ID_DIVISION, @p0, @p1
 GO
 CREATE PROCEDURE sp_get_stores_by_nodo
 	@ID_NODO  INT
@@ -2668,7 +2844,7 @@ FROM (
 	SELECT [t1].*
 	FROM (
 		SELECT ROW_NUMBER() OVER (ORDER BY PA.ID_DIVISION DESC) AS [ROW_NUMBER],
-			'['+CAST(PA.ANO_INICIO AS VARCHAR)+'] '+D.NOMBRE_DIVISION AS 'PROGRAMA', 
+			'['+CAST(PA.ANO_INICIO AS VARCHAR)+'] '+DEP.NOMBRE_DEPARTAMENTO+' - '+D.NOMBRE_DIVISION AS 'PROGRAMA', 
 			D.NOMBRE_DIVISION,
 			PA.ID_DIVISION, 
 			ROUND(ISNULL(((
@@ -2688,141 +2864,16 @@ FROM (
 		FROM TBL_PROGRAMA_ANUAL PA 
 			LEFT JOIN  TBL_ACTIVIDAD AC ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
 			INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION= D.ID_DIVISION
+			INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON DOR.ID_DEPARTAMENTO_ORGANIZACION = D.ID_DEPARTAMENTO_ORGANIZACION
+			INNER JOIN TBL_DEPARTAMENTO DEP ON DEP.ID_DEPARTAMENTO=DOR.ID_DEPARTAMENTO
 		WHERE PA.ANO_INICIO = @ANO_INICIO
-		GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO
+		GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO,DEP.NOMBRE_DEPARTAMENTO
 	) AS [t1]
 	WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
 ) AS [t2]
 ORDER BY PROGRAMA,PRC_TOTAL,ID_DIVISION,[t2].[ROW_NUMBER] ASC
-/*
-SELECT
-		ROUND (ISNULL((((SUM(CASE 
-			WHEN AC.ENERO_P = 0  THEN
-				CASE
-					WHEN AC.ENERO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
-		END)/COUNT(*)) + (SUM(CASE 
-			WHEN AC.FEBRERO_P = 0 THEN
-				CASE
-					WHEN AC.FEBRERO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.MARZO_P = 0 THEN
-				CASE
-					WHEN AC.MARZO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.ABRIL_P = 0 THEN
-				CASE
-					WHEN AC.ABRIL_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
-		END)/COUNT(*)) + (SUM(CASE 
-			WHEN AC.MAYO_P = 0 THEN
-				CASE
-					WHEN AC.MAYO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
-		END)/COUNT(*)) + (SUM(CASE 
-			WHEN AC.JUNIO_P = 0 THEN
-				CASE
-					WHEN AC.JUNIO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.JULIO_P = 0 THEN
-				CASE
-					WHEN AC.JULIO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.AGOSTO_P = 0 THEN
-				CASE
-					WHEN AC.AGOSTO_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
-		END)/COUNT(*)) + (SUM(CASE 
-			WHEN AC.SEPTIEMBRE_P = 0 THEN
-				CASE
-					WHEN AC.SEPTIEMBRE_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
-		END)/COUNT(*)) + (SUM(CASE 
-			WHEN AC.OCTUBRE_P = 0 THEN
-				CASE
-					WHEN AC.OCTUBRE_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.NOVIEMBRE_P = 0 THEN
-				CASE
-					WHEN AC.NOVIEMBRE_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
-		END)/COUNT(*))+ (SUM(CASE 
-			WHEN AC.DICIEMBRE_P = 0 THEN
-				CASE
-					WHEN AC.DICIEMBRE_E = 0 THEN
-						100
-					ELSE
-						0
-				END
-			ELSE
-				((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
-		END)/COUNT(*)))/12),0),2) AS 'PERCENT_TOTAL', PA.ID_PROGRAMA_ANUAL, PA.NOMBRE_PROGRAMA
-	FROM TBL_ACTIVIDAD AC
-		INNER JOIN TBL_PROGRAMA_ANUAL PA ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
-	GROUP BY PA.ID_PROGRAMA_ANUAL,PA.NOMBRE_PROGRAMA
-	*/
-GO
 
+GO
 CREATE PROCEDURE sp_indicadores_by_programa_anual
 	@ID_PROGRAMA_ANUAL		INT = 0,
 	@p0				INT = 0,
@@ -2881,93 +2932,6 @@ FROM (
 ) AS [t2]
 ORDER BY [t2].[ROW_NUMBER],NOMBRE_DIVISION,ID_DIVISION ASC
 GO
-/*
-CREATE PROCEDURE sp_indicadores_by_programa_anual
-	@ID_PROGRAMA   int = 0
-AS
-	DECLARE @ROW_COUNT INT
-		SELECT @ROW_COUNT = COUNT(*)
-		FROM TBL_ACTIVIDAD
-		WHERE ID_PROGRAMA_ANUAL=@ID_PROGRAMA;
-	SELECT
-		(SUM(CASE 
-			WHEN AC.ENERO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'ENERO', --Enero
-		(SUM(CASE 
-			WHEN AC.FEBRERO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'FEBRERO', --Febrero
-		(SUM(CASE 
-			WHEN AC.MARZO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'MARZO', --Marzo
-		(SUM(CASE 
-			WHEN AC.ABRIL_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'ABRIL', --Abril
-		(SUM(CASE 
-			WHEN AC.MAYO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'MAYO', --Mayo
-		(SUM(CASE 
-			WHEN AC.JUNIO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'JUNIO', --Junio
-		(SUM(CASE 
-			WHEN AC.JULIO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'JULIO', --Julio
-		(SUM(CASE 
-			WHEN AC.AGOSTO_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'AGOSTO', --Agosto
-		(SUM(CASE 
-			WHEN AC.SEPTIEMBRE_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'SEPTIEMBRE', --Septiembre
-		(SUM(CASE 
-			WHEN AC.OCTUBRE_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'OCTUBRE', --Octubre
-		(SUM(CASE 
-			WHEN AC.NOVIEMBRE_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'NOVIEMBRE', --Noviembre
-		(SUM(CASE 
-			WHEN AC.DICIEMBRE_P = 0 THEN
-				0
-			ELSE
-				((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
-		END)/@ROW_COUNT) AS 'DICIEMBRE' --Diciembre
-	FROM TBL_ACTIVIDAD AC
-		INNER JOIN TBL_PROGRAMA_ANUAL PA ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
-	WHERE PA.ID_PROGRAMA_ANUAL=@ID_PROGRAMA 
-	GROUP BY PA.ID_PROGRAMA_ANUAL
-GO
-*/
 CREATE PROCEDURE sp_privilegios_user
 	@ID_USUARIO VARCHAR(200)
 AS
@@ -2984,7 +2948,6 @@ AS
 			AND GP.ALLOW_READ=1
 	ORDER BY ND.NODO_PADRE, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC
 GO
-
 CREATE PROCEDURE sp_search_actividad_evaluada 
 	@ID_ORGANIZACION   int = 0,
 	@ID_DEPARTAMENTO_ORGANIZACION int = 0,
@@ -3054,6 +3017,32 @@ DECLARE @sql nvarchar(4000)
 	SELECT @sql = @sql + ' ORDER BY MA.ID_MATRIZ DESC '
 	EXEC sp_executesql @sql, N'@ID_ORGANIZACION INT, @ID_DEPARTAMENTO_ORGANIZACION INT, @ID_DIVISION INT, @ID_AREA INT, @ID_ACTIVIDAD_GENERAL INT, @ID_ACTIVIDAD_ESPECIFICA INT,@MR_CC nvarchar(1), @NOMBRE_ACTIVIDAD_ESPECIFICA nvarchar(100), @ID_CARGO INT, @CONDICION INT, @FECHA_INICIO datetime, @FECHA_TERMINO datetime,@ID_USUARIO varchar(200)',
 					   @ID_ORGANIZACION, @ID_DEPARTAMENTO_ORGANIZACION, @ID_DIVISION, @ID_AREA, @ID_ACTIVIDAD_GENERAL, @ID_ACTIVIDAD_ESPECIFICA,@MR_CC, @NOMBRE_ACTIVIDAD_ESPECIFICA, @ID_CARGO, @CONDICION, @FECHA_INICIO, @FECHA_TERMINO, @ID_USUARIO 
+GO
+CREATE PROCEDURE sp_search_point
+	@PointLat decimal(10, 7),
+	@PointLng decimal(10, 7),
+	@intRadius decimal(10, 7)
+AS
+	DECLARE @intMilesModifier int;
+	SET @intMilesModifier = 6371;
+
+	SELECT  E.ID_EVENTO,
+			E.LAT_EVENTO,
+			E.LNG_EVENTO,
+			E.LUGAR_EXACTO,
+			E.DESCRIPCION_GENERAL,
+			CONVERT(VARCHAR(5),E.FECHA_HORA_EVENTO,108) AS 'HORA_EVENTO',
+			CONVERT(VARCHAR(8),E.FECHA_HORA_EVENTO,101) AS 'FECHA_HORA_EVENTO',
+			E.ID_DEPARTAMENTO_ORGANIZACION,
+			D.NOMBRE_DEPARTAMENTO,
+		  (@intMilesModifier*acos(cos(radians(@PointLat))*cos(radians(LAT_EVENTO))*cos(radians(LNG_EVENTO)-
+		   radians(@PointLng))+sin(radians(@PointLat))*sin(radians(LAT_EVENTO)))) AS 'DISTANCE'
+	FROM TBL_EVENTO E
+			INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+			INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
+	WHERE (@intMilesModifier*acos(cos(radians(@PointLat))*cos(radians(E.LAT_EVENTO))*cos(radians(E.LNG_EVENTO)-
+		   radians(@PointLng))+sin(radians(@PointLat))*sin(radians(E.LAT_EVENTO)))) < @intRadius
+	ORDER BY E.ID_EVENTO DESC;
 GO
 
 CREATE TRIGGER TRIG_UPDATE_NODE ON TBL_GRUPO_PRIVILEGIO
@@ -3135,6 +3124,84 @@ AS
 GO
 
 
+CREATE TRIGGER TRIG_INSERT_PROGRAMA ON TBL_PROGRAMA_ANUAL
+AFTER INSERT
+AS
+
+	DECLARE @ID_TEMPLATE AS INT;
+	DECLARE @ID_PROGRAMA_ANUAL AS INT;
+	DECLARE @ID_PROGRAMA_TEMPLATE AS INT;
+	DECLARE @IS_TEMPLATE AS BIT;
+	
+	DECLARE @ID_ACTIVIDAD AS INT;
+	DECLARE @ID_EVIDENCIA AS INT
+	DECLARE @ID_CARGO AS INT;
+	DECLARE @NOMBRE_ACTIVIDAD AS VARCHAR;
+	DECLARE @TIPO_FRECUENCIA AS INT;
+	DECLARE @CANTIDAD_FRECUENCIA AS INT;
+	DECLARE @ENERO_P AS INT;
+	DECLARE @ENERO_R AS INT;
+	DECLARE @ENERO_E AS BIT;
+	DECLARE @FEBRERO_P AS INT;
+	DECLARE @FEBRERO_R AS INT;
+	DECLARE @FEBRERO_E AS BIT;
+	DECLARE @MARZO_P AS INT;
+	DECLARE @MARZO_R AS INT;
+	DECLARE @MARZO_E AS BIT;
+	DECLARE @ABRIL_P AS INT;
+	DECLARE @ABRIL_R AS INT;
+	DECLARE @ABRIL_E AS BIT;
+	DECLARE @MAYO_P AS INT;
+	DECLARE @MAYO_R AS INT;
+	DECLARE @MAYO_E AS BIT;
+	DECLARE @JUNIO_P AS INT;
+	DECLARE @JUNIO_R AS INT;
+	DECLARE @JUNIO_E AS BIT;
+	DECLARE @JULIO_P AS INT;
+	DECLARE @JULIO_R AS INT;
+	DECLARE @JULIO_E AS BIT;
+	DECLARE @AGOSTO_P AS INT;
+	DECLARE @AGOSTO_R AS INT;
+	DECLARE @AGOSTO_E AS BIT;
+	DECLARE @SEPTIEMBRE_P AS INT;
+	DECLARE @SEPTIEMBRE_R AS INT;
+	DECLARE @SEPTIEMBRE_E AS BIT;
+	DECLARE @OCTUBRE_P AS INT;
+	DECLARE @OCTUBRE_R AS INT;
+	DECLARE @OCTUBRE_E AS BIT;
+	DECLARE @NOVIEMBRE_P AS INT;
+	DECLARE @NOVIEMBRE_R AS INT;
+	DECLARE @NOVIEMBRE_E AS BIT;
+	DECLARE @DICIEMBRE_P AS INT;
+	DECLARE @DICIEMBRE_R AS INT;
+	DECLARE @DICIEMBRE_E AS BIT;
+	
+	SELECT 	@ID_TEMPLATE = ID_TEMPLATE,
+			@ID_PROGRAMA_ANUAL = ID_PROGRAMA_ANUAL,
+			@ID_PROGRAMA_TEMPLATE = ID_PROGRAMA_TEMPLATE,
+			@IS_TEMPLATE = @IS_TEMPLATE
+	FROM inserted;
+	IF @IS_TEMPLATE = 0 AND @ID_PROGRAMA_TEMPLATE IS NOT NULL
+		--  Actividades del Template
+		DECLARE cActividades CURSOR LOCAL FOR
+			SELECT  ID_EVIDENCIA, ID_PROGRAMA_ANUAL, ID_CARGO, NOMBRE_ACTIVIDAD, TIPO_FRECUENCIA, CANTIDAD_FRECUENCIA, ENERO_P, ENERO_R, ENERO_E, FEBRERO_P, FEBRERO_R, FEBRERO_E, MARZO_P, MARZO_R, MARZO_E, ABRIL_P, ABRIL_R, ABRIL_E, MAYO_P, MAYO_R, MAYO_E, JUNIO_P, JUNIO_R, JUNIO_E, JULIO_P, JULIO_R, JULIO_E, AGOSTO_P, AGOSTO_R,  AGOSTO_E, SEPTIEMBRE_P, SEPTIEMBRE_R, SEPTIEMBRE_E, OCTUBRE_P, OCTUBRE_R, OCTUBRE_E, NOVIEMBRE_P, NOVIEMBRE_R, NOVIEMBRE_E, DICIEMBRE_P, DICIEMBRE_R, DICIEMBRE_E 
+					FROM TBL_ACTIVIDAD 
+					WHERE ID_PROGRAMA_ANUAL=@ID_PROGRAMA_TEMPLATE;
+		IF cActividades IS NOT NULL
+			OPEN cActividades
+			FETCH NEXT FROM cActividades 
+				INTO @ID_EVIDENCIA,@ID_PROGRAMA_ANUAL,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E
+			WHILE (@@FETCH_STATUS = 0 )
+			BEGIN
+				SELECT * FROM TBL_ACTIVIDAD
+				INSERT INTO TBL_ACTIVIDAD( ID_EVIDENCIA, ID_PROGRAMA_ANUAL, ID_CARGO, NOMBRE_ACTIVIDAD, TIPO_FRECUENCIA, CANTIDAD_FRECUENCIA, ENERO_P, ENERO_R, ENERO_E, FEBRERO_P, FEBRERO_R, FEBRERO_E, MARZO_P, MARZO_R, MARZO_E, ABRIL_P, ABRIL_R, ABRIL_E, MAYO_P, MAYO_R, MAYO_E, JUNIO_P, JUNIO_R, JUNIO_E, JULIO_P, JULIO_R, JULIO_E, AGOSTO_P, AGOSTO_R,  AGOSTO_E, SEPTIEMBRE_P, SEPTIEMBRE_R, SEPTIEMBRE_E, OCTUBRE_P, OCTUBRE_R, OCTUBRE_E, NOVIEMBRE_P, NOVIEMBRE_R, NOVIEMBRE_E, DICIEMBRE_P, DICIEMBRE_R, DICIEMBRE_E) 
+					VALUES(@ID_EVIDENCIA,@ID_PROGRAMA_ANUAL,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E)
+				FETCH NEXT FROM cActividades 
+					INTO @ID_EVIDENCIA,@ID_PROGRAMA_ANUAL,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E
+			END
+GO
+
+
 CREATE TRIGGER TRIG_INSERT_USUARIO ON TBL_USUARIO
 AFTER INSERT
 AS
@@ -3168,100 +3235,6 @@ AS
             SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', PASSWORD)),3,32)
        FROM inserted;
 go
-CREATE PROCEDURE sp_get_eventos_list
-	@p0   INT = 0,
-	@p1   INT = 10,
-	@ID_ORGANIZACION INT = 1,
-	@ANO INT
-AS
-	SELECT [t2].*
-	FROM (
-		SELECT [t1].*
-		FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY E.ID_EVENTO DESC) AS [ROW_NUMBER],
-					E.ID_EVENTO,
-					E.LAT_EVENTO,
-					E.LNG_EVENTO,
-					E.LUGAR_EXACTO,
-					E.DESCRIPCION_GENERAL,
-					CONVERT(VARCHAR(5),E.FECHA_HORA_EVENTO,108) AS 'HORA_EVENTO',
-					CONVERT(VARCHAR(10),FECHA_HORA_EVENTO,120) AS 'FECHA_HORA_EVENTO',
-					E.ID_DEPARTAMENTO_ORGANIZACION,
-					D.NOMBRE_DEPARTAMENTO,
-					(SELECT COUNT(ET.ID_EVENTO_EMPRESA)
-						FROM TBL_EVENTO EV
-							INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
-							LEFT JOIN TBL_EVENTO_TRABAJADOR ET ON EE.ID_EVENTO_EMPRESA = ET.ID_EVENTO_EMPRESA
-							WHERE EV.ID_EVENTO = E.ID_EVENTO
-						GROUP BY EV.ID_EVENTO, ET.ID_EVENTO_EMPRESA) AS 'COUNT_TRABAJADORES',
-					(SELECT COUNT(IP.ID_INFORME_PRELIMINAR)
-						FROM TBL_EVENTO EV
-							INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
-							LEFT JOIN TBL_I_PRELIMINAR IP ON EE.ID_EVENTO_EMPRESA = IP.ID_EVENTO_EMPRESA
-							WHERE EV.ID_EVENTO = E.ID_EVENTO
-						GROUP BY EV.ID_EVENTO, IP.ID_INFORME_PRELIMINAR) AS 'COUNT_IPRELIMINAR'
-			FROM TBL_EVENTO E
-				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
-				INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
-			WHERE DO.ID_ORGANIZACION = @ID_ORGANIZACION AND YEAR(E.FECHA_HORA_EVENTO) = @ANO
-			) AS [t1]
-		WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
-		) AS [t2]
-	ORDER BY ID_EVENTO,[t2].[ROW_NUMBER] DESC
-GO
-CREATE PROCEDURE sp_get_eventos_departamento_by_organizacion
-	@ID_ORGANIZACION INT,
-	@ANO INT,
-	@p0   INT = 0,
-	@p1   INT
-AS
-	SELECT [t2].*
-	FROM (
-		SELECT [t1].*
-		FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY MES.MES_ID) AS [ROW_NUMBER],
-					MES.MES_ID,
-					MES.MES_NAME,
-					(SELECT COUNT(E.ID_EVENTO)
-					FROM TBL_EVENTO E
-						INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
-					WHERE MONTH(E.FECHA_HORA_EVENTO) = MES_ID AND DO.ID_ORGANIZACION = @ID_ORGANIZACION AND YEAR(E.FECHA_HORA_EVENTO) = @ANO) AS 'COUNT_EVENTOS'
-			FROM (SELECT 1 AS 'MES_ID', 'Enero' AS 'MES_NAME' UNION SELECT ALL 2,'Febrero' UNION SELECT ALL 3,'Marzo' UNION SELECT ALL 4,'Abril' UNION SELECT ALL 5,'Mayo' UNION SELECT ALL 6, 'Junio' UNION SELECT ALL 7, 'Julio' UNION SELECT ALL 8, 'Agosto' UNION SELECT ALL 9,'Septiembre' UNION SELECT ALL 10, 'Octubre' UNION SELECT ALL 11, 'Noviembre' UNION SELECT ALL 12,'Diciembre') MES
-		) AS [t1]
-		WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
-	) AS [t2]
-	ORDER BY [t2].[ROW_NUMBER]
-GO
-CREATE PROCEDURE sp_search_point
-	@PointLat decimal(10, 7),
-	@PointLng decimal(10, 7),
-	@intRadius decimal(10, 7)
-AS
-	DECLARE @intMilesModifier int;
-	SET @intMilesModifier = 6371;
-
-	SELECT  E.ID_EVENTO,
-			E.LAT_EVENTO,
-			E.LNG_EVENTO,
-			E.LUGAR_EXACTO,
-			E.DESCRIPCION_GENERAL,
-			CONVERT(VARCHAR(5),E.FECHA_HORA_EVENTO,108) AS 'HORA_EVENTO',
-			CONVERT(VARCHAR(8),E.FECHA_HORA_EVENTO,101) AS 'FECHA_HORA_EVENTO',
-			E.ID_DEPARTAMENTO_ORGANIZACION,
-			D.NOMBRE_DEPARTAMENTO,
-		  (@intMilesModifier*acos(cos(radians(@PointLat))*cos(radians(LAT_EVENTO))*cos(radians(LNG_EVENTO)-
-		   radians(@PointLng))+sin(radians(@PointLat))*sin(radians(LAT_EVENTO)))) AS 'DISTANCE'
-	FROM TBL_EVENTO E
-			INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
-			INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
-	WHERE (@intMilesModifier*acos(cos(radians(@PointLat))*cos(radians(E.LAT_EVENTO))*cos(radians(E.LNG_EVENTO)-
-		   radians(@PointLng))+sin(radians(@PointLat))*sin(radians(E.LAT_EVENTO)))) < @intRadius
-	ORDER BY E.ID_EVENTO DESC;
-GO
-
-
-
-
 
 
 
@@ -3957,6 +3930,7 @@ INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(71,'dsSearchMarker');
 INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(72,'dsGraphEventosOrganizacion');
 INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(73,'dsMedidaDeControlByActividad');
 INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(74,'dsGraphAvanceProgramaAnualById');
+INSERT INTO TBL_STORE(ID_STORE,NOMBRE_STORE) VALUES(75,'dsTemplate');
 GO
 
 INSERT INTO TBL_EMPRESA(NOMBRE_EMPRESA,DIRECCION_EMPRESA,FONO_EMPRESA,EMAIL_EMPRESA,NOMBRE_CONTRATO) 
@@ -4047,7 +4021,7 @@ INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_E
 		VALUES(12, /* ID_NODO */
 			11, /* NODO_PADRE */
 			'Listado de Programas', /* NOMBRE_MODULO */
-			'ProgramaAnual', /* ID_COMPONENTE */
+			'ProgramaAnualV2', /* ID_COMPONENTE */
 			1, /* ESTADO */
 			2, /* TIPO_NODO */
 			'add-programaanual-icon', /* ICONCLS */
@@ -4172,21 +4146,13 @@ GO
 	--	Crea Programa 
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
 		VALUES(54,12); --dsProgramaAnual
-	--INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(47,12); --dsOrganizacion
-	--INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(21,12); --dsDepartamento
-	--INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(23,12); --dsDivision
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(15,12); --dsCargo
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(33,12); --dsFrecuencia
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(32,12); --dsEvidencia
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(7,12); --dsActividadProgramaAnualPrevencion
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(69,12); --dsGraphAvanceProgramaAnual
-	-- INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(70,12); --dsMeses
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(47,12); --dsOrganizacion
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(21,12); --dsDepartamento
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(23,12); --dsDivision
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(54,12); --dsProgramaAnual
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(69,12); --dsGraphAvanceProgramaAnual
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(74,12); --dsGraphAvanceProgramaAnualById
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(75,12); --dsTemplate
 --REPORTES
 
 --MATRIZ DE RIESGO
@@ -4490,489 +4456,186 @@ INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_GRUPO,PRIVILEGIO,ID_NODO,ESTADO,ALLOW)
 GO
 
 
-DECLARE @ID_USUARIO VARCHAR(200);
-SELECT 
-	@ID_USUARIO='cramirez';
-EXEC sp_get_privilegios_by_usuario @ID_USUARIO;
-SELECT e.NODO_PADRE, e.ID_NODO,0 AS Level
-    FROM TBL_NODO AS e;
-	
-/*
-	SELECT CHILD_ROW.ID_NODO
-		FROM TBL_NODO AS CURRENT_ROW
-		INNER JOIN TBL_NODO AS CHILD_ROW ON CURRENT_ROW.ID_NODO = CHILD_ROW.NODO_PADRE
-		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON GP.ID_NODO = CHILD_ROW.NODO_PADRE
-	WHERE CURRENT_ROW.ID_NODO=2
 
+
+/*
+DECLARE @ID_TEMPLATE INT;
+DECLARE @ID_ORGANIZACION INT;
+DECLARE @ID_DIVISION INT; 
+DECLARE @ID_DEPARTAMENTO_ORGANIZACION INT;
+DECLARE @NOMBRE_DIVISION VARCHAR(200);
+SET @ID_ORGANIZACION = 1;
+SET @ID_TEMPLATE = 1;
+
+
+DECLARE cDivisiones CURSOR LOCAL FOR
+	SELECT DV.ID_DIVISION,DV.ID_DEPARTAMENTO_ORGANIZACION,DV.NOMBRE_DIVISION
+		FROM TBL_DIVISION DV
+			INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON DV.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+	WHERE DO.ID_ORGANIZACION=@ID_ORGANIZACION;
+	OPEN cDivisiones
+	FETCH NEXT FROM cDivisiones 
+		INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+	WHILE (@@FETCH_STATUS = 0 )
+	BEGIN
+		FETCH NEXT FROM cDivisiones 
+			INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+		PRINT @NOMBRE_DIVISION
+	END
+CLOSE cDivisiones
+DEALLOCATE cDivisiones
+
+SELECT * 
+FROM TBL_PROGRAMA_ANUAL PA
+		INNER JOIN TBL_TEMPLATE TM ON PA.ID_TEMPLATE = TM.ID_TEMPLATE
+WHERE TM.ID_TEMPLATE=@ID_TEMPLATE;
 */
 
 
+
+
 /*
-CREATE FUNCTION fn_nodes_by_parent (@ID_NODO INT)
-RETURNS @nodes TABLE 
-(
-	ID_NODO INT,
-	NOMBRE_MODULO VARCHAR(200),
-	ALLOW_READ BIT,
-	ALLOW_WRITE BIT,
-	ALLOW_EDIT BIT,
-	ALLOW_DELETE BIT,
-	ALLOW_PRINT BIT,
-	ALLOW_CRUD BIT
-)
+
+CREATE TRIGGER TRIG_INSERT_PROGRAMA ON TBL_PROGRAMA_ANUAL
+AFTER INSERT
 AS
-BEGIN
-WITH NODESBYPARENT (ID_NODO,
-	NOMBRE_MODULO,
-	ALLOW_READ,
-	ALLOW_WRITE,
-	ALLOW_EDIT,
-	ALLOW_DELETE,
-	ALLOW_PRINT,
-	ALLOW_CRUD)
+
+	DECLARE @ID_TEMPLATE AS INT;
+	DECLARE @ID_PROGRAMA_ANUAL AS INT;
+	DECLARE @ID_PROGRAMA_TEMPLATE AS INT;
+	DECLARE @IS_TEMPLATE AS BIT;
+	
+	DECLARE @ID_ACTIVIDAD AS INT;
+	DECLARE @ID_EVIDENCIA AS INT
+	DECLARE @ID_CARGO AS INT;
+	DECLARE @NOMBRE_ACTIVIDAD AS VARCHAR;
+	DECLARE @TIPO_FRECUENCIA AS INT;
+	DECLARE @CANTIDAD_FRECUENCIA AS INT;
+	DECLARE @ENERO_P AS INT;
+	DECLARE @ENERO_R AS INT;
+	DECLARE @ENERO_E AS BIT;
+	DECLARE @FEBRERO_P AS INT;
+	DECLARE @FEBRERO_R AS INT;
+	DECLARE @FEBRERO_E AS BIT;
+	DECLARE @MARZO_P AS INT;
+	DECLARE @MARZO_R AS INT;
+	DECLARE @MARZO_E AS BIT;
+	DECLARE @ABRIL_P AS INT;
+	DECLARE @ABRIL_R AS INT;
+	DECLARE @ABRIL_E AS BIT;
+	DECLARE @MAYO_P AS INT;
+	DECLARE @MAYO_R AS INT;
+	DECLARE @MAYO_E AS BIT;
+	DECLARE @JUNIO_P AS INT;
+	DECLARE @JUNIO_R AS INT;
+	DECLARE @JUNIO_E AS BIT;
+	DECLARE @JULIO_P AS INT;
+	DECLARE @JULIO_R AS INT;
+	DECLARE @JULIO_E AS BIT;
+	DECLARE @AGOSTO_P AS INT;
+	DECLARE @AGOSTO_R AS INT;
+	DECLARE @AGOSTO_E AS BIT;
+	DECLARE @SEPTIEMBRE_P AS INT;
+	DECLARE @SEPTIEMBRE_R AS INT;
+	DECLARE @SEPTIEMBRE_E AS BIT;
+	DECLARE @OCTUBRE_P AS INT;
+	DECLARE @OCTUBRE_R AS INT;
+	DECLARE @OCTUBRE_E AS BIT;
+	DECLARE @NOVIEMBRE_P AS INT;
+	DECLARE @NOVIEMBRE_R AS INT;
+	DECLARE @NOVIEMBRE_E AS BIT;
+	DECLARE @DICIEMBRE_P AS INT;
+	DECLARE @DICIEMBRE_R AS INT;
+	DECLARE @DICIEMBRE_E AS BIT;
+	
+	SELECT 	@ID_TEMPLATE = ID_TEMPLATE,
+			@ID_PROGRAMA_ANUAL = ID_PROGRAMA_ANUAL,
+			@ID_PROGRAMA_TEMPLATE = ID_PROGRAMA_TEMPLATE,
+			@IS_TEMPLATE = @IS_TEMPLATE
+	FROM inserted;
+	IF @IS_TEMPLATE = 0 AND @ID_PROGRAMA_TEMPLATE IS NOT NULL 
+		--  Actividades del Template
+		DECLARE cActividades CURSOR LOCAL FOR
+			SELECT  ID_EVIDENCIA, ID_CARGO, NOMBRE_ACTIVIDAD, TIPO_FRECUENCIA, CANTIDAD_FRECUENCIA, ENERO_P, ENERO_R, ENERO_E, FEBRERO_P, FEBRERO_R, FEBRERO_E, MARZO_P, MARZO_R, MARZO_E, ABRIL_P, ABRIL_R, ABRIL_E, MAYO_P, MAYO_R, MAYO_E, JUNIO_P, JUNIO_R, JUNIO_E, JULIO_P, JULIO_R, JULIO_E, AGOSTO_P, AGOSTO_R,  AGOSTO_E, SEPTIEMBRE_P, SEPTIEMBRE_R, SEPTIEMBRE_E, OCTUBRE_P, OCTUBRE_R, OCTUBRE_E, NOVIEMBRE_P, NOVIEMBRE_R, NOVIEMBRE_E, DICIEMBRE_P, DICIEMBRE_R, DICIEMBRE_E 
+					FROM TBL_ACTIVIDAD 
+					WHERE ID_PROGRAMA_ANUAL=@ID_PROGRAMA_TEMPLATE;
+		OPEN cActividades
+		FETCH NEXT FROM cActividades 
+			INTO @ID_EVIDENCIA,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E
+		WHILE (@@FETCH_STATUS = 0 )
+		BEGIN
+			INSERT INTO TBL_ACTIVIDAD VALUES(@ID_EVIDENCIA,@ID_PROGRAMA_ANUAL,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E)
+			FETCH NEXT FROM cActividades 
+				INTO @ID_EVIDENCIA,@ID_CARGO,@NOMBRE_ACTIVIDAD,@TIPO_FRECUENCIA,@CANTIDAD_FRECUENCIA,@ENERO_P,@ENERO_R,@ENERO_E,@FEBRERO_P,@FEBRERO_R,@FEBRERO_E,@MARZO_P,@MARZO_R,@MARZO_E,@ABRIL_P,@ABRIL_R,@ABRIL_E,@MAYO_P,@MAYO_R,@MAYO_E,@JUNIO_P,@JUNIO_R,@JUNIO_E,@JULIO_P,@JULIO_R,@JULIO_E,@AGOSTO_P,@AGOSTO_R, @AGOSTO_E,@SEPTIEMBRE_P,@SEPTIEMBRE_R,@SEPTIEMBRE_E,@OCTUBRE_P,@OCTUBRE_R,@OCTUBRE_E,@NOVIEMBRE_P,@NOVIEMBRE_R,@NOVIEMBRE_E,@DICIEMBRE_P,@DICIEMBRE_R,@DICIEMBRE_E
+		END
+	
+GO
+CREATE PROCEDURE sp_create_programa_by_template
+	@ID_ORGANIZACION  INT = 1,
+	@ID_TEMPLATE INT = 1
 AS
-(
-	SELECT 	
-		CHILD_ROW.ID_NODO,
-			CHILD_ROW.NOMBRE_MODULO,
-			GP.ALLOW_READ,
-			GP.ALLOW_WRITE,
-			GP.ALLOW_EDIT,
-			GP.ALLOW_DELETE,
-			GP.ALLOW_PRINT,
-			GP.ALLOW_CRUD
-	FROM TBL_NODO AS CURRENT_ROW
-		INNER JOIN TBL_NODO AS CHILD_ROW ON CURRENT_ROW.ID_NODO = CHILD_ROW.NODO_PADRE
-		INNER JOIN TBL_GRUPO_PRIVILEGIO GP ON GP.ID_NODO = CHILD_ROW.NODO_PADRE
-	WHERE CURRENT_ROW.ID_NODO=@ID_NODO AND GP.ALLOW_READ=1
-)
-	INSERT @nodes
-   SELECT ID_NODO,
-			NOMBRE_MODULO,
-			ALLOW_READ,
-			ALLOW_WRITE,
-			ALLOW_EDIT,
-			ALLOW_DELETE,
-			ALLOW_PRINT,
-			ALLOW_CRUD
-   FROM NODESBYPARENT
-   RETURN
-END; 
+	DECLARE @ID_DIVISION INT; 
+	DECLARE @ID_PROGRAMA_TEMPLATE INT;
+	DECLARE @ID_DEPARTAMENTO_ORGANIZACION INT;
+	DECLARE @NOMBRE_DIVISION VARCHAR(200);
+	DECLARE @NOMBRE_PROGRAMA NVARCHAR(4000);
+	DECLARE @OBJETIVO NVARCHAR(4000);
+	DECLARE @META NVARCHAR(4000);
+	DECLARE @MES_INICIO INT;
+	DECLARE @ANO_INICIO INT;
+
+	DECLARE cDivisiones CURSOR LOCAL FOR
+		SELECT DV.ID_DIVISION,DV.ID_DEPARTAMENTO_ORGANIZACION,DV.NOMBRE_DIVISION
+			FROM TBL_DIVISION DV
+				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON DV.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
+		WHERE DO.ID_ORGANIZACION=@ID_ORGANIZACION;
+		OPEN cDivisiones
+		FETCH NEXT FROM cDivisiones 
+			INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+		SELECT	@OBJETIVO = OBJETIVO,
+				@META = META,
+				@MES_INICIO = MES_INICIO,
+				@ANO_INICIO = ANO_INICIO,
+				@NOMBRE_PROGRAMA = NOMBRE_PROGRAMA,
+				@ID_PROGRAMA_TEMPLATE = ID_PROGRAMA_ANUAL
+		FROM TBL_PROGRAMA_ANUAL
+		WHERE ID_TEMPLATE=@ID_TEMPLATE;
+		WHILE (@@FETCH_STATUS = 0 )
+		BEGIN
+			
+			
+			INSERT INTO TBL_PROGRAMA_ANUAL (
+				ID_DEPARTAMENTO_ORGANIZACION,
+				ID_PROGRAMA_TEMPLATE,
+				ID_DIVISION,
+				ID_TEMPLATE,
+				IS_TEMPLATE,
+				OBJETIVO,
+				META,
+				FECHA_CREACION,
+				NOMBRE_PROGRAMA,
+				MES_INICIO,
+				ANO_INICIO) 
+			VALUES(
+				@ID_DEPARTAMENTO_ORGANIZACION,
+				@ID_PROGRAMA_TEMPLATE,
+				@ID_DIVISION,
+				@ID_TEMPLATE,
+				0,
+				@OBJETIVO,
+				@META,
+				GETDATE(),
+				@NOMBRE_PROGRAMA,
+				@MES_INICIO,
+				@ANO_INICIO
+			);
+			PRINT @NOMBRE_DIVISION
+			FETCH NEXT FROM cDivisiones 
+				INTO @ID_DIVISION, @ID_DEPARTAMENTO_ORGANIZACION, @NOMBRE_DIVISION
+			
+		END
+	CLOSE cDivisiones
+	DEALLOCATE cDivisiones	
 GO
 
-
-SELECT	CHILD.ID_NODO,
-		CHILD.NOMBRE_MODULO,
-		CHILD.NODO_PADRE,
-		GP.ALLOW_READ,
-		GP.ALLOW_WRITE,
-		GP.ALLOW_EDIT,
-		GP.ALLOW_DELETE,
-		GP.ALLOW_PRINT,
-		GP.ALLOW_CRUD
-FROM TBL_GRUPO_PRIVILEGIO GP
-	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
-	INNER JOIN fn_recursive_node() RN ON ND.ID_NODO= RN.NODO_PADRE
-	INNER JOIN TBL_NODO CHILD ON RN.ID_NODO = CHILD.ID_NODO
-WHERE (GP.ID_GRUPO=3 OR GP.ID_GRUPO=1) AND GP.ALLOW_READ=1
-ORDER BY CHILD.NODO_PADRE ASC
 */
-
-
-/*
-SELECT	ND.ID_NODO,
-		ND.NODO_PADRE,
-		ND.NOMBRE_MODULO,
-		GP.*
-FROM TBL_GRUPO_PRIVILEGIO GP
-	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
-WHERE (((GP.ID_GRUPO IN (SELECT ID_GRUPO FROM TBL_USUARIO  WHERE ID_USUARIO='efuentealba') OR GP.ID_GRUPO=1)) OR GP.ID_GRUPO=3)
-		AND GP.ALLOW_READ=1
-ORDER BY ND.NODO_PADRE, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC;
-
-
-
-SELECT	ND.ID_NODO,
-		ND.NODO_PADRE,
-		ND.NOMBRE_MODULO,
-		GP.*
-FROM TBL_GRUPO_PRIVILEGIO GP
-	INNER JOIN TBL_NODO ND ON GP.ID_NODO = ND.ID_NODO
-WHERE ((GP.ID_GRUPO IN (SELECT UG.ID_GRUPO 
-							FROM TBL_USUARIO U
-								INNER JOIN TBL_USUARIO_GRUPO UG ON U.ID_USUARIO=UG.ID_USUARIO  
-							WHERE U.ID_USUARIO='efuentealba') OR GP.ID_GRUPO=1))
-		AND GP.ALLOW_READ=1
-ORDER BY ND.NODO_PADRE, ND.ID_NODO,GROUP_ID,TIPO_DISPLAY ASC;
-
-
-
-
---- TRABAJADORES POR EVENTO
-SELECT * FROM TBL_EVENTO_TRABAJADOR;
-INSERT INTO TBL_EVENTO_TRABAJADOR VALUES(1,
-	1,
-	NULL,
-	GETDATE(),
-	GETDATE(),
-	1
-);
-
--- group.png
-DECLARE @p0 INT;
-DECLARE @p1 INT;
-SET @p0 = 20;
-SET @p1 = 10;
-SELECT [t2].*
-FROM (
-    SELECT [t1].*
-    FROM (
-		SELECT ROW_NUMBER() OVER (ORDER BY E.ID_EVENTO,E.LAT_EVENTO,E.LNG_EVENTO,E.LUGAR_EXACTO,E.ID_DEPARTAMENTO_ORGANIZACION,D.NOMBRE_DEPARTAMENTO) AS [ROW_NUMBER],
-				E.ID_EVENTO,
-				E.LAT_EVENTO,
-				E.LNG_EVENTO,
-				E.LUGAR_EXACTO,
-				E.DESCRIPCION_GENERAL,
-				CONVERT(VARCHAR(5),E.FECHA_HORA_EVENTO,108) AS 'HORA_EVENTO',
-				CONVERT(VARCHAR(10),FECHA_HORA_EVENTO,120) AS 'FECHA_HORA_EVENTO',
-				E.ID_DEPARTAMENTO_ORGANIZACION,
-				D.NOMBRE_DEPARTAMENTO,
-				(SELECT COUNT(ET.ID_EVENTO_EMPRESA)
-					FROM TBL_EVENTO EV
-						INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
-						LEFT JOIN TBL_EVENTO_TRABAJADOR ET ON EE.ID_EVENTO_EMPRESA = ET.ID_EVENTO_EMPRESA
-						WHERE EV.ID_EVENTO = E.ID_EVENTO
-					GROUP BY EV.ID_EVENTO, ET.ID_EVENTO_EMPRESA) AS 'COUNT_TRABAJADORES',
-				(SELECT COUNT(IP.ID_INFORME_PRELIMINAR)
-					FROM TBL_EVENTO EV
-						INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
-						LEFT JOIN TBL_I_PRELIMINAR IP ON EE.ID_EVENTO_EMPRESA = IP.ID_EVENTO_EMPRESA
-						WHERE EV.ID_EVENTO = E.ID_EVENTO
-					GROUP BY EV.ID_EVENTO, IP.ID_INFORME_PRELIMINAR) AS 'COUNT_IPRELIMINAR'
-		FROM TBL_EVENTO E
-			INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
-			INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
-        ) AS [t1]
-    WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
-    ) AS [t2]
-ORDER BY [t2].[ROW_NUMBER]
-
-
-
-
-
-
-
-
-
-
-
-
-
-CREATE PROCEDURE sp_get_eventos_departamento_by_organizacion
-	@ID_ORGANIZACION INT,
-	@ANO INT,
-	@p0   INT = 0,
-	@p1   INT
-AS
-	SELECT [t2].*
-	FROM (
-		SELECT [t1].*
-		FROM (
-			SELECT 	ROW_NUMBER() OVER (ORDER BY ISNULL(MONTH(E.FECHA_HORA_EVENTO),0), D.NOMBRE_DEPARTAMENTO, COUNT(E.ID_DEPARTAMENTO_ORGANIZACION)) AS [ROW_NUMBER],
-					COUNT(E.ID_DEPARTAMENTO_ORGANIZACION) AS 'COUNT_EVENTOS', 
-					D.NOMBRE_DEPARTAMENTO,
-					ISNULL(MONTH(E.FECHA_HORA_EVENTO),0) AS 'MES'
-			FROM TBL_DEPARTAMENTO_ORGANIZACION DO
-				INNER JOIN TBL_DEPARTAMENTO D ON D.ID_DEPARTAMENTO = DO.ID_DEPARTAMENTO
-				LEFT JOIN TBL_EVENTO E ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
-			WHERE DO.ID_ORGANIZACION = @ID_ORGANIZACION 
-				AND (ISNULL(CONVERT(VARCHAR(4),E.FECHA_HORA_EVENTO,120),1) = 1 
-				OR YEAR(E.FECHA_HORA_EVENTO) = @ANO)
-			GROUP BY MONTH(FECHA_HORA_EVENTO), E.ID_DEPARTAMENTO_ORGANIZACION,D.NOMBRE_DEPARTAMENTO
-		) AS [t1]
-		WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
-	) AS [t2]
-	ORDER BY [t2].[ROW_NUMBER]
-GO
-
-
-
--- CONSULTA MEDIDAS DE UNA DIVISIÓN
-	SELECT MC.ID_MEDIDAS_DE_CONTROL,MC.NOM_MEDIDA_DE_CONTROL 
-	FROM TBL_ACTIVIDAD_EVALUADA AE
-		INNER JOIN TBL_PELIGRO_MEDIDA PM ON AE.ID_ACTIVIDAD_EVALUADA=PM.ID_ACTIVIDAD_EVALUADA
-		INNER JOIN TBL_MEDIDA_DE_CONTROL MC ON MC.ID_MEDIDAS_DE_CONTROL = PM.ID_MEDIDAS_DE_CONTROL
-	GROUP BY MC.ID_MEDIDAS_DE_CONTROL,MC.NOM_MEDIDA_DE_CONTROL 
-	
--- CONSULTA PRC DE AVANCE POR DIVISIÓN
-	DECLARE @TOTAL INT;
-
-WITH GETTOTALPROGRAM (PRC_AVANCE,ID_DIVISION)
-	AS
-	(
-		
-		
-		SELECT
-			ROUND (ISNULL((((SUM(CASE 
-				WHEN AX.ENERO_P = 0  THEN
-					CASE
-						WHEN AX.ENERO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.ENERO_R AS DECIMAL)/CAST(AX.ENERO_P AS DECIMAL))*100)
-			END)/COUNT(*)) + (SUM(CASE 
-				WHEN AX.FEBRERO_P = 0 THEN
-					CASE
-						WHEN AX.FEBRERO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.FEBRERO_R AS DECIMAL)/CAST(AX.FEBRERO_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.MARZO_P = 0 THEN
-					CASE
-						WHEN AX.MARZO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.MARZO_R AS DECIMAL)/CAST(AX.MARZO_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.ABRIL_P = 0 THEN
-					CASE
-						WHEN AX.ABRIL_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.ABRIL_R AS DECIMAL)/CAST(AX.ABRIL_P AS DECIMAL))*100)
-			END)/COUNT(*)) + (SUM(CASE 
-				WHEN AX.MAYO_P = 0 THEN
-					CASE
-						WHEN AX.MAYO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.MAYO_R AS DECIMAL)/CAST(AX.MAYO_P AS DECIMAL))*100)
-			END)/COUNT(*)) + (SUM(CASE 
-				WHEN AX.JUNIO_P = 0 THEN
-					CASE
-						WHEN AX.JUNIO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.JUNIO_R AS DECIMAL)/CAST(AX.JUNIO_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.JULIO_P = 0 THEN
-					CASE
-						WHEN AX.JULIO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.JULIO_R AS DECIMAL)/CAST(AX.JULIO_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.AGOSTO_P = 0 THEN
-					CASE
-						WHEN AX.AGOSTO_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.AGOSTO_R AS DECIMAL)/CAST(AX.AGOSTO_P AS DECIMAL))*100)
-			END)/COUNT(*)) + (SUM(CASE 
-				WHEN AX.SEPTIEMBRE_P = 0 THEN
-					CASE
-						WHEN AX.SEPTIEMBRE_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.SEPTIEMBRE_R AS DECIMAL)/CAST(AX.SEPTIEMBRE_P AS DECIMAL))*100)
-			END)/COUNT(*)) + (SUM(CASE 
-				WHEN AX.OCTUBRE_P = 0 THEN
-					CASE
-						WHEN AX.OCTUBRE_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.OCTUBRE_R AS DECIMAL)/CAST(AX.OCTUBRE_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.NOVIEMBRE_P = 0 THEN
-					CASE
-						WHEN AX.NOVIEMBRE_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.NOVIEMBRE_R AS DECIMAL)/CAST(AX.NOVIEMBRE_P AS DECIMAL))*100)
-			END)/COUNT(*))+ (SUM(CASE 
-				WHEN AX.DICIEMBRE_P = 0 THEN
-					CASE
-						WHEN AX.DICIEMBRE_E = 0 THEN
-							100
-						ELSE
-							0
-					END
-				ELSE
-					((CAST(AX.DICIEMBRE_R AS DECIMAL)/CAST(AX.DICIEMBRE_P AS DECIMAL))*100)
-			END)/COUNT(*)))/SUM(
-				CAST(AX.ENERO_E AS INT) + CAST(AX.FEBRERO_E AS INT) + CAST(AX.MARZO_E AS INT)+ CAST(AX.ABRIL_E AS INT)+CAST(AX.MAYO_E AS INT)+CAST(AX.JUNIO_E AS INT)+CAST(AX.JULIO_E AS INT)+CAST(AX.AGOSTO_E AS INT)+CAST(AX.SEPTIEMBRE_E AS INT)+CAST(AX.OCTUBRE_E AS INT)+CAST(AX.NOVIEMBRE_E AS INT)+CAST(AX.DICIEMBRE_E AS INT)
-			)),0),2) , PX.ID_DIVISION
-		FROM TBL_ACTIVIDAD AX
-			INNER JOIN TBL_PROGRAMA_ANUAL PX ON AX.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL
-		GROUP BY PX.ID_DIVISION,PX.ANO_INICIO
-	)
-
-	SELECT	D.NOMBRE_DIVISION, 
-			PA.ID_DIVISION,
-			PA.ANO_INICIO,
-			ISNULL(CN.PRC_AVANCE,0) AS PRC_AVANCE
-	FROM TBL_PROGRAMA_ANUAL PA
-		INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION
-		LEFT JOIN GETTOTALPROGRAM CN ON PA.ID_DIVISION=CN.ID_DIVISION
-	GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO,CN.PRC_AVANCE
-
-
-
-	
-	
--- AVANCE PRC POR DIVISION
-	SELECT D.NOMBRE_DIVISION, 
-			PA.ID_DIVISION, 
-			(SUM(CASE 
-				WHEN AC.ENERO_P <> 0  THEN
-					((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.ENERO_E AS INT))) AS 'PCR_ENERO_R',
-			(SUM(CASE 
-				WHEN AC.FEBRERO_P <> 0  THEN
-					((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.FEBRERO_E AS INT))) AS 'PCR_FEBRERO_R',
-			(SUM(CASE 
-				WHEN AC.MARZO_P <> 0  THEN
-					((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.MARZO_E AS INT))) AS 'PCR_MARZO_R',
-			(SUM(CASE 
-				WHEN AC.ABRIL_P <> 0  THEN
-					((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.ABRIL_E AS INT))) AS 'PCR_ABRIL_R',
-			(SUM(CASE 
-				WHEN AC.MAYO_P <> 0  THEN
-					((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.MAYO_E AS INT))) AS 'PCR_MAYO_R',
-			(SUM(CASE 
-				WHEN AC.JUNIO_P <> 0  THEN
-					((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.JUNIO_E AS INT))) AS 'PCR_JUNIO_R',
-			(SUM(CASE 
-				WHEN AC.JULIO_P <> 0  THEN
-					((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.JULIO_E AS INT))) AS 'PCR_JULIO_R',
-			(SUM(CASE 
-				WHEN AC.AGOSTO_P <> 0  THEN
-					((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.AGOSTO_E AS INT))) AS 'PCR_AGOSTO_R',
-			(SUM(CASE 
-				WHEN AC.SEPTIEMBRE_P <> 0  THEN
-					((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.SEPTIEMBRE_E AS INT))) AS 'PCR_SEPTIEMBRE_R',
-			(SUM(CASE 
-				WHEN AC.OCTUBRE_P <> 0  THEN
-					((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
-				
-			END)/SUM(CAST(AC.OCTUBRE_E AS INT))) AS 'PCR_OCTUBRE_R',
-			(SUM(CASE 
-				WHEN AC.NOVIEMBRE_P <> 0  THEN
-					((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.NOVIEMBRE_E AS INT))) AS 'PCR_NOVIEMBRE_R',
-			(SUM(CASE 
-				WHEN AC.DICIEMBRE_P <> 0  THEN
-					((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
-			END)/SUM(CAST(AC.DICIEMBRE_E AS INT))) AS 'PCR_DICIEMBRE_R'
-	FROM TBL_PROGRAMA_ANUAL PA 
-		INNER JOIN  TBL_ACTIVIDAD AC ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
-		INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION= D.ID_DIVISION
-	GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO;
-
-
-
-
-
-
-
-SELECT '['+CAST(PA.ANO_INICIO AS VARCHAR)+'] '+D.NOMBRE_DIVISION AS 'PROGRAMA', 
-		PA.ID_DIVISION, 
-		ISNULL(((
-			(SUM(CASE WHEN AC.ENERO_P <> 0  THEN ((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.ENERO_E AS INT))) +
-			(SUM(CASE WHEN AC.FEBRERO_P <> 0  THEN ((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.FEBRERO_E AS INT))) +
-			(SUM(CASE WHEN AC.MARZO_P <> 0  THEN ((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MARZO_E AS INT))) +
-			(SUM(CASE WHEN AC.ABRIL_P <> 0  THEN ((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) END)/SUM(CAST(AC.ABRIL_E AS INT))) +
-			(SUM(CASE WHEN AC.MAYO_P <> 0  THEN ((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MAYO_E AS INT))) +
-			(SUM(CASE WHEN AC.JUNIO_P <> 0  THEN ((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JUNIO_E AS INT))) +
-			(SUM(CASE WHEN AC.JULIO_P <> 0  THEN ((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JULIO_E AS INT))) + 
-			(SUM(CASE WHEN AC.AGOSTO_P <> 0  THEN ((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) END)/SUM(CAST(AC.AGOSTO_E AS INT))) + 
-			(SUM(CASE WHEN AC.SEPTIEMBRE_P <> 0  THEN ((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.SEPTIEMBRE_E AS INT))) +
-			(SUM(CASE WHEN AC.OCTUBRE_P <> 0  THEN ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.OCTUBRE_E AS INT))) +
-			(SUM(CASE WHEN AC.NOVIEMBRE_P <> 0  THEN ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.NOVIEMBRE_E AS INT))) +
-			(SUM(CASE WHEN AC.DICIEMBRE_P <> 0  THEN ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.DICIEMBRE_E AS INT)))
-		)/12),0) AS 'PRC_TOTAL'
-FROM TBL_PROGRAMA_ANUAL PA 
-	LEFT JOIN  TBL_ACTIVIDAD AC ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
-	INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION= D.ID_DIVISION
-WHERE PA.ANO_INICIO = 2012
-GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO;
-
-
-
-
-
--- DATOS DE PRUEBA PROGRAMA ANUAL
-
-	-- Programa 1
-	INSERT INTO TBL_PROGRAMA_ANUAL VALUES(10,31,'"Alcanzar los indicadores de accidentabilidad establecidos como meta en el Plan Anual de Gestión  (PAG 2011), que tiene como objetivo principal en punto P11 ""Gestionar la Prevención de Riesgos y la confiabilidad de las instalaciones"" en la Gestión de Seguridad y Salud Ocupacional de Refinería Bío Bío año 2011. 
-	Para ello las acciones se orientan a fortalecer la conducta individual (Autocuidado), respeto por nuestra normativa, supervisión predictiva en terreno, a objeto de tender a ""Cero daño a las personas"" ','',GETDATE(),'Prevención',3,2012);
-	INSERT INTO TBL_PROGRAMA_ANUAL VALUES(10,31,'"Alcanzar los indicadores de accidentabilidad establecidos como meta en el Plan Anual de Gestión  (PAG 2011), que tiene como objetivo principal en punto P11 ""Gestionar la Prevención de Riesgos y la confiabilidad de las instalaciones"" en la Gestión de Seguridad y Salud Ocupacional de Refinería Bío Bío año 2011. 
-	Para ello las acciones se orientan a fortalecer la conducta individual (Autocuidado), respeto por nuestra normativa, supervisión predictiva en terreno, a objeto de tender a ""Cero daño a las personas"" ','',GETDATE(),'Salud Ocupacional',3,2012);
-	INSERT INTO TBL_PROGRAMA_ANUAL VALUES(10,31,'"Alcanzar los indicadores de accidentabilidad establecidos como meta en el Plan Anual de Gestión  (PAG 2011), que tiene como objetivo principal en punto P11 ""Gestionar la Prevención de Riesgos y la confiabilidad de las instalaciones"" en la Gestión de Seguridad y Salud Ocupacional de Refinería Bío Bío año 2011. 
-	Para ello las acciones se orientan a fortalecer la conducta individual (Autocuidado), respeto por nuestra normativa, supervisión predictiva en terreno, a objeto de tender a ""Cero daño a las personas"" ','',GETDATE(),'Patrimonio',3,2012);
-	INSERT INTO TBL_PROGRAMA_ANUAL VALUES(10,31,'"Alcanzar los indicadores de accidentabilidad establecidos como meta en el Plan Anual de Gestión  (PAG 2011), que tiene como objetivo principal en punto P11 ""Gestionar la Prevención de Riesgos y la confiabilidad de las instalaciones"" en la Gestión de Seguridad y Salud Ocupacional de Refinería Bío Bío año 2011. 
-	Para ello las acciones se orientan a fortalecer la conducta individual (Autocuidado), respeto por nuestra normativa, supervisión predictiva en terreno, a objeto de tender a ""Cero daño a las personas"" ','',GETDATE(),'Medio Ambiente',3,2012);
-
-
-	INSERT INTO TBL_ACTIVIDAD VALUES(1,1,4,'Liderar reuniones con línea de Supervisión para analizar temas de Prevención de Riesgos.',2,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(2,1,4,'Efectuar observaciones preventivas de seguridad (OPS ) orientado a trabajos con mangueras y en altura y reportar a Prev. de Riesgos.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(3,1,4,'Exponer gestión preventiva de División en reunión semanal de Producción.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(4,1,10,'Realizar inspecciones preventivas en las áreas para detectar condiciones sub-estándar y/o denuncia de incidentes orientado a fluidos con temperatura y trabajos en altura.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(5,1,10,'"Reinstrucción en turno:\r\n1.Política y Decálogo.\r\n2. E-003 PTE\r\n3. Peligros  fluidos de proceso con temperatura\r\n4. Módulos I Safe Start\r\n6. Modulo II Safe Start\r\n7. Modulo III Safe Start\r\n8. Modulo IV Safe Start\r\n9. Modulo V Safe Start\r\n10. E-006 Actualizado"',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-
-	-- Programa 2
-	INSERT INTO TBL_PROGRAMA_ANUAL VALUES(1,1,'"Alcanzar los indicadores de accidentabilidad establecidos como meta en el Plan Anual de Gestión  (PAG 2011), que tiene como objetivo principal en punto P11 ""Gestionar la Prevención de Riesgos y la confiabilidad de las instalaciones"" en la Gestión de Seguridad y Salud Ocupacional de Refinería Bío Bío año 2011. 
-	Para ello las acciones se orientan a fortalecer la conducta individual (Autocuidado), respeto por nuestra normativa, supervisión predictiva en terreno, a objeto de tender a ""Cero daño a las personas"" ','',GETDATE(),'Prevención',3,2011);
-	
-	INSERT INTO TBL_ACTIVIDAD VALUES(1,5,4,'Liderar reuniones con línea de Supervisión para analizar temas de Prevención de Riesgos.',2,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1,4,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(2,5,4,'Efectuar observaciones preventivas de seguridad (OPS ) orientado a trabajos con mangueras y en altura y reportar a Prev. de Riesgos.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(3,5,4,'Exponer gestión preventiva de División en reunión semanal de Producción.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(4,5,10,'Realizar inspecciones preventivas en las áreas para detectar condiciones sub-estándar y/o denuncia de incidentes orientado a fluidos con temperatura y trabajos en altura.',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-	INSERT INTO TBL_ACTIVIDAD VALUES(5,5,10,'"Reinstrucción en turno:\r\n1.Política y Decálogo.\r\n2. E-003 PTE\r\n3. Peligros  fluidos de proceso con temperatura\r\n4. Módulos I Safe Start\r\n6. Modulo II Safe Start\r\n7. Modulo III Safe Start\r\n8. Modulo IV Safe Start\r\n9. Modulo V Safe Start\r\n10. E-006 Actualizado"',3,1, 1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1, 0,3)
-
-*/
-
-

@@ -59,6 +59,8 @@
     .informe-icon {background:transparent url(/icons/page.png) 0 0 no-repeat !important;}
     .toggle-minus-icon {background:transparent url(/icons/bullet_toggle_minus.png) 0 0 no-repeat !important;}
     .toggle-plus-icon {background:transparent url(/icons/bullet_toggle_plus.png) 0 0 no-repeat !important;}
+    .stack-icon{background:transparent url(/icons/page_white_stack.png) 0 0 no-repeat !important;}
+    .sum-icon{background:transparent url(/icons/sum.png) 0 0 no-repeat !important;}
     .tooltip
     {
         float: right;        
