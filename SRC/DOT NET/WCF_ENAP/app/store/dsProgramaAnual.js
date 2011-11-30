@@ -8,11 +8,14 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "NOMBRE_DIVISION", "type": "string" },
         { "name": "OBJETIVO_META", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date" },
-        { "name": "PROGRAMA", "type": "string"},
+        { "name": "PROGRAMA", "type": "string" },
         { "name": "NOMBRE_PROGRAMA", "type": "string" },
         { "name": "MES_INICIO", "type": "int" },
         { "name": "ANO_INICIO", "type": "int" },
-        { "name": "PERCENT_TOTAL", "type": "int" }
+        { "name": "PERCENT_TOTAL", "type": "int" },
+        { 'name': 'IS_TEMPLATE', 'type': 'boolean' },
+        { 'name': 'ID_TEMPLATE', 'type': 'int' },
+        {'name':'ACTION','type':'string'}
 
     ]
 });

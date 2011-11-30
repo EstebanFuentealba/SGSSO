@@ -417,7 +417,15 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Crear a partir de Plantilla'
+											id: 'btn_create_programa_by_template',
+											disabled: true,
+                                            text: 'Crear a partir de Plantilla',
+											handler: function () {
+												var store = Ext.StoreManager.lookup('dsProgramaAnual'),
+													grid = Ext.getCmp('grid_programas_list'),
+													records = grid.getSelectionModel().getSelection();
+												store.add(Ext.apply(records[0].data,{'ACTION':'stack','ID_PROGRAMA_ANUAL':null}));
+											}
                                         }
                                     ]
                                 }
@@ -444,6 +452,12 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 									var json, name, i, l, items, series, fields;
 									if (records[0]) {
 										var record = records[0];
+										console.log(record.get('IS_TEMPLATE'));
+										if(record.get('IS_TEMPLATE')){
+											Ext.getCmp('btn_create_programa_by_template').setDisabled(false);
+										} else {
+											Ext.getCmp('btn_create_programa_by_template').setDisabled(true);
+										}
 										Ext.getCmp('chart_prc_p_r_by_programa').setLoading(true);
 										var store = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById');
 										store.load({
@@ -520,7 +534,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 											winActividadProgramaAnual.show();
 											Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged', function (store, opts) {
 												Ext.getCmp('graphAvanceProgramaAnual').setLoading(true);
-												var selectedYear = Ext.getCmp('panel-ProgramaAnual').contextMenuFilters.getComponent(0).getValue();
+												var selectedYear = Ext.getCmp('panel-ProgramaAnualV2').contextMenuFilters.getComponent(0).getValue();
 												
 												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load({
 													params: {
@@ -536,6 +550,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 													callback: function (records, operation, success) {
 														Ext.getCmp('chart_prc_p_r_by_programa').setLoading(false);
 														if (records.length == 0) {
+														
 															Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
 															Ext.getCmp('chart_prc_p_r_by_programa').redraw(); ;
 														}

@@ -74,7 +74,7 @@ namespace WCF_ENAP
             string NOMBRE_PROGRAMA, 
             int MES_INICIO, 
             int ANO_INICIO,
-            string IS_TEMPLATE,
+            bool IS_TEMPLATE,
             int ID_TEMPLATE,
             string ACTION,
             int ID_ORGANIZACION)
@@ -89,22 +89,102 @@ namespace WCF_ENAP
             {
                 var results = (from dp in bd.TBL_DIVISION
                  join dpor in bd.TBL_DEPARTAMENTO_ORGANIZACION on dp.ID_DEPARTAMENTO_ORGANIZACION equals dpor.ID_DEPARTAMENTO_ORGANIZACION
-                 where dpor.ID_DEPARTAMENTO_ORGANIZACION == ID_ORGANIZACION
+                               where dpor.ID_ORGANIZACION == ID_ORGANIZACION
                  select new { dpor.ID_DEPARTAMENTO_ORGANIZACION, dp.ID_DIVISION, dp.NOMBRE_DIVISION }).ToList();
-                foreach (var data in results)
+
+                List<TBL_PROGRAMA_ANUAL> programas = (from p in bd.TBL_PROGRAMA_ANUAL 
+                                 where p.ID_TEMPLATE == ID_TEMPLATE
+                                 select p).ToList<TBL_PROGRAMA_ANUAL>();
+
+                
+                foreach (TBL_PROGRAMA_ANUAL programa in programas)
                 {
-                    TBL_PROGRAMA_ANUAL nuevoP = new TBL_PROGRAMA_ANUAL()
+                    foreach (var data in results)
                     {
-                        NOMBRE_PROGRAMA = "["+ANO_INICIO+"] "+data.NOMBRE_DIVISION,
-                        OBJETIVO_META = OBJETIVO_META,
-                        FECHA_CREACION = DateTime.Now,
-                        MES_INICIO = MES_INICIO,
-                        ANO_INICIO = ANO_INICIO,
-                        ID_DEPARTAMENTO_ORGANIZACION = data.ID_DEPARTAMENTO_ORGANIZACION,
-                        ID_DIVISION = data.ID_DIVISION
-                    };
-                    bd.TBL_PROGRAMA_ANUAL.InsertOnSubmit(nuevoP);
-                    bd.SubmitChanges();
+                        TBL_PROGRAMA_ANUAL nuevoP = new TBL_PROGRAMA_ANUAL()
+                        {
+                            NOMBRE_PROGRAMA = programa.NOMBRE_PROGRAMA,
+                            ID_PROGRAMA_TEMPLATE = programa.ID_PROGRAMA_ANUAL,
+                            ID_TEMPLATE = null,
+                            IS_TEMPLATE = false,
+                            OBJETIVO_META = OBJETIVO_META,
+                            FECHA_CREACION = DateTime.Now,
+                            MES_INICIO = MES_INICIO,
+                            ANO_INICIO = ANO_INICIO,
+                            ID_DEPARTAMENTO_ORGANIZACION = data.ID_DEPARTAMENTO_ORGANIZACION,
+                            ID_DIVISION = data.ID_DIVISION
+                        };
+                        bd.TBL_PROGRAMA_ANUAL.InsertOnSubmit(nuevoP);
+                        bd.SubmitChanges();
+                        List<TBL_ACTIVIDAD> actividades = (from p in bd.TBL_ACTIVIDAD
+                                                           where p.ID_PROGRAMA_ANUAL == programa.ID_PROGRAMA_ANUAL
+                                                           select p).ToList<TBL_ACTIVIDAD>();
+                        foreach (TBL_ACTIVIDAD nactividad in actividades)
+                        {
+                            TBL_ACTIVIDAD tActividad = new TBL_ACTIVIDAD()
+                            {
+                                ID_PROGRAMA_ANUAL = nuevoP.ID_PROGRAMA_ANUAL,
+                                ID_EVIDENCIA = nactividad.ID_EVIDENCIA,
+                                ID_CARGO = nactividad.ID_CARGO,
+                                ID_ACTIVIDAD = nactividad.ID_ACTIVIDAD,
+                                MES_INICIO = nactividad.MES_INICIO,
+                                NOMBRE_ACTIVIDAD = nactividad.NOMBRE_ACTIVIDAD,
+                                TIPO_FRECUENCIA = nactividad.TIPO_FRECUENCIA,
+                                TURNO = nactividad.TURNO,
+                                CANTIDAD_FRECUENCIA = nactividad.CANTIDAD_FRECUENCIA,
+                                ENERO_P = nactividad.ENERO_P,
+                                ENERO_R = nactividad.ENERO_R,
+                                ENERO_E = nactividad.ENERO_E,
+
+                                FEBRERO_P = nactividad.FEBRERO_P,
+                                FEBRERO_R = nactividad.FEBRERO_R,
+                                FEBRERO_E = nactividad.FEBRERO_E,
+
+                                MARZO_P = nactividad.MARZO_P,
+                                MARZO_R = nactividad.MARZO_R,
+                                MARZO_E = nactividad.MARZO_E,
+
+                                ABRIL_P = nactividad.ABRIL_P,
+                                ABRIL_R = nactividad.ABRIL_R,
+                                ABRIL_E = nactividad.ABRIL_E,
+
+                                MAYO_P = nactividad.MAYO_P,
+                                MAYO_R = nactividad.MAYO_R,
+                                MAYO_E = nactividad.MAYO_E,
+
+                                JUNIO_P = nactividad.JUNIO_P,
+                                JUNIO_R = nactividad.JUNIO_R,
+                                JUNIO_E = nactividad.JUNIO_E,
+
+                                JULIO_P = nactividad.JULIO_P,
+                                JULIO_R = nactividad.JULIO_R,
+                                JULIO_E = nactividad.JULIO_E,
+
+                                AGOSTO_P = nactividad.AGOSTO_P,
+                                AGOSTO_R = nactividad.AGOSTO_R,
+                                AGOSTO_E = nactividad.AGOSTO_E,
+
+                                SEPTIEMBRE_P = nactividad.SEPTIEMBRE_P,
+                                SEPTIEMBRE_R = nactividad.SEPTIEMBRE_R,
+                                SEPTIEMBRE_E = nactividad.SEPTIEMBRE_E,
+
+                                OCTUBRE_P = nactividad.OCTUBRE_P,
+                                OCTUBRE_R = nactividad.OCTUBRE_R,
+                                OCTUBRE_E = nactividad.OCTUBRE_E,
+
+                                NOVIEMBRE_P = nactividad.NOVIEMBRE_P,
+                                NOVIEMBRE_R = nactividad.NOVIEMBRE_R,
+                                NOVIEMBRE_E = nactividad.NOVIEMBRE_E,
+
+                                DICIEMBRE_P = nactividad.DICIEMBRE_P,
+                                DICIEMBRE_R = nactividad.DICIEMBRE_R,
+                                DICIEMBRE_E = nactividad.DICIEMBRE_E
+                            };
+                            bd.TBL_ACTIVIDAD.InsertOnSubmit(tActividad);
+                            bd.SubmitChanges();
+                        }
+                    }
+                    
                 }
             }
             else
@@ -117,7 +197,7 @@ namespace WCF_ENAP
                     MES_INICIO = MES_INICIO,
                     ANO_INICIO = ANO_INICIO
                 };
-                if (IS_TEMPLATE == "on")
+                if (IS_TEMPLATE)
                 {
                     nuevo.IS_TEMPLATE = true;
                     nuevo.ID_TEMPLATE = ID_TEMPLATE;
@@ -141,7 +221,7 @@ namespace WCF_ENAP
                         MES_INICIO = nuevo.MES_INICIO,
                         ANO_INICIO = nuevo.ANO_INICIO
                     };
-                if (IS_TEMPLATE != "on")
+                if (!IS_TEMPLATE)
                 {
                     temp.ID_DEPARTAMENTO_ORGANIZACION = ID_DEPARTAMENTO_ORGANIZACION;
                     temp.ID_DIVISION = ID_DIVISION;
@@ -199,12 +279,25 @@ namespace WCF_ENAP
 		[WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]
 		public void Delete(string id)
 		{
+
+            var programasHijos = (from variable in bd.TBL_PROGRAMA_ANUAL
+                          where variable.ID_PROGRAMA_TEMPLATE == int.Parse(id) && variable.IS_TEMPLATE==false
+                          select variable).ToList < TBL_PROGRAMA_ANUAL>();
+            if (programasHijos.Count > 0)
+            {
+                bd.TBL_PROGRAMA_ANUAL.DeleteAllOnSubmit(programasHijos);
+                bd.SubmitChanges();
+            }
+
 			var objeto = (from variable in bd.TBL_PROGRAMA_ANUAL
 							where variable.ID_PROGRAMA_ANUAL == int.Parse(id)
 							select variable).First();
 
 			bd.TBL_PROGRAMA_ANUAL.DeleteOnSubmit(objeto);
 			bd.SubmitChanges();
+
+
+
 		}
         string orderBy(ExtJSSort _sort)
         {

@@ -3,7 +3,7 @@
     title: 'Información de Nuevo Programa',
     margin: '5 5 5 5',
     initComponent: function () {
-        var me = this, 
+        var me = this,
             yearsList = [],
             yearStep = 4,
             yearNow = (new Date()).getFullYear();
@@ -31,11 +31,25 @@
                             items: [
                                 {
                                     xtype: 'checkboxfield',
+                                    id: 'chk_is_template',
+                                    name: 'IS_TEMPLATE',
+                                    value: false,
                                     boxLabel: 'Crear un Programa Plantilla',
-                                    columnWidth: 0.5
+                                    columnWidth: 0.5,
+                                    listeners: {
+                                        change: function (field, newValue, oldValue, eOpts) {
+                                            if (newValue) {
+                                                Ext.getCmp('pnl_asigna_template').setDisabled(false);
+                                            } else {
+                                                Ext.getCmp('pnl_asigna_template').setDisabled(true);
+                                            }
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'panel',
+                                    disabled: true,
+                                    id: 'pnl_asigna_template',
                                     border: 0,
                                     layout: {
                                         type: 'column'
@@ -47,12 +61,69 @@
                                             store: 'dsTemplate',
                                             margin: '0 5 0 0',
                                             fieldLabel: 'Asignar a',
-                                            columnWidth: 0.9
+                                            columnWidth: 0.9,
+                                            name: 'ID_TEMPLATE',
+                                            displayField: 'NOMBRE_TEMPLATE',
+                                            queryMode: 'local',
+                                            valueField: 'ID_TEMPLATE'
                                         },
                                         {
                                             xtype: 'button',
                                             iconCls: 'btn-add',
-                                            columnWidth: 0.1
+                                            columnWidth: 0.1,
+                                            handler: function () {
+                                                var winTemplate = Ext.create('Ext.window.Window', {
+                                                    modal: true,
+                                                    width: 600,
+                                                    title: 'Ingresa Nueva Plantilla',
+                                                    items: [
+                                                        {
+                                                            xtype: 'form',
+                                                            title: 'Datos de la Plantilla',
+                                                            margin: '5 5 5 5',
+                                                            items: [
+                                                                {
+                                                                    xtype: 'textfield',
+                                                                    margin: '5 5 5 5',
+                                                                    name: 'NOMBRE_TEMPLATE',
+                                                                    fieldLabel: 'Nombre de Plantilla',
+                                                                    labelWidth: 150,
+                                                                    anchor: '100%'
+                                                                }
+                                                            ],
+                                                            buttons: [{
+                                                                text: 'Reset',
+                                                                handler: function () {
+                                                                    var form = this.up('form').getForm();
+                                                                    form.reset();
+                                                                }
+                                                            }, {
+                                                                text: 'Agregar',
+                                                                handler: function () {
+                                                                    var new_object,
+                                                                                errors,
+                                                                                form;
+
+                                                                    form = this.up('form').getForm();
+                                                                    
+                                                                    new_object = Ext.create('WCF_ENAP.model.Template', form.getValues());
+                                                                    errors = new_object.validate();
+
+                                                                    if (errors.isValid() && form.isValid()) {
+                                                                        this.disable(true);
+                                                                        Ext.data.StoreManager.lookup('dsTemplate').insert(0, new_object);
+                                                                        form.reset();
+                                                                    } else {
+                                                                        form.markInvalid(errors);
+                                                                    }
+                                                                    this.enable(true);
+                                                                }
+                                                            }]
+                                                        }
+                                                    ]
+                                                });
+                                                winTemplate.show();
+                                            }
                                         }
                                     ]
                                 }
@@ -117,7 +188,7 @@
                                 'change': function (cmb, newValue, oldValue, eOpts) {
                                     var cmbDepto = Ext.getCmp('cmb_programaAnual_departamento');
                                     cmbDepto.clearValue();
-                                    if (newValue != null) {
+                                    if (newValue != null && !Ext.getCmp('chk_is_template').getValue()) {
                                         Ext.data.StoreManager.lookup('dsDepartamento').load({
                                             params: { 'ID_ORGANIZACION': newValue },
                                             callback: function (records, operation, success) {
@@ -217,7 +288,7 @@
 
                     form = Ext.getCmp('form_add_nuevo_programa').getForm();
 
-                    new_object = Ext.create('WCF_ENAP.model.ProgramaAnual', Ext.apply({ 'PERCENT_TOTAL': 0 }, form.getValues()));
+                    new_object = Ext.create('WCF_ENAP.model.ProgramaAnual', Ext.apply( form.getValues(),{ 'PERCENT_TOTAL': 0, 'IS_TEMPLATE': Ext.getCmp('chk_is_template').getValue() }));
                     errors = new_object.validate();
 
                     if (errors.isValid() && form.isValid()) {
