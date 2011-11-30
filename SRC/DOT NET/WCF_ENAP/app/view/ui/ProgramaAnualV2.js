@@ -24,16 +24,45 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
             yearsList.push([yInicio]);
         }
 		
-        Ext.StoreManager.lookup('dsProgramaAnual').on('datachanged', function (store, opts) {
-            var selectedYear = me.contextMenuFilters.getComponent(0).getValue();
-            Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load({
-                params: {
-                    'ANO_INICIO': selectedYear
-                },
-                callback: function (records) {
-                    Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
-                }
-            });
+		var dsGraphAvanceProgramaAnual = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual'),
+			dsProgramaAnual = Ext.StoreManager.lookup('dsProgramaAnual'),
+			dsGraphAvanceProgramaAnualById = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById');
+			
+		// 	ON LOAD STORE
+		dsGraphAvanceProgramaAnual.on('beforeload',function(store,operation, eOpts) {
+			Ext.getCmp('graphAvanceProgramaAnual').setLoading(true);
+		});
+		dsGraphAvanceProgramaAnual.on('load',function(store,records, successful, operation, eOpts) {
+			Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
+		});
+		dsProgramaAnual.on('beforeload',function(store,operation, eOpts) {
+			//Ext.getCmp('grid_programas_list').setLoading(true);
+		});
+		dsProgramaAnual.on('load',function(store,records, successful, operation, eOpts) {
+			//Ext.getCmp('grid_programas_list').setLoading(false);
+		});
+		dsGraphAvanceProgramaAnualById.on('beforeload',function(store,operation, eOpts) {
+			Ext.getCmp('chart_prc_p_r_by_programa').setLoading(true);
+		});
+		dsGraphAvanceProgramaAnualById.on('load',function(store,records, successful, operation, eOpts) {
+			Ext.getCmp('chart_prc_p_r_by_programa').setLoading(false);
+		});
+		dsGraphAvanceProgramaAnualById.getProxy().on('exception', function(proxy, response, operation, eOpts) {
+			console.log('ERRROR');
+		});
+		
+		//	LISTENERS
+        dsProgramaAnual.on('datachanged', function (store, opts) {
+			console.log('CHANGE')
+            var selectedYear = me.contextMenuFilters.getComponent(0).getValue(),
+				store = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual');
+			store.setProxy(Ext.apply(store.getProxy(),{
+				extraParams: {
+					'ANO_INICIO': Ext.getCmp('cmb_menu_ano').getValue(),
+					'TEMPLATE': Ext.getCmp('chk_menu_show_templates').checked,
+					'ID_DIVISION': 0
+				}
+			}));
         });
 		me.contextMenuFilters = Ext.create('Ext.menu.Menu', {
             items: [
@@ -50,6 +79,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 		            name: 'ANO_INICIO',
 		            listeners: {
 		                change: function (field, newValue, oldValue, eOpts) {
+							console.log('change ano');
 							var store = Ext.StoreManager.lookup('dsProgramaAnual');
 							store.setProxy(Ext.apply(store.getProxy(),{
 								extraParams: {
@@ -167,10 +197,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 										'ANO_INICIO': Ext.getCmp('cmb_menu_ano').getValue(),
 										'TEMPLATE': Ext.getCmp('chk_menu_show_templates').checked,
 										'ID_DIVISION': newValue
-									},
-									callback: function (records) {
-                                        Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
-                                    }
+									}
 								}))
 								store.load();
                             } else {
@@ -179,10 +206,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 										'ANO_INICIO': Ext.getCmp('cmb_menu_ano').getValue(),
 										'TEMPLATE': Ext.getCmp('chk_menu_show_templates').checked,
 										'ID_DIVISION': 0
-									},
-									callback: function (records) {
-                                        Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
-                                    }
+									}
 								}))
 								store.load();
                             }
@@ -347,7 +371,16 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
                                     xtype: 'pagingtoolbar',
                                     displayInfo: true,
                                     store: 'dsProgramaAnual',
-                                    dock: 'bottom'
+                                    dock: 'bottom',
+									listeners: {
+										change: function(paging, pageData, eOpts) {
+											
+											console.log("PAGIN");
+											if(!Ext.isEmpty(pageData.currentPage) && !Ext.isEmpty(pageData.total) && Ext.isNumber(pageData.currentPage)){
+												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').loadPage(pageData.currentPage);
+											}
+										}
+									}
                                 },
                                 {
                                     xtype: 'toolbar',
@@ -419,6 +452,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
                                             xtype: 'button',
 											id: 'btn_create_programa_by_template',
 											disabled: true,
+											iconCls: 'stack-icon',
                                             text: 'Crear a partir de Plantilla',
 											handler: function () {
 												var store = Ext.StoreManager.lookup('dsProgramaAnual'),
@@ -458,15 +492,17 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 										} else {
 											Ext.getCmp('btn_create_programa_by_template').setDisabled(true);
 										}
-										Ext.getCmp('chart_prc_p_r_by_programa').setLoading(true);
 										var store = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById');
 										store.load({
 											params: { 'ID_PROGRAMA_ANUAL': record.get('ID_PROGRAMA_ANUAL') },
 											callback: function (records, operation, success) {
-												Ext.getCmp('chart_prc_p_r_by_programa').setLoading(false);
 												if (records.length == 0) {
-													Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
-													Ext.getCmp('chart_prc_p_r_by_programa').redraw();
+													try{
+														Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
+														Ext.getCmp('chart_prc_p_r_by_programa').redraw();
+													}catch(e){
+														//No hay datos en el Gráfico
+													}
 												}
 											}
 										});
@@ -533,24 +569,18 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 											form.loadRecord(record);
 											winActividadProgramaAnual.show();
 											Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged', function (store, opts) {
-												Ext.getCmp('graphAvanceProgramaAnual').setLoading(true);
 												var selectedYear = Ext.getCmp('panel-ProgramaAnualV2').contextMenuFilters.getComponent(0).getValue();
 												
 												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load({
 													params: {
 														'ANO_INICIO': selectedYear
-													},
-													callback: function (records) {
-														Ext.getCmp('graphAvanceProgramaAnual').setLoading(false);
 													}
 												});
 												var records = Ext.getCmp('grid_programas_list').getSelectionModel().getSelection();
 												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById').load({
 													params: { 'ID_PROGRAMA_ANUAL': records[0].get('ID_PROGRAMA_ANUAL') },
 													callback: function (records, operation, success) {
-														Ext.getCmp('chart_prc_p_r_by_programa').setLoading(false);
 														if (records.length == 0) {
-														
 															Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
 															Ext.getCmp('chart_prc_p_r_by_programa').redraw(); ;
 														}

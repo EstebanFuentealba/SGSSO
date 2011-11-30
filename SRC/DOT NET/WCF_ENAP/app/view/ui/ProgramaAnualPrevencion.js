@@ -84,7 +84,8 @@
                     labelWidth: 120,
                     anchor: '100%'
                 }
-                , {
+                ,
+                    {
                     xtype: 'gridpanel',
                     height: 500,
                     id: 'grid_programa_anual',
@@ -101,7 +102,11 @@
                         xtype: 'gridcolumn',
                         text: 'Información General',
                         columns: [
-
+                            {
+                                xtype: 'numbercolumn',
+                                dataIndex: 'CANTIDAD_FRECUENCIA',
+                                text: 'Realizar'
+                            },
                             {
                                 xtype: 'gridcolumn',
                                 dataIndex: 'TIPO_FRECUENCIA',
@@ -223,13 +228,14 @@
                                 },
                                 {
                                     xtype: 'button',
+                                    iconCls: 'btn-delete',
                                     text: 'Remover Actividad Seleccionada',
                                     handler: function () {
                                         var view = Ext.getCmp('grid_programa_anual').getView(),
                                             summaryGroups = view.getFeature('groupAnual').summaryGroups,
                                             summaryData = view.getFeature('groupAnual').generateSummaryData(),
                                             total = [];
-                                        /* Calculo Total Avance */
+                                        // Calculo Total Avance
                                         for (var i = 0, length = summaryGroups.length; i < length; ++i) {
                                             var actividad = summaryData[summaryGroups[i].name], index = 0;
                                             for (var percent in actividad) {
@@ -252,6 +258,7 @@
                                 {
                                     tooltip: 'Click Para ocultar o Mostrar el Total Mensual de Avance',
                                     text: 'Mostrar Totales de Avance',
+                                    iconCls: 'sum-icon',
                                     handler: function () {
                                         var view = Ext.getCmp('grid_programa_anual').getView();
                                         showSummary = !showSummary;
