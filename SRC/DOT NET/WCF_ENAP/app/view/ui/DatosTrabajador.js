@@ -6,7 +6,6 @@
     ],
     modal: true,
     width: 850,
-    //height : 520,
     maximizable: true,
     cmpRecord: null,
     title: 'Agregar Datos',
@@ -153,7 +152,7 @@
 																			    xtype: 'combo',
 																			    labelAlign: 'top',
 																			    fieldLabel: 'Cargo',
-																			    name: 'NOMBRE_CARGO',
+																			    name: 'ID_CARGO',
 																			    store: 'dsCargo',
 																			    emptyText: 'Seleccione el cargo del trabajador',
 																			    displayField: 'NOMBRE_CARGO',
@@ -165,16 +164,15 @@
 																			{
 																			    xtype: 'radiogroup',
 																			    labelAlign: 'top',
-																			    fieldLabel: 'Calificacion',
-																			    name: 'CALIFICACION',
+																			    fieldLabel: 'Clasificacion',
 																			    columns: 2,
 																			    columnWidth: .5,
 																			    items: [
-																								{ boxLabel: 'Mayor', name: 'CALIFICACION', inputValue: '1' },
-																								{ boxLabel: 'Leve', name: 'CALIFICACION', inputValue: '4' },
-																								{ boxLabel: 'Serio', name: 'CALIFICACION', inputValue: '2' },
-																								{ boxLabel: 'Sin Efecto', name: 'CALIFICACION', inputValue: '5' },
-																								{ boxLabel: 'Relevante', name: 'CALIFICACIONS', inputValue: '3' }
+																								{ boxLabel: 'Mayor', name: 'CLASIFICACION', inputValue: '1' },
+																								{ boxLabel: 'Leve', name: 'CLASIFICACION', inputValue: '4' },
+																								{ boxLabel: 'Serio', name: 'CLASIFICACION', inputValue: '2' },
+																								{ boxLabel: 'Sin Efecto', name: 'CLASIFICACION', inputValue: '5' },
+																								{ boxLabel: 'Relevante', name: 'CLASIFICACION', inputValue: '3' }
 																						   ]
 																			},
 																			{
@@ -208,9 +206,8 @@
 														            errors = new_object.validate();
 														            if (errors.isValid() && form.isValid()) {
 														                this.disable(true);
-														                Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
+														                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
 														                this.up('tabpanel').setActiveTab(1);
-														                //form.reset();
 														            }
 														            else {
 														                form.markInvalid(errors);
@@ -221,12 +218,11 @@
 														},
 															{
 															    xtype: 'form',
-															    title: 'Tipo de Incidente a Persona',
-															    id: 'panel_tipo_incidente_persona',
 															    anchor: '100%',
 															    layout: 'anchor',
+															    title: 'Tipo de Incidente a Persona',
+															    id: 'panel_tipo_incidente_persona',
 															    tabIndex: 2,
-
 															    items: [
 																		   {
 																		       xtype: 'itemselector',
@@ -504,20 +500,8 @@
 															            }, values);
 
 															            new_object = Ext.create('WCF_ENAP.model.e0063', formValues);
+
 															            Ext.data.StoreManager.lookup('dse0063').insert(0, new_object);
-															            /*form = this.up('form').getForm();
-															            new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
-															            errors = new_object.validate();
-															            if (errors.isValid() && form.isValid()) {
-															            this.disable(true);
-															            //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
-															            this.up('tabpanel').setActiveTab(4);
-															            //form.reset();
-															            }
-															            else {
-															            form.markInvalid(errors);
-															            }
-															            this.enable(true);*/
 															        }
 															    }]
 
@@ -589,7 +573,121 @@
 										             }
 										         }
 										     }
-										 }
+										 },
+										  {
+										      xtype: 'gridpanel',
+										      margin: '5 5 5 5',
+										      title: 'Listado de Trabajadores',
+										      //columnWidth: 0.5,
+                                              collapsible:true,
+										      store: 'dsTrabajador',
+										      columns: [
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'RUT_TRABAJADOR',
+                                                                //flex: 0.12,
+                                                                text: 'Rut'
+                                                            },
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'NOMBRES',
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    name: 'NOMBRES',
+                                                                    allowBlank: false,
+                                                                    vtype: 'alpha',
+                                                                    //flex: 0.15,
+                                                                    anchor: '100%'
+                                                                },
+                                                                text: 'Nombres'
+                                                            },
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'APELLIDO_PATERNO',
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    name: 'APELLIDO_PATERNO',
+                                                                    allowBlank: false,
+                                                                    vtype: 'alpha',
+                                                                    //flex: 0.14,
+                                                                    anchor: '100%'
+                                                                },
+                                                                text: 'Apellido Paterno'
+                                                            },
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'APELLIDO_MATERNO',
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    name: 'APELLIDO_MATERNO',
+                                                                    allowBlank: false,
+                                                                    vtype: 'alpha',
+                                                                    //flex: 0.14,
+                                                                    anchor: '100%'
+                                                                },
+                                                                text: 'Apellido Materno'
+                                                            },
+                                                            {
+                                                                "xtype": "gridcolumn",
+                                                                "dataIndex": "ID_CARGO",
+                                                                "text": "Cargo",
+                                                                "sortable": true,
+                                                                "field": {
+                                                                    "xtype": "combo",
+                                                                    "displayField": "NOMBRE_CARGO",
+                                                                    "valueField": "ID_CARGO",
+                                                                    "anchor": "100%",
+                                                                    "store": "dsCargo",
+                                                                    "name": "ID_CARGO"
+                                                                },
+                                                                "renderer": function (value, metaData, record, rowIndex, colIndex, store) {
+                                                                    var idx = Ext.data.StoreManager.lookup(this.columns[colIndex].field.store).find('ID_CARGO', value.toString());
+                                                                    return idx !== -1 ? Ext.data.StoreManager.lookup(this.columns[colIndex].field.store).getAt(idx).get('NOMBRE_CARGO') : ''
+                                                                }
+                                                            },
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'ANOS_EXPERIENCIA_LABORAL',
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    name: 'ANOS_EXPERIENCIA_LABORAL',
+                                                                    allowBlank: false,
+                                                                    //vtype: 'alpha',
+                                                                    //flex: 0.14,
+                                                                    anchor: '100%'
+                                                                },
+                                                                text: 'Años Experiencia Laboral'
+                                                            },
+                                                            {
+                                                                xtype: 'gridcolumn',
+                                                                dataIndex: 'ANOS_EXPERIENCIA_CARGO',
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    name: 'ANOS_EXPERIENCIA_CARGO',
+                                                                    allowBlank: false,
+                                                                    //vtype: 'alpha',
+                                                                    //flex: 0.14,
+                                                                    anchor: '100%'
+                                                                },
+                                                                text: 'Años Experiencia Cargo'
+                                                            }
+
+                                                            ],
+										                    viewConfig: {
+										                    },
+										                    dockedItems: [
+                                                            {
+                                                                xtype: 'pagingtoolbar',
+                                                                store: 'dsTrabajador',
+                                                                displayInfo: true,
+                                                                dock: 'bottom'
+                                                            }
+                                                            ],
+										                                                          plugins: [
+                                                            Ext.create('Ext.grid.plugin.RowEditing', {
+                                                            })
+                                                            ]
+										  }
 									]
 						}
 

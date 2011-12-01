@@ -64,23 +64,27 @@ namespace WCF_ENAP
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         public JSONCollection<TBL_I_PRELIMINAR> Create(
             int CLASIFICACION,
+            // Evento 
             int ID_EMPRESA,
-            /* Evento */
             int ID_EVENTO,
-            /* Datos Trabajador */
+            // Datos Trabajador 
             string RUT_TRABAJADOR,
             string NOMBRES,
             string APELLIDO_MATERNO,
             string APELLIDO_PATERNO,
             string ANOS_EXPERIENCIA_CARGO,
             string ANOS_EXPERIENCIA_LABORAL,
-            int ID_TRABAJADOR,
             int ID_CARGO,
-            /* Tipo Incidente a persona*/
+            // Tipo Incidente a persona
             int[] TIPO_INCIDENTE_PERSONA_LIST,
-            /* Causa Inmediata Acción*/
+            // Causa Inmediata Acción
             int[] CAUSA_INMEDIATA_ACCION_LIST,
-            /* Factores de la persona*/
+
+                   //causas patrimonio
+            int[] TIPO_INCIDENTE_PATRIMONIO_LIST,
+            int[] CAUSA_INMEDIATA_ACCION_PATRIMONIO_LIST,
+
+            // Factores de la persona
             int[] CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA,
             int[] CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA,
             int[] CAUSA_LISTA_FATORES_AUTOCUIDADO,
@@ -88,34 +92,126 @@ namespace WCF_ENAP
             int[] CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO,
             int[] CAUSA_LISTA_FATORES_FALTA_HABILIDAD,
             int[] CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA,
-            int[] CAUSA_LISTA_FATORES_TECNCION_MENTAL)
+            int[] CAUSA_LISTA_FATORES_TECNCION_MENTAL,
+
+            // Factores de la patrimonio
+
+            int[] CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO,
+            int[] CAUSA_LISTA_FACTORES_ING_INADECUADA,
+            int[] CAUSA_LISTA_FACTORES_COMPRAS_INADECUADAS,
+            int[] CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADO,
+            int[] CAUSA_LISTA_FACTORES_HERRAMIENTAS_INADECUADAS,
+            int[] CAUSA_LISTA_FACTORES_USO_DESGASTE,
+            int[] CAUSA_LISTA_FACTORES_ABUSO,
+            int[] CAUSA_LISTA_FACTORES_ERRORES,
+
+            int ID_TRABAJADOR,
+            int ID_EVENTO_EMPRESA,
+            int ID_EVENTO_TRABAJADOR
+
+
+
+            )
         {
             JSONCollection<TBL_I_PRELIMINAR> objJSON = new JSONCollection<TBL_I_PRELIMINAR>();
+
+            if (ID_EMPRESA == 0)
+            {
+                ID_EMPRESA = 1;
+            }
+            // Declaro un atributo para trabajarlo abajo
+            TBL_EVENTO_EMPRESA existeEventoEmpresa = null;
             try
             {
-                if (ID_EMPRESA == 0)
-                {
-                    ID_EMPRESA = 1;
-                }
-                TBL_EVENTO_EMPRESA nuevoEventoEmpresa = new TBL_EVENTO_EMPRESA()
+                //Busco en la base de datos un registro con los parametros asignados
+                existeEventoEmpresa = (from evento_empresa in bd.TBL_EVENTO_EMPRESA
+                                       where evento_empresa.ID_EVENTO == ID_EVENTO && evento_empresa.ID_EMPRESA == ID_EMPRESA
+                                       select evento_empresa).Single<TBL_EVENTO_EMPRESA>();
+                //select evento_empresa).SingleOrDefault();
+                //Si no existe morira
+            }//ingresa dos veces el id_evento_empresa
+            catch (Exception ex) { }
+            //si el atributo sigue siendo nulo lo creo
+            if (existeEventoEmpresa == null)
+            {
+                existeEventoEmpresa = new TBL_EVENTO_EMPRESA()
                 {
                     ID_EVENTO = ID_EVENTO,
                     ID_EMPRESA = ID_EMPRESA,
                     ESTADO = true
                 };
-
-                bd.TBL_EVENTO_EMPRESA.InsertOnSubmit(nuevoEventoEmpresa);
+                bd.TBL_EVENTO_EMPRESA.InsertOnSubmit(existeEventoEmpresa);
                 bd.SubmitChanges();
+            }
 
-                TBL_I_PRELIMINAR nuevoInformePreliminar = new TBL_I_PRELIMINAR()
+
+
+
+            TBL_I_PRELIMINAR nuevoInformePreliminar = null;
+            try
+            {
+                //Busco en la base de datos un registro con los parametros asignados
+                nuevoInformePreliminar = (from informe_preliminar in bd.TBL_I_PRELIMINAR
+                                          where informe_preliminar.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA //&& informe_preliminar.ID_EMPRESA == ID_EMPRESA
+                                          select informe_preliminar).Single<TBL_I_PRELIMINAR>();
+                //Si no existe morira
+            }//ingresa dos veces el id_evento_empresa
+            catch (Exception ex) { }
+            //si el atributo sigue siendo nulo lo creo
+            if (nuevoInformePreliminar == null)
+            {
+                nuevoInformePreliminar = new TBL_I_PRELIMINAR()
                 {
-                    //ID_EVENTO_EMPRESA = nuevoEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
                     FECHA_INGRESO = DateTime.Now,// CONSULAR CONFIGURACION DE SERVIDOOR
                     CLASIFICACION = CLASIFICACION
                 };
                 bd.TBL_I_PRELIMINAR.InsertOnSubmit(nuevoInformePreliminar);
                 bd.SubmitChanges();
-                /*Consultar si existe*/
+            }
+            /*
+                TBL_I_PRELIMINAR nuevoInformePreliminar = new TBL_I_PRELIMINAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    //fecha ingreso de datos del trabajador
+                    FECHA_INGRESO = DateTime.Now,// CONSULAR CONFIGURACION DE SERVIDOOR
+                    CLASIFICACION = CLASIFICACION
+                };
+                bd.TBL_I_PRELIMINAR.InsertOnSubmit(nuevoInformePreliminar);
+                bd.SubmitChanges();
+                
+            */
+
+
+            /**/
+            // Declaro un atributo para trabajarlo abajo
+            TBL_TRABAJADOR nuevoTrabajador = null;
+            try
+            {
+                //Busco en la base de datos un registro con los parametros asignados
+                nuevoTrabajador = (from trabajador in bd.TBL_TRABAJADOR
+                                   where trabajador.RUT_TRABAJADOR == RUT_TRABAJADOR
+                                   select trabajador).Single<TBL_TRABAJADOR>();
+                //Si no existe morira
+            }
+            catch (Exception ex) { }
+            //si el atributo sigue siendo nulo lo creo
+            if (nuevoTrabajador == null)
+            {
+                nuevoTrabajador = new TBL_TRABAJADOR()
+                {
+                    RUT_TRABAJADOR = RUT_TRABAJADOR,
+                    NOMBRES = NOMBRES,
+                    APELLIDO_MATERNO = APELLIDO_MATERNO,
+                    APELLIDO_PATERNO = APELLIDO_PATERNO,
+                    ANOS_EXPERIENCIA_CARGO = int.Parse(ANOS_EXPERIENCIA_CARGO),
+                    ID_CARGO = ID_CARGO,
+                    ANOS_EXPERIENCIA_LABORAL = int.Parse(ANOS_EXPERIENCIA_LABORAL)
+                };
+                bd.TBL_TRABAJADOR.InsertOnSubmit(nuevoTrabajador);
+                bd.SubmitChanges();
+            }
+            /*
                 TBL_TRABAJADOR nuevoTrabajador = new TBL_TRABAJADOR()
                 {
                     RUT_TRABAJADOR = RUT_TRABAJADOR,
@@ -123,132 +219,158 @@ namespace WCF_ENAP
                     APELLIDO_MATERNO = APELLIDO_MATERNO,
                     APELLIDO_PATERNO = APELLIDO_PATERNO,
                     ANOS_EXPERIENCIA_CARGO = int.Parse(ANOS_EXPERIENCIA_CARGO),
+                    ID_CARGO = ID_CARGO,
                     ANOS_EXPERIENCIA_LABORAL = int.Parse(ANOS_EXPERIENCIA_LABORAL)
                 };
                 bd.TBL_TRABAJADOR.InsertOnSubmit(nuevoTrabajador);
                 bd.SubmitChanges();
-                
+
+          */
+            TBL_EVENTO_TRABAJADOR existeEventoTrabajador = null;
+            try
+            {
+                //Busco en la base de datos un registro con los parametros asignados
+                existeEventoTrabajador = (from evento_trabajador in bd.TBL_EVENTO_TRABAJADOR
+                                          where evento_trabajador.ID_TRABAJADOR == ID_TRABAJADOR && evento_trabajador.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR
+                                          select evento_trabajador).Single<TBL_EVENTO_TRABAJADOR>();
+                //Si no existe morira
+            }
+            catch (Exception ex) { }
+            //si el atributo sigue siendo nulo lo creo
+            if (existeEventoTrabajador == null)
+            {
+                existeEventoTrabajador = new TBL_EVENTO_TRABAJADOR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_TRABAJADOR = nuevoTrabajador.ID_TRABAJADOR
+                };
+                bd.TBL_EVENTO_TRABAJADOR.InsertOnSubmit(existeEventoTrabajador);
+                bd.SubmitChanges();
+            }
+            /*
                 TBL_EVENTO_TRABAJADOR nuevoEventoTrabajador = new TBL_EVENTO_TRABAJADOR()
                 {
-                    ID_EVENTO_EMPRESA = nuevoEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
                     ID_TRABAJADOR = nuevoTrabajador.ID_TRABAJADOR
-                    
+
                 };
                 bd.TBL_EVENTO_TRABAJADOR.InsertOnSubmit(nuevoEventoTrabajador);
                 bd.SubmitChanges();
-
-                foreach(int idPeligro in TIPO_INCIDENTE_PERSONA_LIST) {
-                    TBL_PELIGRO_EVENTO_TRABAJADOR nuevoPeligroEncontrado = new TBL_PELIGRO_EVENTO_TRABAJADOR()
-                    {
-                        ID_EVENTO_TRABAJADOR = nuevoEventoTrabajador.ID_EVENTO_TRABAJADOR,
-                        ID_PELIGRO = idPeligro
-                    };
-                    bd.TBL_PELIGRO_EVENTO_TRABAJADOR.InsertOnSubmit(nuevoPeligroEncontrado);
-                    bd.SubmitChanges();
-                }
-                foreach (int idCausaInmediata in CAUSA_INMEDIATA_ACCION_LIST)
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaInmediata = new TBL_CAUSA_INFORME_PRELIMIANAR()
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idCausaInmediata
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaInmediata);
-                    bd.SubmitChanges();
-                }
-                foreach (int idCapacidadFisicaInadecuada in CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA)
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCFI = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idCapacidadFisicaInadecuada
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCFI);
-                    bd.SubmitChanges();
-                
-                }
-                foreach (int idCapacidadFisicaPsicologicaInadecuada in CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCPsI = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idCapacidadFisicaPsicologicaInadecuada
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCPsI);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresAutocuidado in CAUSA_LISTA_FATORES_AUTOCUIDADO )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFAC = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresAutocuidado
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFAC);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresCapMental in CAUSA_LISTA_FATORES_CAP_MENTAL )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCM = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresCapMental
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCM);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresFaltaConocimiento in CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFC = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresFaltaConocimiento
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFC);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresFaltaHabilidad in CAUSA_LISTA_FATORES_FALTA_HABILIDAD )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFFH = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresFaltaHabilidad
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFFH);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresMotivacionInadecuada in CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFMI = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresMotivacionInadecuada
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFMI);
-                    bd.SubmitChanges();
-                }
-                foreach (int idFactoresTencionMental in CAUSA_LISTA_FATORES_TECNCION_MENTAL )
-                {
-                    TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaTM = new TBL_CAUSA_INFORME_PRELIMIANAR
-                    {
-                        ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
-                        ID_CAUSA = idFactoresTencionMental
-                    };
-                    bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaTM);
-                    bd.SubmitChanges();
-                }
-
-
-                // objJSON.items = nuevo;
-                objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count();
-                objJSON.success = true;
-            }
-            catch (Exception e)
+            */
+            foreach (int idPeligro in TIPO_INCIDENTE_PERSONA_LIST)
             {
-                objJSON.success = false;
+                TBL_PELIGRO_EVENTO_TRABAJADOR nuevoPeligroEncontrado = new TBL_PELIGRO_EVENTO_TRABAJADOR()
+                {
+                    //ID_EVENTO_TRABAJADOR = nuevoEventoTrabajador.ID_EVENTO_TRABAJADOR,
+                    ID_EVENTO_TRABAJADOR = existeEventoTrabajador.ID_EVENTO_TRABAJADOR,
+                    ID_PELIGRO = ID_TRABAJADOR
+                };
+                bd.TBL_PELIGRO_EVENTO_TRABAJADOR.InsertOnSubmit(nuevoPeligroEncontrado);
+                bd.SubmitChanges();
             }
+            foreach (int idCausaInmediata in CAUSA_INMEDIATA_ACCION_LIST)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaInmediata = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            foreach (int idCapacidadFisicaInadecuada in CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCFI = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idCapacidadFisicaInadecuada
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCFI);
+                bd.SubmitChanges();
+
+            }
+            foreach (int idCapacidadFisicaPsicologicaInadecuada in CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCPsI = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idCapacidadFisicaPsicologicaInadecuada
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCPsI);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresAutocuidado in CAUSA_LISTA_FATORES_AUTOCUIDADO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFAC = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresAutocuidado
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFAC);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresCapMental in CAUSA_LISTA_FATORES_CAP_MENTAL)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFCM = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresCapMental
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFCM);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresFaltaConocimiento in CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFC = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresFaltaConocimiento
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFC);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresFaltaHabilidad in CAUSA_LISTA_FATORES_FALTA_HABILIDAD)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFFH = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresFaltaHabilidad
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFFH);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresMotivacionInadecuada in CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaFMI = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresMotivacionInadecuada
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaFMI);
+                bd.SubmitChanges();
+            }
+            foreach (int idFactoresTencionMental in CAUSA_LISTA_FATORES_TECNCION_MENTAL)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaListaTM = new TBL_CAUSA_INFORME_PRELIMIANAR
+                {
+                    ID_INFORME_PRELIMINAR = nuevoInformePreliminar.ID_INFORME_PRELIMINAR,
+                    ID_CAUSA = idFactoresTencionMental
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaListaTM);
+                bd.SubmitChanges();
+            }
+
+
+
+
+            // objJSON.items = nuevo;
+            objJSON.totalCount = bd.TBL_I_PRELIMINAR.Count();
+            objJSON.success = true;
+
             return objJSON;
         }
+
+
 
         [WebGet(UriTemplate = "{id}")]
         public JSONCollection<TBL_I_PRELIMINAR> Get(string id)

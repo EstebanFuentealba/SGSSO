@@ -7,7 +7,7 @@
     modal: true,
     width: 850,
     maximizable: true,
-    cmpPadre: null,
+    cmpRecord: null,
     title: 'Agregar Datos Tipo Incidente',
     initComponent: function () {
 
@@ -80,6 +80,11 @@
 						    xtype: 'form',
 						    id: 'form_datos_incidente_patrimonio',
 						    items: [
+                                        {
+                                            xtype: 'hiddenfield',
+                                            name: 'ID_EVENTO',
+                                            value: me.cmpRecord.get('ID_EVENTO')
+                                        },
 										{
 										    xtype: 'tabpanel',
 										    margin: '5 5 5 5',
@@ -87,44 +92,102 @@
 										    layout: 'column',
 										    id: 'panel-DatosTipoIncidente',
 										    items: [
+                                                            {
+                                                                xtype: 'radiogroup',
+                                                                labelAlign: 'top',
+                                                                fieldLabel: 'Clasificacion',
+                                                                columns: 2,
+                                                                columnWidth: .5,
+                                                                title: 'Calificacion del Incidente',
+                                                                items: [
+																			{ boxLabel: 'Mayor', name: 'CLASIFICACION', inputValue: '1' },
+																			{ boxLabel: 'Leve', name: 'CLASIFICACION', inputValue: '4' },
+																			{ boxLabel: 'Serio', name: 'CLASIFICACION', inputValue: '2' },
+																			{ boxLabel: 'Sin Efecto', name: 'CLASIFICACION', inputValue: '5' },
+																			{ boxLabel: 'Relevante', name: 'CLASIFICACION', inputValue: '3' }
+																		],
+                                                                buttons: [{
+                                                                    text: 'Siguiente >>>',
+                                                                    handler: function () {
+                                                                        var new_object,
+																	errors,
+																	form;
+                                                                        form = this.up('form').getForm();
+                                                                        new_object = Ext.create('WCF_ENAP.model.Trabajador', form.getValues());
+                                                                        errors = new_object.validate();
+                                                                        if (errors.isValid() && form.isValid()) {
+                                                                            this.disable(true);
+                                                                            //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
+                                                                            this.up('tabpanel').setActiveTab(1);
+                                                                        }
+                                                                        else {
+                                                                            form.markInvalid(errors);
+                                                                        }
+                                                                        this.enable(true);
+                                                                    }
+                                                                }]
+
+                                                            },
 				                                            {
 				                                                xtype: 'form',
 				                                                anchor: '100%',
 				                                                layout: 'anchor',
-				                                                //tabIndex: 1,
-				                                                id: 'panel-TipoIncidentePPMA',
+				                                                tabIndex: 1,
 				                                                title: 'Tipo de Incidente a Patrimonio Proceso Medio Ambiente',
+				                                                id: 'panel-TipoIncidentePPMA',
+				                                                
 				                                                items: [
 																			{
 																			    xtype: 'itemselector',
-																			    id: 'STORE_LIST_TRES',
+																			    id: 'TIPO_INCIDENTE_PATRIMONIO',
+																			    name: 'TIPO_INCIDENTE_PATRIMONIO',
 																			    store: dsPeligroListaTipoIncidentePatrimonio,
 																			    anchor: '100%',
 																			    displayField: 'NOM_PELIGRO',
 																			    valueField: 'ID_PELIGRO'
 																			}
 																		],
-				                                                buttons: [{
-				                                                    text: 'Siguiente >>>',
-				                                                    handler: function () {
-				                                                        var new_object,
-				                                                        errors,
-				                                                        form;
-				                                                        form = this.up('form').getForm();
-				                                                        new_object = Ext.create('WCF_ENAP.model.Peligro', form.getValues());
-				                                                        errors = new_object.validate();
-				                                                        if (errors.isValid() && form.isValid()) {
-				                                                            this.disable(true);
-				                                                            //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
-				                                                            this.up('tabpanel').setActiveTab(1);
-				                                                            //form.reset();
-				                                                        }
-				                                                        else {
-				                                                            form.markInvalid(errors);
-				                                                        }
-				                                                        this.enable(true);
-				                                                    }
-				                                                }]
+																			buttons: [{
+																			    text: '<<< Anterior',
+																			    handler: function () {
+																			        var new_object,
+					                                                                errors,
+					                                                                form;
+																			        form = this.up('form').getForm();
+																			        new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
+																			        errors = new_object.validate();
+																			        if (errors.isValid() && form.isValid()) {
+																			            this.disable(true);
+																			            //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
+																			            this.up('tabpanel').setActiveTab(0);
+																			            //form.reset();
+																			        }
+																			        else {
+																			            form.markInvalid(errors);
+																			        }
+																			        this.enable(true);
+																			    }
+																			}, {
+																			    text: 'Siguiente >>>',
+																			    handler: function () {
+																			        var new_object,
+					                                                                errors,
+					                                                                form;
+																			        form = this.up('form').getForm();
+																			        new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
+																			        errors = new_object.validate();
+																			        if (errors.isValid() && form.isValid()) {
+																			            this.disable(true);
+																			            //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
+																			            this.up('tabpanel').setActiveTab(2);
+																			            //form.reset();
+																			        }
+																			        else {
+																			            form.markInvalid(errors);
+																			        }
+																			        this.enable(true);
+																			    }
+																			}]
 				                                            },
 															{
 															    xtype: 'form',
@@ -136,7 +199,8 @@
 															    items: [
 																			{
 																			    xtype: 'itemselector',
-																			    id: 'STORE_LIST_CINCO',
+																			    id: 'CAUSA_INMEDIATA_ACCION_PATRIMONIO',
+																			    name: 'CAUSA_INMEDIATA_ACCION_PATRIMONIO',
 																			    store: dsCausaListaCondcion,
 																			    anchor: '100%',
 																			    displayField: 'DESCRIPCION',
@@ -155,7 +219,7 @@
 															            if (errors.isValid() && form.isValid()) {
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
-															                this.up('tabpanel').setActiveTab(0);
+															                this.up('tabpanel').setActiveTab(1);
 															                //form.reset();
 															            }
 															            else {
@@ -175,7 +239,7 @@
 															            if (errors.isValid() && form.isValid()) {
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
-															                this.up('tabpanel').setActiveTab(2);
+															                this.up('tabpanel').setActiveTab(3);
 															                //form.reset();
 															            }
 															            else {
@@ -200,7 +264,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO',
 																			    store: dsCausaListaFactoresFaltaLiderazgo,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -215,7 +279,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_ING_INADECUADA',
 																			    store: dsCausaListaFactoresIngInadecuada,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -230,7 +294,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_COMPRAS_INADECUADAS',
 																			    store: dsCausaListaFactoresComprasInadecuadas,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -245,7 +309,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADO',
 																			    store: dsCausaListaFactoresMantenimientoInadecuado,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -260,7 +324,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_HERRAMIENTAS_INADECUADAS',
 																			    store: dsCausaListaFactoresHerrEquioInadecuado,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -275,7 +339,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_USO_DESGASTE',
 																			    store: dsCausaListaFactoresUsoDesgaste,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -290,7 +354,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_ABUSO',
 																			    store: dsCausaListaFactoresAbuso,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -305,7 +369,7 @@
 																			    emptyText: 'Seleccione la o las ',
 																			    margin: '5 5 5 5',
 																			    anchor: '100%',
-																			    name: 'ID_CAUSA',
+																			    name: 'CAUSA_LISTA_FACTORES_ERRORES',
 																			    store: dsCausaListaFactoresErrores,
 																			    displayField: 'DESCRIPCION',
 																			    valueField: 'ID_CAUSA',
@@ -326,7 +390,7 @@
 															            if (errors.isValid() && form.isValid()) {
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
-															                this.up('tabpanel').setActiveTab(1);
+															                this.up('tabpanel').setActiveTab(2);
 															                //form.reset();
 															            }
 															            else {
@@ -338,21 +402,32 @@
 															        text: 'Guardar',
 															        handler: function () {
 															            var new_object,
-				                                                            errors,
-				                                                            form;
-															            form = this.up('form').getForm();
+																			errors,
+																			form,
+                                                                            values;
+															            values = Ext.getCmp('form_datos_incidente_patrimonio').getForm().getValues();
+
+															            var formValues = Ext.apply({
+															               'TIPO_INCIDENTE_PATRIMONIO_LIST': Ext.getCmp('TIPO_INCIDENTE_PATRIMONIO').getRawValue(),
+															               'CAUSA_INMEDIATA_ACCION_PATRIMONIO_LIST': Ext.getCmp('CAUSA_INMEDIATA_ACCION_PATRIMONIO').getRawValue()
+															            }, values);
+
+															            new_object = Ext.create('WCF_ENAP.model.e0063', formValues);
+
+															            Ext.data.StoreManager.lookup('dse0063').insert(0, new_object);
+															            /*form = this.up('form').getForm();
 															            new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
 															            errors = new_object.validate();
 															            if (errors.isValid() && form.isValid()) {
-															                this.disable(true);
-															                //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
-															                this.up('tabpanel').setActiveTab(3);
-															                //form.reset();
+															            this.disable(true);
+															            //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
+															            this.up('tabpanel').setActiveTab(4);
+															            //form.reset();
 															            }
 															            else {
-															                form.markInvalid(errors);
+															            form.markInvalid(errors);
 															            }
-															            this.enable(true);
+															            this.enable(true);*/
 															        }
 															    }]
 															}
