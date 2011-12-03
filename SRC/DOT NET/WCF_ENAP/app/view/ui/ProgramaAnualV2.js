@@ -50,10 +50,7 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 		dsGraphAvanceProgramaAnualById.getProxy().on('exception', function(proxy, response, operation, eOpts) {
 			console.log('ERRROR');
 		});
-		
-		//	LISTENERS
-        dsProgramaAnual.on('datachanged', function (store, opts) {
-			console.log('CHANGE')
+		var fnListenerProgramaAnual = function (store, records, index, eOpts) {
             var selectedYear = me.contextMenuFilters.getComponent(0).getValue(),
 				store = Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual');
 			store.setProxy(Ext.apply(store.getProxy(),{
@@ -63,7 +60,12 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 					'ID_DIVISION': 0
 				}
 			}));
-        });
+        };
+		//	LISTENERS
+        dsProgramaAnual.on('add',fnListenerProgramaAnual);
+		dsProgramaAnual.on('remove',fnListenerProgramaAnual);
+		dsProgramaAnual.on('update',fnListenerProgramaAnual);
+		
 		me.contextMenuFilters = Ext.create('Ext.menu.Menu', {
             items: [
 		        {
@@ -79,7 +81,6 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 		            name: 'ANO_INICIO',
 		            listeners: {
 		                change: function (field, newValue, oldValue, eOpts) {
-							console.log('change ano');
 							var store = Ext.StoreManager.lookup('dsProgramaAnual');
 							store.setProxy(Ext.apply(store.getProxy(),{
 								extraParams: {
@@ -374,8 +375,6 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
                                     dock: 'bottom',
 									listeners: {
 										change: function(paging, pageData, eOpts) {
-											
-											console.log("PAGIN");
 											if(!Ext.isEmpty(pageData.currentPage) && !Ext.isEmpty(pageData.total) && Ext.isNumber(pageData.currentPage)){
 												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').loadPage(pageData.currentPage);
 											}
@@ -481,12 +480,17 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 								}
 							],
 							listeners: {
-								selectionchange: function (model, records) {
-									this.down('#btn_delete_programa').setDisabled(records.length === 0);
-									var json, name, i, l, items, series, fields;
-									if (records[0]) {
-										var record = records[0];
-										console.log(record.get('IS_TEMPLATE'));
+								itemclick: function(view, record, item, index, e, eOpts) {
+									this.down('#btn_delete_programa').setDisabled(Ext.isEmpty(record));
+									var json, 
+										name, 
+										i, 
+										l, 
+										items, 
+										series, 
+										fields,
+										grid = Ext.getCmp('grid_programas_list');
+									if (record) {
 										if(record.get('IS_TEMPLATE')){
 											Ext.getCmp('btn_create_programa_by_template').setDisabled(false);
 										} else {
@@ -568,25 +572,30 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 											var form = formulario.getForm();
 											form.loadRecord(record);
 											winActividadProgramaAnual.show();
-											Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion').on('datachanged', function (store, opts) {
-												var selectedYear = Ext.getCmp('panel-ProgramaAnualV2').contextMenuFilters.getComponent(0).getValue();
-												
+											var dsActividadProgramaAnualPrevencion = Ext.StoreManager.lookup('dsActividadProgramaAnualPrevencion');
+											var fnListenerActividadProgramaAnual = function (store, records, index, eOpts) {
+												/*var selectedYear = Ext.getCmp('panel-ProgramaAnualV2').contextMenuFilters.getComponent(0).getValue();
 												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnual').load({
-													params: {
-														'ANO_INICIO': selectedYear
-													}
+													params: { 'ANO_INICIO': selectedYear }
 												});
 												var records = Ext.getCmp('grid_programas_list').getSelectionModel().getSelection();
-												Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById').load({
-													params: { 'ID_PROGRAMA_ANUAL': records[0].get('ID_PROGRAMA_ANUAL') },
-													callback: function (records, operation, success) {
-														if (records.length == 0) {
-															Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
-															Ext.getCmp('chart_prc_p_r_by_programa').redraw(); ;
+												if(records[0]){
+													Ext.StoreManager.lookup('dsGraphAvanceProgramaAnualById').load({
+														params: { 'ID_PROGRAMA_ANUAL': records[0].get('ID_PROGRAMA_ANUAL') },
+														callback: function (records, operation, success) {
+															if (records.length == 0) {
+																Ext.getCmp('chart_prc_p_r_by_programa').surface.removeAll();
+																Ext.getCmp('chart_prc_p_r_by_programa').redraw(); ;
+															}
 														}
-													}
-												});
-											});
+													});
+												}*/
+												Ext.getCmp('grid_programas_list').getStore().load();
+												
+											};
+											dsActividadProgramaAnualPrevencion.on('add',fnListenerActividadProgramaAnual);
+											dsActividadProgramaAnualPrevencion.on('remove',fnListenerActividadProgramaAnual);
+											dsActividadProgramaAnualPrevencion.on('update',fnListenerActividadProgramaAnual);
 										}
 									});
 									

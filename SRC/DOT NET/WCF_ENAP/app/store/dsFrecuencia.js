@@ -30,6 +30,10 @@ Ext.define('WCF_ENAP.store.dsFrecuencia', {
                 [
                     4,
                     "Anual"
+                ],
+                [
+                    5,
+                    "Semestral"
                 ]
             ]
         }, cfg)]);

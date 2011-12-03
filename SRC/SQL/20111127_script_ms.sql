@@ -1,5 +1,12 @@
 if exists (select 1
           from sysobjects
+          where id = object_id('TRIG_UPDATE_ACTIVIDAD')
+          and type = 'TR')
+   drop trigger TRIG_UPDATE_ACTIVIDAD
+go
+
+if exists (select 1
+          from sysobjects
           where id = object_id('TRIG_UPDATE_NODE')
           and type = 'TR')
    drop trigger TRIG_UPDATE_NODE
@@ -45,6 +52,13 @@ if exists (select 1
           where  id = object_id('SP_CREATE_PROGRAMA_BY_TEMPLATE')
           and type = 'P')
    drop procedure SP_CREATE_PROGRAMA_BY_TEMPLATE
+go
+
+if exists (select 1
+          from sysobjects
+          where  id = object_id('SP_GET_ACTIVIDADES_BY_PROGRAMA')
+          and type = 'P')
+   drop procedure SP_GET_ACTIVIDADES_BY_PROGRAMA
 go
 
 if exists (select 1
@@ -1364,69 +1378,70 @@ create table TBL_ACTIVIDAD (
       constraint CKC_TIPO_FRECUENCIA_TBL_ACTI check (TIPO_FRECUENCIA is null or (TIPO_FRECUENCIA between 1 and 7 and TIPO_FRECUENCIA in (1,2,3,4,5,6,7))),
    CANTIDAD_FRECUENCIA  int                  null,
    ENERO_P              int                  null default 0
-      constraint CKC_ENERO_P_TBL_ACTI check (ENERO_P is null or (ENERO_P between 0 and 100)),
+      constraint CKC_ENERO_P_TBL_ACTI check (ENERO_P is null or (ENERO_P >= 0)),
    ENERO_R              int                  null default 0
-      constraint CKC_ENERO_R_TBL_ACTI check (ENERO_R is null or (ENERO_R between 0 and 100)),
+      constraint CKC_ENERO_R_TBL_ACTI check (ENERO_R is null or (ENERO_R >= 0)),
    ENERO_E              bit                  null default 1,
    FEBRERO_P            int                  null default 0
-      constraint CKC_FEBRERO_P_TBL_ACTI check (FEBRERO_P is null or (FEBRERO_P between 0 and 100)),
+      constraint CKC_FEBRERO_P_TBL_ACTI check (FEBRERO_P is null or (FEBRERO_P >= 0)),
    FEBRERO_R            int                  null default 0
-      constraint CKC_FEBRERO_R_TBL_ACTI check (FEBRERO_R is null or (FEBRERO_R between 0 and 100)),
+      constraint CKC_FEBRERO_R_TBL_ACTI check (FEBRERO_R is null or (FEBRERO_R >= 0)),
    FEBRERO_E            bit                  null default 1,
    MARZO_P              int                  null default 0
-      constraint CKC_MARZO_P_TBL_ACTI check (MARZO_P is null or (MARZO_P between 0 and 100)),
+      constraint CKC_MARZO_P_TBL_ACTI check (MARZO_P is null or (MARZO_P >= 0)),
    MARZO_R              int                  null default 0
-      constraint CKC_MARZO_R_TBL_ACTI check (MARZO_R is null or (MARZO_R between 0 and 100)),
+      constraint CKC_MARZO_R_TBL_ACTI check (MARZO_R is null or (MARZO_R >= 0)),
    MARZO_E              bit                  null default 1,
    ABRIL_P              int                  null default 0
-      constraint CKC_ABRIL_P_TBL_ACTI check (ABRIL_P is null or (ABRIL_P between 0 and 100)),
+      constraint CKC_ABRIL_P_TBL_ACTI check (ABRIL_P is null or (ABRIL_P >= 0)),
    ABRIL_R              int                  null default 0
-      constraint CKC_ABRIL_R_TBL_ACTI check (ABRIL_R is null or (ABRIL_R between 0 and 100)),
+      constraint CKC_ABRIL_R_TBL_ACTI check (ABRIL_R is null or (ABRIL_R >= 0)),
    ABRIL_E              bit                  null default 1,
    MAYO_P               int                  null default 0
-      constraint CKC_MAYO_P_TBL_ACTI check (MAYO_P is null or (MAYO_P between 0 and 100)),
+      constraint CKC_MAYO_P_TBL_ACTI check (MAYO_P is null or (MAYO_P >= 0)),
    MAYO_R               int                  null default 0
-      constraint CKC_MAYO_R_TBL_ACTI check (MAYO_R is null or (MAYO_R between 0 and 100)),
+      constraint CKC_MAYO_R_TBL_ACTI check (MAYO_R is null or (MAYO_R >= 0)),
    MAYO_E               bit                  null,
    JUNIO_P              int                  null default 0
-      constraint CKC_JUNIO_P_TBL_ACTI check (JUNIO_P is null or (JUNIO_P between 0 and 100)),
+      constraint CKC_JUNIO_P_TBL_ACTI check (JUNIO_P is null or (JUNIO_P >= 0)),
    JUNIO_R              int                  null default 0
-      constraint CKC_JUNIO_R_TBL_ACTI check (JUNIO_R is null or (JUNIO_R between 0 and 100)),
+      constraint CKC_JUNIO_R_TBL_ACTI check (JUNIO_R is null or (JUNIO_R >= 0)),
    JUNIO_E              bit                  null default 1,
    JULIO_P              int                  null default 0
-      constraint CKC_JULIO_P_TBL_ACTI check (JULIO_P is null or (JULIO_P between 0 and 100)),
+      constraint CKC_JULIO_P_TBL_ACTI check (JULIO_P is null or (JULIO_P >= 0)),
    JULIO_R              int                  null default 0
-      constraint CKC_JULIO_R_TBL_ACTI check (JULIO_R is null or (JULIO_R between 0 and 100)),
+      constraint CKC_JULIO_R_TBL_ACTI check (JULIO_R is null or (JULIO_R >= 0)),
    JULIO_E              bit                  null default 1,
    AGOSTO_P             int                  null default 0
-      constraint CKC_AGOSTO_P_TBL_ACTI check (AGOSTO_P is null or (AGOSTO_P between 0 and 100)),
+      constraint CKC_AGOSTO_P_TBL_ACTI check (AGOSTO_P is null or (AGOSTO_P >= 0)),
    AGOSTO_R             int                  null default 0
-      constraint CKC_AGOSTO_R_TBL_ACTI check (AGOSTO_R is null or (AGOSTO_R between 0 and 100)),
+      constraint CKC_AGOSTO_R_TBL_ACTI check (AGOSTO_R is null or (AGOSTO_R >= 0)),
    AGOSTO_E             bit                  null default 1,
    SEPTIEMBRE_P         int                  null default 0
-      constraint CKC_SEPTIEMBRE_P_TBL_ACTI check (SEPTIEMBRE_P is null or (SEPTIEMBRE_P between 0 and 100)),
+      constraint CKC_SEPTIEMBRE_P_TBL_ACTI check (SEPTIEMBRE_P is null or (SEPTIEMBRE_P >= 0)),
    SEPTIEMBRE_R         int                  null default 0
-      constraint CKC_SEPTIEMBRE_R_TBL_ACTI check (SEPTIEMBRE_R is null or (SEPTIEMBRE_R between 0 and 100)),
+      constraint CKC_SEPTIEMBRE_R_TBL_ACTI check (SEPTIEMBRE_R is null or (SEPTIEMBRE_R >= 0)),
    SEPTIEMBRE_E         bit                  null default 1,
    OCTUBRE_P            int                  null default 0
-      constraint CKC_OCTUBRE_P_TBL_ACTI check (OCTUBRE_P is null or (OCTUBRE_P between 0 and 100)),
+      constraint CKC_OCTUBRE_P_TBL_ACTI check (OCTUBRE_P is null or (OCTUBRE_P >= 0)),
    OCTUBRE_R            int                  null default 0
-      constraint CKC_OCTUBRE_R_TBL_ACTI check (OCTUBRE_R is null or (OCTUBRE_R between 0 and 100)),
+      constraint CKC_OCTUBRE_R_TBL_ACTI check (OCTUBRE_R is null or (OCTUBRE_R >= 0)),
    OCTUBRE_E            bit                  null default 1,
    NOVIEMBRE_P          int                  null default 0
-      constraint CKC_NOVIEMBRE_P_TBL_ACTI check (NOVIEMBRE_P is null or (NOVIEMBRE_P between 0 and 100)),
+      constraint CKC_NOVIEMBRE_P_TBL_ACTI check (NOVIEMBRE_P is null or (NOVIEMBRE_P >= 0)),
    NOVIEMBRE_R          int                  null default 0
-      constraint CKC_NOVIEMBRE_R_TBL_ACTI check (NOVIEMBRE_R is null or (NOVIEMBRE_R between 0 and 100)),
+      constraint CKC_NOVIEMBRE_R_TBL_ACTI check (NOVIEMBRE_R is null or (NOVIEMBRE_R >= 0)),
    NOVIEMBRE_E          bit                  null default 1,
    DICIEMBRE_P          int                  null default 0
-      constraint CKC_DICIEMBRE_P_TBL_ACTI check (DICIEMBRE_P is null or (DICIEMBRE_P between 0 and 100)),
+      constraint CKC_DICIEMBRE_P_TBL_ACTI check (DICIEMBRE_P is null or (DICIEMBRE_P >= 0)),
    DICIEMBRE_R          int                  null default 0
-      constraint CKC_DICIEMBRE_R_TBL_ACTI check (DICIEMBRE_R is null or (DICIEMBRE_R between 0 and 100)),
+      constraint CKC_DICIEMBRE_R_TBL_ACTI check (DICIEMBRE_R is null or (DICIEMBRE_R >= 0)),
    DICIEMBRE_E          bit                  null default 1,
    TURNO                char(1)              null
       constraint CKC_TURNO_TBL_ACTI check (TURNO is null or (TURNO in ('A','B','C','D','0'))),
    MES_INICIO           int                  null
       constraint CKC_MES_INICIO_TBL_ACTI check (MES_INICIO is null or (MES_INICIO between 1 and 12 and MES_INICIO in (1,2,3,4,5,6,7,8,9,10,11,12))),
+   TOTAL                decimal(10,7)        null,
    constraint PK_TBL_ACTIVIDAD primary key nonclustered (ID_ACTIVIDAD)
 )
 go
@@ -2623,6 +2638,78 @@ AS
 	CLOSE cDivisiones
 	DEALLOCATE cDivisiones	
 GO
+CREATE PROCEDURE sp_get_actividades_by_programa
+	@ID_PROGRAMA_ANUAL INT=0,
+	@p0  INT = 0,
+	@p1  INT = 10
+AS
+	SELECT [t3].[ID_ACTIVIDAD], [t3].[ID_EVIDENCIA], [t3].[ID_PROGRAMA_ANUAL], [t3].[ID_CARGO], [t3].[NOMBRE_ACTIVIDAD], [t3].[TIPO_FRECUENCIA], [t3].[CANTIDAD_FRECUENCIA], [t3].[ENERO_P], [t3].[ENERO_R], [t3].[ENERO_E], [t3].[FEBRERO_P], [t3].[FEBRERO_R], [t3].[FEBRERO_E], [t3].[MARZO_P], [t3].[MARZO_R], [t3].[MARZO_E], [t3].[ABRIL_P], [t3].[ABRIL_R], [t3].[ABRIL_E], [t3].[MAYO_P], [t3].[MAYO_R], [t3].[MAYO_E], [t3].[JUNIO_P], [t3].[JUNIO_R], [t3].[JUNIO_E], [t3].[JULIO_P], [t3].[JULIO_R], [t3].[JULIO_E], [t3].[AGOSTO_P], [t3].[AGOSTO_R], [t3].[AGOSTO_E], [t3].[SEPTIEMBRE_P], [t3].[SEPTIEMBRE_R], [t3].[SEPTIEMBRE_E], [t3].[OCTUBRE_P], [t3].[OCTUBRE_R], [t3].[OCTUBRE_E], [t3].[NOVIEMBRE_P], [t3].[NOVIEMBRE_R], [t3].[NOVIEMBRE_E], [t3].[DICIEMBRE_P], [t3].[DICIEMBRE_R], [t3].[DICIEMBRE_E], [t3].[TURNO], [t3].[MES_INICIO],[t3].NOMBRE_EVIDENCIA,[t3].NOMBRE_CARGO,[t3].ANO_INICIO,[t3].TOTAL
+	FROM (
+		SELECT [t2].[ID_ACTIVIDAD], [t2].[ID_EVIDENCIA], [t2].[ID_PROGRAMA_ANUAL], [t2].[ID_CARGO], [t2].[NOMBRE_ACTIVIDAD], [t2].[TIPO_FRECUENCIA], [t2].[CANTIDAD_FRECUENCIA], [t2].[ENERO_P], [t2].[ENERO_R], [t2].[ENERO_E], [t2].[FEBRERO_P], [t2].[FEBRERO_R], [t2].[FEBRERO_E], [t2].[MARZO_P], [t2].[MARZO_R], [t2].[MARZO_E], [t2].[ABRIL_P], [t2].[ABRIL_R], [t2].[ABRIL_E], [t2].[MAYO_P], [t2].[MAYO_R], [t2].[MAYO_E], [t2].[JUNIO_P], [t2].[JUNIO_R], [t2].[JUNIO_E], [t2].[JULIO_P], [t2].[JULIO_R], [t2].[JULIO_E], [t2].[AGOSTO_P], [t2].[AGOSTO_R], [t2].[AGOSTO_E], [t2].[SEPTIEMBRE_P], [t2].[SEPTIEMBRE_R], [t2].[SEPTIEMBRE_E], [t2].[OCTUBRE_P], [t2].[OCTUBRE_R], [t2].[OCTUBRE_E], [t2].[NOVIEMBRE_P], [t2].[NOVIEMBRE_R], [t2].[NOVIEMBRE_E], [t2].[DICIEMBRE_P], [t2].[DICIEMBRE_R], [t2].[DICIEMBRE_E], [t2].[TURNO], [t2].[MES_INICIO],[t2].NOMBRE_EVIDENCIA,[t2].NOMBRE_CARGO,[t2].ANO_INICIO,[t2].TOTAL, [t2].[ROW_NUMBER]
+		FROM (
+			SELECT [t1].[ID_ACTIVIDAD], [t1].[ID_EVIDENCIA], [t1].[ID_PROGRAMA_ANUAL], [t1].[ID_CARGO], [t1].[NOMBRE_ACTIVIDAD], [t1].[TIPO_FRECUENCIA], [t1].[CANTIDAD_FRECUENCIA], [t1].[ENERO_P], [t1].[ENERO_R], [t1].[ENERO_E], [t1].[FEBRERO_P], [t1].[FEBRERO_R], [t1].[FEBRERO_E], [t1].[MARZO_P], [t1].[MARZO_R], [t1].[MARZO_E], [t1].[ABRIL_P], [t1].[ABRIL_R], [t1].[ABRIL_E], [t1].[MAYO_P], [t1].[MAYO_R], [t1].[MAYO_E], [t1].[JUNIO_P], [t1].[JUNIO_R], [t1].[JUNIO_E], [t1].[JULIO_P], [t1].[JULIO_R], [t1].[JULIO_E], [t1].[AGOSTO_P], [t1].[AGOSTO_R], [t1].[AGOSTO_E], [t1].[SEPTIEMBRE_P], [t1].[SEPTIEMBRE_R], [t1].[SEPTIEMBRE_E], [t1].[OCTUBRE_P], [t1].[OCTUBRE_R], [t1].[OCTUBRE_E], [t1].[NOVIEMBRE_P], [t1].[NOVIEMBRE_R], [t1].[NOVIEMBRE_E], [t1].[DICIEMBRE_P], [t1].[DICIEMBRE_R], [t1].[DICIEMBRE_E], [t1].[TURNO], [t1].[MES_INICIO],[t1].NOMBRE_EVIDENCIA,[t1].NOMBRE_CARGO,[t1].ANO_INICIO,[t1].TOTAL, [t1].[ROW_NUMBER]
+			FROM (
+				SELECT 	ROW_NUMBER() OVER (ORDER BY [t0].[ID_ACTIVIDAD], [t0].[ID_EVIDENCIA], [t0].[ID_PROGRAMA_ANUAL], [t0].[ID_CARGO], [t0].[TIPO_FRECUENCIA], [t0].[CANTIDAD_FRECUENCIA], [t0].[ENERO_P], [t0].[ENERO_R], [t0].[ENERO_E], [t0].[FEBRERO_P], [t0].[FEBRERO_R], [t0].[FEBRERO_E], [t0].[MARZO_P], [t0].[MARZO_R], [t0].[MARZO_E], [t0].[ABRIL_P], [t0].[ABRIL_R], [t0].[ABRIL_E], [t0].[MAYO_P], [t0].[MAYO_R], [t0].[MAYO_E], [t0].[JUNIO_P], [t0].[JUNIO_R], [t0].[JUNIO_E], [t0].[JULIO_P], [t0].[JULIO_R], [t0].[JULIO_E], [t0].[AGOSTO_P], [t0].[AGOSTO_R], [t0].[AGOSTO_E], [t0].[SEPTIEMBRE_P], [t0].[SEPTIEMBRE_R], [t0].[SEPTIEMBRE_E], [t0].[OCTUBRE_P], [t0].[OCTUBRE_R], [t0].[OCTUBRE_E], [t0].[NOVIEMBRE_P], [t0].[NOVIEMBRE_R], [t0].[NOVIEMBRE_E], [t0].[DICIEMBRE_P], [t0].[DICIEMBRE_R], [t0].[DICIEMBRE_E], [t0].[TURNO], [t0].[MES_INICIO],[EV].NOMBRE_EVIDENCIA,[CA].NOMBRE_CARGO,[PO].ANO_INICIO,[t0].TOTAL) AS [ROW_NUMBER], 
+						[t0].[ID_ACTIVIDAD], 
+						[t0].[ID_EVIDENCIA], 
+						[t0].[ID_PROGRAMA_ANUAL], 
+						[t0].[ID_CARGO], 
+						[t0].[NOMBRE_ACTIVIDAD], 
+						[t0].[TIPO_FRECUENCIA], 
+						[t0].[CANTIDAD_FRECUENCIA], 
+						[t0].[ENERO_P], 
+						[t0].[ENERO_R], 
+						[t0].[ENERO_E], 
+						[t0].[FEBRERO_P], 
+						[t0].[FEBRERO_R], 
+						[t0].[FEBRERO_E], 
+						[t0].[MARZO_P], 
+						[t0].[MARZO_R], 
+						[t0].[MARZO_E], 
+						[t0].[ABRIL_P], 
+						[t0].[ABRIL_R], 
+						[t0].[ABRIL_E], 
+						[t0].[MAYO_P], 
+						[t0].[MAYO_R], 
+						[t0].[MAYO_E], 
+						[t0].[JUNIO_P], 
+						[t0].[JUNIO_R], 
+						[t0].[JUNIO_E], 
+						[t0].[JULIO_P], 
+						[t0].[JULIO_R], 
+						[t0].[JULIO_E], 
+						[t0].[AGOSTO_P], 
+						[t0].[AGOSTO_R], 
+						[t0].[AGOSTO_E], 
+						[t0].[SEPTIEMBRE_P], 
+						[t0].[SEPTIEMBRE_R], 
+						[t0].[SEPTIEMBRE_E], 
+						[t0].[OCTUBRE_P], 
+						[t0].[OCTUBRE_R], 
+						[t0].[OCTUBRE_E], 
+						[t0].[NOVIEMBRE_P], 
+						[t0].[NOVIEMBRE_R], 
+						[t0].[NOVIEMBRE_E], 
+						[t0].[DICIEMBRE_P], 
+						[t0].[DICIEMBRE_R], 
+						[t0].[DICIEMBRE_E], 
+						[t0].[TURNO],
+						[t0].[TOTAL], 
+						[t0].[MES_INICIO],
+						[EV].NOMBRE_EVIDENCIA,
+						[CA].NOMBRE_CARGO,
+						[PO].ANO_INICIO
+				FROM [dbo].[TBL_PROGRAMA_ANUAL] AS [PO]
+					INNER JOIN [dbo].[TBL_ACTIVIDAD] AS [t0] ON [PO].ID_PROGRAMA_ANUAL=[t0].ID_PROGRAMA_ANUAL
+					INNER JOIN [dbo].[TBL_EVIDENCIA] [EV] ON [t0].ID_EVIDENCIA=[EV].ID_EVIDENCIA
+					INNER JOIN [dbo].[TBL_CARGO] [CA] ON [t0].ID_CARGO=[CA].ID_CARGO
+				WHERE [PO].[ID_PROGRAMA_ANUAL] = @ID_PROGRAMA_ANUAL
+				) AS [t1]
+			WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1
+			) AS [t2]
+		) AS [t3]
+	ORDER BY [t3].[ID_ACTIVIDAD] DESC, [t3].[ROW_NUMBER]
+GO
 CREATE PROCEDURE sp_get_eventos_departamento_by_organizacion
 	@ID_ORGANIZACION INT,
 	@ANO INT,
@@ -2677,7 +2764,7 @@ AS
 							INNER JOIN TBL_EVENTO_EMPRESA EE ON EV.ID_EVENTO = EE.ID_EVENTO
 							LEFT JOIN TBL_I_PRELIMINAR IP ON EE.ID_EVENTO_EMPRESA = IP.ID_EVENTO_EMPRESA
 							WHERE EV.ID_EVENTO = E.ID_EVENTO
-						GROUP BY EV.ID_EVENTO, IP.ID_EVENTO_EMPRESA) AS 'COUNT_IPRELIMINAR'
+						GROUP BY EV.ID_EVENTO, IP.ID_INFORME_PRELIMINAR) AS 'COUNT_IPRELIMINAR'
 			FROM TBL_EVENTO E
 				INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DO ON E.ID_DEPARTAMENTO_ORGANIZACION = DO.ID_DEPARTAMENTO_ORGANIZACION
 				INNER JOIN TBL_DEPARTAMENTO D ON DO.ID_DEPARTAMENTO=D.ID_DEPARTAMENTO
@@ -2803,7 +2890,7 @@ AS
  SELECT @sql = @sql + 'SELECT [t1].* FROM (';
   SELECT @sql = @sql + 'SELECT ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION DESC) AS [ROW_NUMBER],';
   SELECT @sql = @sql + 'ISNULL(''[''+CAST(PA.ANO_INICIO AS VARCHAR)+''] ''+DEP.NOMBRE_DEPARTAMENTO+'' - ''+D.NOMBRE_DIVISION,TM.NOMBRE_TEMPLATE) AS ''PROGRAMA'',';
-  SELECT @sql = @sql + 'PA.ID_PROGRAMA_ANUAL, ISNULL(PA.ID_DEPARTAMENTO_ORGANIZACION,0) AS ''ID_DEPARTAMENTO_ORGANIZACION'', PA.NOMBRE_PROGRAMA, ISNULL(D.ID_DIVISION,0) AS ''ID_DIVISION'', ISNULL(D.NOMBRE_DIVISION,'' '') AS ''NOMBRE_DIVISION'', PA.OBJETIVO_META,PA.IS_TEMPLATE,PA.ID_TEMPLATE, PA.FECHA_CREACION, PA.MES_INICIO, PA.ANO_INICIO, ISNULL((SELECT  ROUND (ISNULL((((SUM(CASE   WHEN AC.ENERO_P = 0 THEN   CASE   WHEN AC.ENERO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.FEBRERO_P = 0 THEN   CASE   WHEN AC.FEBRERO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.MARZO_P = 0 THEN   CASE   WHEN AC.MARZO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.ABRIL_P = 0 THEN   CASE   WHEN AC.ABRIL_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.MAYO_P = 0 THEN   CASE   WHEN AC.MAYO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.JUNIO_P = 0 THEN   CASE   WHEN AC.JUNIO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.JULIO_P = 0 THEN   CASE   WHEN AC.JULIO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.AGOSTO_P = 0 THEN   CASE   WHEN AC.AGOSTO_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.SEPTIEMBRE_P = 0 THEN   CASE   WHEN AC.SEPTIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*)) + (SUM(CASE   WHEN AC.OCTUBRE_P = 0 THEN   CASE   WHEN AC.OCTUBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.NOVIEMBRE_P = 0 THEN   CASE   WHEN AC.NOVIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*))+ (SUM(CASE   WHEN AC.DICIEMBRE_P = 0 THEN   CASE   WHEN AC.DICIEMBRE_E = 0 THEN  100   ELSE  0   END  ELSE   ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)  END)/COUNT(*)))/12),0),2)  FROM TBL_ACTIVIDAD AC  INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS ''PERCENT_TOTAL'' FROM TBL_PROGRAMA_ANUAL PA LEFT JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION LEFT JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON D.ID_DEPARTAMENTO_ORGANIZACION=DOR.ID_DEPARTAMENTO_ORGANIZACION LEFT JOIN TBL_DEPARTAMENTO DEP ON DOR.ID_DEPARTAMENTO=DEP.ID_DEPARTAMENTO LEFT JOIN TBL_TEMPLATE TM ON TM.ID_TEMPLATE=PA.ID_TEMPLATE  WHERE PA.ANO_INICIO=@ANO_INICIO';
+  SELECT @sql = @sql + 'PA.ID_PROGRAMA_ANUAL, ISNULL(PA.ID_DEPARTAMENTO_ORGANIZACION,0) AS ''ID_DEPARTAMENTO_ORGANIZACION'', PA.NOMBRE_PROGRAMA, ISNULL(D.ID_DIVISION,0) AS ''ID_DIVISION'', ISNULL(D.NOMBRE_DIVISION,'' '') AS ''NOMBRE_DIVISION'', PA.OBJETIVO_META,PA.IS_TEMPLATE,PA.ID_TEMPLATE, PA.FECHA_CREACION, PA.MES_INICIO, PA.ANO_INICIO, ISNULL((SELECT AVG(AC.TOTAL) FROM TBL_ACTIVIDAD AC INNER JOIN TBL_PROGRAMA_ANUAL PX ON AC.ID_PROGRAMA_ANUAL=PX.ID_PROGRAMA_ANUAL WHERE PX.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL GROUP BY PX.ID_PROGRAMA_ANUAL,PX.NOMBRE_PROGRAMA),0) AS ''PERCENT_TOTAL'' FROM TBL_PROGRAMA_ANUAL PA LEFT JOIN TBL_DIVISION D ON PA.ID_DIVISION = D.ID_DIVISION LEFT JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON D.ID_DEPARTAMENTO_ORGANIZACION=DOR.ID_DEPARTAMENTO_ORGANIZACION LEFT JOIN TBL_DEPARTAMENTO DEP ON DOR.ID_DEPARTAMENTO=DEP.ID_DEPARTAMENTO LEFT JOIN TBL_TEMPLATE TM ON TM.ID_TEMPLATE=PA.ID_TEMPLATE  WHERE PA.ANO_INICIO=@ANO_INICIO';
   IF @ID_DIVISION <> 0
  SELECT @sql = @sql + ' AND D.ID_DIVISION = @ID_DIVISION '
 	SELECT @sql = @sql + ' AND PA.IS_TEMPLATE =  @TEMPLATE '
@@ -2851,7 +2938,7 @@ FROM (
 				(SUM(CASE WHEN AC.OCTUBRE_P <> 0  THEN ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.OCTUBRE_E AS INT))) +
 				(SUM(CASE WHEN AC.NOVIEMBRE_P <> 0  THEN ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.NOVIEMBRE_E AS INT))) +
 				(SUM(CASE WHEN AC.DICIEMBRE_P <> 0  THEN ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.DICIEMBRE_E AS INT)))
-			)/12),0),2) AS 'PRC_TOTAL'
+			)/12)   ,0),2) AS 'PRC_TOTAL'
 		FROM TBL_PROGRAMA_ANUAL PA 
 			LEFT JOIN  TBL_ACTIVIDAD AC ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
 			INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION= D.ID_DIVISION
@@ -2877,40 +2964,40 @@ FROM (
 		SELECT 	ROW_NUMBER() OVER (ORDER BY D.NOMBRE_DIVISION,PA.ID_DIVISION DESC) AS [ROW_NUMBER],
 				D.NOMBRE_DIVISION, 
 				PA.ID_DIVISION, 
-				(SUM(CASE WHEN AC.ENERO_P <> 0  THEN ((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.ENERO_E AS INT))) AS 'PCR_ENERO_R',
+				ISNULL((SUM(CASE WHEN AC.ENERO_P <> 0  THEN ((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.ENERO_E AS INT))),0) AS 'PCR_ENERO_R',
 				(SUM(AC.ENERO_P)) AS 'ENERO_P',
 				(SUM(AC.ENERO_R)) AS 'ENERO_R',
-				(SUM(CASE WHEN AC.FEBRERO_P <> 0  THEN ((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.FEBRERO_E AS INT))) AS 'PCR_FEBRERO_R',
+				ISNULL((SUM(CASE WHEN AC.FEBRERO_P <> 0  THEN ((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) END)/SUM(CAST(AC.FEBRERO_E AS INT))),0) AS 'PCR_FEBRERO_R',
 				(SUM(AC.FEBRERO_P)) AS 'FEBRERO_P',
 				(SUM(AC.FEBRERO_R)) AS 'FEBRERO_R',
-				(SUM(CASE WHEN AC.MARZO_P <> 0  THEN ((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MARZO_E AS INT))) AS 'PCR_MARZO_R',
+				ISNULL((SUM(CASE WHEN AC.MARZO_P <> 0  THEN ((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MARZO_E AS INT))),0) AS 'PCR_MARZO_R',
 				(SUM(AC.MARZO_P)) AS 'MARZO_P',
 				(SUM(AC.MARZO_R)) AS 'MARZO_R',
-				(SUM(CASE WHEN AC.ABRIL_P <> 0  THEN ((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) END)/SUM(CAST(AC.ABRIL_E AS INT))) AS 'PCR_ABRIL_R',
+				ISNULL((SUM(CASE WHEN AC.ABRIL_P <> 0  THEN ((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) END)/SUM(CAST(AC.ABRIL_E AS INT))),0) AS 'PCR_ABRIL_R',
 				(SUM(AC.ABRIL_P)) AS 'ABRIL_P',
 				(SUM(AC.ABRIL_R)) AS 'ABRIL_R',
-				(SUM(CASE WHEN AC.MAYO_P <> 0  THEN ((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MAYO_E AS INT))) AS 'PCR_MAYO_R',
+				ISNULL((SUM(CASE WHEN AC.MAYO_P <> 0  THEN ((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) END)/SUM(CAST(AC.MAYO_E AS INT))),0) AS 'PCR_MAYO_R',
 				(SUM(AC.MAYO_P)) AS 'MAYO_P',
 				(SUM(AC.MAYO_R)) AS 'MAYO_R',
-				(SUM(CASE WHEN AC.JUNIO_P <> 0  THEN ((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JUNIO_E AS INT))) AS 'PCR_JUNIO_R',
+				ISNULL((SUM(CASE WHEN AC.JUNIO_P <> 0  THEN ((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JUNIO_E AS INT))),0) AS 'PCR_JUNIO_R',
 				(SUM(AC.JUNIO_P)) AS 'JUNIO_P',
 				(SUM(AC.JUNIO_R)) AS 'JUNIO_R',
-				(SUM(CASE WHEN AC.JULIO_P <> 0  THEN ((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JULIO_E AS INT))) AS 'PCR_JULIO_R',
+				ISNULL((SUM(CASE WHEN AC.JULIO_P <> 0  THEN ((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) END)/SUM(CAST(AC.JULIO_E AS INT))),0) AS 'PCR_JULIO_R',
 				(SUM(AC.JULIO_P)) AS 'JULIO_P',
 				(SUM(AC.JULIO_R)) AS 'JULIO_R',
-				(SUM(CASE WHEN AC.AGOSTO_P <> 0  THEN ((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) END)/SUM(CAST(AC.AGOSTO_E AS INT))) AS 'PCR_AGOSTO_R',
+				ISNULL((SUM(CASE WHEN AC.AGOSTO_P <> 0  THEN ((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) END)/SUM(CAST(AC.AGOSTO_E AS INT))),0) AS 'PCR_AGOSTO_R',
 				(SUM(AC.AGOSTO_P)) AS 'AGOSTO_P',
 				(SUM(AC.AGOSTO_R)) AS 'AGOSTO_R',
-				(SUM(CASE WHEN AC.SEPTIEMBRE_P <> 0  THEN ((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.SEPTIEMBRE_E AS INT))) AS 'PCR_SEPTIEMBRE_R',
+				ISNULL((SUM(CASE WHEN AC.SEPTIEMBRE_P <> 0  THEN ((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.SEPTIEMBRE_E AS INT))),0) AS 'PCR_SEPTIEMBRE_R',
 				(SUM(AC.SEPTIEMBRE_P)) AS 'SEPTIEMBRE_P',
 				(SUM(AC.SEPTIEMBRE_R)) AS 'SEPTIEMBRE_R',
-				(SUM(CASE WHEN AC.OCTUBRE_P <> 0  THEN ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.OCTUBRE_E AS INT))) AS 'PCR_OCTUBRE_R',
+				ISNULL((SUM(CASE WHEN AC.OCTUBRE_P <> 0  THEN ((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.OCTUBRE_E AS INT))),0) AS 'PCR_OCTUBRE_R',
 				(SUM(AC.OCTUBRE_P)) AS 'OCTUBRE_P',
 				(SUM(AC.OCTUBRE_R)) AS 'OCTUBRE_R',
-				(SUM(CASE WHEN AC.NOVIEMBRE_P <> 0  THEN ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.NOVIEMBRE_E AS INT))) AS 'PCR_NOVIEMBRE_R',
+				ISNULL((SUM(CASE WHEN AC.NOVIEMBRE_P <> 0  THEN ((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.NOVIEMBRE_E AS INT))),0) AS 'PCR_NOVIEMBRE_R',
 				(SUM(AC.NOVIEMBRE_P)) AS 'NOVIEMBRE_P',
 				(SUM(AC.NOVIEMBRE_R)) AS 'NOVIEMBRE_R',
-				(SUM(CASE WHEN AC.DICIEMBRE_P <> 0  THEN ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.DICIEMBRE_E AS INT))) AS 'PCR_DICIEMBRE_R',
+				ISNULL((SUM(CASE WHEN AC.DICIEMBRE_P <> 0  THEN ((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) END)/SUM(CAST(AC.DICIEMBRE_E AS INT))),0) AS 'PCR_DICIEMBRE_R',
 				(SUM(AC.DICIEMBRE_P)) AS 'DICIEMBRE_P',
 				(SUM(AC.DICIEMBRE_R)) AS 'DICIEMBRE_R'
 		FROM TBL_PROGRAMA_ANUAL PA 
@@ -3036,6 +3123,183 @@ AS
 	ORDER BY E.ID_EVENTO DESC;
 GO
 
+CREATE TRIGGER TRIG_UPDATE_ACTIVIDAD ON TBL_ACTIVIDAD
+FOR UPDATE
+AS
+    DECLARE @ID_ACTIVIDAD AS INT;
+	DECLARE @TOTAL AS DECIMAL(10,7);
+	SELECT @ID_ACTIVIDAD=ID_ACTIVIDAD
+    FROM inserted;
+    SELECT @TOTAL = (
+			(	
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								ENERO_P <> 0  THEN 
+									((CAST(ENERO_R AS DECIMAL)/CAST(ENERO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(ENERO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								FEBRERO_P <> 0  THEN 
+									((CAST(FEBRERO_R AS DECIMAL)/CAST(FEBRERO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(FEBRERO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								MARZO_P <> 0  THEN 
+									((CAST(MARZO_R AS DECIMAL)/CAST(MARZO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(MARZO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								ABRIL_P <> 0  THEN 
+									((CAST(ABRIL_R AS DECIMAL)/CAST(ABRIL_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(ABRIL_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								MAYO_P <> 0  THEN 
+									((CAST(MAYO_R AS DECIMAL)/CAST(MAYO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(MAYO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								JUNIO_P <> 0  THEN 
+									((CAST(JUNIO_R AS DECIMAL)/CAST(JUNIO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(JUNIO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								JULIO_P <> 0  THEN 
+									((CAST(JULIO_R AS DECIMAL)/CAST(JULIO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(JULIO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AGOSTO_P <> 0  THEN 
+									((CAST(AGOSTO_R AS DECIMAL)/CAST(AGOSTO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AGOSTO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								SEPTIEMBRE_P <> 0  THEN 
+									((CAST(SEPTIEMBRE_R AS DECIMAL)/CAST(SEPTIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(SEPTIEMBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								OCTUBRE_P <> 0  THEN 
+									((CAST(OCTUBRE_R AS DECIMAL)/CAST(OCTUBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(OCTUBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								NOVIEMBRE_P <> 0  THEN 
+									((CAST(NOVIEMBRE_R AS DECIMAL)/CAST(NOVIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(NOVIEMBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								DICIEMBRE_P <> 0  THEN 
+									((CAST(DICIEMBRE_R AS DECIMAL)/CAST(DICIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(DICIEMBRE_E AS INT))
+					)
+				,0)
+			)
+			/
+			(
+				SUM(CAST(ENERO_E AS INT))+
+				SUM(CAST(FEBRERO_E AS INT))+
+				SUM(CAST(MARZO_E AS INT))+
+				SUM(CAST(ABRIL_E AS INT))+
+				SUM(CAST(MAYO_E AS INT))+
+				SUM(CAST(JUNIO_E AS INT))+
+				SUM(CAST(JULIO_E AS INT))+
+				SUM(CAST(AGOSTO_E AS INT))+
+				SUM(CAST(SEPTIEMBRE_E AS INT))+
+				SUM(CAST(OCTUBRE_E AS INT))+
+				SUM(CAST(NOVIEMBRE_E AS INT))+
+				SUM(CAST(DICIEMBRE_E AS INT))
+			)
+		)
+    FROM inserted;
+    UPDATE TBL_ACTIVIDAD
+        SET TOTAL = @TOTAL
+	WHERE ID_ACTIVIDAD=@ID_ACTIVIDAD;
+GO
+
+
 CREATE TRIGGER TRIG_UPDATE_NODE ON TBL_GRUPO_PRIVILEGIO
 AFTER INSERT, UPDATE
 AS
@@ -3148,6 +3412,14 @@ AS
             SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', PASSWORD)),3,32)
        FROM inserted;
 go
+
+
+
+
+
+
+
+
 
 
 
@@ -4067,6 +4339,7 @@ GO
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(69,12); --dsGraphAvanceProgramaAnual
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(74,12); --dsGraphAvanceProgramaAnualById
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(75,12); --dsTemplate
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(33,12); --dsFrecuencia
 --REPORTES
 
 --MATRIZ DE RIESGO
@@ -4551,5 +4824,417 @@ AS
 	CLOSE cDivisiones
 	DEALLOCATE cDivisiones	
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+########################
+PUEDE SER
+########################
+SELECT ROW_NUMBER() OVER (ORDER BY PA.ID_DIVISION DESC) AS [ROW_NUMBER],
+'['+CAST(PA.ANO_INICIO AS VARCHAR)+'] '+DEP.NOMBRE_DEPARTAMENTO+' - '+D.NOMBRE_DIVISION AS 'PROGRAMA', 
+D.NOMBRE_DIVISION,
+PA.ID_DIVISION, 
+	(
+		(
+			SUM(
+				CASE WHEN AC.ENERO_E =1 THEN
+					CASE WHEN AC.ENERO_P <> 0 AND AC.ENERO_R <> 0 THEN 
+						((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.ENERO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.ENERO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.FEBRERO_E =1 THEN
+					CASE WHEN AC.FEBRERO_P <> 0 AND AC.FEBRERO_R <> 0 THEN 
+						((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.FEBRERO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.FEBRERO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.MARZO_E =1 THEN
+					CASE WHEN AC.MARZO_P <> 0 AND AC.MARZO_R <> 0 THEN 
+						((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.MARZO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.MARZO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.ABRIL_E =1 THEN
+					CASE WHEN AC.ABRIL_P <> 0 AND AC.ABRIL_R <> 0 THEN 
+						((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.ABRIL_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.ABRIL_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.MAYO_E =1 THEN
+					CASE WHEN AC.MAYO_P <> 0 AND AC.MAYO_R <> 0 THEN 
+						((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.MAYO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.MAYO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.JUNIO_E =1 THEN
+					CASE WHEN AC.JUNIO_P <> 0 AND AC.JUNIO_R <> 0 THEN 
+						((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.JUNIO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.JUNIO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.JULIO_E =1 THEN
+					CASE WHEN AC.JULIO_P <> 0 AND AC.JULIO_R <> 0 THEN 
+						((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.JULIO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.JULIO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.AGOSTO_E =1 THEN
+					CASE WHEN AC.AGOSTO_P <> 0 AND AC.AGOSTO_R <> 0 THEN 
+						((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.AGOSTO_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.AGOSTO_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.SEPTIEMBRE_E =1 THEN
+					CASE WHEN AC.SEPTIEMBRE_P <> 0 AND AC.SEPTIEMBRE_R <> 0 THEN 
+						((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.SEPTIEMBRE_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.SEPTIEMBRE_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.OCTUBRE_E =1 THEN
+					CASE WHEN AC.OCTUBRE_P <> 0 AND AC.OCTUBRE_R <> 0 THEN 
+						((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.OCTUBRE_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.OCTUBRE_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.NOVIEMBRE_E =1 THEN
+					CASE WHEN AC.NOVIEMBRE_P <> 0 AND AC.NOVIEMBRE_R <> 0 THEN 
+						((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.NOVIEMBRE_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.NOVIEMBRE_E AS INT))
+				ELSE
+					1
+			END
+		) +
+		(
+			SUM(
+				CASE WHEN AC.DICIEMBRE_E =1 THEN
+					CASE WHEN AC.DICIEMBRE_P <> 0 AND AC.DICIEMBRE_R <> 0 THEN 
+						((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100)
+					END
+				ELSE
+					0	
+				END
+			)/
+			CASE
+				WHEN SUM(CAST(AC.DICIEMBRE_E AS INT)) <> 0 THEN
+					SUM(CAST(AC.DICIEMBRE_E AS INT))
+				ELSE
+					1
+			END
+		) 
+	) AS 'PRC_TOTAL'
+FROM TBL_PROGRAMA_ANUAL PA 
+LEFT JOIN  TBL_ACTIVIDAD AC ON AC.ID_PROGRAMA_ANUAL=PA.ID_PROGRAMA_ANUAL
+INNER JOIN TBL_DIVISION D ON PA.ID_DIVISION= D.ID_DIVISION
+INNER JOIN TBL_DEPARTAMENTO_ORGANIZACION DOR ON DOR.ID_DEPARTAMENTO_ORGANIZACION = D.ID_DEPARTAMENTO_ORGANIZACION
+INNER JOIN TBL_DEPARTAMENTO DEP ON DEP.ID_DEPARTAMENTO=DOR.ID_DEPARTAMENTO
+WHERE PA.ANO_INICIO = 2011
+GROUP BY D.NOMBRE_DIVISION,PA.ID_DIVISION,PA.ANO_INICIO,DEP.NOMBRE_DEPARTAMENTO
+
+
+
+### TRIGGER UPDATE TOTAL
+CREATE TRIGGER TRIG_UPDATE_ACTIVIDAD ON TBL_ACTIVIDAD
+BEFORE UPDATE
+AS
+	DECLARE @TOTAL AS DECIMAL(10, 7);
+	
+	 UPDATE inserted
+		SET TOTAL = (
+			(	
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.ENERO_P <> 0  THEN 
+									((CAST(AC.ENERO_R AS DECIMAL)/CAST(AC.ENERO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.ENERO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.FEBRERO_P <> 0  THEN 
+									((CAST(AC.FEBRERO_R AS DECIMAL)/CAST(AC.FEBRERO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.FEBRERO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.MARZO_P <> 0  THEN 
+									((CAST(AC.MARZO_R AS DECIMAL)/CAST(AC.MARZO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.MARZO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.ABRIL_P <> 0  THEN 
+									((CAST(AC.ABRIL_R AS DECIMAL)/CAST(AC.ABRIL_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.ABRIL_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.MAYO_P <> 0  THEN 
+									((CAST(AC.MAYO_R AS DECIMAL)/CAST(AC.MAYO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.MAYO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.JUNIO_P <> 0  THEN 
+									((CAST(AC.JUNIO_R AS DECIMAL)/CAST(AC.JUNIO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.JUNIO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.JULIO_P <> 0  THEN 
+									((CAST(AC.JULIO_R AS DECIMAL)/CAST(AC.JULIO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.JULIO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.AGOSTO_P <> 0  THEN 
+									((CAST(AC.AGOSTO_R AS DECIMAL)/CAST(AC.AGOSTO_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.AGOSTO_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.SEPTIEMBRE_P <> 0  THEN 
+									((CAST(AC.SEPTIEMBRE_R AS DECIMAL)/CAST(AC.SEPTIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.SEPTIEMBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.OCTUBRE_P <> 0  THEN 
+									((CAST(AC.OCTUBRE_R AS DECIMAL)/CAST(AC.OCTUBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.OCTUBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.NOVIEMBRE_P <> 0  THEN 
+									((CAST(AC.NOVIEMBRE_R AS DECIMAL)/CAST(AC.NOVIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.NOVIEMBRE_E AS INT))
+					)
+				,0)+
+				ISNULL(
+					(
+						SUM(
+							CASE WHEN 
+								AC.DICIEMBRE_P <> 0  THEN 
+									((CAST(AC.DICIEMBRE_R AS DECIMAL)/CAST(AC.DICIEMBRE_P AS DECIMAL))*100) 
+							END
+						)
+						/
+						SUM(CAST(AC.DICIEMBRE_E AS INT))
+					)
+				,0)
+			)
+			/
+			(
+				SUM(CAST(AC.ENERO_E AS INT))+
+				SUM(CAST(AC.FEBRERO_E AS INT))+
+				SUM(CAST(AC.MARZO_E AS INT))+
+				SUM(CAST(AC.ABRIL_E AS INT))+
+				SUM(CAST(AC.MAYO_E AS INT))+
+				SUM(CAST(AC.JUNIO_E AS INT))+
+				SUM(CAST(AC.JULIO_E AS INT))+
+				SUM(CAST(AC.AGOSTO_E AS INT))+
+				SUM(CAST(AC.SEPTIEMBRE_E AS INT))+
+				SUM(CAST(AC.OCTUBRE_E AS INT))+
+				SUM(CAST(AC.NOVIEMBRE_E AS INT))+
+				SUM(CAST(AC.DICIEMBRE_E AS INT))
+			)
+		) AS 'TOTAL'
+	FROM inserted;
+GO
+
 
 */

@@ -112,7 +112,11 @@ namespace WCF_ENAP
                         }
                         else
                         {
-                            padre.children.Add(nodoJSON);
+                            /* TODO: ERROR Padre Oculto hijo visible */
+                            if (padre != null)
+                            {
+                                padre.children.Add(nodoJSON);
+                            }
                         }
                         //padre.children.Add(nodoJSON);
                         

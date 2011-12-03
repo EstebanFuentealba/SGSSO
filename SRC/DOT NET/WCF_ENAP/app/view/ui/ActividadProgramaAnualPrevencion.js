@@ -110,6 +110,11 @@
                                     columnWidth: 0.44
                                 },
                                 {
+                                    xtype: 'hiddenfield',
+                                    name: 'NOMBRE_FRECUENCIA',
+                                    id: 'hdd_nombre_frecuencia'
+                                },
+                                {
                                     xtype: 'combobox',
                                     margin: '0 0 0 5',
                                     labelWidth: 120,
@@ -121,13 +126,13 @@
                                     listeners: {
                                         'change': function (cmb, newValue, oldValue, eOpts) {
                                             /* Anual */
-                                            if(newValue == 4){
-                                                var winMesesEvaluados = Ext.create('Ext.window.Window',{
-                                                        modal: true,
-                                                        height: 188,
-                                                        width: 762,
-                                                        title: 'Meses en que se Realizará',
-                                                        items: [
+                                            if (newValue == 4) {
+                                                var winMesesEvaluados = Ext.create('Ext.window.Window', {
+                                                    modal: true,
+                                                    height: 188,
+                                                    width: 762,
+                                                    title: 'Meses en que se Realizará',
+                                                    items: [
                                                             {
                                                                 xtype: 'form',
                                                                 margin: '5 5 5 5',
@@ -216,23 +221,23 @@
                                                                             }
 
                                                                         ],
-                                                                        listeners : {
-                                                                            change: function( field ,  newValue,  oldValue,  eOpts ) {
+                                                                        listeners: {
+                                                                            change: function (field, newValue, oldValue, eOpts) {
                                                                                 var record = Ext.getCmp('form_actividad_programa_anual').getForm().getRecord();
-                                                                                record.set('ENERO_E',false);
-                                                                                record.set('FEBRERO_E',false);
-                                                                                record.set('MARZO_E',false);
-                                                                                record.set('ABRIL_E',false);
-                                                                                record.set('MAYO_E',false);
-                                                                                record.set('JUNIO_E',false);
-                                                                                record.set('JULIO_E',false);
-                                                                                record.set('AGOSTO_E',false);
-                                                                                record.set('SEPTIEMBRE_E',false);
-                                                                                record.set('OCTUBRE_E',false);
-                                                                                record.set('NOVIEMBRE_E',false);
-                                                                                record.set('DICIEMBRE_E',false);
-                                                                                Ext.each(Ext.getCmp('chk_group_month_selected').getChecked(),function(checkbox) {
-                                                                                    record.set(checkbox.name, checkbox.value);  
+                                                                                record.set('ENERO_E', false);
+                                                                                record.set('FEBRERO_E', false);
+                                                                                record.set('MARZO_E', false);
+                                                                                record.set('ABRIL_E', false);
+                                                                                record.set('MAYO_E', false);
+                                                                                record.set('JUNIO_E', false);
+                                                                                record.set('JULIO_E', false);
+                                                                                record.set('AGOSTO_E', false);
+                                                                                record.set('SEPTIEMBRE_E', false);
+                                                                                record.set('OCTUBRE_E', false);
+                                                                                record.set('NOVIEMBRE_E', false);
+                                                                                record.set('DICIEMBRE_E', false);
+                                                                                Ext.each(Ext.getCmp('chk_group_month_selected').getChecked(), function (checkbox) {
+                                                                                    record.set(checkbox.name, checkbox.value);
                                                                                 });
                                                                                 Ext.getCmp('form_actividad_programa_anual').getForm().loadRecord(record);
                                                                             }
@@ -241,8 +246,8 @@
                                                                 ]
                                                             }
                                                         ]
-                                                    });
-                                                    winMesesEvaluados.show();
+                                                });
+                                                winMesesEvaluados.show();
 
                                             }
                                         }
@@ -273,7 +278,20 @@
                                     labelWidth: 120,
                                     displayField: 'NOMBRE_EVIDENCIA',
                                     valueField: 'ID_EVIDENCIA',
-                                    columnWidth: 0.94
+                                    columnWidth: 0.94,
+                                    listeners: {
+                                        change: function (element, newValue, oldValue, options) {
+                                            if (!Ext.isEmpty(newValue)) {
+                                                var record = this.store.getById(newValue);
+                                                Ext.getCmp('hdd_nombre_evidencia').setValue(record.get('NOMBRE_EVIDENCIA'));
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'hiddenfield',
+                                    name: 'NOMBRE_EVIDENCIA',
+                                    id: 'hdd_nombre_evidencia'
                                 },
                                 {
                                     xtype: 'button',
@@ -299,7 +317,7 @@
                                                             "fieldLabel": "Nombre Evidencia",
                                                             "anchor": "100%",
                                                             "name": "NOMBRE_EVIDENCIA",
-                                                            "labelWidth":120
+                                                            "labelWidth": 120
                                                         }
                                                     ],
                                                     buttons: [{
@@ -346,7 +364,20 @@
                                     store: 'dsCargo',
                                     valueField: 'ID_CARGO',
                                     columnWidth: 0.94,
-                                    name: 'ID_CARGO'
+                                    name: 'ID_CARGO',
+                                    listeners: {
+                                        change: function (element, newValue, oldValue, options) {
+                                            if (!Ext.isEmpty(newValue)) {
+                                                var record = this.store.getById(newValue);
+                                                Ext.getCmp('hdd_nombre_cargo').setValue(record.get('NOMBRE_CARGO'));
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'hiddenfield',
+                                    name: 'NOMBRE_CARGO',
+                                    id: 'hdd_nombre_cargo'
                                 },
                                 {
                                     xtype: 'button',
@@ -412,10 +443,10 @@
                                     name: 'ALL_TURNO',
                                     inputValue: 1,
                                     listeners: {
-                                        change:function(field, newValue, oldValue, eOpts ){
+                                        change: function (field, newValue, oldValue, eOpts) {
                                             Ext.getCmp('chk_group_turno_list').setVisible(newValue);
                                             Ext.getCmp('window-ActividadProgramaAnualPrevencion').doLayout();
-                                            
+
                                         }
                                     }
                                 },
@@ -477,30 +508,31 @@
                             new_object = Ext.create('WCF_ENAP.model.ActividadProgramaAnualPrevencion', form.getValues());
                             errors = new_object.validate();
                             var tipo_turno = new_object.get('ALL_TURNO');
-                            
-                            
+
+
                             if (errors.isValid() && form.isValid()) {
                                 this.disable(true);
-                                if(tipo_turno == 1) {
-                                    var records=[];
+                                if (tipo_turno == 1) {
+                                    var records = [];
                                     var chks = Ext.getCmp('chk_group_turno_list').getValue();
-                                    Ext.each(chks.chk_turno,function(name, index, turnoSelf){
+                                    Ext.each(chks.chk_turno, function (name, index, turnoSelf) {
                                         var c_new_object = Ext.create('WCF_ENAP.model.ActividadProgramaAnualPrevencion', form.getValues());
-                                        c_new_object.set('TURNO',name);
+                                        c_new_object.set('TURNO', name);
                                         records.push(c_new_object);
                                     });
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, records);
                                 } else {
-                                    new_object.set('TURNO','0');
+                                    new_object.set('TURNO', '0');
                                     Ext.data.StoreManager.lookup('dsActividadProgramaAnualPrevencion').insert(0, new_object);
-                                }  
+                                }
                                 form.reset();
+                                this.up('window').destroy();
                             } else {
                                 form.markInvalid(errors);
                             }
                             this.enable(true);
-                            
-                        
+
+
                         }
                     }]
                 }
