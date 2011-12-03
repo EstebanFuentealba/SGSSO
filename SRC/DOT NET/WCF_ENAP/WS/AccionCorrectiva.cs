@@ -59,28 +59,36 @@ namespace WCF_ENAP
         }
 
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        public JSONCollection<TBL_ACCION_CORRECTIVA> Create(string ID_USUARIO, string ID_INFORME, string ID_ACCION, string FECHA_PLAZO, string FECHA_REALIZACION, string PORCENTAJE_CUMPLIMIENTO, string DESCRIPCION, string FECHA_CREACION)
+        public JSONCollection<TBL_ACCION_CORRECTIVA> Create(
+            string ID_USUARIO, 
+            string ID_INFORME, 
+            string ID_ACCION, 
+            string FECHA_PLAZO, 
+            string FECHA_REALIZACION, 
+            string PORCENTAJE_CUMPLIMIENTO, 
+            string DESCRIPCION, 
+            string FECHA_CREACION)
         {
             JSONCollection<TBL_ACCION_CORRECTIVA> objJSON = new JSONCollection<TBL_ACCION_CORRECTIVA>();
             try
             {
                 TBL_ACCION_CORRECTIVA nuevo = new TBL_ACCION_CORRECTIVA()
                 {
+                    ID_ACCION = int.Parse(ID_ACCION),
                     ID_USUARIO = ID_USUARIO,
                     ID_INFORME_PRELIMINAR = int.Parse(ID_INFORME),
-                    ID_ACCION = int.Parse(ID_ACCION),
                     FECHA_PLAZO = DateTime.Parse(FECHA_PLAZO),
-                    FECHA_REALIZACION = DateTime.Parse(FECHA_REALIZACION),
+                    //FECHA_REALIZACION = DateTime.Parse(FECHA_REALIZACION),
                     PORCENTAJE_CUMPLIMIENTO = int.Parse(PORCENTAJE_CUMPLIMIENTO),
                     DESCRIPCION = DESCRIPCION,
-                    FECHA_CREACION = DateTime.Parse(FECHA_CREACION)
+                    //FECHA_CREACION = DateTime.Parse(FECHA_CREACION)
                 };
                 bd.TBL_ACCION_CORRECTIVA.InsertOnSubmit(nuevo);
                 bd.SubmitChanges();
 
                 objJSON.items = nuevo;
                 objJSON.totalCount = bd.TBL_ACCION_CORRECTIVA.Count();
-                objJSON.success = true;
+                objJSON.success = true; 
             }
             catch (Exception e)
             {

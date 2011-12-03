@@ -73,21 +73,21 @@
 																				            bodyPadding: 10,
 																				            title: 'Ingrese nueva Accion',
 																				            items: [
-																						            {
-																						                xtype: 'textfield',
-																						                labelAlign: 'top',
-																						                margin: '5 5 5 5',
-																						                name: 'NOMBRE_ACCION',
-																						                store: 'dsAccion',
-																						                anchor: '100%',
-																						                displayField: 'NOMBRE_ACCION',
-																						                valueField: 'ID_ACCION',
-																						                fieldLabel: 'Accion',
-																						                emptyText: 'Accion Correctiva',
-																						                allowBlank: false
-																						            }
+																						                {
+																						                    xtype: 'textfield',
+																						                    labelAlign: 'top',
+																						                    margin: '5 5 5 5',
+																						                    name: 'NOMBRE_ACCION',
+																						                    store: 'dsAccion',
+																						                    anchor: '100%',
+																						                    displayField: 'NOMBRE_ACCION',
+																						                    valueField: 'ID_ACCION',
+																						                    fieldLabel: 'Accion',
+																						                    emptyText: 'Accion Correctiva',
+																						                    allowBlank: false
+																						                }
 
-																					            ],
+																					                ],
 																				            buttons: [{
 																				                text: 'Agregar',
 																				                handler: function () {
@@ -135,17 +135,17 @@
 												            xtype: 'form',
 												            border: 0,
 												            items: [
-														        {
-														            xtype: 'datefield',
-														            labelAlign: 'top',
-														            name: 'FECHA_PLAZO',
-														            margin: '5 5 5 5',
-														            fieldLabel: 'Fecha Propuesta Ejecucion',
-														            anchor: '100%',
-														            emptyText: 'Fecha Propuesta Ejecucion',
-														            columnWidth: 0.5
-														        }
-													        ]
+														                {
+														                    xtype: 'datefield',
+														                    labelAlign: 'top',
+														                    name: 'FECHA_PLAZO',
+														                    margin: '5 5 5 5',
+														                    fieldLabel: 'Fecha Propuesta Ejecucion',
+														                    anchor: '100%',
+														                    emptyText: 'Fecha Propuesta Ejecucion',
+														                    columnWidth: 0.5
+														                }
+													                ]
 												        },
 												        {
 												            xtype: 'htmleditor',
@@ -167,22 +167,9 @@
 															form,
 		                                                    values;
 	                                                        values = Ext.getCmp('form_datos_acciones_correctivas').getForm().getValues();
-	                                                        new_object = Ext.create('WCF_ENAP.model.DatosAcionesCorrectivas', formValues);
-
+	                                                       	                                                       
+                                                            new_object = Ext.create('WCF_ENAP.model.DatosAcionesCorrectivas', formValues);
 	                                                        Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
-	                                                        /*form = this.up('form').getForm();
-	                                                        new_object = Ext.create('WCF_ENAP.model.Accion', form.getValues());
-	                                                        errors = new_object.validate();
-	                                                        if (errors.isValid() && form.isValid()) {
-	                                                        this.disable(true);
-	                                                        //Ext.data.StoreManager.lookup(dsAccion).insert(0, new_object);
-	                                                        this.up('tabpanel').setActiveTab(4);
-	                                                        //form.reset();
-	                                                        }
-	                                                        else {
-	                                                        form.markInvalid(errors);
-	                                                        }
-	                                                        this.enable(true);*/
 	                                                    }
 	                                                }
 												]

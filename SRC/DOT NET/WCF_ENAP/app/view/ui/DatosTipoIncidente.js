@@ -110,9 +110,10 @@
                                                                     text: 'Siguiente >>>',
                                                                     handler: function () {
                                                                         var new_object,
-																	errors,
-																	form;
+																	    errors,
+																	    form;
                                                                         form = this.up('form').getForm();
+                                                                        // verificar model!!
                                                                         new_object = Ext.create('WCF_ENAP.model.Trabajador', form.getValues());
                                                                         errors = new_object.validate();
                                                                         if (errors.isValid() && form.isValid()) {
@@ -154,7 +155,7 @@
 					                                                                errors,
 					                                                                form;
 																			        form = this.up('form').getForm();
-																			        new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
+																			        new_object = Ext.create('WCF_ENAP.model.Peligro', form.getValues());
 																			        errors = new_object.validate();
 																			        if (errors.isValid() && form.isValid()) {
 																			            this.disable(true);
@@ -174,7 +175,7 @@
 					                                                                errors,
 					                                                                form;
 																			        form = this.up('form').getForm();
-																			        new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
+																			        new_object = Ext.create('WCF_ENAP.model.Peligro', form.getValues());
 																			        errors = new_object.validate();
 																			        if (errors.isValid() && form.isValid()) {
 																			            this.disable(true);
@@ -220,7 +221,6 @@
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
 															                this.up('tabpanel').setActiveTab(1);
-															                //form.reset();
 															            }
 															            else {
 															                form.markInvalid(errors);
@@ -240,7 +240,6 @@
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
 															                this.up('tabpanel').setActiveTab(3);
-															                //form.reset();
 															            }
 															            else {
 															                form.markInvalid(errors);
@@ -391,7 +390,6 @@
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
 															                this.up('tabpanel').setActiveTab(2);
-															                //form.reset();
 															            }
 															            else {
 															                form.markInvalid(errors);
@@ -412,22 +410,9 @@
 															               'CAUSA_INMEDIATA_ACCION_PATRIMONIO_LIST': Ext.getCmp('CAUSA_INMEDIATA_ACCION_PATRIMONIO').getRawValue()
 															            }, values);
 
-															            new_object = Ext.create('WCF_ENAP.model.e0063', formValues);
-
-															            Ext.data.StoreManager.lookup('dse0063').insert(0, new_object);
-															            /*form = this.up('form').getForm();
-															            new_object = Ext.create('WCF_ENAP.model.Causa', form.getValues());
-															            errors = new_object.validate();
-															            if (errors.isValid() && form.isValid()) {
-															            this.disable(true);
-															            //Ext.data.StoreManager.lookup(dsCausaListaAccion).insert(0, new_object);
-															            this.up('tabpanel').setActiveTab(4);
-															            //form.reset();
-															            }
-															            else {
-															            form.markInvalid(errors);
-															            }
-															            this.enable(true);*/
+															           new_object = Ext.create('WCF_ENAP.model.e0063', formValues);
+                                                                       
+															           Ext.data.StoreManager.lookup('e0063').insert(0, new_object);
 															        }
 															    }]
 															}

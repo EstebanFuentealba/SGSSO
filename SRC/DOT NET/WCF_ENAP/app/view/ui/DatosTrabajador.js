@@ -113,7 +113,7 @@
 																			    fieldLabel: 'RUT',
 																			    emptyText: 'Ingrese RUT',
 																			    name: 'RUT_TRABAJADOR',
-																			    // allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    vtype: 'rut',
 																			    columnWidth: .5
@@ -124,7 +124,7 @@
 																			    fieldLabel: 'Nombres',
 																			    name: 'NOMBRES',
 																			    emptyText: 'Ingrese los Nombres del trabajador',
-																			    // allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    columnWidth: .5
 																			},
@@ -134,7 +134,7 @@
 																			    fieldLabel: 'Apellido Paterno',
 																			    emptyText: 'Ingrese Apellido Paterno del Trabajador',
 																			    name: 'APELLIDO_PATERNO',
-																			    //allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    columnWidth: .5
 																			},
@@ -144,7 +144,7 @@
 																			    fieldLabel: 'Apellido Materno',
 																			    name: 'APELLIDO_MATERNO',
 																			    emptyText: 'Ingrese Apellido Materno del Trabajador',
-																			    //allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    columnWidth: .5
 																			},
@@ -158,7 +158,7 @@
 																			    displayField: 'NOMBRE_CARGO',
 																			    valueField: 'ID_CARGO',
 																			    anchor: '100%',
-																			    //allowBlank: false,
+																			    allowBlank: false,
 																			    columnWidth: .5
 																			},
 																			{
@@ -166,6 +166,7 @@
 																			    labelAlign: 'top',
 																			    fieldLabel: 'Clasificacion',
 																			    columns: 2,
+																			    allowBlank: false,
 																			    columnWidth: .5,
 																			    items: [
 																								{ boxLabel: 'Mayor', name: 'CLASIFICACION', inputValue: '1' },
@@ -180,7 +181,7 @@
 																			    labelAlign: 'top',
 																			    fieldLabel: 'Años de experiencia Laboral en ENAP',
 																			    name: 'ANOS_EXPERIENCIA_LABORAL',
-																			    //allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    columnWidth: .5
 																			},
@@ -189,33 +190,33 @@
 																			    labelAlign: 'top',
 																			    fieldLabel: 'Años de experiencia en el Cargo',
 																			    name: 'ANOS_EXPERIENCIA_CARGO',
-																			    //allowBlank: false,
+																			    allowBlank: false,
 																			    anchor: '100%',
 																			    columnWidth: .5
 																			}
 
 																	   ],
-														    buttons: [{
-														        text: 'Siguiente >>>',
-														        handler: function () {
-														            var new_object,
-																	errors,
-																	form;
-														            form = this.up('form').getForm();
-														            new_object = Ext.create('WCF_ENAP.model.Trabajador', form.getValues());
-														            errors = new_object.validate();
-														            if (errors.isValid() && form.isValid()) {
-														                this.disable(true);
-														                //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
-														                this.up('tabpanel').setActiveTab(1);
+														        buttons: [{
+														            text: 'Siguiente >>>',
+														            handler: function () {
+														                var new_object,
+																	    errors,
+																	    form;
+														                form = this.up('form').getForm();
+														                new_object = Ext.create('WCF_ENAP.model.Trabajador', form.getValues());
+														                errors = new_object.validate();
+														                if (errors.isValid() && form.isValid()) {
+														                    this.disable(true);
+														                    //Ext.data.StoreManager.lookup('dsTrabajador').insert(0, new_object);
+														                    this.up('tabpanel').setActiveTab(1);
+														                }
+														                else {
+														                    form.markInvalid(errors);
+														                }
+														                this.enable(true);
 														            }
-														            else {
-														                form.markInvalid(errors);
-														            }
-														            this.enable(true);
-														        }
-														    }]
-														},
+														        }]
+														    },
 															{
 															    xtype: 'form',
 															    anchor: '100%',
@@ -267,7 +268,6 @@
 															                this.disable(true);
 															                //Ext.data.StoreManager.lookup(dsPeligroLista).insert(0, new_object);
 															                this.up('tabpanel').setActiveTab(2);
-															                //form.reset();
 															            }
 															            else {
 															                form.markInvalid(errors);
@@ -579,7 +579,7 @@
 										      margin: '5 5 5 5',
 										      title: 'Listado de Trabajadores',
 										      //columnWidth: 0.5,
-                                              collapsible:true,
+										      collapsible: true,
 										      store: 'dsTrabajador',
 										      columns: [
                                                             {
@@ -673,9 +673,9 @@
                                                             }
 
                                                             ],
-										                    viewConfig: {
-										                    },
-										                    dockedItems: [
+										      viewConfig: {
+										      },
+										      dockedItems: [
                                                             {
                                                                 xtype: 'pagingtoolbar',
                                                                 store: 'dsTrabajador',
@@ -683,7 +683,7 @@
                                                                 dock: 'bottom'
                                                             }
                                                             ],
-										                                                          plugins: [
+										      plugins: [
                                                             Ext.create('Ext.grid.plugin.RowEditing', {
                                                             })
                                                             ]

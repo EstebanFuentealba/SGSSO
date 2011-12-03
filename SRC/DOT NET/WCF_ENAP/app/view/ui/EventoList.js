@@ -385,6 +385,7 @@
                                                                 'dsCargo',
                                                                 'dsAccion',
                                                                 'dsAccionCorrectiva'
+                                                                
                                                             ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();

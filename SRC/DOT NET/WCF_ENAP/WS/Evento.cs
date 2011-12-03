@@ -120,17 +120,6 @@ namespace WCF_ENAP
 
             bd.TBL_EVENTO.InsertOnSubmit(inserted);
             bd.SubmitChanges();
-            /*
-            TBL_EVENTO_EMPRESA eventoEmpresa = new TBL_EVENTO_EMPRESA()
-            {
-                ID_EMPRESA = ID_EMPRESA,
-                ESTADO = true,
-                ID_EVENTO = inserted.ID_EVENTO
-            };
-            bd.TBL_EVENTO_EMPRESA.InsertOnSubmit(eventoEmpresa);
-            bd.SubmitChanges();
-            
-            */
 
             sp_get_eventos_listResult nuevo = new sp_get_eventos_listResult()
             {

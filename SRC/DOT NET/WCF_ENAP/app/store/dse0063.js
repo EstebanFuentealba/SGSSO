@@ -44,9 +44,6 @@ Ext.define('WCF_ENAP.model.e0063', {
         { "name": "CAUSA_LISTA_FACTORES_USO_DESGASTE" },
         { "name": "CAUSA_LISTA_FACTORES_ABUSO" },
         { "name": "CAUSA_LISTA_FACTORES_ERRORES" }
-        
-        
-   
 
     ]
 
