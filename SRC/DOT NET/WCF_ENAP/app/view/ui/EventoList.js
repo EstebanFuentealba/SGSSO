@@ -12,7 +12,7 @@
     id: 'panel-EventoList',
     contextMenuYear: null,
     initComponent: function () {
-             var me = this,
+        var me = this,
             lastMarker = null;
         var me = this,
             lastMarker = null,
@@ -33,12 +33,12 @@
                     var nuevo_marker = fnCreateMarkerFromRecord(record);
                     Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
                     /*Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
-                        params: {
-                            'ANO': newValue
-                        },
-                        callback: function (records, operation, success) {
-                            Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
-                        }
+                    params: {
+                    'ANO': newValue
+                    },
+                    callback: function (records, operation, success) {
+                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
+                    }
                     });*/
                 } catch (e) { }
             }
@@ -232,8 +232,8 @@
                                                             });
                                                         },
                                                         load: function (store, records, successful, operation, eOpts) {
-                                                           // console.log("CARGO LA WEA ");
-                                                           // console.log(records);
+                                                            // console.log("CARGO LA WEA ");
+                                                            // console.log(records);
                                                         }
                                                     }
                                                 });
@@ -277,12 +277,14 @@
                                     flex: 0.2
                                 },
                                 {
+                                    //fecha en la cual ocurrio el incidente
                                     xtype: 'gridcolumn',
                                     dataIndex: 'FECHA_HORA_EVENTO',
                                     text: 'Fecha',
                                     flex: 0.1
                                 },
                                 {
+                                    //hora en la que se ingreso el incidente al sisteme
                                     xtype: 'gridcolumn',
                                     dataIndex: 'HORA_EVENTO',
                                     text: 'Hora',
@@ -313,8 +315,8 @@
                             ],
                             viewConfig: {
 
-                        },
-                        dockedItems: [
+                            },
+                            dockedItems: [
                                 {
                                     xtype: 'toolbar',
                                     dock: 'top',
@@ -350,23 +352,25 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Datos Trabajador',
+                                            text: 'Afecta a Trabajador',
                                             handler: function () {
-                                                var me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
+                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
+                                                    me = this;
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
                                                     stores:
                                                             [
                                                                 'dsTrabajador',
                                                                 'dsCargo',
+                                                                'dsPeligro',
+                                                                'dsCausa',
                                                                 'dsAccion',
                                                                 'dsAccionCorrectiva'
                                                             ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTrabajador', {
-                                                            cmpPadre: me
+                                                            cmpRecord: record
                                                         });
                                                         addEvento.show();
                                                         addEvento.on('destroy', function () {
@@ -379,10 +383,10 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Datos PATRIMONIO...',
+                                            text: 'Afecta a PATRIMONIO',
                                             handler: function () {
-                                                var me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
+                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
+                                                    me = this;
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
                                                     stores:
@@ -393,11 +397,12 @@
                                                                 'dsCargo',
                                                                 'dsAccion',
                                                                 'dsAccionCorrectiva'
+                                                                
                                                             ],
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {
-                                                            cmpPadre: me
+                                                            cmpRecord: record
                                                         });
                                                         addEvento.show();
                                                         addEvento.on('destroy', function () {
@@ -410,9 +415,10 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Medidas de control...',
+                                            text: 'Acciones Correctivas',
                                             handler: function () {
-                                                var me = this;
+                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
+                                                me = this;
                                                 Ext.getCmp('pnl_gmap').hide();
                                                 Ext.application({
                                                     name: 'WCF_ENAP',
@@ -426,7 +432,7 @@
                                                     launch: function () {
                                                         Ext.QuickTips.init();
                                                         var addEvento = Ext.create('WCF_ENAP.view.ui.DatosAcionesCorrectivas', {
-                                                            cmpPadre: me
+                                                            cmpRecord: record
                                                         });
                                                         addEvento.show();
                                                         addEvento.on('destroy', function () {
@@ -495,7 +501,7 @@
                                     }
                                 }
                             ]
-                    },
+                        },
                         {
                             xtype: 'panel',
                             height: 500,
@@ -544,5 +550,6 @@
     afterRender: function () {
         this.contextMenuYear.getComponent(0).select((new Date()).getFullYear());
         this.contextMenuYear.getComponent(0).checkChange();
+        this.callParent(arguments);
     }
 });
