@@ -160,16 +160,37 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
                         'change': function (cmb, newValue, oldValue, eOpts) {
                             var cmbDiv = this.next('combobox'); ;
                             cmbDiv.clearValue();
-                            if (!Ext.isEmpty(newValue)) {
-                                Ext.data.StoreManager.lookup('dsDivision').load({
+							var store = Ext.StoreManager.lookup('dsProgramaAnual');
+                            if (!Ext.isEmpty(newValue) && Ext.isNumber(newValue)) {
+								Ext.data.StoreManager.lookup('dsDivision').load({
                                     params: { 'ID_DEPARTAMENTO': newValue },
                                     callback: function (records, operation, success) {
                                         cmbDiv.setDisabled(!(Ext.isArray(records) && records.length > 0));
                                     }
                                 });
+								store.setProxy(Ext.apply(store.getProxy(),{
+									extraParams: {
+										'ANO_INICIO': Ext.getCmp('cmb_menu_ano').getValue(),
+										'TEMPLATE': Ext.getCmp('chk_menu_show_templates').checked,
+										'ID_DEPARTAMENTO_ORGANIZACION': newValue,
+										'ID_DIVISION': 0
+									}
+								}))
+								store.load();
                             } else {
 								cmbDiv.setDisabled(true);
-							}
+								store.setProxy(Ext.apply(store.getProxy(),{
+									extraParams: {
+										'ANO_INICIO': Ext.getCmp('cmb_menu_ano').getValue(),
+										'TEMPLATE': Ext.getCmp('chk_menu_show_templates').checked,
+										'ID_DEPARTAMENTO_ORGANIZACION': 0,
+										'ID_DIVISION': 0
+									}
+								}))
+								store.load();
+								
+                            }
+							
                         }
                     }
                 },

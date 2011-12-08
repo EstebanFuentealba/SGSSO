@@ -511,7 +511,7 @@
 
 
                             if (errors.isValid() && form.isValid()) {
-                                this.disable(true);
+                                //this.disable(true);
                                 if (tipo_turno == 1) {
                                     var records = [];
                                     var chks = Ext.getCmp('chk_group_turno_list').getValue();
@@ -530,7 +530,7 @@
                             } else {
                                 form.markInvalid(errors);
                             }
-                            this.enable(true);
+                            //this.enable(true);
 
 
                         }

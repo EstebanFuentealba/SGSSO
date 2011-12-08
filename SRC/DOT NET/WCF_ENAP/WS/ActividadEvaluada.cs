@@ -102,16 +102,19 @@ namespace WCF_ENAP
                 }
                 _start = (_page * _limit) - _limit;
                 var query = bd.TBL_ACTIVIDAD_EVALUADA.Skip(_start).Take(_limit);
-                if ((_ID_PELIGRO != 0) && (_ID_DEPARTAMENTO_ORGANIZACION != 0) && (_ID_DIVISION != 0) && (_ID_AREA != 0) && (_ID_ACTIVIDAD_GENERAL != 0) && (_ID_ACTIVIDAD_ESPECIFICA != 0) && (_ID_CARGO != 0) && (_CONDICION != 0))
+                if ((_ID_PELIGRO != 0) && (_ID_DEPARTAMENTO_ORGANIZACION != 0) && (_ID_DIVISION != 0) && (_ID_ACTIVIDAD_GENERAL != 0) && (_ID_ACTIVIDAD_ESPECIFICA != 0) && (_ID_CARGO != 0) && (_CONDICION != 0))
                 {
                     query = query.Where(s => s.ID_DEPARTAMENTO_ORGANIZACION == (int)_ID_DEPARTAMENTO_ORGANIZACION 
                         && s.ID_DIVISION == (int)_ID_DIVISION
-                        && s.ID_AREA == (int)_ID_AREA
                         && s.ID_ACTIVIDAD_GENERAL == _ID_ACTIVIDAD_GENERAL
                         && s.ID_ACTIVIDAD_ESPECIFICA == _ID_ACTIVIDAD_ESPECIFICA
                         && s.ID_CARGO == _ID_CARGO
                         && s.CONDICION == _CONDICION
                         && s.ID_PELIGRO == _ID_PELIGRO);
+                    if (_ID_AREA != 0)
+                    {
+                        query = query.Where(s => s.ID_AREA == (int)_ID_AREA);
+                    }
                 }
                     query = query.OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
                     List<TBL_ACTIVIDAD_EVALUADA> results = query.ToList();
