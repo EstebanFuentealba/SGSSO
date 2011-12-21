@@ -62,7 +62,8 @@ Ext.define('WCF_ENAP.view.ui.ProgramaAnualV2', {
 			}));
         };
 		//	LISTENERS
-        dsProgramaAnual.on('add',fnListenerProgramaAnual);
+        dsProgramaAnual.on('add', fnListenerProgramaAnual);
+        dsProgramaAnual.on('load', fnListenerProgramaAnual);
 		dsProgramaAnual.on('remove',fnListenerProgramaAnual);
 		dsProgramaAnual.on('update',fnListenerProgramaAnual);
 		

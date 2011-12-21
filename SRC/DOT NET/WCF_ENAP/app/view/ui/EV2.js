@@ -34,7 +34,65 @@ Ext.define('WCF_ENAP.view.ui.EV2', {
             columnWidth: .5
         });
 
+        Ext.StoreManager.lookup('dsMatrizRiesgo').on('write', function (store, operation, options) {
+            console.log(operation.getRecords());
+            /*var record = operation.getRecords()[0],
+                name = Ext.String.capitalize(operation.action);
+            if (name == 'Create') {
+                if (record.get('ID_MATRIZ')) {
+                    var idNuevaMatriz = record.get('ID_MATRIZ');
+                    var winOk = Ext.create('Ext.window.Window', {
+                        width: 673,
+                        title: 'Agregado con éxito',
+                        modal: true,
+                        items: [
+                        {
+                            xtype: 'label',
+                            height: 14,
+                            margin: '10 10 10 10',
+                            width: 47,
+                            text: 'Se guardó la matriz con éxito, ¿ Quieres Descargar un Documento ?'
+                        },
+                        {
+                            xtype: 'panel',
+                            frame: true,
+                            margin: '5 5 5 5',
+                            layout: {
+                                type: 'column'
+                            },
+                            flex: 1,
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    text: 'Planilla de Reconocimiento de Riesgo',
+                                    columnWidth: 0.5,
+                                    iconCls: 'matriz-icon',
+                                    handler: function () {
+                                        window.location = "/utils/Export-Planilla.aspx?ID_MATRIZ=" + idNuevaMatriz;
+                                        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 5',
+                                    text: 'Matriz de Riesgo',
+                                    columnWidth: 0.5,
+                                    iconCls: 'matriz-icon',
+                                    handler: function () {
+                                        window.location = "/utils/Export-Matriz.aspx?ID_MATRIZ=" + idNuevaMatriz;
+                                        Ext.Msg.alert('Advertencia', 'Espera un momento mientras se genera el documento, ésto puede tardar varios segundos.');
+                                    }
+                                }
+                            ]
+                        }
 
+                        ]
+                    });
+                    winOk.show();
+                }
+            }*/
+        });
         Ext.StoreManager.lookup('dsActividadEvaluada').on('write', function (store, operation, index, eOpts) {
             var record = operation.getRecords()[0],
                 name = Ext.String.capitalize(operation.action);

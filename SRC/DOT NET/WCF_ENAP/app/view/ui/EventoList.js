@@ -32,14 +32,6 @@
                 try {
                     var nuevo_marker = fnCreateMarkerFromRecord(record);
                     Ext.getCmp('gmapid').addSingleMarker(nuevo_marker);
-                    /*Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
-                    params: {
-                    'ANO': newValue
-                    },
-                    callback: function (records, operation, success) {
-                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
-                    }
-                    });*/
                 } catch (e) { }
             }
         });
@@ -352,7 +344,7 @@
                                         },
                                         {
                                             xtype: 'button',
-                                            text: 'Afecta a Trabajador',
+                                            text: 'Información del Incidente',
                                             handler: function () {
                                                 var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
                                                     me = this;
@@ -360,7 +352,7 @@
                                                     name: 'WCF_ENAP',
                                                     stores:
                                                             [
-                                                                'dsTrabajador',
+                                                                'dsTrabajadorInvolucrado',
                                                                 'dsCargo',
                                                                 'dsPeligro',
                                                                 'dsCausa',
@@ -381,7 +373,7 @@
 
                                             }
                                         },
-                                        {
+                                        /*{
                                             xtype: 'button',
                                             text: 'Afecta a PATRIMONIO',
                                             handler: function () {
@@ -412,7 +404,7 @@
                                                 });
 
                                             }
-                                        },
+                                        },*/
                                         {
                                             xtype: 'button',
                                             text: 'Acciones Correctivas',

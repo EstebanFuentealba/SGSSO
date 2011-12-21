@@ -61,7 +61,7 @@ namespace WCF_ENAP
         [WebInvoke(UriTemplate = "", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         public JSONCollection<TBL_ACCION_CORRECTIVA> Create(
             string ID_USUARIO, 
-            string ID_INFORME, 
+            string ID_EVENTO, 
             string ID_ACCION, 
             string FECHA_PLAZO, 
             string FECHA_REALIZACION, 
@@ -76,7 +76,7 @@ namespace WCF_ENAP
                 {
                     ID_ACCION = int.Parse(ID_ACCION),
                     ID_USUARIO = ID_USUARIO,
-                    ID_INFORME_PRELIMINAR = int.Parse(ID_INFORME),
+                    ID_EVENTO= int.Parse(ID_EVENTO),
                     FECHA_PLAZO = DateTime.Parse(FECHA_PLAZO),
                     //FECHA_REALIZACION = DateTime.Parse(FECHA_REALIZACION),
                     PORCENTAJE_CUMPLIMIENTO = int.Parse(PORCENTAJE_CUMPLIMIENTO),
@@ -125,7 +125,7 @@ namespace WCF_ENAP
                               where variable.ID_ACCION_CORRECTIVA == int.Parse(id)
                               select variable).Single();
                 objeto.ID_USUARIO = nuevo.ID_USUARIO;
-                objeto.ID_INFORME_PRELIMINAR = nuevo.ID_INFORME_PRELIMINAR;
+                objeto.ID_EVENTO = nuevo.ID_EVENTO;
                 objeto.ID_ACCION = nuevo.ID_ACCION;
                 objeto.FECHA_PLAZO = nuevo.FECHA_PLAZO;
                 objeto.FECHA_REALIZACION = nuevo.FECHA_REALIZACION;

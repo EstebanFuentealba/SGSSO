@@ -8,7 +8,7 @@
     width: 850,
     maximizable: true,
     cmpRecord: null,
-    title: 'Agregar Datos Acciones Correctivase',
+    title: 'Agregar Datos de Acciones Correctivas',
     initComponent: function () {
 
         var me = this,
@@ -45,7 +45,7 @@
 															            store: 'dsAccion',
 															            displayField: 'NOMBRE_ACCION',
 															            valueField: 'ID_ACCION',
-															            fieldLabel: 'Accion Correctiva',
+															            fieldLabel: 'Acción Correctiva',
 															            //emptyText: 'Listado de Acciones Correctivas',
 															            //allowBlank: false,
 															            anchor: '100%',
@@ -83,7 +83,7 @@
 																						                    displayField: 'NOMBRE_ACCION',
 																						                    valueField: 'ID_ACCION',
 																						                    fieldLabel: 'Accion',
-																						                    emptyText: 'Accion Correctiva',
+																						                    emptyText: 'Acción Correctiva',
 																						                    allowBlank: false
 																						                }
 
@@ -127,8 +127,8 @@
 												            displayField: 'NOMBRE_CARGO',
 												            valueField: 'ID_CARGO',
 												            multiSelect: true,
-												            fieldLabel: 'Responsable',
-												            emptyText: 'Responsable',
+												            fieldLabel: 'Responsable(s)',
+												            emptyText: 'Selecciona Responsable(s)',
 												            allowBlank: false
 												        },
 												        {
@@ -140,9 +140,9 @@
 														                    labelAlign: 'top',
 														                    name: 'FECHA_PLAZO',
 														                    margin: '5 5 5 5',
-														                    fieldLabel: 'Fecha Propuesta Ejecucion',
+														                    fieldLabel: 'Fecha de Ejecución',
 														                    anchor: '100%',
-														                    emptyText: 'Fecha Propuesta Ejecucion',
+														                    emptyText: 'Fecha de Ejecución',
 														                    columnWidth: 0.5
 														                }
 													                ]
@@ -154,7 +154,7 @@
 												            margin: '5 5 5 5',
 												            name: 'ID_ACCION_CORRECTIVA',
 												            style: 'background-color: white;',
-												            fieldLabel: 'Descripcion de la o las acciones Correctivas',
+												            fieldLabel: 'Descripción de la o las acciones Correctivas',
 												            anchor: '100%'
 												        }
 									],

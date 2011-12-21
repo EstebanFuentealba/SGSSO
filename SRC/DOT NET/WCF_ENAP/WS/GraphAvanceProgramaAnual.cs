@@ -63,7 +63,7 @@ namespace WCF_ENAP
             }
             _start = (_page * _limit) - _limit;
             JSONCollection<List<sp_indicadores_all_programa_anualResult>> objJSON = new JSONCollection<List<sp_indicadores_all_programa_anualResult>>();
-            var query = bd.sp_indicadores_all_programa_anual(_ANO_INICIO, _start, _limit,false);
+            var query = bd.sp_indicadores_all_programa_anual(_ANO_INICIO, _start, _limit);
             objJSON.items = query.ToList<sp_indicadores_all_programa_anualResult>();
             objJSON.success = true;
             return objJSON;

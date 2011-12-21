@@ -88,7 +88,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
      * @cfg {String} minSelectionsText Validation message displayed when {@link #minSelections} is not met (defaults to 'Minimum {0}
      * item(s) required').  The {0} token will be replaced by the value of {@link #minSelections}.
      */
-    minSelectionsText: 'Minimum {0} item(s) required',
+    minSelectionsText: 'Mínimo {0} item(s) es requerido',
 
     /**
      * @cfg {String} maxSelectionsText Validation message displayed when {@link #maxSelections} is not met (defaults to 'Maximum {0}
