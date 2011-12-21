@@ -34,8 +34,8 @@ Tipos de Causa:
 11	Liderazgo Deficiente
 12	Ingeniería Inadecuada
 13	Deficiencia de Adquisiciones
-14	Mantención Deficiente
-15	Estándares de Trabajo inadecuados
+15	Mantención Deficiente
+-	Estándares de Trabajo inadecuados
 16	Herramientas y Equipos Inadecuados
 17	Uso y Desgaste
 18	Abuso o Maltrato
@@ -62,7 +62,7 @@ Tipos de Causa:
         public static int CAUSA_ING_INADECUADA = 12;
 
         public static int CAUSA_COMPRAS_INADECUADAS = 13;
-        public static int CAUSA_MANTENIMIENTO_INADECUADO = 14;
+        public static int CAUSA_MANTENIMIENTO_INADECUADO = 15;
         
         public static int CAUSA_HERR_EQUI_INADECUADO = 16;
         public static int CAUSA_USO_DESGASTE = 17;

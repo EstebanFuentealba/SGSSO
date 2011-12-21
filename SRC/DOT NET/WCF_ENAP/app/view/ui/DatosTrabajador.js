@@ -165,6 +165,7 @@
 					    items: [
 								{
 								    xtype: 'form',
+								    id: 'form_afecta_a',
 								    bodyPadding: 10,
 								    title: 'Afecta a',
 								    items: [
@@ -175,6 +176,7 @@
                                                         items: [
                                                             {
                                                                 xtype: 'checkboxfield',
+                                                                name: 'AFECTA_PERSONA',
                                                                 boxLabel: 'Personas',
                                                                 listeners: {
                                                                     change: function (field, newValue, oldValue, eOpts) {
@@ -197,6 +199,7 @@
                                                             },
                                                             {
                                                                 xtype: 'checkboxfield',
+                                                                name: 'AFECTA_PATRIMONIO',
                                                                 boxLabel: 'Patrimonio',
                                                                 listeners: {
                                                                     change: function (field, newValue, oldValue, eOpts) {
@@ -214,6 +217,7 @@
                                                             },
                                                             {
                                                                 xtype: 'checkboxfield',
+                                                                name: 'AFECTA_PERDIDA_PROCESO',
                                                                 boxLabel: 'Pérdida de Proceso',
                                                                 listeners: {
                                                                     change: function (field, newValue, oldValue, eOpts) {
@@ -230,6 +234,7 @@
                                                             },
                                                             {
                                                                 xtype: 'checkboxfield',
+                                                                name: 'AFECTA_MEDIO_AMBIENTE',
                                                                 boxLabel: 'Medio Ambiente',
                                                                 listeners: {
                                                                     change: function (field, newValue, oldValue, eOpts) {
@@ -247,6 +252,7 @@
                                                             },
                                                             {
                                                                 xtype: 'checkboxfield',
+                                                                name: 'AFECTA_IMAGEN',
                                                                 boxLabel: 'Imágen',
                                                                 listeners: {
                                                                     change: function (field, newValue, oldValue, eOpts) {
@@ -984,7 +990,7 @@
 										                            );
 										                            new_object = Ext.create('WCF_ENAP.model.Trabajador', joinValues);
 										                            Ext.data.StoreManager.lookup('dsTrabajadorInvolucrado').insert(0, new_object);
-										                            
+
 										                        }
 										                    }
 									                    ]
@@ -1202,6 +1208,7 @@
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresAbuso,
                                         name: 'CAUSA_LISTA_FACTORES_ABUSO_MALTRATO',
+                                        id: 'CAUSA_LISTA_FACTORES_ABUSO_MALTRATO',
                                         fieldLabel: 'Abuso o Maltrato',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione el o las',
@@ -1214,6 +1221,7 @@
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresIngInadecuada,
                                         name: 'CAUSA_LISTA_FACTORES_ING_INADECUADA',
+                                        id: 'CAUSA_LISTA_FACTORES_ING_INADECUADA',
                                         fieldLabel: 'Ingeniería Inadecuada',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1226,6 +1234,7 @@
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresComprasInadecuadas,
                                         name: 'CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA',
+                                        id: 'CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA',
                                         fieldLabel: 'Deficiencia en las Adquisiciones',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1238,6 +1247,7 @@
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresMantenimientoInadecuado,
                                         name: 'CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA',
+                                        id: 'CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA',
                                         fieldLabel: 'Mantención Deficiente',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1249,6 +1259,8 @@
                                     {
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresHerrEquioInadecuado,
+                                        name: 'CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO',
+                                        id: 'CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO',
                                         fieldLabel: 'Herramientas y equipos inadecuados',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1260,6 +1272,8 @@
                                     {
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresUsoDesgaste,
+                                        name: 'CAUSA_LISTA_FACTORES_USO_DESGASTE',
+                                        id: 'CAUSA_LISTA_FACTORES_USO_DESGASTE',
                                         fieldLabel: 'Uso y Desgaste',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1271,6 +1285,8 @@
                                     {
                                         xtype: 'boxselect',
                                         store: dsCausaListaFactoresFaltaLiderazgo,
+                                        name: 'CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO',
+                                        id: 'CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO',
                                         fieldLabel: 'Liderazgo deficiente',
                                         labelAlign: 'top',
                                         emptyText: 'Seleccione la o las',
@@ -1304,7 +1320,21 @@
 				                                form,
 				                                values;
 				                            form = Ext.getCmp('form_informe_preliminar').getForm();
-				                            if (form.isValid()) {
+				                            var TRABAJADORES_LIST = [];
+				                            Ext.StoreManager.lookup('dsTrabajadorInvolucrado').each(function (record) { TRABAJADORES_LIST.push(record.get('ID_TRABAJADOR')); });
+
+				                            new_object = Ext.create('WCF_ENAP.model.e0063', Ext.apply(
+                                                form.getValues(),
+                                                {
+                                                    'TIPO_INCIDENTE_PATRIMONIO': Ext.getCmp('TIPO_INCIDENTE_PATRIMONIO').getRawValue(),
+                                                    'TIPO_INCIDENTE_PERSONA': Ext.getCmp('TIPO_INCIDENTE_PERSONA').getRawValue(),
+                                                    'CAUSA_INMEDIATA_ACCION_PATRIMONIO': Ext.getCmp('CAUSA_INMEDIATA_ACCION_PATRIMONIO').getRawValue()
+                                                }
+                                            ));
+				                            Ext.data.StoreManager.lookup('dse0063').insert(0, new_object);
+				                            errors = new_object.validate();
+
+				                            if (errors.isValid() && form.isValid()) {
 
 				                            } else {
 				                                form.markInvalid(errors);
@@ -1361,7 +1391,44 @@
 					        }
 					    }
 					}
-				]
+				],
+			    listeners: {
+			        beforerender: function (cmp, eOpts) {
+			            var store = Ext.StoreManager.lookup('dse0063');
+			            store.setProxy(Ext.apply(store.getProxy(), {
+			                extraParams: {
+			                    'ID_EVENTO_EMPRESA': me.cmpRecord.get('ID_EVENTO_EMPRESA')
+			                }
+			            }));
+			            store.load({
+			                callback: function (records, operation, success) {
+			                    if (records.length > 0) {
+			                        var record = records[0];
+			                        console.log(record);
+
+			                        Ext.getCmp('form_afecta_a').loadRecord(record);
+			                        dsPeligroLista.on('load', function () {
+			                            Ext.getCmp('TIPO_INCIDENTE_PERSONA').setRawValue(record.get('TIPO_INCIDENTE_PERSONA'));
+			                        });
+			                        dsPeligroListaTipoIncidentePatrimonio.on('load', function () {
+			                            Ext.getCmp('TIPO_INCIDENTE_PATRIMONIO').setRawValue(record.get('TIPO_INCIDENTE_PATRIMONIO'));
+			                        });
+			                        dsCausaListaCondcion.on('load', function () {
+			                            Ext.getCmp('CAUSA_INMEDIATA_ACCION_PATRIMONIO').setRawValue(record.get('CAUSA_INMEDIATA_ACCION_PATRIMONIO'));
+			                        });
+
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_ABUSO_MALTRATO').value = record.get('CAUSA_LISTA_FACTORES_ABUSO_MALTRATO');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_ING_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_ING_INADECUADA');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO').value = record.get('CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_USO_DESGASTE').value = record.get('CAUSA_LISTA_FACTORES_USO_DESGASTE');
+			                        Ext.getCmp('CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO').value = record.get('CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO');
+			                    }
+			                }
+			            });
+			        }
+			    }
 			}
 		];
         me.callParent(arguments);

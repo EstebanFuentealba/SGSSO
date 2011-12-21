@@ -1,23 +1,32 @@
 Ext.define('WCF_ENAP.model.e0063', {
     extend: 'Ext.data.Model',
-    idProperty: 'ID_EVENTO_EMPRESA',
+    idProperty: 'ID_INFORME_PRELIMINAR',
     fields: [
-        { "name": "ID_EVENTO_EMPRESA", "type": "int", "useNull": true },
+        { "name": "ID_INFORME_PRELIMINAR", "type": "int", "useNull": true },
+        { "name": "ID_EVENTO_EMPRESA", "type": "int" },
+        { "name": "AFECTA_PERSONA", "type": "boolean" },
+        { "name": "AFECTA_PATRIMONIO", "type": "boolean" },
+        { "name": "AFECTA_PERDIDA_PROCESO", "type": "boolean" },
+        { "name": "AFECTA_MEDIO_AMBIENTE", "type": "boolean" },
+        { "name": "AFECTA_IMAGEN", "type": "boolean" },
+
         { "name": "CLASIFICACION_TRABAJADOR", "type": "int" },
         { "name": "CLASIFICACION_PATRIMONIO", "type": "int" },
         { "name": "CLASIFICACION_MEDIO_AMBIENTE", "type": "int" },
         { "name": "CLASIFICACION_PERDIDA_PROCESO", "type": "int" },
         { "name": "CLASIFICACION_IMAGEN", "type": "int" },
+
         { "name": "TIPO_INCIDENTE_PATRIMONIO" },
-        { "name": "TIPO_INCIDENTE_PERSONA" },
         { "name": "TIPO_INCIDENTE_PERSONA" },
         { "name": "CAUSA_INMEDIATA_ACCION_PATRIMONIO" },
         { "name": "CAUSA_LISTA_FACTORES_ABUSO_MALTRATO" },
         { "name": "CAUSA_LISTA_FACTORES_ING_INADECUADA" },
         { "name": "CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA" },
-        { "name": "CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA" }
+        { "name": "CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA" },
+        { "name": "CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO" },
+        { "name": "CAUSA_LISTA_FACTORES_USO_DESGASTE" },
+        { "name": "CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO" }
     ]
-
 });
 Ext.define('WCF_ENAP.store.dse0063', {
     extend: 'Ext.data.Store',
@@ -26,15 +35,15 @@ Ext.define('WCF_ENAP.store.dse0063', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             autoSync: true,
             storeId: 'dse0063',
-            pageSize: 300,
+            pageSize: 10,
             remoteSort: true,
             model: 'WCF_ENAP.model.e0063',
             proxy: {
                 type: 'rest',
-                url: '/e0063/',
+                url: '/Evento/preliminar',
                 reader: {
                     type: 'json',
                     root: 'items',

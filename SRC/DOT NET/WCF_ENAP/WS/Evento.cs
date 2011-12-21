@@ -17,6 +17,37 @@ using System.Web.Script.Serialization;
   */
 namespace WCF_ENAP
 {
+    public class InformePreliminarJSON
+    {
+        public int ID_INFORME_PRELIMINAR;
+        public int ID_EVENTO_EMPRESA;
+
+        public bool AFECTA_PERSONA = false;
+        public bool AFECTA_PATRIMONIO = false;
+        public bool AFECTA_PERDIDA_PROCESO = false;
+        public bool AFECTA_MEDIO_AMBIENTE = false;
+        public bool AFECTA_IMAGEN = false;
+
+        public int CLASIFICACION_TRABAJADOR;
+        public int CLASIFICACION_PATRIMONIO;
+        public int CLASIFICACION_MEDIO_AMBIENTE;
+        public int CLASIFICACION_PERDIDA_PROCESO;
+        public int CLASIFICACION_IMAGEN;
+
+        public int[] TIPO_INCIDENTE_PATRIMONIO;
+        public int[] TIPO_INCIDENTE_PERSONA;
+
+        public int[] CAUSA_INMEDIATA_ACCION_PATRIMONIO;
+
+        public int[] CAUSA_LISTA_FACTORES_ABUSO_MALTRATO;
+        public int[] CAUSA_LISTA_FACTORES_ING_INADECUADA;
+        public int[] CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA;
+        public int[] CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA;
+        public int[] CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO;
+        public int[] CAUSA_LISTA_FACTORES_USO_DESGASTE;
+        public int[] CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO;
+
+    }
     public class TrabajadorInvolucradoJSON
     {
         public string RUT_TRABAJADOR;
@@ -56,6 +87,128 @@ namespace WCF_ENAP
         {
             bd = new DataClassesEnapDataContext();
         }
+        [WebGet(UriTemplate = "preliminar?ID_EVENTO_EMPRESA={ID_EVENTO_EMPRESA}")]
+        public JSONCollection<InformePreliminarJSON> GetInformePreliminar(
+            int ID_EVENTO_EMPRESA)
+        {
+            JSONCollection<InformePreliminarJSON> objJSON = new JSONCollection<InformePreliminarJSON>();
+            var resultsCausas = ( from cip in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                            join ca in bd.TBL_CAUSA on cip.ID_CAUSA equals ca.ID_CAUSA
+                            where cip.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA
+                            orderby ca.TIPO_CAUSA ascending
+                            select ca).ToList();
+            var resultsEvaluaciones = (from ev in bd.TBL_EVALUACION_INCIDENTE
+                                 where ev.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA
+                                 orderby ev.AFECTA ascending
+                                 select ev).ToList();
+            var resultsPeligros = (from pet in bd.TBL_PELIGRO_EVENTO_TRABAJADOR
+                                   join pe in bd.TBL_PELIGRO on pet.ID_PELIGRO equals pe.ID_PELIGRO
+                                   where pet.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA
+                                   orderby pe.TIPO_PELIGRO ascending
+                                   select pe).ToList();
+            InformePreliminarJSON informePreliminar = new InformePreliminarJSON();
+            List<int> incidenteOtro = new List<int>();
+            List<int> incidentePersona = new List<int>(); 
+            foreach (TBL_PELIGRO peligro in resultsPeligros)
+            {
+                if (peligro.TIPO_PELIGRO == 1)
+                {
+                    incidentePersona.Add(peligro.ID_PELIGRO);
+                }
+                else if (peligro.TIPO_PELIGRO == 2)
+                {
+                    incidenteOtro.Add(peligro.ID_PELIGRO);
+                }
+            }
+            informePreliminar.TIPO_INCIDENTE_PATRIMONIO = incidenteOtro.ToArray();
+            informePreliminar.TIPO_INCIDENTE_PERSONA = incidentePersona.ToArray();
+
+            foreach (TBL_EVALUACION_INCIDENTE evaluacion in resultsEvaluaciones)
+            {
+                if (evaluacion.AFECTA == 1)
+                {
+                    informePreliminar.CLASIFICACION_TRABAJADOR = (int)evaluacion.CALIFICACION;
+                    informePreliminar.AFECTA_PERSONA = true;
+                }
+                else if (evaluacion.AFECTA == 2)
+                {
+                    informePreliminar.CLASIFICACION_PATRIMONIO = (int)evaluacion.CALIFICACION;
+                    informePreliminar.AFECTA_PATRIMONIO = true;
+                }
+                else if (evaluacion.AFECTA == 3)
+                {
+                    informePreliminar.CLASIFICACION_PERDIDA_PROCESO = (int)evaluacion.CALIFICACION;
+                    informePreliminar.AFECTA_PERDIDA_PROCESO = true;
+                }
+                else if (evaluacion.AFECTA == 4)
+                {
+                    informePreliminar.CLASIFICACION_MEDIO_AMBIENTE = (int)evaluacion.CALIFICACION;
+                    informePreliminar.AFECTA_MEDIO_AMBIENTE = true;
+                }
+                else if (evaluacion.AFECTA == 5)
+                {
+                    informePreliminar.CLASIFICACION_IMAGEN = (int)evaluacion.CALIFICACION;
+                    informePreliminar.AFECTA_IMAGEN = true;
+                }
+            }
+            List<int> condiciones = new List<int>();
+            List<int> abusoMaltrato = new List<int>();
+            List<int> ingInadecuada = new List<int>();
+            List<int> adquisicionesInadecuada = new List<int>();
+            List<int> mantencionInadecuada = new List<int>();
+            List<int> herramientaEquipoInadecuada = new List<int>();
+            List<int> usoDesgaste = new List<int>();
+            List<int> faltaLiderazgo = new List<int>();
+            foreach (TBL_CAUSA causa in resultsCausas)
+            {
+                if (causa.TIPO_CAUSA == e0063.CAUSA_CONDICION)
+                {
+                    condiciones.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_FACTORES_ABUSO)
+                {
+                    abusoMaltrato.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_ING_INADECUADA)
+                {
+                    ingInadecuada.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_COMPRAS_INADECUADAS)
+                {
+                    adquisicionesInadecuada.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_MANTENIMIENTO_INADECUADO)
+                {
+                    mantencionInadecuada.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_HERR_EQUI_INADECUADO)
+                {
+                    herramientaEquipoInadecuada.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_USO_DESGASTE)
+                {
+                    usoDesgaste.Add(causa.ID_CAUSA);
+                }
+                else if (causa.TIPO_CAUSA == e0063.CAUSA_FALTA_LIDERAZGO)
+                {
+                    faltaLiderazgo.Add(causa.ID_CAUSA);
+                }
+            }
+            informePreliminar.CAUSA_INMEDIATA_ACCION_PATRIMONIO = condiciones.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_ABUSO_MALTRATO = abusoMaltrato.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_ING_INADECUADA = ingInadecuada.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA = adquisicionesInadecuada.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA = mantencionInadecuada.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO = herramientaEquipoInadecuada.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_USO_DESGASTE = usoDesgaste.ToArray();
+            informePreliminar.CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO = faltaLiderazgo.ToArray();
+            objJSON.items = informePreliminar;
+            objJSON.totalCount = 1;
+            objJSON.success = true;
+            //} catch (Exception ex) { objJSON.success = false; }
+            return objJSON;
+        }
+
         [WebGet(UriTemplate = "trabajadores?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_EVENTO_EMPRESA={ID_EVENTO_EMPRESA}")]
         public JSONCollection<List<sp_get_trabajadores_by_id_evento_empresaResult>> GetTrabajadores(
             int _page,
@@ -141,6 +294,352 @@ namespace WCF_ENAP
             objJSON.totalCount = bd.TBL_EVENTO.Count<TBL_EVENTO>();
             objJSON.success = true;
             //} catch (Exception ex) { objJSON.success = false; }
+            return objJSON;
+        }
+        [WebInvoke(UriTemplate = "preliminar", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        public JSONCollection<InformePreliminarJSON> AddInformacionPreliminar(
+            int ID_EVENTO_EMPRESA,
+
+            int CLASIFICACION_TRABAJADOR,
+            int CLASIFICACION_PATRIMONIO,
+            int CLASIFICACION_MEDIO_AMBIENTE,
+            int CLASIFICACION_PERDIDA_PROCESO,
+            int CLASIFICACION_IMAGEN,
+
+            int[] TIPO_INCIDENTE_PATRIMONIO,
+            int[] TIPO_INCIDENTE_PERSONA,
+
+            int[] CAUSA_INMEDIATA_ACCION_PATRIMONIO,
+
+            int[] CAUSA_LISTA_FACTORES_ABUSO_MALTRATO,
+            int[] CAUSA_LISTA_FACTORES_ING_INADECUADA,
+            int[] CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA,
+            int[] CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA,
+            int[] CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO,
+            int[] CAUSA_LISTA_FACTORES_USO_DESGASTE,
+            int[] CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO
+        )
+        {
+            #region Si no viene la ID_EMPRESA , declaro por defecto ERBB
+            int ID_EMPRESA = 1;
+
+            #endregion
+
+            JSONCollection<InformePreliminarJSON> objJSON = new JSONCollection<InformePreliminarJSON>();
+
+            TBL_EVENTO_EMPRESA existeEventoEmpresa = (from evento_empresa in bd.TBL_EVENTO_EMPRESA
+                                                      where evento_empresa.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA
+                                                      select evento_empresa).Single<TBL_EVENTO_EMPRESA>();
+            #region [CLASIFICACION] Elimino todos las evaluacionesy agrego las nuevas
+            try
+            {
+                var evaluacionesIncidente = (from variable in bd.TBL_EVALUACION_INCIDENTE
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA
+                                      select variable).ToList();
+                bd.TBL_EVALUACION_INCIDENTE.DeleteAllOnSubmit(evaluacionesIncidente);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            if (CLASIFICACION_TRABAJADOR != 0)
+            {
+                TBL_EVALUACION_INCIDENTE evaluacionIncidenteTrabajador = new TBL_EVALUACION_INCIDENTE()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    AFECTA = 1,
+                    CALIFICACION = CLASIFICACION_TRABAJADOR
+                };
+                bd.TBL_EVALUACION_INCIDENTE.InsertOnSubmit(evaluacionIncidenteTrabajador);
+                bd.SubmitChanges();
+            }
+            if (CLASIFICACION_PATRIMONIO != 0)
+            {
+                TBL_EVALUACION_INCIDENTE evaluacionIncidentePatrimonio = new TBL_EVALUACION_INCIDENTE()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    AFECTA = 2,
+                    CALIFICACION = CLASIFICACION_PATRIMONIO
+                };
+                bd.TBL_EVALUACION_INCIDENTE.InsertOnSubmit(evaluacionIncidentePatrimonio);
+                bd.SubmitChanges();
+            }
+            if (CLASIFICACION_MEDIO_AMBIENTE != 0)
+            {
+                TBL_EVALUACION_INCIDENTE evaluacionIncidenteMedioAmbiente = new TBL_EVALUACION_INCIDENTE()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    AFECTA = 3,
+                    CALIFICACION = CLASIFICACION_MEDIO_AMBIENTE
+                };
+                bd.TBL_EVALUACION_INCIDENTE.InsertOnSubmit(evaluacionIncidenteMedioAmbiente);
+                bd.SubmitChanges();
+            }
+            if (CLASIFICACION_PERDIDA_PROCESO != 0)
+            {
+                TBL_EVALUACION_INCIDENTE evaluacionIncidentePerdidaProceso = new TBL_EVALUACION_INCIDENTE()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    AFECTA = 4,
+                    CALIFICACION = CLASIFICACION_PERDIDA_PROCESO
+                };
+                bd.TBL_EVALUACION_INCIDENTE.InsertOnSubmit(evaluacionIncidentePerdidaProceso);
+                bd.SubmitChanges();
+            }
+            if (CLASIFICACION_IMAGEN != 0)
+            {
+                TBL_EVALUACION_INCIDENTE evaluacionIncidenteImagen = new TBL_EVALUACION_INCIDENTE()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    AFECTA = 5,
+                    CALIFICACION = CLASIFICACION_IMAGEN
+                };
+                bd.TBL_EVALUACION_INCIDENTE.InsertOnSubmit(evaluacionIncidenteImagen);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [TIPO_INCIDENTE_PATRIMONIO] Elimino los tipos de incidente de patrimonio que existieran y agrego los nuevas
+            try
+            {
+                var peligrosPatrimonio = (from variable in bd.TBL_PELIGRO_EVENTO_TRABAJADOR
+                                      join peligro in bd.TBL_PELIGRO on variable.ID_PELIGRO equals peligro.ID_PELIGRO
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && peligro.TIPO_PELIGRO == 2
+                                      select variable).ToList();
+                bd.TBL_PELIGRO_EVENTO_TRABAJADOR.DeleteAllOnSubmit(peligrosPatrimonio);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idPeligroPatrimonio in TIPO_INCIDENTE_PATRIMONIO)
+            {
+                TBL_PELIGRO_EVENTO_TRABAJADOR nuevaPeligroPatrimonio = new TBL_PELIGRO_EVENTO_TRABAJADOR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_PELIGRO = idPeligroPatrimonio
+                };
+                bd.TBL_PELIGRO_EVENTO_TRABAJADOR.InsertOnSubmit(nuevaPeligroPatrimonio);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [TIPO_INCIDENTE_PERSONA] Elimino los tipos de incidente de persona que existieran y agrego los nuevas
+            try
+            {
+                var peligrosPersona = (from variable in bd.TBL_PELIGRO_EVENTO_TRABAJADOR
+                                          join peligro in bd.TBL_PELIGRO on variable.ID_PELIGRO equals peligro.ID_PELIGRO
+                                          where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && peligro.TIPO_PELIGRO == 1
+                                          select variable).ToList();
+                bd.TBL_PELIGRO_EVENTO_TRABAJADOR.DeleteAllOnSubmit(peligrosPersona);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idPeligroPersona in TIPO_INCIDENTE_PERSONA)
+            {
+                TBL_PELIGRO_EVENTO_TRABAJADOR nuevaPeligroPersona = new TBL_PELIGRO_EVENTO_TRABAJADOR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_PELIGRO = idPeligroPersona
+                };
+                bd.TBL_PELIGRO_EVENTO_TRABAJADOR.InsertOnSubmit(nuevaPeligroPersona);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_INMEDIATA_ACCION_PATRIMONIO] Elimino todos las causas inmediatas del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaInmediata = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_CONDICION
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaInmediata);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaCondicion in CAUSA_INMEDIATA_ACCION_PATRIMONIO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaInmediata = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaCondicion
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_ABUSO_MALTRATO] Elimino todos las causas abuso maltrato del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaAbusoMaltrato = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_FACTORES_ABUSO
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaAbusoMaltrato);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaAbusoMaltrato in CAUSA_LISTA_FACTORES_ABUSO_MALTRATO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaAbusoMaltrato = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaAbusoMaltrato
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaAbusoMaltrato);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_ING_INADECUADA] Elimino todos las causas ingeniería inadecuada del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaIngInadecuada = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_ING_INADECUADA
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaIngInadecuada);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaIngInadecuada in CAUSA_LISTA_FACTORES_ING_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaIngInadecuada = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaIngInadecuada
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaIngInadecuada);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA] Elimino todos las causas compras inadecuadas del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaComprasInadecuada = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_COMPRAS_INADECUADAS
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaComprasInadecuada);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaComprasInadecuada in CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaComprasInadecuada = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaComprasInadecuada
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaComprasInadecuada);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA] Elimino todos las causas mantenimiento inadecuadas del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaMantenimientoInadecuado = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_MANTENIMIENTO_INADECUADO
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaMantenimientoInadecuado);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaMantenimientoInadecuado in CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaMantenimientoInadecuado = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaMantenimientoInadecuado
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaMantenimientoInadecuado);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO] Elimino todos las causas herramientas y equipos inadecuados del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaHerramientaEquipoInadecuado = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_HERR_EQUI_INADECUADO
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaHerramientaEquipoInadecuado);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaHerramientaEquipoInadecuado in CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaHerramientaEquipoInadecuado = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaHerramientaEquipoInadecuado
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaHerramientaEquipoInadecuado);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_USO_DESGASTE] Elimino todos las causas uso desgaste inadecuadas del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaUsoDesgaste = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_USO_DESGASTE
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaUsoDesgaste);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaUsoDesgaste in CAUSA_LISTA_FACTORES_USO_DESGASTE)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaCausaUsoDesgaste = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaUsoDesgaste
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaCausaUsoDesgaste);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO] Elimino todos las causas falta de liderazgo del informe preliminar y agrego las nuevas
+            try
+            {
+                var causaFaltaLiderazgo = (from variable in bd.TBL_CAUSA_INFORME_PRELIMIANAR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_EMPRESA == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_LIDERAZGO
+                                      select variable).ToList();
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.DeleteAllOnSubmit(causaFaltaLiderazgo);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaFaltaLiderazgo in CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO)
+            {
+                TBL_CAUSA_INFORME_PRELIMIANAR nuevaCausaFaltaLiderazgo = new TBL_CAUSA_INFORME_PRELIMIANAR()
+                {
+                    ID_EVENTO_EMPRESA = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_CAUSA = idCausaFaltaLiderazgo
+                };
+                bd.TBL_CAUSA_INFORME_PRELIMIANAR.InsertOnSubmit(nuevaCausaFaltaLiderazgo);
+                bd.SubmitChanges();
+            }
+            #endregion
+
+            InformePreliminarJSON informePreliminar = new InformePreliminarJSON()
+            {
+                ID_INFORME_PRELIMINAR = ID_EVENTO_EMPRESA,
+                ID_EVENTO_EMPRESA = ID_EVENTO_EMPRESA,
+                CLASIFICACION_TRABAJADOR = CLASIFICACION_TRABAJADOR,
+                CLASIFICACION_PATRIMONIO = CLASIFICACION_PATRIMONIO,
+                CLASIFICACION_MEDIO_AMBIENTE = CLASIFICACION_MEDIO_AMBIENTE,
+                CLASIFICACION_PERDIDA_PROCESO = CLASIFICACION_PERDIDA_PROCESO,
+                CLASIFICACION_IMAGEN = CLASIFICACION_IMAGEN,
+                TIPO_INCIDENTE_PATRIMONIO = TIPO_INCIDENTE_PATRIMONIO,
+                TIPO_INCIDENTE_PERSONA = TIPO_INCIDENTE_PERSONA,
+                CAUSA_INMEDIATA_ACCION_PATRIMONIO = CAUSA_INMEDIATA_ACCION_PATRIMONIO,
+                CAUSA_LISTA_FACTORES_ABUSO_MALTRATO = CAUSA_LISTA_FACTORES_ABUSO_MALTRATO,
+                CAUSA_LISTA_FACTORES_ING_INADECUADA = CAUSA_LISTA_FACTORES_ING_INADECUADA,
+                CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA = CAUSA_LISTA_FACTORES_COMPRAS_INADECUADA,
+                CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA = CAUSA_LISTA_FACTORES_MANTENIMIENTO_INADECUADA,
+                CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO = CAUSA_LISTA_FACTORES_HERR_EQUIPO_INADECUADO,
+                CAUSA_LISTA_FACTORES_USO_DESGASTE = CAUSA_LISTA_FACTORES_USO_DESGASTE,
+                CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO = CAUSA_LISTA_FACTORES_FALTA_LIDERAZGO
+            };
+            objJSON.items = informePreliminar;
+            objJSON.totalCount = 1;
+            objJSON.success = true;
             return objJSON;
         }
         [WebInvoke(UriTemplate = "trabajadores", Method = "POST", RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -236,8 +735,8 @@ namespace WCF_ENAP
                 var causaInmediata = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                       join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                       where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_ACCION
-                                      select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(causaInmediata);
+                                      select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(causaInmediata);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -258,8 +757,8 @@ namespace WCF_ENAP
                 var capFisicaInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                            join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                            where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_CAP_FISICA_INADECUADA
-                                           select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(capFisicaInadecuada);
+                                           select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(capFisicaInadecuada);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -280,8 +779,8 @@ namespace WCF_ENAP
                 var cappsicologicaInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                                 join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                                 where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_CAP_PSICOLOGICA_INADECUADA
-                                                select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(cappsicologicaInadecuada);
+                                                select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(cappsicologicaInadecuada);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -303,8 +802,8 @@ namespace WCF_ENAP
                 var capMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                  join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                  where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
-                                 select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(capMental);
+                                 select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(capMental);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -326,8 +825,8 @@ namespace WCF_ENAP
                 var tensionMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                      where variable.ID_EVENTO_TRABAJADOR == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
-                                     select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(tensionMental);
+                                     select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(tensionMental);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -349,8 +848,8 @@ namespace WCF_ENAP
                 var faltaConocimiento = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                          join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                          where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_CONOCIMIENTO
-                                         select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(faltaConocimiento);
+                                         select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(faltaConocimiento);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -372,8 +871,8 @@ namespace WCF_ENAP
                 var faltaHabilidad = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                       join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                       where variable.ID_EVENTO_TRABAJADOR == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_HABILIDAD
-                                      select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(faltaHabilidad);
+                                      select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(faltaHabilidad);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -395,8 +894,8 @@ namespace WCF_ENAP
                 var motivacionInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                             join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                             where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_MOTIVACION_INADECUADA
-                                            select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(motivacionInadecuada);
+                                            select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(motivacionInadecuada);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -418,8 +917,8 @@ namespace WCF_ENAP
                 var autoCuidado = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                    join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                    where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_AUTO_CUIDADO
-                                   select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(autoCuidado);
+                                   select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(autoCuidado);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
@@ -441,8 +940,8 @@ namespace WCF_ENAP
                 var errores = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
                                where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_ERRORES
-                               select variable).First();
-                bd.TBL_CAUSA_TRABAJADOR.DeleteOnSubmit(errores);
+                               select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(errores);
                 bd.SubmitChanges();
             }
             catch (Exception ex) { }
