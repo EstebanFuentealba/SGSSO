@@ -796,6 +796,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresCapFisicaInadecuada,
                                                                 name: 'CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA',
+                                                                id: 'CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA',
                                                                 fieldLabel: 'Capacidad Física Inadecuada',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -809,6 +810,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresCapPsicologicaInadecuada,
                                                                 name: 'CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA',
+                                                                id: 'CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA',
                                                                 fieldLabel: 'Capacidad Psicológica Inadecuada',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -821,7 +823,8 @@
                                                             {
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresCapMental,
-                                                                name: 'CAUSA_LISTA_FATORES_CAP_MENTAL',
+                                                                name: 'CAUSA_LISTA_FATORES_TENSION_FISICA',
+                                                                id: 'CAUSA_LISTA_FATORES_TENSION_FISICA',
                                                                 fieldLabel: 'Tensión Física o Fisiológica',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -835,6 +838,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresTencionMental,
                                                                 name: 'CAUSA_LISTA_FATORES_TENSION_MENTAL',
+                                                                id: 'CAUSA_LISTA_FATORES_TENSION_MENTAL',
                                                                 fieldLabel: 'Tensión Mental o Sicológica',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -848,6 +852,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresFaltaConocimiento,
                                                                 name: 'CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO',
+                                                                id: 'CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO',
                                                                 fieldLabel: 'Falta de Conocimiento',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -860,6 +865,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresFaltaHabilidad,
                                                                 name: 'CAUSA_LISTA_FATORES_FALTA_HABILIDAD',
+                                                                id: 'CAUSA_LISTA_FATORES_FALTA_HABILIDAD',
                                                                 fieldLabel: 'Falta de Habilidad',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -873,6 +879,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresMotivacionInadecuada,
                                                                 name: 'CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA',
+                                                                id: 'CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA',
                                                                 fieldLabel: 'Motivación Deficiente',
                                                                 labelAlign: 'top',
                                                                 emptyText: 'Seleccione la o las',
@@ -932,6 +939,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresAutocuidado,
                                                                 name: 'CAUSA_LISTA_FATORES_AUTOCUIDADO',
+                                                                id: 'CAUSA_LISTA_FATORES_AUTOCUIDADO',
                                                                 fieldLabel: 'Estados',
                                                                 displayField: 'DESCRIPCION',
                                                                 valueField: 'ID_CAUSA',
@@ -944,6 +952,7 @@
                                                                 xtype: 'boxselect',
                                                                 store: dsCausaListaFactoresErrores,
                                                                 name: 'CAUSA_LISTA_FACTORES_ERRORES',
+                                                                id: 'CAUSA_LISTA_FACTORES_ERRORES',
                                                                 fieldLabel: 'Errores',
                                                                 displayField: 'DESCRIPCION',
                                                                 valueField: 'ID_CAUSA',
@@ -1054,6 +1063,7 @@
                                                             }
                                                         }
                                                     }
+
                                                 }
                                             },
                                             {
@@ -1062,7 +1072,29 @@
                                                 margin: '5 5 5 5',
                                                 title: 'Listado de Trabajadores Involucrados',
                                                 columnWidth: 0.5,
+
                                                 listeners: {
+                                                    'selectionchange': function (model, records) {
+                                                        if (records[0]) {
+                                                            var record = records[0];
+                                                            Ext.getCmp('form_afecta_trabajador').loadRecord(record);
+                                                            dsCausaListaAccion.on('load', function () {
+                                                                Ext.getCmp('CAUSA_INMEDIATA_ACCION').setRawValue(record.get('CAUSA_INMEDIATA_ACCION'));
+                                                            });
+
+                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA');
+                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA');
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_TENSION_FISICA').value = record.get('CAUSA_LISTA_FATORES_TENSION_FISICA');
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_TENSION_MENTAL').value = record.get('CAUSA_LISTA_FATORES_TENSION_MENTAL');
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO').value = record.get('CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO');
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_FALTA_HABILIDAD').value = record.get('CAUSA_LISTA_FATORES_FALTA_HABILIDAD');
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA').value = record.get('CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA');
+
+                                                            Ext.getCmp('CAUSA_LISTA_FATORES_AUTOCUIDADO').value = record.get('CAUSA_LISTA_FATORES_AUTOCUIDADO');
+                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_ERRORES').value = record.get('CAUSA_LISTA_FACTORES_ERRORES');
+                                                            Ext.getCmp('form_afecta_trabajador').doLayout();
+                                                        }
+                                                    },
                                                     'afterrender': function (cmp, eOpts) {
                                                         var dsTrabajadorInvolucrado = Ext.StoreManager.lookup('dsTrabajadorInvolucrado');
                                                         dsTrabajadorInvolucrado.setProxy(Ext.apply(dsTrabajadorInvolucrado.getProxy(), {
@@ -1404,7 +1436,6 @@
 			                callback: function (records, operation, success) {
 			                    if (records.length > 0) {
 			                        var record = records[0];
-			                        console.log(record);
 
 			                        Ext.getCmp('form_afecta_a').loadRecord(record);
 			                        dsPeligroLista.on('load', function () {

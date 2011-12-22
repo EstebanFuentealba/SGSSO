@@ -4,6 +4,7 @@ Ext.define('WCF_ENAP.model.e0063', {
     fields: [
         { "name": "ID_INFORME_PRELIMINAR", "type": "int", "useNull": true },
         { "name": "ID_EVENTO_EMPRESA", "type": "int" },
+
         { "name": "AFECTA_PERSONA", "type": "boolean" },
         { "name": "AFECTA_PATRIMONIO", "type": "boolean" },
         { "name": "AFECTA_PERDIDA_PROCESO", "type": "boolean" },

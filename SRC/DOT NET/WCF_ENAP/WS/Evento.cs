@@ -50,19 +50,21 @@ namespace WCF_ENAP
     }
     public class TrabajadorInvolucradoJSON
     {
+        public int ID_EVENTO_TRABAJADOR;
+        public int ID_EVENTO_EMPRESA;
         public string RUT_TRABAJADOR;
         public string NOMBRES;
         public string APELLIDO_MATERNO;
         public string APELLIDO_PATERNO;
-        public string ANOS_EXPERIENCIA_CARGO;
-        public string ANOS_EXPERIENCIA_LABORAL;
+        public int ANOS_EXPERIENCIA_CARGO;
+        public int ANOS_EXPERIENCIA_LABORAL;
         public int ID_CARGO;
         // Causa Inmediata Acción
         public int[] CAUSA_INMEDIATA_ACCION;
         // Factores de la persona
         public int[] CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA;
         public int[] CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA;
-        public int[] CAUSA_LISTA_FATORES_CAP_MENTAL;
+        public int[] CAUSA_LISTA_FATORES_TENSION_FISICA;
         public int[] CAUSA_LISTA_FATORES_TENSION_MENTAL;
         public int[] CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO;
         public int[] CAUSA_LISTA_FATORES_FALTA_HABILIDAD;
@@ -209,15 +211,16 @@ namespace WCF_ENAP
             return objJSON;
         }
 
-        [WebGet(UriTemplate = "trabajadores?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_EVENTO_EMPRESA={ID_EVENTO_EMPRESA}")]
-        public JSONCollection<List<sp_get_trabajadores_by_id_evento_empresaResult>> GetTrabajadores(
+        [WebGet(UriTemplate = "trabajadores?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_EVENTO_EMPRESA={ID_EVENTO_EMPRESA}&ID_TRABAJADOR={ID_TRABAJADOR}")]
+        public JSONCollection<List<TrabajadorInvolucradoJSON>> GetTrabajadores(
             int _page,
             int _start,
             int _limit,
             string _sort,
-            int ID_EVENTO_EMPRESA)
+            int ID_EVENTO_EMPRESA,
+            int ID_TRABAJADOR)
         {
-            JSONCollection<List<sp_get_trabajadores_by_id_evento_empresaResult>> objJSON = new JSONCollection<List<sp_get_trabajadores_by_id_evento_empresaResult>>();
+            JSONCollection<List<TrabajadorInvolucradoJSON>> objJSON = new JSONCollection<List<TrabajadorInvolucradoJSON>>();
             ExtJSSort sort = null;
             if (_sort != null)
             {
@@ -238,12 +241,115 @@ namespace WCF_ENAP
             }
             _start = (_page * _limit) - _limit;
 
-            var query = bd.sp_get_trabajadores_by_id_evento_empresa(ID_EVENTO_EMPRESA, _start, _limit).OrderBy("RUT_TRABAJADOR ASC");
-            //aki
-            query = query.Select(r => r);
-            List<sp_get_trabajadores_by_id_evento_empresaResult> results = query.ToList();
-            objJSON.items = results;
-            objJSON.totalCount = results.Count;
+            var resultTrabajador = (from et in bd.TBL_EVENTO_TRABAJADOR
+                                    join tr in bd.TBL_TRABAJADOR on et.ID_TRABAJADOR equals tr.ID_TRABAJADOR
+                                    where et.ID_EVENTO_EMPRESA == ID_EVENTO_EMPRESA
+                                    orderby tr.RUT_TRABAJADOR ascending
+                                    select new { 
+                                        et.ID_EVENTO_EMPRESA,
+                                        et.ID_EVENTO_TRABAJADOR,
+                                        tr.ID_TRABAJADOR,
+                                        tr.RUT_TRABAJADOR,
+                                        tr.NOMBRES,
+                                        tr.APELLIDO_PATERNO,
+                                        tr.APELLIDO_MATERNO,
+                                        tr.ANOS_EXPERIENCIA_LABORAL,
+                                        tr.ANOS_EXPERIENCIA_CARGO,
+                                        tr.ID_CARGO
+                                    }).Skip(_start).Take(_limit);
+            List<TrabajadorInvolucradoJSON> trabajadores = new List<TrabajadorInvolucradoJSON>();
+                foreach (var trabajador in resultTrabajador)
+                {
+                    
+                    TrabajadorInvolucradoJSON trabajadorInvolucrado = new TrabajadorInvolucradoJSON()
+                    {
+                        RUT_TRABAJADOR = trabajador.RUT_TRABAJADOR,
+                        NOMBRES = trabajador.NOMBRES,
+                        APELLIDO_PATERNO = trabajador.APELLIDO_PATERNO,
+                        APELLIDO_MATERNO = trabajador.APELLIDO_MATERNO,
+                        ANOS_EXPERIENCIA_LABORAL = (int)trabajador.ANOS_EXPERIENCIA_LABORAL,
+                        ANOS_EXPERIENCIA_CARGO = (int)trabajador.ANOS_EXPERIENCIA_CARGO,
+                        ID_CARGO = (int)trabajador.ID_CARGO
+                    };
+                    trabajadorInvolucrado.ID_EVENTO_TRABAJADOR = trabajador.ID_EVENTO_TRABAJADOR;
+                    trabajadorInvolucrado.ID_EVENTO_EMPRESA = (int)trabajador.ID_EVENTO_EMPRESA;
+
+                    var resultsCausas = (from ct in bd.TBL_CAUSA_TRABAJADOR
+                                         join et in bd.TBL_EVENTO_TRABAJADOR on ct.ID_EVENTO_TRABAJADOR equals et.ID_EVENTO_TRABAJADOR
+                                         join ca in bd.TBL_CAUSA on ct.ID_CAUSA equals ca.ID_CAUSA
+                                         where et.ID_TRABAJADOR == trabajador.ID_TRABAJADOR
+                                         orderby ca.TIPO_CAUSA ascending
+                                         select ca).ToList();
+                    List<int> acciones = new List<int>();
+                    List<int> capFisicaInadecuada = new List<int>();
+                    List<int> capPsicologicaInadecuada = new List<int>();
+                    List<int> tensionFisicaFisiologica = new List<int>();
+                    List<int> tensionMentalSicologica = new List<int>();
+                    List<int> faltaConocimiento = new List<int>();
+                    List<int> faltaHabilidad = new List<int>();
+                    List<int> motivacionDeficiente = new List<int>();
+                    List<int> autoCuidado = new List<int>();
+                    List<int> errores = new List<int>(); 
+                    foreach (TBL_CAUSA causa in resultsCausas)
+                    {
+                        
+                        if (causa.TIPO_CAUSA == e0063.CAUSA_ACCION)
+                        {
+                            acciones.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_CAP_FISICA_INADECUADA)
+                        {
+                            capFisicaInadecuada.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_CAP_PSICOLOGICA_INADECUADA)
+                        {
+                            capPsicologicaInadecuada.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_TENSION_FISICA)
+                        {
+                            tensionFisicaFisiologica.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL)
+                        {
+                            tensionMentalSicologica.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_FALTA_CONOCIMIENTO)
+                        {
+                            faltaConocimiento.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_FALTA_HABILIDAD)
+                        {
+                            faltaHabilidad.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_MOTIVACION_INADECUADA)
+                        {
+                            motivacionDeficiente.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_AUTO_CUIDADO)
+                        {
+                            autoCuidado.Add(causa.ID_CAUSA);
+                        }
+                        else if (causa.TIPO_CAUSA == e0063.CAUSA_ERRORES)
+                        {
+                            errores.Add(causa.ID_CAUSA);
+                        }
+                    }
+                    trabajadorInvolucrado.CAUSA_INMEDIATA_ACCION = acciones.ToArray();
+                    
+                    trabajadorInvolucrado.CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA = capFisicaInadecuada.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA = capPsicologicaInadecuada.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_TENSION_FISICA = tensionFisicaFisiologica.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_TENSION_MENTAL = tensionMentalSicologica.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO = faltaConocimiento.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_FALTA_HABILIDAD = faltaHabilidad.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA = motivacionDeficiente.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FATORES_AUTOCUIDADO = autoCuidado.ToArray();
+                    trabajadorInvolucrado.CAUSA_LISTA_FACTORES_ERRORES = errores.ToArray();
+                    trabajadores.Add(trabajadorInvolucrado);
+                    
+                }
+            objJSON.items = trabajadores; 
+            objJSON.totalCount = objJSON.items.Count;
             objJSON.success = true;
             //} catch (Exception ex) { objJSON.success = false; }
             return objJSON;
@@ -653,8 +759,8 @@ namespace WCF_ENAP
             string NOMBRES,
             string APELLIDO_MATERNO,
             string APELLIDO_PATERNO,
-            string ANOS_EXPERIENCIA_CARGO,
-            string ANOS_EXPERIENCIA_LABORAL,
+            int ANOS_EXPERIENCIA_CARGO,
+            int ANOS_EXPERIENCIA_LABORAL,
             int ID_CARGO,
 
             // Causa Inmediata Acción
@@ -662,7 +768,7 @@ namespace WCF_ENAP
             // Factores de la persona
             int[] CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA,
             int[] CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA,
-            int[] CAUSA_LISTA_FATORES_CAP_MENTAL,
+            int[] CAUSA_LISTA_FATORES_TENSION_FISICA,
             int[] CAUSA_LISTA_FATORES_TENSION_MENTAL,
             int[] CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO,
             int[] CAUSA_LISTA_FATORES_FALTA_HABILIDAD,
@@ -699,9 +805,9 @@ namespace WCF_ENAP
                     NOMBRES = NOMBRES,
                     APELLIDO_MATERNO = APELLIDO_MATERNO,
                     APELLIDO_PATERNO = APELLIDO_PATERNO,
-                    ANOS_EXPERIENCIA_CARGO = int.Parse(ANOS_EXPERIENCIA_CARGO),
+                    ANOS_EXPERIENCIA_CARGO = ANOS_EXPERIENCIA_CARGO,
                     ID_CARGO = ID_CARGO,
-                    ANOS_EXPERIENCIA_LABORAL = int.Parse(ANOS_EXPERIENCIA_LABORAL)
+                    ANOS_EXPERIENCIA_LABORAL = ANOS_EXPERIENCIA_LABORAL
                 };
                 bd.TBL_TRABAJADOR.InsertOnSubmit(nuevoTrabajador);
                 bd.SubmitChanges();
@@ -766,7 +872,7 @@ namespace WCF_ENAP
             {
                 TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
                 {
-                    ID_EVENTO_TRABAJADOR = existeEventoEmpresa.ID_EVENTO_EMPRESA,
+                    ID_EVENTO_TRABAJADOR = existeEventoTrabajador.ID_EVENTO_TRABAJADOR,
                     ID_CAUSA = idCausaInmediata
                 };
                 bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
@@ -796,7 +902,7 @@ namespace WCF_ENAP
                 bd.SubmitChanges();
             }
             #endregion
-            #region [CAUSA_LISTA_FATORES_CAP_MENTAL] Elimino todos las causas de  Capaciadad mental inadecuada del informe preliminar y agrego las nuevas
+            #region [CAUSA_LISTA_FATORES_TENSION_FISICA] Elimino todos las causas de TENSIÓN FISICA inadecuada del informe preliminar y agrego las nuevas
             try
             {
                 var capMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
@@ -808,7 +914,7 @@ namespace WCF_ENAP
             }
             catch (Exception ex) { }
 
-            foreach (int idCausaInmediata in CAUSA_LISTA_FATORES_CAP_MENTAL)
+            foreach (int idCausaInmediata in CAUSA_LISTA_FATORES_TENSION_FISICA)
             {
                 TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
                 {
@@ -960,17 +1066,19 @@ namespace WCF_ENAP
 
             TrabajadorInvolucradoJSON trabajadorInvolucrado = new TrabajadorInvolucradoJSON()
             {
+                ID_EVENTO_EMPRESA = (int)existeEventoTrabajador.ID_EVENTO_EMPRESA,
+                ID_EVENTO_TRABAJADOR = existeEventoTrabajador.ID_EVENTO_TRABAJADOR,
                 RUT_TRABAJADOR = RUT_TRABAJADOR,
                 NOMBRES = NOMBRES,
                 APELLIDO_PATERNO =APELLIDO_PATERNO,
                 APELLIDO_MATERNO = APELLIDO_MATERNO,
-                ANOS_EXPERIENCIA_LABORAL = ANOS_EXPERIENCIA_LABORAL,
+                ANOS_EXPERIENCIA_LABORAL = (int)ANOS_EXPERIENCIA_LABORAL,
                 ANOS_EXPERIENCIA_CARGO = ANOS_EXPERIENCIA_CARGO,
                 ID_CARGO = ID_CARGO,
                 CAUSA_INMEDIATA_ACCION = CAUSA_INMEDIATA_ACCION,
                 CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA = CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA,
                 CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA = CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA,
-                CAUSA_LISTA_FATORES_CAP_MENTAL = CAUSA_LISTA_FATORES_CAP_MENTAL,
+                CAUSA_LISTA_FATORES_TENSION_FISICA = CAUSA_LISTA_FATORES_TENSION_FISICA,
                 CAUSA_LISTA_FATORES_TENSION_MENTAL = CAUSA_LISTA_FATORES_TENSION_MENTAL,
                 CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO = CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO,
                 CAUSA_LISTA_FATORES_FALTA_HABILIDAD = CAUSA_LISTA_FATORES_FALTA_HABILIDAD,

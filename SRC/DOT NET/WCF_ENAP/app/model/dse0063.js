@@ -3,9 +3,9 @@ Ext.define('WCF_ENAP.model.e0063', {
     idProperty: 'ID_INFORME_PRELIMINAR',
     fields: [
         { "name": "ID_INFORME_PRELIMINAR", "type": "int", "useNull": true },
-        { "name": "ID_EVENTO", "type": "int" },
+        { "name": "ID_EVENTO_EMPRESA", "type": "int" },
 
-        { "name": "AFECTA_PERSONA", "type":"boolean" },
+        { "name": "AFECTA_PERSONA", "type": "boolean" },
         { "name": "AFECTA_PATRIMONIO", "type": "boolean" },
         { "name": "AFECTA_PERDIDA_PROCESO", "type": "boolean" },
         { "name": "AFECTA_MEDIO_AMBIENTE", "type": "boolean" },
@@ -16,9 +16,9 @@ Ext.define('WCF_ENAP.model.e0063', {
         { "name": "CLASIFICACION_MEDIO_AMBIENTE", "type": "int" },
         { "name": "CLASIFICACION_PERDIDA_PROCESO", "type": "int" },
         { "name": "CLASIFICACION_IMAGEN", "type": "int" },
+
         { "name": "TIPO_INCIDENTE_PATRIMONIO" },
         { "name": "TIPO_INCIDENTE_PERSONA" },
-        { "name": "TRABAJADORES_LIST" },
         { "name": "CAUSA_INMEDIATA_ACCION_PATRIMONIO" },
         { "name": "CAUSA_LISTA_FACTORES_ABUSO_MALTRATO" },
         { "name": "CAUSA_LISTA_FACTORES_ING_INADECUADA" },
