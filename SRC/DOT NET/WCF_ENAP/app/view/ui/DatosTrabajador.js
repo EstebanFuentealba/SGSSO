@@ -1013,6 +1013,7 @@
 										                                new_object.save({
 										                                    callback: function (records, options) {
 										                                        console.log("ACTUALIZADO");
+										                                        Ext.getCmp('grid_trabajadores_involucrados').down('pagingtoolbar').doRefresh();
 										                                        form.reset();
 										                                        Ext.getCmp('grid_trabajadores_involucrados').getSelectionModel().deselectAll();
 										                                    }
@@ -1098,22 +1099,32 @@
                                                     'selectionchange': function (model, records) {
                                                         if (records[0]) {
                                                             var record = records[0];
-                                                            console.log(record);
                                                             Ext.getCmp('form_datos_trabajador').loadRecord(record);
                                                             dsCausaListaAccion.on('load', function () {
                                                                 Ext.getCmp('CAUSA_INMEDIATA_ACCION').setRawValue(record.get('CAUSA_INMEDIATA_ACCION'));
                                                             });
+                                                            var campos = [
+                                                                [dsCausaListaAccion, 'CAUSA_INMEDIATA_ACCION'],
+                                                                [dsCausaListaFactoresCapFisicaInadecuada, 'CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA'],
+                                                                [dsCausaListaFactoresCapPsicologicaInadecuada, 'CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA'],
+                                                                [dsCausaListaFactoresCapMental, 'CAUSA_LISTA_FATORES_TENSION_FISICA'],
+                                                                [dsCausaListaFactoresTencionMental, 'CAUSA_LISTA_FATORES_TENSION_MENTAL'],
+                                                                [dsCausaListaFactoresFaltaConocimiento, 'CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO'],
+                                                                [dsCausaListaFactoresFaltaHabilidad, 'CAUSA_LISTA_FATORES_FALTA_HABILIDAD'],
+                                                                [dsCausaListaFactoresMotivacionInadecuada, 'CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA'],
+                                                                [dsCausaListaFactoresAutocuidado, 'CAUSA_LISTA_FATORES_AUTOCUIDADO'],
+                                                                [dsCausaListaFactoresErrores, 'CAUSA_LISTA_FACTORES_ERRORES']
+                                                            ];
+                                                            Ext.Array.each(campos, function (name) {
+                                                                if (name[0].count() > 0) {
+                                                                    Ext.getCmp(name[1]).setValue(record.get(name[1]));
+                                                                } else {
+                                                                    name[0].on('load', function () {
+                                                                        Ext.getCmp(name[1]).setValue(record.get(name[1]));
+                                                                    });
+                                                                }
+                                                            });
 
-                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA');
-                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA').value = record.get('CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA');
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_TENSION_FISICA').value = record.get('CAUSA_LISTA_FATORES_TENSION_FISICA');
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_TENSION_MENTAL').value = record.get('CAUSA_LISTA_FATORES_TENSION_MENTAL');
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO').value = record.get('CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO');
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_FALTA_HABILIDAD').value = record.get('CAUSA_LISTA_FATORES_FALTA_HABILIDAD');
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA').value = record.get('CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA');
-
-                                                            Ext.getCmp('CAUSA_LISTA_FATORES_AUTOCUIDADO').value = record.get('CAUSA_LISTA_FATORES_AUTOCUIDADO');
-                                                            Ext.getCmp('CAUSA_LISTA_FACTORES_ERRORES').value = record.get('CAUSA_LISTA_FACTORES_ERRORES');
                                                             Ext.getCmp('form_afecta_trabajador').doLayout();
                                                         }
                                                     },

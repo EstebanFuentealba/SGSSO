@@ -930,7 +930,7 @@ namespace WCF_ENAP
             {
                 var tensionMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
-                                     where variable.ID_EVENTO_TRABAJADOR == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
+                                     where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
                                      select variable).ToList();
                 bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(tensionMental);
                 bd.SubmitChanges();
@@ -976,7 +976,7 @@ namespace WCF_ENAP
             {
                 var faltaHabilidad = (from variable in bd.TBL_CAUSA_TRABAJADOR
                                       join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
-                                      where variable.ID_EVENTO_TRABAJADOR == existeEventoEmpresa.ID_EVENTO_EMPRESA && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_HABILIDAD
+                                      where variable.ID_EVENTO_TRABAJADOR == existeEventoTrabajador.ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_HABILIDAD
                                       select variable).ToList();
                 bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(faltaHabilidad);
                 bd.SubmitChanges();
@@ -1191,6 +1191,258 @@ namespace WCF_ENAP
             return objJSON;
         }
 
+        [WebInvoke(UriTemplate = "trabajadores/{_ID_EVENTO_TRABAJADOR}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
+        public JSONCollection<TrabajadorInvolucradoJSON> UpdateTrabajadorInvolucrado(string _ID_EVENTO_TRABAJADOR,TrabajadorInvolucradoJSON updateTrabajador)
+        {
+            JSONCollection<TrabajadorInvolucradoJSON> objJSON = new JSONCollection<TrabajadorInvolucradoJSON>();
+            try
+            {
+                int ID_EVENTO_TRABAJADOR = int.Parse(_ID_EVENTO_TRABAJADOR);
+                var objetoTrabajador = (from trabajador in bd.TBL_TRABAJADOR
+                                        join eventoTrabajador in bd.TBL_EVENTO_TRABAJADOR on trabajador.ID_TRABAJADOR equals eventoTrabajador.ID_EVENTO_TRABAJADOR
+                                        where eventoTrabajador.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR
+                                        select trabajador).Single();
+                objetoTrabajador.NOMBRES = updateTrabajador.NOMBRES;
+                objetoTrabajador.APELLIDO_PATERNO = updateTrabajador.APELLIDO_PATERNO;
+                objetoTrabajador.APELLIDO_MATERNO = updateTrabajador.APELLIDO_MATERNO;
+                objetoTrabajador.ID_CARGO = updateTrabajador.ID_CARGO;
+                objetoTrabajador.ANOS_EXPERIENCIA_LABORAL = updateTrabajador.ANOS_EXPERIENCIA_LABORAL;
+                objetoTrabajador.ANOS_EXPERIENCIA_CARGO = updateTrabajador.ANOS_EXPERIENCIA_CARGO;
+
+                try
+            {
+                var causaInmediata = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_ACCION
+                                      select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(causaInmediata);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_INMEDIATA_ACCION)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #region [CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA] Elimino todos las causas de  Capaciadad fisica inadecuada del informe preliminar y agrego las nuevas
+            try
+            {
+                var capFisicaInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                           join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                           where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_CAP_FISICA_INADECUADA
+                                           select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(capFisicaInadecuada);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FACTORES_CAP_FISICA_INADECUADA)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA] Elimino todos las causas de  Capaciadad psicologica inadecuada del informe preliminar y agrego las nuevas
+            try
+            {
+                var cappsicologicaInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                                join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                                where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_CAP_PSICOLOGICA_INADECUADA
+                                                select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(cappsicologicaInadecuada);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FACTORES_CAP_PSICOLOGICA_INADECUADA)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_TENSION_FISICA] Elimino todos las causas de TENSIÓN FISICA inadecuada del informe preliminar y agrego las nuevas
+            try
+            {
+                var capMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                 join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                 where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
+                                 select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(capMental);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_TENSION_FISICA)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_TENSION_MENTAL] Elimino todos las causas de  tensión mental del informe preliminar y agrego las nuevas
+            try
+            {
+                var tensionMental = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                     join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                     where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_TENSION_MENTAL
+                                     select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(tensionMental);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_TENSION_MENTAL)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO] Elimino todos las causas de  falta de conocimiento del informe preliminar y agrego las nuevas
+            try
+            {
+                var faltaConocimiento = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                         join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                         where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_CONOCIMIENTO
+                                         select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(faltaConocimiento);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_FALTA_CONOCIMIETO)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_FALTA_HABILIDAD] Elimino todos las causas de  falta de habilidad del informe preliminar y agrego las nuevas
+            try
+            {
+                var faltaHabilidad = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                      join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                      where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_FALTA_HABILIDAD
+                                      select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(faltaHabilidad);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_FALTA_HABILIDAD)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA] Elimino todos las causas de motivacion inadecuada del informe preliminar y agrego las nuevas
+            try
+            {
+                var motivacionInadecuada = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                            join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                            where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_MOTIVACION_INADECUADA
+                                            select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(motivacionInadecuada);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_MOTIVACION_INADECUADA)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FATORES_AUTOCUIDADO] Elimino todos las causas de autocuidado del informe preliminar y agrego las nuevas
+            try
+            {
+                var autoCuidado = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                                   join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                                   where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_AUTO_CUIDADO
+                                   select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(autoCuidado);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FATORES_AUTOCUIDADO)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            #region [CAUSA_LISTA_FACTORES_ERRORES] Elimino todos las causas de errores del informe preliminar y agrego las nuevas
+            try
+            {
+                var errores = (from variable in bd.TBL_CAUSA_TRABAJADOR
+                               join causa in bd.TBL_CAUSA on variable.ID_CAUSA equals causa.ID_CAUSA
+                               where variable.ID_EVENTO_TRABAJADOR == ID_EVENTO_TRABAJADOR && causa.TIPO_CAUSA == e0063.CAUSA_ERRORES
+                               select variable).ToList();
+                bd.TBL_CAUSA_TRABAJADOR.DeleteAllOnSubmit(errores);
+                bd.SubmitChanges();
+            }
+            catch (Exception ex) { }
+
+            foreach (int idCausaInmediata in updateTrabajador.CAUSA_LISTA_FACTORES_ERRORES)
+            {
+                TBL_CAUSA_TRABAJADOR nuevaCausaInmediata = new TBL_CAUSA_TRABAJADOR()
+                {
+                    ID_EVENTO_TRABAJADOR = ID_EVENTO_TRABAJADOR,
+                    ID_CAUSA = idCausaInmediata
+                };
+                bd.TBL_CAUSA_TRABAJADOR.InsertOnSubmit(nuevaCausaInmediata);
+                bd.SubmitChanges();
+            }
+            #endregion
+            }
+            catch (Exception ex) { }
+
+            objJSON.items = updateTrabajador;
+            objJSON.totalCount = 1;
+            objJSON.success = true;
+            return objJSON;
+        }
         [WebInvoke(UriTemplate = "{id}", Method = "PUT", RequestFormat = WebMessageFormat.Json)]
         public JSONCollection<TBL_EVENTO> Update(string id, TBL_EVENTO nuevo)
         {

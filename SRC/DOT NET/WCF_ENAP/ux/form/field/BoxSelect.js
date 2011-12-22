@@ -854,7 +854,6 @@ Ext.define('Ext.ux.form.field.BoxSelect', {
 
         return result;
     },
-
     /**
 	 * Adds a value or values to the current value of the field
 	 * @param {mixed} valueMixed The value or values to add to the current value

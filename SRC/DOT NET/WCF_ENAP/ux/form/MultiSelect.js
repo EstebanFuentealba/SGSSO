@@ -273,7 +273,6 @@ Ext.define('Ext.ux.form.MultiSelect', {
         }
         return me.rawValue;
     },
-
     // inherit docs
     setRawValue: function(value) {
         var me = this,
