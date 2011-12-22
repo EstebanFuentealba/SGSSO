@@ -644,6 +644,11 @@
                                                         title: 'Antecedentes Generales',
                                                         items: [
                                                             {
+                                                                xtype: 'hiddenfield',
+                                                                name: 'ID_EVENTO_TRABAJADOR',
+                                                                id: 'ID_EVENTO_TRABAJADOR'
+                                                            },
+                                                            {
                                                                 xtype: 'textfield',
                                                                 margin: '5 5 5 5',
                                                                 name: 'RUT_TRABAJADOR',
@@ -997,8 +1002,24 @@
 										                                Ext.getCmp('form_informe_preliminar').getForm().getValues(),
 										                                values
 										                            );
+										                            console.log(joinValues);
 										                            new_object = Ext.create('WCF_ENAP.model.Trabajador', joinValues);
-										                            Ext.data.StoreManager.lookup('dsTrabajadorInvolucrado').insert(0, new_object);
+										                            console.log(new_object);
+										                            var trabajadorSync = Ext.data.StoreManager.lookup('dsTrabajadorInvolucrado').getById(new_object.get('ID_EVENTO_TRABAJADOR'));
+										                            if (!trabajadorSync) {
+										                                Ext.data.StoreManager.lookup('dsTrabajadorInvolucrado').insert(0, new_object);
+										                            } else {
+										                                new_object.setProxy(Ext.data.StoreManager.lookup('dsTrabajadorInvolucrado').getProxy());
+										                                new_object.save({
+										                                    callback: function (records, options) {
+										                                        console.log("ACTUALIZADO");
+										                                        form.reset();
+										                                        Ext.getCmp('grid_trabajadores_involucrados').getSelectionModel().deselectAll();
+										                                    }
+										                                });
+										                            }
+
+
 
 										                        }
 										                    }
@@ -1072,12 +1093,13 @@
                                                 margin: '5 5 5 5',
                                                 title: 'Listado de Trabajadores Involucrados',
                                                 columnWidth: 0.5,
-
+                                                id: 'grid_trabajadores_involucrados',
                                                 listeners: {
                                                     'selectionchange': function (model, records) {
                                                         if (records[0]) {
                                                             var record = records[0];
-                                                            Ext.getCmp('form_afecta_trabajador').loadRecord(record);
+                                                            console.log(record);
+                                                            Ext.getCmp('form_datos_trabajador').loadRecord(record);
                                                             dsCausaListaAccion.on('load', function () {
                                                                 Ext.getCmp('CAUSA_INMEDIATA_ACCION').setRawValue(record.get('CAUSA_INMEDIATA_ACCION'));
                                                             });

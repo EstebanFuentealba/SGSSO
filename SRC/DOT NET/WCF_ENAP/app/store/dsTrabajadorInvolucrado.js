@@ -1,7 +1,8 @@
 ﻿Ext.define('WCF_ENAP.model.Trabajador', {
     extend: 'Ext.data.Model',
-    idProperty: 'ID_TRABAJADOR',
+    idProperty: 'ID_EVENTO_TRABAJADOR',
     fields: [
+        { "name": "ID_EVENTO_TRABAJADOR", "type": "int" },
         { "name": "RUT_TRABAJADOR", "type": "string" },
         { "name": "NOMBRES", "type": "string" },
         { "name": "APELLIDO_MATERNO", "type": "string" },
