@@ -625,6 +625,8 @@
                                         items: [
                                             {
                                                 xtype: 'tabpanel',
+                                                disabled: true,
+                                                id: 'tab_afecta_trabajador',
                                                 margin: '5 5 5 5',
                                                 bodyPadding: 10,
                                                 activeTab: 0,
@@ -633,6 +635,7 @@
                                                     {
                                                         xtype: 'form',
                                                         id: 'form_datos_trabajador',
+                                                        
                                                         defaults: {
                                                             defaults: {
                                                                 margin: '5 5 5 5'
@@ -1019,9 +1022,6 @@
 										                                    }
 										                                });
 										                            }
-
-
-
 										                        }
 										                    }
 									                    ]
@@ -1099,6 +1099,7 @@
                                                     'selectionchange': function (model, records) {
                                                         if (records[0]) {
                                                             var record = records[0];
+                                                            Ext.getCmp('tab_afecta_trabajador').setDisabled(false);
                                                             Ext.getCmp('form_datos_trabajador').loadRecord(record);
                                                             dsCausaListaAccion.on('load', function () {
                                                                 Ext.getCmp('CAUSA_INMEDIATA_ACCION').setRawValue(record.get('CAUSA_INMEDIATA_ACCION'));
@@ -1124,7 +1125,6 @@
                                                                     });
                                                                 }
                                                             });
-
                                                             Ext.getCmp('form_afecta_trabajador').doLayout();
                                                         }
                                                     },
@@ -1168,6 +1168,36 @@
 
                                             },
                                             dockedItems: [
+                                                    {
+                                                        xtype: 'toolbar',
+                                                        dock: 'top',
+                                                        items: [
+                                                            {
+                                                                xtype: 'button',
+                                                                iconCls: 'btn-add',
+                                                                text: 'Agregar Trabajador',
+                                                                handler: function () {
+                                                                    Ext.getCmp('tab_afecta_trabajador').setDisabled(false);
+                                                                    var form = Ext.getCmp('form_afecta_trabajador').getForm();
+                                                                    form.reset();
+                                                                    Ext.getCmp('grid_trabajadores_involucrados').getSelectionModel().deselectAll();
+                                                                    Ext.getCmp('tab_afecta_trabajador').setActiveTab(0);
+                                                                }
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                iconCls: 'btn-delete',
+                                                                text: 'Remover Seleccionado',
+                                                                handler: function () {
+                                                                    var store = Ext.StoreManager.lookup('dsTrabajadorInvolucrado'),
+													                    grid = Ext.getCmp('grid_trabajadores_involucrados'),
+													                    records = grid.getSelectionModel().getSelection();
+                                                                    store.remove(records);
+                                                                    Ext.getCmp('tab_afecta_trabajador').setDisabled(true);
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
 								                    {
 								                        xtype: 'pagingtoolbar',
 								                        store: 'dsTrabajadorInvolucrado',
