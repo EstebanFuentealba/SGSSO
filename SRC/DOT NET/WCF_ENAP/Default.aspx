@@ -68,6 +68,9 @@
     .arrow_left-icon{background:transparent url(/icons/arrow_left.png) 0 0 no-repeat !important;}
     .shield-icon{background:transparent url(/icons/shield.png) 0 0 no-repeat !important;}
     .error-icon{background:transparent url(/icons/error.png) 0 0 no-repeat !important;}
+    .stop-icon{background:transparent url(/icons/stop.png) 0 0 no-repeat !important;}
+    .accept-icon{background:transparent url(/icons/accept.png) 0 0 no-repeat !important;}
+    .alert-icon{background:transparent url(/icons/error.png) 0 0 no-repeat !important;}
     .tooltip
     {
         float: right;        

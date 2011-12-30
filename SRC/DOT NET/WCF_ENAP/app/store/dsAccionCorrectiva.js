@@ -6,13 +6,15 @@ Ext.define('WCF_ENAP.model.AccionCorrectiva', {
         { "name": "ID_EVENTO_EMPRESA", "type": "int" },
         { "name": "ID_ACCION", "type": "int" },
         { "name": "NOMBRE_ACCION", "type": "string" },
-        { "name": "FECHA_COMIENZO", "type": "date", "dateFormat":"d-m-Y" },
+        { "name": "FECHA_COMIENZO", "type": "date", "dateFormat": "d-m-Y" },
         { "name": "FECHA_PLAZO", "type": "date", "dateFormat": "d-m-Y" },
         { "name": "FECHA_EJECUCION", "type": "date", "dateFormat": "d-m-Y" },
         { "name": "PORCENTAJE_CUMPLIMIENTO", "type": "int" },
         { "name": "DESCRIPCION", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date", "dateFormat": "d-m-Y" },
-        { "name": "RESPONSABLE" }
+        { "name": "RESPONSABLE" },
+        { "name": "RESPONSABLES", "type": "string" },
+        { "name": "RESPONSABLES_OBJECT" }
     ]
 });
 Ext.define('WCF_ENAP.store.dsAccionCorrectiva', {

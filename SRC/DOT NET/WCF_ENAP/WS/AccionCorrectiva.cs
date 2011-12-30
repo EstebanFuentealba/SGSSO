@@ -16,6 +16,11 @@ using WCF_ENAP.WS;
   */
 namespace WCF_ENAP
 {
+    public class CargoJSON
+    {
+        public int ID_CARGO;
+        public string NOMBRE_CARGO;
+    }
     public class AccionCorrectivaJSON
     {
         public int ID_ACCION_CORRECTIVA;
@@ -28,7 +33,8 @@ namespace WCF_ENAP
         public string DESCRIPCION;
         public string FECHA_CREACION;
         public int[] RESPONSABLE;
-
+        public string RESPONSABLES;
+        public CargoJSON[] RESPONSABLES_OBJECT;
     }
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -83,6 +89,8 @@ namespace WCF_ENAP
                 List<AccionCorrectivaJSON> acciones = new List<AccionCorrectivaJSON>();
                 AccionCorrectivaJSON accion = new AccionCorrectivaJSON();
                 List<int> cargosId = new List<int>();
+                List<CargoJSON> cargos = new List<CargoJSON>();
+                List<string> cargosName = new List<string>();
                 int index = 0;
                 foreach (var accionCorrectiva in accionesCorrectivas)
                 {
@@ -90,12 +98,19 @@ namespace WCF_ENAP
                     if (lastId != 0 && lastId != accionCorrectiva.ID_ACCION_CORRECTIVA)
                     {
 
-                        acciones.Add(accion);
                         accion.RESPONSABLE = cargosId.ToArray();
+                        accion.RESPONSABLES = String.Join(", ", cargosName);
+                        accion.RESPONSABLES_OBJECT = cargos.ToArray();
+                        acciones.Add(accion);
                         cargosId = new List<int>();
+                        cargosName = new List<string>();
+                        cargos = new List<CargoJSON>();
                         index++;
                     }
+
                     cargosId.Add(accionCorrectiva.ID_CARGO);
+                    cargosName.Add(accionCorrectiva.NOMBRE_CARGO);
+                    cargos.Add(new CargoJSON() { ID_CARGO = accionCorrectiva.ID_CARGO, NOMBRE_CARGO = accionCorrectiva.NOMBRE_CARGO });
                     accion = new AccionCorrectivaJSON()
                     {
                         ID_ACCION_CORRECTIVA = accionCorrectiva.ID_ACCION_CORRECTIVA,
@@ -117,6 +132,8 @@ namespace WCF_ENAP
                 if (!acciones.Contains(accion))
                 {
                     accion.RESPONSABLE = cargosId.ToArray();
+                    accion.RESPONSABLES = String.Join(", ", cargosName);
+                    accion.RESPONSABLES_OBJECT = cargos.ToArray();
                     acciones.Add(accion);
                 }
                 List<AccionCorrectivaJSON> results = acciones;

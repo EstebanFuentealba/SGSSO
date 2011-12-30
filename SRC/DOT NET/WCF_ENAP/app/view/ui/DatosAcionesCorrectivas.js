@@ -3,19 +3,19 @@
     requires: [
         'Ext.ux.form.field.BoxSelect'
     ],
-    width: 828,
+    width: 1000,
     cmpRecord: null,
     title: 'Agregar Datos de Acciones Correctivas',
     maximizable: true,
     initComponent: function () {
         var me = this;
         var store = Ext.StoreManager.lookup('dsAccionCorrectiva');
-            store.setProxy(Ext.apply(store.getProxy(), {
-                extraParams: {
-                    'ID_EVENTO_EMPRESA': me.cmpRecord.get('ID_EVENTO_EMPRESA')
-                }
-            }));
-            store.load();
+        store.setProxy(Ext.apply(store.getProxy(), {
+            extraParams: {
+                'ID_EVENTO_EMPRESA': me.cmpRecord.get('ID_EVENTO_EMPRESA')
+            }
+        }));
+        store.load();
         Ext.applyIf(me, {
             items: [
                 {
@@ -32,7 +32,7 @@
                             margin: '5 5 5 5',
                             bodyPadding: 10,
                             title: 'Medida Correctiva o Preventiva',
-                            columnWidth: 0.5,
+                            columnWidth: 0.45,
                             items: [
                                 {
                                     xtype: 'hiddenfield',
@@ -42,6 +42,11 @@
                                     xtype: 'hiddenfield',
                                     name: 'ID_EVENTO_EMPRESA',
                                     value: me.cmpRecord.get('ID_EVENTO_EMPRESA')
+                                },
+                                {
+                                    xtype: 'hiddenfield',
+                                    id: 'hdd_field_responsables_name',
+                                    name: 'RESPONSABLES'
                                 },
                                 {
                                     xtype: 'panel',
@@ -75,13 +80,11 @@
                                                         var addAccion = Ext.create('WCF_ENAP.view.ui.Accion', {
                                                             listeners: {
                                                                 addedRecord: function (cmp, record) {
-                                                                    console.log('ADDED RECORD: ');
-                                                                    Ext.getCmp('cmb_accion_correctiva').select();
+                                                                    Ext.getCmp('cmb_accion_correctiva').select(record);
                                                                     addAccion.close();
                                                                 },
                                                                 existsRecord: function (cmp, record) {
-                                                                    console.log('EXISTE RECORD: ');
-                                                                    console.log(record);
+
                                                                 }
                                                             }
                                                         });
@@ -101,7 +104,12 @@
                                     displayField: 'NOMBRE_CARGO',
                                     valueField: 'ID_CARGO',
                                     multiSelect: true,
-                                    anchor: '100%'
+                                    anchor: '100%',
+                                    listeners: {
+                                        change: function (field, newValue, oldValue, eOpts) {
+                                            Ext.getCmp('hdd_field_responsables_name').setValue(this.getRawValue());
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'panel',
@@ -114,27 +122,44 @@
                                         {
                                             xtype: 'datefield',
                                             margin: '5 5 5 5',
-                                            fieldLabel: 'Fecha de Inicio',
+                                            fieldLabel: 'Fecha Inicio',
                                             name: 'FECHA_COMIENZO',
                                             labelAlign: 'top',
                                             columnWidth: 0.333,
-                                            format: 'd-m-Y'
+                                            format: 'd-m-Y',
+                                            id: 'startdtac',
+                                            vtype: 'daterange',
+                                            endDateField: 'enddtac',
+                                            listeners: {
+                                                select: function (combo, value) {
+                                                    Ext.getCmp('enddtac').setValue(value);
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'datefield',
+                                            disabled: true,
                                             margin: '5 5 5 5',
-                                            fieldLabel: 'Fecha de Término',
+                                            fieldLabel: 'Fecha Término',
                                             name: 'FECHA_PLAZO',
                                             labelAlign: 'top',
                                             columnWidth: 0.333,
-                                            format: 'd-m-Y'
+                                            format: 'd-m-Y',
+                                            id: 'enddtac',
+                                            vtype: 'daterange',
+                                            startDateField: 'startdtac',
+                                            listeners: {
+                                                change: function (field, newValue, oldValue, eOpts){
+                                                    Ext.getCmp('enddtac').setDisabled((newValue==null));
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'datefield',
                                             id: 'field_date_ejecucion',
                                             disabled: true,
                                             margin: '5 5 5 5',
-                                            fieldLabel: 'Fecha de Ejecución',
+                                            fieldLabel: 'Fecha Ejecución',
                                             name: 'FECHA_EJECUCION',
                                             labelAlign: 'top',
                                             columnWidth: 0.333,
@@ -170,16 +195,18 @@
 									errors,
 									form,
 		                            values;
-                                    
+
                                     form = Ext.getCmp('form_datos_acciones_correctivas').getForm();
                                     values = form.getValues();
 
                                     var record = Ext.StoreManager.lookup('dsAccion').findRecord('ID_ACCION', values['ID_ACCION']);
                                     new_object = Ext.create('WCF_ENAP.model.AccionCorrectiva', Ext.apply(values, { 'NOMBRE_ACCION': record.get('NOMBRE_ACCION') }));
                                     errors = new_object.validate();
+
                                     if (errors.isValid() && form.isValid()) {
-                                        if(Ext.isDefined(values['ID_ACCION_CORRECTIVA']) && Ext.isNumeric(values['ID_ACCION_CORRECTIVA'])){
+                                        if (Ext.isDefined(values['ID_ACCION_CORRECTIVA']) && Ext.isNumeric(values['ID_ACCION_CORRECTIVA'])) {
                                             form.updateRecord(form.getRecord());
+                                            Ext.getCmp('grid_acciones_correctivas_list').getDockedItems('pagingtoolbar')[0].doRefresh()
                                         } else {
                                             Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
                                         }
@@ -190,37 +217,66 @@
                         },
                         {
                             xtype: 'gridpanel',
+                            id: 'grid_acciones_correctivas_list',
                             margin: '5 5 5 5',
                             title: 'Listado de Acciones a Realizar',
                             store: 'dsAccionCorrectiva',
-                            columnWidth: 0.5,
+                            columnWidth: 0.55,
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
+                                    flex: 0.3,
                                     dataIndex: 'NOMBRE_ACCION',
                                     text: 'Acción'
                                 },
                                 {
-                                    xtype: 'gridcolumn',
+                                    xtype: 'templatecolumn',
+                                    flex: 0.2,
                                     text: 'Responsable(s)',
-                                    dataIndex: 'RESPONSABLE',
+                                    dataIndex: 'RESPONSABLES_OBJECT',
+                                    tpl: '<ol><tpl for="RESPONSABLES_OBJECT"><li>{NOMBRE_CARGO}</li></tpl></ol>'
                                 },
                                 {
                                     xtype: 'datecolumn',
-                                    dataIndex: 'FECHA_EJECUCION',
-                                    text: 'Fecha de Ejecución',
+                                    flex: 0.15,
+                                    dataIndex: 'FECHA_COMIENZO',
+                                    text: 'Inicio',
                                     format: 'd-m-Y'
                                 },
                                 {
-                                    xtype: 'booleancolumn',
+                                    xtype: 'datecolumn',
+                                    flex: 0.15,
+                                    dataIndex: 'FECHA_PLAZO',
+                                    text: 'Fin',
+                                    format: 'd-m-Y'
+                                },
+                                {
+                                    xtype: 'datecolumn',
+                                    flex: 0.15,
+                                    dataIndex: 'FECHA_EJECUCION',
+                                    text: 'Ejecución',
+                                    format: 'd-m-Y'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    flex: 0.05,
                                     dataIndex: 'bool',
-                                    text: 'Estado'
+                                    text: 'Estado',
+                                    renderer: function (value, meta, record) {
+                                        if (record.get('FECHA_EJECUCION') != null) {
+                                            if (record.get('FECHA_EJECUCION') >= record.get('FECHA_COMIENZO') && record.get('FECHA_EJECUCION') <= record.get('FECHA_PLAZO')) {
+                                                return '<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="16" border="0" height="16" class="accept-icon" />';
+                                            }
+                                            return '<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="16" border="0" height="16" class="alert-icon" />';
+                                        }
+                                        return '<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="16" border="0" height="16" class="stop-icon" />';
+                                    }
                                 }
                             ],
                             viewConfig: {
 
-                            },
-                            dockedItems: [
+                        },
+                        dockedItems: [
                                 {
                                     xtype: 'pagingtoolbar',
                                     displayInfo: true,
@@ -228,20 +284,20 @@
                                     dock: 'bottom'
                                 }
                             ],
-                            listeners: {
-                                selectionchange: function (model, records) {
-                                    var form,
+                        listeners: {
+                            selectionchange: function (model, records) {
+                                var form,
                                         record;
-                                        form = Ext.getCmp('form_datos_acciones_correctivas');
-                                    if (records[0]) {
-                                        record = records[0];
-                                        form.loadRecord(record);
-                                        Ext.getCmp('btn_accion_correctiva_submit').setText('Guardar');
-                                        Ext.getCmp('field_date_ejecucion').setDisabled(false);
-                                    }
+                                form = Ext.getCmp('form_datos_acciones_correctivas');
+                                if (records[0]) {
+                                    record = records[0];
+                                    form.loadRecord(record);
+                                    Ext.getCmp('btn_accion_correctiva_submit').setText('Guardar');
+                                    Ext.getCmp('field_date_ejecucion').setDisabled(false);
                                 }
                             }
                         }
+                    }
                     ]
                 }
             ]
