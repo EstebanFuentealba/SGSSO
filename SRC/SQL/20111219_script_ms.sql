@@ -175,13 +175,6 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_REFERENCE_TBL_USUA')
-alter table TBL_ACCION_CORRECTIVA
-   drop constraint FK_TBL_ACCI_REFERENCE_TBL_USUA
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('TBL_ACCION_CORRECTIVA') and o.name = 'FK_TBL_ACCI_REFERENCE_TBL_EVEN')
 alter table TBL_ACCION_CORRECTIVA
    drop constraint FK_TBL_ACCI_REFERENCE_TBL_EVEN
@@ -455,6 +448,20 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_TBL_HERRTRABAJ_REFERENCE_TBL_EVEN')
+alter table TBL_HERRAMIENTA_TRABAJADOR
+   drop constraint FK_TBL_HERRTRABAJ_REFERENCE_TBL_EVEN
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_TBL_HERRTRABAJ_REFERENCE_TBL_HERR')
+alter table TBL_HERRAMIENTA_TRABAJADOR
+   drop constraint FK_TBL_HERRTRABAJ_REFERENCE_TBL_HERR
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('TBL_HISTORIAL_EMPRESA') and o.name = 'FK_TBL_HIST_REGISTRA_TBL_EMPR')
 alter table TBL_HISTORIAL_EMPRESA
    drop constraint FK_TBL_HIST_REGISTRA_TBL_EMPR
@@ -609,6 +616,20 @@ go
 
 if exists (select 1
    from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_RESPONSABLE_ACCION') and o.name = 'FK_TBL_RESP_REFERENCE_TBL_ACCI')
+alter table TBL_RESPONSABLE_ACCION
+   drop constraint FK_TBL_RESP_REFERENCE_TBL_ACCI
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TBL_RESPONSABLE_ACCION') and o.name = 'FK_TBL_RESP_REFERENCE_TBL_CARG')
+alter table TBL_RESPONSABLE_ACCION
+   drop constraint FK_TBL_RESP_REFERENCE_TBL_CARG
+go
+
+if exists (select 1
+   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('TBL_TRABAJADOR') and o.name = 'FK_TBL_TRAB_REFERENCE_TBL_CARG')
 alter table TBL_TRABAJADOR
    drop constraint FK_TBL_TRAB_REFERENCE_TBL_CARG
@@ -633,20 +654,6 @@ if exists (select 1
    where r.fkeyid = object_id('TBL_USUARIO_GRUPO') and o.name = 'FK_TBL_USUA_TBL_USUAR_TBL_GRUP')
 alter table TBL_USUARIO_GRUPO
    drop constraint FK_TBL_USUA_TBL_USUAR_TBL_GRUP
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('THL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_THL_HERR_REFERENCE_TBL_TRAB')
-alter table THL_HERRAMIENTA_TRABAJADOR
-   drop constraint FK_THL_HERR_REFERENCE_TBL_TRAB
-go
-
-if exists (select 1
-   from dbo.sysreferences r join dbo.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('THL_HERRAMIENTA_TRABAJADOR') and o.name = 'FK_THL_HERR_REFERENCE_TBL_HERR')
-alter table THL_HERRAMIENTA_TRABAJADOR
-   drop constraint FK_THL_HERR_REFERENCE_TBL_HERR
 go
 
 if exists (select 1
@@ -875,6 +882,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('TBL_HERRAMIENTA_TRABAJADOR')
+            and   type = 'U')
+   drop table TBL_HERRAMIENTA_TRABAJADOR
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('TBL_HISTORIAL_EMPRESA')
             and   type = 'U')
    drop table TBL_HISTORIAL_EMPRESA
@@ -994,6 +1008,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('TBL_RESPONSABLE_ACCION')
+            and   type = 'U')
+   drop table TBL_RESPONSABLE_ACCION
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('TBL_STORE')
             and   type = 'U')
    drop table TBL_STORE
@@ -1025,13 +1046,6 @@ if exists (select 1
            where  id = object_id('TBL_USUARIO_GRUPO')
             and   type = 'U')
    drop table TBL_USUARIO_GRUPO
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('THL_HERRAMIENTA_TRABAJADOR')
-            and   type = 'U')
-   drop table THL_HERRAMIENTA_TRABAJADOR
 go
 
 if exists(select 1 from systypes where name='CLASIFICACION')
@@ -1403,13 +1417,13 @@ go
 create table TBL_ACCION_CORRECTIVA (
    ID_ACCION_CORRECTIVA int                  identity,
    ID_ACCION            int                  null,
-   ID_USUARIO           varchar(200)         null,
-   ID_EVENTO            int                  null,
+   ID_EVENTO_EMPRESA    int                  null,
    FECHA_PLAZO          datetime             null,
-   FECHA_REALIZACION    datetime             null,
+   FECHA_EJECUCION      datetime             null,
    PORCENTAJE_CUMPLIMIENTO int                  null,
    DESCRIPCION          text                 null,
    FECHA_CREACION       datetime             null,
+   FECHA_COMIENZO       datetime             null,
    constraint PK_TBL_ACCION_CORRECTIVA primary key nonclustered (ID_ACCION_CORRECTIVA)
 )
 go
@@ -1816,6 +1830,7 @@ create table TBL_EVENTO_TRABAJADOR (
    FECHA_PRESENTACION_HOSPITAL datetime             null,
    FECHA_ALTA_MEDICA    datetime             null,
    TIPO_LESION          int                  null,
+   IS_CTP               bit                  null,
    constraint PK_TBL_EVENTO_TRABAJADOR primary key nonclustered (ID_EVENTO_TRABAJADOR)
 )
 go
@@ -1828,6 +1843,13 @@ execute sp_addextendedproperty 'MS_Description',
    3=Articulaciones: Lesiones ligamentosas, de cart?lagos, luxaciones y subluxaciones, meniscopat?as, bursitis, etc.
    4=Huesos: fracturas, fisuras, periostitis, entre otras.',
    'user', @CurrentUser, 'table', 'TBL_EVENTO_TRABAJADOR', 'column', 'TIPO_LESION'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¿Es un incidente con tiempo perdido?',
+   'user', @CurrentUser, 'table', 'TBL_EVENTO_TRABAJADOR', 'column', 'IS_CTP'
 go
 
 /*==============================================================*/
@@ -1878,6 +1900,17 @@ create table TBL_HERRAMIENTA (
    NOMBRE_HERRAMIENTA   varchar(200)         null,
    constraint PK_TBL_HERRAMIENTA primary key (ID_HERRAMIENTA),
    constraint AK_KEY_2_TBL_HERR unique (NOMBRE_HERRAMIENTA)
+)
+go
+
+/*==============================================================*/
+/* Table: TBL_HERRAMIENTA_TRABAJADOR                            */
+/*==============================================================*/
+create table TBL_HERRAMIENTA_TRABAJADOR (
+   ID_HERRAMIENTA       int                  not null,
+   ID_EVENTO_TRABAJADOR int                  not null,
+   UTILIZADA            bit                  null,
+   constraint PK_TBL_HERRAMIENTA_TRABAJADOR primary key (ID_HERRAMIENTA, ID_EVENTO_TRABAJADOR)
 )
 go
 
@@ -2100,6 +2133,17 @@ create table TBL_RECURSO_COMPROMETIDO (
 go
 
 /*==============================================================*/
+/* Table: TBL_RESPONSABLE_ACCION                                */
+/*==============================================================*/
+create table TBL_RESPONSABLE_ACCION (
+   ID_ACCION_CORRECTIVA int                  not null,
+   ID_CARGO             int                  not null,
+   ESTADO               int                  null,
+   constraint PK_TBL_RESPONSABLE_ACCION primary key (ID_ACCION_CORRECTIVA, ID_CARGO)
+)
+go
+
+/*==============================================================*/
 /* Table: TBL_STORE                                             */
 /*==============================================================*/
 create table TBL_STORE (
@@ -2168,16 +2212,6 @@ create table TBL_USUARIO_GRUPO (
 )
 go
 
-/*==============================================================*/
-/* Table: THL_HERRAMIENTA_TRABAJADOR                            */
-/*==============================================================*/
-create table THL_HERRAMIENTA_TRABAJADOR (
-   ID_HERRAMIENTA       int                  not null,
-   ID_TRABAJADOR        int                  not null,
-   constraint PK_THL_HERRAMIENTA_TRABAJADOR primary key (ID_HERRAMIENTA, ID_TRABAJADOR)
-)
-go
-
 alter table MATRIZ_EMPRESA
    add constraint FK_MATRIZ_E_EMPRESA_M_TBL_EMPR foreign key (ID_EMPRESA)
       references TBL_EMPRESA (ID_EMPRESA)
@@ -2194,13 +2228,8 @@ alter table MATRIZ_HISTORIAL
 go
 
 alter table TBL_ACCION_CORRECTIVA
-   add constraint FK_TBL_ACCI_REFERENCE_TBL_USUA foreign key (ID_USUARIO)
-      references TBL_USUARIO (ID_USUARIO)
-go
-
-alter table TBL_ACCION_CORRECTIVA
-   add constraint FK_TBL_ACCI_REFERENCE_TBL_EVEN foreign key (ID_EVENTO)
-      references TBL_EVENTO (ID_EVENTO)
+   add constraint FK_TBL_ACCI_REFERENCE_TBL_EVEN foreign key (ID_EVENTO_EMPRESA)
+      references TBL_EVENTO_EMPRESA (ID_EVENTO_EMPRESA)
 go
 
 alter table TBL_ACCION_CORRECTIVA
@@ -2327,6 +2356,7 @@ go
 alter table TBL_CAUSA_TRABAJADOR
    add constraint FK_TBL_CAUS_REFERENCE_TBL_EVENTO_TRABAJADOR foreign key (ID_EVENTO_TRABAJADOR)
       references TBL_EVENTO_TRABAJADOR (ID_EVENTO_TRABAJADOR)
+         on delete cascade
 go
 
 alter table TBL_CAUSA_TRABAJADOR
@@ -2394,6 +2424,16 @@ alter table TBL_GRUPO_PRIVILEGIO
       references TBL_GRUPO (ID_GRUPO)
 go
 
+alter table TBL_HERRAMIENTA_TRABAJADOR
+   add constraint FK_TBL_HERRTRABAJ_REFERENCE_TBL_EVEN foreign key (ID_EVENTO_TRABAJADOR)
+      references TBL_EVENTO_TRABAJADOR (ID_EVENTO_TRABAJADOR)
+go
+
+alter table TBL_HERRAMIENTA_TRABAJADOR
+   add constraint FK_TBL_HERRTRABAJ_REFERENCE_TBL_HERR foreign key (ID_HERRAMIENTA)
+      references TBL_HERRAMIENTA (ID_HERRAMIENTA)
+go
+
 alter table TBL_HISTORIAL_EMPRESA
    add constraint FK_TBL_HIST_REGISTRA_TBL_EMPR foreign key (ID_EMPRESA)
       references TBL_EMPRESA (ID_EMPRESA)
@@ -2442,6 +2482,7 @@ go
 alter table TBL_PARTE_CORPORAL_TRABAJADOR
    add constraint FK_TBL_PART_INCORPORA_TBL_EVEN foreign key (ID_EVENTO_TRABAJADOR)
       references TBL_EVENTO_TRABAJADOR (ID_EVENTO_TRABAJADOR)
+         on delete cascade
 go
 
 alter table TBL_PARTE_CORPORAL_TRABAJADOR
@@ -2504,6 +2545,16 @@ alter table TBL_PUNTO_GEOGRAFICO
       references TBL_DEPARTAMENTO_ORGANIZACION (ID_DEPARTAMENTO_ORGANIZACION)
 go
 
+alter table TBL_RESPONSABLE_ACCION
+   add constraint FK_TBL_RESP_REFERENCE_TBL_ACCI foreign key (ID_ACCION_CORRECTIVA)
+      references TBL_ACCION_CORRECTIVA (ID_ACCION_CORRECTIVA)
+go
+
+alter table TBL_RESPONSABLE_ACCION
+   add constraint FK_TBL_RESP_REFERENCE_TBL_CARG foreign key (ID_CARGO)
+      references TBL_CARGO (ID_CARGO)
+go
+
 alter table TBL_TRABAJADOR
    add constraint FK_TBL_TRAB_REFERENCE_TBL_CARG foreign key (ID_CARGO)
       references TBL_CARGO (ID_CARGO)
@@ -2522,16 +2573,6 @@ go
 alter table TBL_USUARIO_GRUPO
    add constraint FK_TBL_USUA_TBL_USUAR_TBL_GRUP foreign key (ID_GRUPO)
       references TBL_GRUPO (ID_GRUPO)
-go
-
-alter table THL_HERRAMIENTA_TRABAJADOR
-   add constraint FK_THL_HERR_REFERENCE_TBL_TRAB foreign key (ID_TRABAJADOR)
-      references TBL_TRABAJADOR (ID_TRABAJADOR)
-go
-
-alter table THL_HERRAMIENTA_TRABAJADOR
-   add constraint FK_THL_HERR_REFERENCE_TBL_HERR foreign key (ID_HERRAMIENTA)
-      references TBL_HERRAMIENTA (ID_HERRAMIENTA)
 go
 
 CREATE FUNCTION fn_nodes_by_parent (@ID_NODO INT)
@@ -3003,14 +3044,13 @@ SELECT [t2].*
 FROM (
 	SELECT [t1].* 
 	FROM (
-		SELECT ROW_NUMBER() OVER (ORDER BY ET.ID_TRABAJADOR,TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO,TR.ID_CARGO,TR.ANOS_EXPERIENCIA_CARGO,TR.ANOS_EXPERIENCIA_LABORAL) AS [ROW_NUMBER],
-				ET.ID_TRABAJADOR,
-				TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO,TR.ID_CARGO,TR.ANOS_EXPERIENCIA_CARGO,TR.ANOS_EXPERIENCIA_LABORAL
+		SELECT ROW_NUMBER() OVER (ORDER BY TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO) AS [ROW_NUMBER],
+				TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO
 		FROM TBL_EVENTO_EMPRESA EE
 			INNER JOIN TBL_EVENTO_TRABAJADOR ET ON EE.ID_EVENTO_EMPRESA=ET.ID_EVENTO_EMPRESA
 			INNER JOIN TBL_TRABAJADOR TR ON ET.ID_TRABAJADOR=TR.ID_TRABAJADOR
 		WHERE EE.ID_EVENTO_EMPRESA=@ID_EVENTO_EMPRESA
-		GROUP BY ET.ID_TRABAJADOR,TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO,TR.ID_CARGO,TR.ANOS_EXPERIENCIA_CARGO,TR.ANOS_EXPERIENCIA_LABORAL) AS [t1] 
+		GROUP BY ET.ID_TRABAJADOR,TR.RUT_TRABAJADOR,TR.NOMBRES,TR.APELLIDO_PATERNO,TR.APELLIDO_MATERNO) AS [t1] 
 WHERE [t1].[ROW_NUMBER] BETWEEN @p0 + 1 AND @p0 + @p1) AS [t2] 
 ORDER BY RUT_TRABAJADOR,[t2].[ROW_NUMBER] ASC
 
@@ -3514,6 +3554,9 @@ AS
             SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', PASSWORD)),3,32)
        FROM inserted;
 go
+
+
+
 
 
 
@@ -4198,20 +4241,7 @@ INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_E
 			1, /* SHOW_ON_LOGUED */
 			0 /* SHOW_ON_NOLOGUED */
 		);
-		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) 
-		VALUES(8, /* ID_NODO */
-			6, /* NODO_PADRE */
-			'Ingreso de Evento', /* NOMBRE_MODULO */
-			'e0063', /* ID_COMPONENTE */
-			1, /* ESTADO */
-			2, /* TIPO_NODO */
-			'add-evento-icon', /* ICONCLS */
-			2, /* N_ORDER */
-			1, /* TIPO_DISPLAY */
-			NULL, /* GROUP_ID */
-			1, /* SHOW_ON_LOGUED */
-			0 /* SHOW_ON_NOLOGUED */
-		);
+		
 		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) 
 		VALUES(9, /* ID_NODO */
 			6, /* NODO_PADRE */
@@ -4294,7 +4324,21 @@ INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_E
 			1, /* ESTADO */
 			2, /* TIPO_NODO */
 			'buscar-icon', /* ICONCLS */
-			1, /* N_ORDER */
+			2, /* N_ORDER */
+			1, /* TIPO_DISPLAY */
+			NULL, /* GROUP_ID */
+			1, /* SHOW_ON_LOGUED */
+			0 /* SHOW_ON_NOLOGUED */
+		);
+		INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) 
+		VALUES(18, /* ID_NODO */
+			15, /* NODO_PADRE */
+			'Medida de Control como Actividad de Programa', /* NOMBRE_MODULO */
+			'ActividadProgramaMedidaControl', /* ID_COMPONENTE */
+			1, /* ESTADO */
+			2, /* TIPO_NODO */
+			'add-programaanual-icon', /* ICONCLS */
+			3, /* N_ORDER */
 			1, /* TIPO_DISPLAY */
 			NULL, /* GROUP_ID */
 			1, /* SHOW_ON_LOGUED */
@@ -4305,8 +4349,8 @@ UPDATE TBL_GRUPO_PRIVILEGIO SET ALLOW_READ=0,ALLOW_WRITE=0,ALLOW_EDIT=0,ALLOW_DE
 UPDATE TBL_GRUPO_PRIVILEGIO SET ALLOW_READ=0,ALLOW_WRITE=0,ALLOW_EDIT=0,ALLOW_DELETE=0,ALLOW_PRINT=0, ALLOW_CRUD=0 WHERE ID_NODO=11 AND ID_GRUPO=1; -- NO ACCESO Programa Anual
 UPDATE TBL_GRUPO_PRIVILEGIO SET ALLOW_READ=0,ALLOW_WRITE=0,ALLOW_EDIT=0,ALLOW_DELETE=0,ALLOW_PRINT=0, ALLOW_CRUD=0 WHERE ID_NODO=14 AND ID_GRUPO=1; -- NO ACCESO Reportes
 	
-	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) VALUES(18,1,'Login','Login',1,2,'login-icon',6,2,1,0,1);
-	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) VALUES(19,1,'Logout','Logout',1,2,'logout-icon',7,3,1,1,0);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) VALUES(19,1,'Login','Login',1,2,'login-icon',6,2,1,0,1);
+	INSERT INTO TBL_NODO(ID_NODO,NODO_PADRE,NOMBRE_MODULO,ID_COMPONENTE,ESTADO,TIPO_NODO,ICONCLS,N_ORDER,TIPO_DISPLAY,GROUP_ID,SHOW_ON_LOGUED,SHOW_ON_NOLOGUED) VALUES(20,1,'Logout','Logout',1,2,'logout-icon',7,3,1,1,0);
 	
 	INSERT INTO TBL_GRUPO_PRIVILEGIO(ID_NODO,ID_GRUPO,ALLOW_READ,ALLOW_WRITE,ALLOW_EDIT,ALLOW_DELETE,ALLOW_PRINT,ALLOW_CRUD,ESTADO)
 	VALUES(2,2,1,1,1,1,1,1,1) -- ADMIN -> ACCESO ADMINISTRACIÓN
@@ -4327,47 +4371,8 @@ GO
 		VALUES(71,7);
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
 		VALUES(72,7);
-	-- Agrega Evento
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(24,8);	--dse0063
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(26,8);	--dsEmpresa
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(49,8);	--dsPeligro
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(15,8);	--dsCargo
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(10,8);	--dsEventoEmpresa
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(47,8);	--dsOrganizacion
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(21,8);	--dsDepartamento
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(23,8);	--dsDivision
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(11,8);	--dsArea
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(60,8);	--dsTrabajador
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(34,8);	--dsGrupo
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(28,8);	--dsEvento
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(16,8);	--dsCausa
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(30,8);	--dsEventoEmpresa
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(44,8);	--dsMedidaDeControl
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(51,8);	--dsPeligroMedida
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(1,8);	--dsAccion
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(2,8);	--dsAccionCorrectiva
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(68,8);	--dsHerramienta
-	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
-		VALUES(76,8);	--dsTrabajadorInvolucrado
+		VALUES(24,7);
 --PROGRAMA ANUAL
 	--	Crea Programa 
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(54,12); --dsProgramaAnual
@@ -4433,6 +4438,19 @@ GO
 		VALUES(44,17); --dsMedidaDeControl
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)
 		VALUES(73,17); --dsMedidaDeControlByActividad
+		
+	-- Medida como Actividad de Programa
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(47,18); --dsOrganizacion
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(21,18); --dsDepartamento
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(23,18); --dsDivision
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(11,18); --dsArea
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO) VALUES(54,18); --dsProgramaAnual
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(44,18); --dsMedidaDeControl
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(70,18); --dsMeses
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(33,18); --dsFrecuencia
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(32,18); --dsEvidencia
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(15,18); --dsCargo
+	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)	VALUES(7,18); --dsActividadProgramaAnualPrevencion
 --ADMINISTRACIÓN
 	-- Menu generador
 	INSERT INTO TBL_MODULO_STORE (ID_STORE,ID_NODO)

@@ -15,6 +15,7 @@ using WCF_ENAP.WS;
   */
 namespace WCF_ENAP
 {
+    
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
@@ -25,6 +26,33 @@ namespace WCF_ENAP
         public Causa()
         {
             bd = new DataClassesEnapDataContext();
+        }
+        [WebGet(UriTemplate = "getAll?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&TIPO_CAUSA={_tipo_causa}")]
+        public JSONCollection<List<TBL_CAUSA>> GetAllCollection(int _page, int _start, int _limit, string _sort, string _dir, int _tipo_causa)
+        {
+            JSONCollection<List<TBL_CAUSA>> objJSON = new JSONCollection<List<TBL_CAUSA>>();
+            if (_dir == null)
+            {
+                _dir = "DESC";
+            }
+            if (_page == 0)
+            {
+                _page = 1;
+            }
+            if (_limit == 0)
+            {
+                _limit = 10;
+            }
+            _start = (_page * _limit) - _limit;
+            var query = bd.TBL_CAUSA.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+            foreach(TBL_CAUSA causa in query.ToList()) {
+
+            }
+            List<TBL_CAUSA> results = query.ToList();
+            objJSON.items = results;
+            objJSON.totalCount = bd.TBL_CAUSA.Count<TBL_CAUSA>();
+            objJSON.success = true;
+            return objJSON;
         }
         [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&TIPO_CAUSA={_tipo_causa}")]
         public JSONCollection<List<TBL_CAUSA>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _tipo_causa)

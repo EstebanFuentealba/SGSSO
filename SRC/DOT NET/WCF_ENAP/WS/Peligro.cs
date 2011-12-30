@@ -26,6 +26,35 @@ namespace WCF_ENAP
         {
             bd = new DataClassesEnapDataContext();
         }
+        [WebGet(UriTemplate = "getAll?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&TIPO_PELIGRO={_tipo_peligro}")]
+        public JSONCollection<List<TBL_PELIGRO>> GetAllCollection(int _page, int _start, int _limit, string _sort, string _dir, int _tipo_peligro)
+        {
+
+            JSONCollection<List<TBL_PELIGRO>> objJSON = new JSONCollection<List<TBL_PELIGRO>>();
+            try
+            {
+                if (_dir == null)
+                {
+                    _dir = "ASC";
+                }
+                if (_page == 0)
+                {
+                    _page = 1;
+                }
+                if (_limit == 0)
+                {
+                    _limit = 10;
+                }
+                _start = (_page * _limit) - _limit;
+                var query = bd.TBL_PELIGRO.Skip(_start).Take(_limit).OrderBy(orderBy(_sort) + " " + _dir).Select(r => r);
+                List<TBL_PELIGRO> results = query.ToList();
+                objJSON.items = results;
+                objJSON.totalCount = bd.TBL_PELIGRO.Count<TBL_PELIGRO>();
+                objJSON.success = true;
+            }
+            catch (Exception ex) { }
+            return objJSON;
+        }
         [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&TIPO_PELIGRO={_tipo_peligro}")]
         public JSONCollection<List<TBL_PELIGRO>> GetCollection(int _page, int _start, int _limit, string _sort, string _dir, int _tipo_peligro)
         {

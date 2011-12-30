@@ -302,7 +302,8 @@
                                 },
                                 {
                                     xtype: 'gridcolumn', text: 'S',
-                                    flex: 0.05
+                                    flex: 0.05,
+                                    dataIndex: 'AVG_CALIFICACION'
                                 }
                             ],
                             viewConfig: {
@@ -434,7 +435,8 @@
                                                 });
 
                                             }
-                                        },
+                                        }
+                                        /*,
                                         {
                                             xtype: 'button',
                                             text: 'Seguimiento...',
@@ -467,6 +469,7 @@
 
                                             }
                                         }
+                                        */
                                     ]
                                 },
                                 {

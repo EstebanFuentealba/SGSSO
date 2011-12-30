@@ -13,7 +13,8 @@ Ext.define('WCF_ENAP.model.Evento', {
         { "name": "LUGAR_EXACTO", "type": "string" },
         { "name": "DESCRIPCION_GENERAL", "type": "string" },
         { "name": "COUNT_IPRELIMINAR", "type": "int" },
-        { "name": "COUNT_TRABAJADORES", "type": "int" }
+        { "name": "COUNT_TRABAJADORES", "type": "int" },
+        { "name": "AVG_CALIFICACION", "type": "int" }
     ]
 });
 Ext.define('WCF_ENAP.store.dsEvento', {

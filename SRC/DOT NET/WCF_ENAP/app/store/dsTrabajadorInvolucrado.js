@@ -12,6 +12,7 @@
         { "name": "ANOS_EXPERIENCIA_LABORAL", "type": "int" },
         { "name": "ID_TRABAJADOR", "type": "int", "useNull": true },
         { "name": "ID_CARGO", "type": "int" },
+        { "name": "IS_CTP", "type":"boolean"},
 
     /* Incidente data */
         { "name": "ID_EVENTO", "type": "int" },
