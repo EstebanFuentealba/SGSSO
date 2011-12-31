@@ -33,7 +33,7 @@ namespace WCF_ENAP
         public string DESCRIPCION;
         public string FECHA_CREACION;
         public int[] RESPONSABLE;
-        public string RESPONSABLES;
+        public string[] RESPONSABLES;
         public CargoJSON[] RESPONSABLES_OBJECT;
     }
     [ServiceContract]
@@ -99,9 +99,12 @@ namespace WCF_ENAP
                     {
 
                         accion.RESPONSABLE = cargosId.ToArray();
-                        accion.RESPONSABLES = String.Join(", ", cargosName);
+                        accion.RESPONSABLES = cargosName.ToArray();
                         accion.RESPONSABLES_OBJECT = cargos.ToArray();
-                        acciones.Add(accion);
+                        if (accion.ID_ACCION_CORRECTIVA != 0)
+                        {
+                            acciones.Add(accion);
+                        }
                         cargosId = new List<int>();
                         cargosName = new List<string>();
                         cargos = new List<CargoJSON>();
@@ -132,9 +135,11 @@ namespace WCF_ENAP
                 if (!acciones.Contains(accion))
                 {
                     accion.RESPONSABLE = cargosId.ToArray();
-                    accion.RESPONSABLES = String.Join(", ", cargosName);
+                    accion.RESPONSABLES = cargosName.ToArray();
                     accion.RESPONSABLES_OBJECT = cargos.ToArray();
-                    acciones.Add(accion);
+                    if(accion.ID_ACCION_CORRECTIVA != 0){
+                        acciones.Add(accion);
+                    }
                 }
                 List<AccionCorrectivaJSON> results = acciones;
                 objJSON.items = results;
@@ -182,6 +187,13 @@ namespace WCF_ENAP
                     bd.TBL_RESPONSABLE_ACCION.InsertOnSubmit(responsable);
                     bd.SubmitChanges();
                 }
+                /*List<CargoJSON> cargosList = new List<CargoJSON>();
+                for(int i = 0; i < RESPONSABLE.Length; i++){
+                    cargosList.Add(new CargoJSON(){
+                        ID_CARGO = RESPONSABLE[i],
+                        NOMBRE_CARGO = RESPONSABLES[i]
+                    });
+                }*/
                 AccionCorrectivaJSON retorna = new AccionCorrectivaJSON()
                 {
                     ID_ACCION_CORRECTIVA = nuevo.ID_ACCION_CORRECTIVA,
@@ -261,6 +273,12 @@ namespace WCF_ENAP
         [WebInvoke(UriTemplate = "{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json)]
         public void Delete(string id)
         {
+            var responsables = (from variable in bd.TBL_RESPONSABLE_ACCION
+                          where variable.ID_ACCION_CORRECTIVA == int.Parse(id)
+                          select variable).ToList();
+            bd.TBL_RESPONSABLE_ACCION.DeleteAllOnSubmit(responsables);
+            bd.SubmitChanges();
+
             var objeto = (from variable in bd.TBL_ACCION_CORRECTIVA
                           where variable.ID_ACCION_CORRECTIVA == int.Parse(id)
                           select variable).First();

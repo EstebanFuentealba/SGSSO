@@ -13,7 +13,6 @@ Ext.define('WCF_ENAP.model.AccionCorrectiva', {
         { "name": "DESCRIPCION", "type": "string" },
         { "name": "FECHA_CREACION", "type": "date", "dateFormat": "d-m-Y" },
         { "name": "RESPONSABLE" },
-        { "name": "RESPONSABLES", "type": "string" },
         { "name": "RESPONSABLES_OBJECT" }
     ]
 });

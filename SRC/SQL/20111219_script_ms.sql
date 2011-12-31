@@ -2548,6 +2548,7 @@ go
 alter table TBL_RESPONSABLE_ACCION
    add constraint FK_TBL_RESP_REFERENCE_TBL_ACCI foreign key (ID_ACCION_CORRECTIVA)
       references TBL_ACCION_CORRECTIVA (ID_ACCION_CORRECTIVA)
+         on delete cascade
 go
 
 alter table TBL_RESPONSABLE_ACCION
@@ -3554,6 +3555,7 @@ AS
             SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', PASSWORD)),3,32)
        FROM inserted;
 go
+
 
 
 

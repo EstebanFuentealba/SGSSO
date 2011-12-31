@@ -1,7 +1,8 @@
 ﻿Ext.define('WCF_ENAP.view.ui.DatosAcionesCorrectivas', {
     extend: 'Ext.window.Window',
     requires: [
-        'Ext.ux.form.field.BoxSelect'
+        'Ext.ux.form.field.BoxSelect',
+        'Ext.ux.form.field.ClearButton'
     ],
     width: 1000,
     cmpRecord: null,
@@ -59,6 +60,7 @@
                                         {
                                             xtype: 'combobox',
                                             id: 'cmb_accion_correctiva',
+                                            allowBlank: false,
                                             margin: '0 5 0 0',
                                             name: 'ID_ACCION',
                                             store: 'dsAccion',
@@ -99,6 +101,7 @@
                                     xtype: 'boxselect',
                                     margin: '5 5 5 5',
                                     fieldLabel: 'Responsable(s)',
+                                    allowBlank: false,
                                     name: 'RESPONSABLE',
                                     store: 'dsCargo',
                                     displayField: 'NOMBRE_CARGO',
@@ -121,8 +124,10 @@
                                     items: [
                                         {
                                             xtype: 'datefield',
+                                            plugins: ['clearbutton'],
                                             margin: '5 5 5 5',
                                             fieldLabel: 'Fecha Inicio',
+                                            allowBlank: false,
                                             name: 'FECHA_COMIENZO',
                                             labelAlign: 'top',
                                             columnWidth: 0.333,
@@ -138,7 +143,9 @@
                                         },
                                         {
                                             xtype: 'datefield',
+                                            plugins: ['clearbutton'],
                                             disabled: true,
+                                            allowBlank: false,
                                             margin: '5 5 5 5',
                                             fieldLabel: 'Fecha Término',
                                             name: 'FECHA_PLAZO',
@@ -149,13 +156,14 @@
                                             vtype: 'daterange',
                                             startDateField: 'startdtac',
                                             listeners: {
-                                                change: function (field, newValue, oldValue, eOpts){
-                                                    Ext.getCmp('enddtac').setDisabled((newValue==null));
+                                                change: function (field, newValue, oldValue, eOpts) {
+                                                    Ext.getCmp('enddtac').setDisabled((newValue == null));
                                                 }
                                             }
                                         },
                                         {
                                             xtype: 'datefield',
+                                            plugins: ['clearbutton'],
                                             id: 'field_date_ejecucion',
                                             disabled: true,
                                             margin: '5 5 5 5',
@@ -170,6 +178,7 @@
                                 {
                                     xtype: 'htmleditor',
                                     name: 'DESCRIPCION',
+                                    allowBlank: false,
                                     height: 150,
                                     style: 'background-color: white;',
                                     fieldLabel: 'Descripción de la acción correctiva',
@@ -183,13 +192,16 @@
                                     var form;
                                     form = Ext.getCmp('form_datos_acciones_correctivas').getForm();
                                     Ext.getCmp('btn_accion_correctiva_submit').setText('Agregar');
+                                    Ext.getCmp('btn_accion_correctiva_submit').setIconCls('btn-add');
                                     Ext.getCmp('field_date_ejecucion').setDisabled(true);
+                                    Ext.getCmp('grid_acciones_correctivas_list').getSelectionModel().deselectAll();
                                     form.reset();
                                 }
                             },
                             {
                                 id: 'btn_accion_correctiva_submit',
                                 text: 'Agregar',
+                                iconCls: 'btn-add',
                                 handler: function () {
                                     var new_object,
 									errors,
@@ -206,12 +218,15 @@
                                     if (errors.isValid() && form.isValid()) {
                                         if (Ext.isDefined(values['ID_ACCION_CORRECTIVA']) && Ext.isNumeric(values['ID_ACCION_CORRECTIVA'])) {
                                             form.updateRecord(form.getRecord());
-                                            Ext.getCmp('grid_acciones_correctivas_list').getDockedItems('pagingtoolbar')[0].doRefresh()
                                         } else {
                                             Ext.data.StoreManager.lookup('dsAccionCorrectiva').insert(0, new_object);
                                         }
                                     }
-
+                                    Ext.getCmp('btn_accion_correctiva_submit').setText('Agregar');
+                                    Ext.getCmp('btn_accion_correctiva_submit').setIconCls('btn-add');
+                                    Ext.getCmp('field_date_ejecucion').setDisabled(true);
+                                    form.reset();
+                                    Ext.getCmp('grid_acciones_correctivas_list').getDockedItems('pagingtoolbar')[0].doRefresh();
                                 }
                             }]
                         },
@@ -264,7 +279,7 @@
                                     text: 'Estado',
                                     renderer: function (value, meta, record) {
                                         if (record.get('FECHA_EJECUCION') != null) {
-                                            if (record.get('FECHA_EJECUCION') >= record.get('FECHA_COMIENZO') && record.get('FECHA_EJECUCION') <= record.get('FECHA_PLAZO')) {
+                                            if ((record.get('FECHA_EJECUCION') >= record.get('FECHA_COMIENZO') && record.get('FECHA_EJECUCION') <= record.get('FECHA_PLAZO')) || (record.get('FECHA_EJECUCION') <= record.get('FECHA_COMIENZO'))) {
                                                 return '<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="16" border="0" height="16" class="accept-icon" />';
                                             }
                                             return '<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="16" border="0" height="16" class="alert-icon" />';
@@ -277,6 +292,30 @@
 
                         },
                         dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [{
+                                        xtype: 'button',
+                                        disabled: true,
+                                        text: 'Eliminar Seleccionado',
+                                        id: 'btn_delete_accion_correctiva',
+                                        itemId: 'btn_delete_accion_correctiva',
+                                        iconCls: 'btn-delete',
+                                        handler: function () {
+                                            var record,
+                                                storeAccionCorrectiva = Ext.StoreManager.lookup('dsAccionCorrectiva'),
+												grid = Ext.getCmp('grid_acciones_correctivas_list'),
+												records = grid.getSelectionModel().getSelection();
+                                            record = Ext.create('WCF_ENAP.model.AccionCorrectiva', {
+                                                'ID_ACCION_CORRECTIVA': records[0].get('ID_ACCION_CORRECTIVA')
+                                            });
+                                            record.setProxy(storeAccionCorrectiva.getProxy());
+                                            record.destroy();
+                                            Ext.getCmp('grid_acciones_correctivas_list').getDockedItems('pagingtoolbar')[0].doRefresh();
+                                        }
+                                    }]
+                                },
                                 {
                                     xtype: 'pagingtoolbar',
                                     displayInfo: true,
@@ -293,8 +332,10 @@
                                     record = records[0];
                                     form.loadRecord(record);
                                     Ext.getCmp('btn_accion_correctiva_submit').setText('Guardar');
+                                    Ext.getCmp('btn_accion_correctiva_submit').setIconCls('btn-save');
                                     Ext.getCmp('field_date_ejecucion').setDisabled(false);
                                 }
+                                this.down('#btn_delete_accion_correctiva').setDisabled(Ext.isEmpty(records[0]));
                             }
                         }
                     }
