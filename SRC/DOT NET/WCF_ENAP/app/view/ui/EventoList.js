@@ -44,13 +44,13 @@
 		                data: yearsList
 		            }),
 		            margin: '0 0 0 5',
-		            fieldLabel: 'Año',
-		            height: 50,
+		            iconCls: 'no-icon',
 		            valueField: 'ANO',
 		            displayField: 'ANO',
 		            name: 'ANO_INICIO',
 		            listeners: {
 		                change: function (field, newValue, oldValue, eOpts) {
+		                    var cmbCalificacion = this.next('combobox');
 		                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
 		                    Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
 		                        params: {
@@ -68,9 +68,68 @@
 		                        }
 		                    });
 		                    this.up('menu').hide();
+		                    var dsSearch = Ext.data.StoreManager.lookup('dsSearchMarker');
+		                    dsSearch.setProxy(Ext.apply(dsSearch.getProxy(), {
+		                        extraParams: {
+		                            'ANO': newValue,
+		                            'CALIFICACION': cmbCalificacion.getValue()
+		                        }
+		                    }))
 		                }
 		            }
-		        }
+		        },
+                {
+                    xtype: 'combobox',
+                    store: Ext.create('Ext.data.ArrayStore', {
+                        fields: ['CALIFICACION','CALIFICACION_NOMBRE'],
+                        data: [
+                            [0,'Todos'],
+                            [1,'Mayor'],
+                            [2,'Serio'],
+                            [3,'Relevante'],
+                            [4,'Leve'],
+                            [5, 'Sin Efecto'],
+                            [6, 'Sin Información'],
+                        ]
+                    }),
+                    margin: '0 0 0 5',
+                    iconCls: 'no-icon',
+                    valueField: 'CALIFICACION',
+                    displayField: 'CALIFICACION_NOMBRE',
+                    name: 'CALIFICACION',
+                    listeners: {
+                        change: function (field, newValue, oldValue, eOpts) {
+                            var cmbAno = this.prev('combobox');
+                            Ext.getCmp('pnl_graph_incidentes_mes').setLoading(true);
+                            Ext.data.StoreManager.lookup('dsGraphEventosOrganizacion').load({
+                                params: {
+                                    'ANO': cmbAno.getValue(),
+                                    'CALIFICACION': newValue
+                                },
+                                callback: function (records, operation, success) {
+                                    Ext.getCmp('pnl_graph_incidentes_mes').setLoading(false);
+                                }
+                            });
+                            Ext.data.StoreManager.lookup('dsEvento').load({
+                                params: {
+                                    'ANO': cmbAno.getValue(),
+                                    'CALIFICACION': newValue
+                                },
+                                callback: function (records, operation, success) {
+                                }
+                            });
+                            var dsSearch = Ext.data.StoreManager.lookup('dsSearchMarker');
+                            dsSearch.setProxy(Ext.apply(dsSearch.getProxy(), {
+                                extraParams: {
+                                    'ANO': cmbAno.getValue(),
+                                    'CALIFICACION': newValue
+                                }
+                            }))
+                            this.up('menu').hide();
+
+                        }
+                    }
+                }
 	        ]
         });
         Ext.applyIf(me, {
@@ -303,7 +362,22 @@
                                 {
                                     xtype: 'gridcolumn', text: 'S',
                                     flex: 0.05,
-                                    dataIndex: 'AVG_CALIFICACION'
+                                    dataIndex: 'AVG_CALIFICACION',
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        var markersIcons = ['red', 'orange', 'yellow', 'blue', 'green','white'],
+                                        dataIcon;
+                                        try {
+                                            var calificacion = parseInt(value);
+                                            if (calificacion > 0) {
+                                                dataIcon = '/icons/mm_20_' + markersIcons[calificacion - 1] + '.png';
+                                            } else {
+                                                dataIcon = '/icons/mm_20_white.png';
+                                            }
+                                        } catch (e) {
+                                            dataIcon = '/icons/mm_20_green.png';
+                                        }
+                                        return '<img src="' + dataIcon  + '" class="x-tree-icon">';
+                                    }
                                 }
                             ],
                             viewConfig: {
@@ -374,102 +448,102 @@
 
                                             }
                                         },
-                                        /*{
-                                            xtype: 'button',
-                                            text: 'Afecta a PATRIMONIO',
-                                            handler: function () {
-                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
-                                                    me = this;
-                                                Ext.application({
-                                                    name: 'WCF_ENAP',
-                                                    stores:
-                                                            [
-                                                                'dsCausa',
-                                                                'dsTrabajador',
-                                                                'dsPeligro',
-                                                                'dsCargo',
-                                                                'dsAccion',
-                                                                'dsAccionCorrectiva'
+                                    /*{
+                                    xtype: 'button',
+                                    text: 'Afecta a PATRIMONIO',
+                                    handler: function () {
+                                    var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
+                                    me = this;
+                                    Ext.application({
+                                    name: 'WCF_ENAP',
+                                    stores:
+                                    [
+                                    'dsCausa',
+                                    'dsTrabajador',
+                                    'dsPeligro',
+                                    'dsCargo',
+                                    'dsAccion',
+                                    'dsAccionCorrectiva'
                                                                 
-                                                            ],
-                                                    launch: function () {
-                                                        Ext.QuickTips.init();
-                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {
-                                                            cmpRecord: record
-                                                        });
-                                                        addEvento.show();
-                                                        addEvento.on('destroy', function () {
-                                                            Ext.getCmp('pnl_gmap').show();
-                                                        });
-                                                    }
-                                                });
+                                    ],
+                                    launch: function () {
+                                    Ext.QuickTips.init();
+                                    var addEvento = Ext.create('WCF_ENAP.view.ui.DatosTipoIncidente', {
+                                    cmpRecord: record
+                                    });
+                                    addEvento.show();
+                                    addEvento.on('destroy', function () {
+                                    Ext.getCmp('pnl_gmap').show();
+                                    });
+                                    }
+                                    });
 
-                                            }
-                                        },*/
+                                    }
+                                    },*/
                                         {
-                                            xtype: 'button',
-                                            text: 'Acciones Correctivas',
-                                            handler: function () {
-                                                var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
+                                        xtype: 'button',
+                                        text: 'Acciones Correctivas',
+                                        handler: function () {
+                                            var record = Ext.getCmp('grid_eventos_list').getSelectionModel().getSelection()[0],
                                                 me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
-                                                Ext.application({
-                                                    name: 'WCF_ENAP',
-                                                    stores:
+                                            Ext.getCmp('pnl_gmap').hide();
+                                            Ext.application({
+                                                name: 'WCF_ENAP',
+                                                stores:
                                                             [
                                                                 'dsCausa',
                                                                 'dsCargo',
                                                                 'dsAccion',
                                                                 'dsAccionCorrectiva'
                                                             ],
-                                                    launch: function () {
-                                                        Ext.QuickTips.init();
-                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosAcionesCorrectivas', {
-                                                            cmpRecord: record
-                                                        });
-                                                        addEvento.show();
-                                                        addEvento.on('destroy', function () {
-                                                            Ext.getCmp('pnl_gmap').show();
-                                                        });
-                                                    }
-                                                });
+                                                launch: function () {
+                                                    Ext.QuickTips.init();
+                                                    var addEvento = Ext.create('WCF_ENAP.view.ui.DatosAcionesCorrectivas', {
+                                                        cmpRecord: record
+                                                    });
+                                                    addEvento.show();
+                                                    addEvento.on('destroy', function () {
+                                                        Ext.getCmp('pnl_gmap').show();
+                                                    });
+                                                }
+                                            });
 
-                                            }
                                         }
-                                        /*,
-                                        {
-                                            xtype: 'button',
-                                            text: 'Seguimiento...',
-                                            handler: function () {
-                                                var me = this;
-                                                Ext.getCmp('pnl_gmap').hide();
-                                                Ext.application({
-                                                    name: 'WCF_ENAP',
-                                                    stores:
-                                                            [
-                                                                    'dsCausa',
-                                                                    'dsCargo',
-                                                                    'dsAccion',
-                                                                    'dsUsuario',
-                                                                    'dsEvento',
-                                                                    'dsGraphEventosOrganizacion',
-                                                                    'dsAccionCorrectiva'
-                                                            ],
-                                                    launch: function () {
-                                                        Ext.QuickTips.init();
-                                                        var addEvento = Ext.create('WCF_ENAP.view.ui.DatosSeguimiento', {
-                                                            cmpPadre: me
-                                                        });
-                                                        addEvento.show();
-                                                        addEvento.on('destroy', function () {
-                                                            Ext.getCmp('pnl_gmap').show();
-                                                        });
-                                                    }
-                                                });
+                                    }
+                                    /*,
+                                    {
+                                    xtype: 'button',
+                                    text: 'Seguimiento...',
+                                    handler: function () {
+                                    var me = this;
+                                    Ext.getCmp('pnl_gmap').hide();
+                                    Ext.application({
+                                    name: 'WCF_ENAP',
+                                    stores:
+                                    [
+                                    'dsCausa',
+                                    'dsCargo',
+                                    'dsAccion',
+                                    'dsUsuario',
+                                    'dsEvento',
+                                    'dsGraphEventosOrganizacion',
+                                    'dsAccionCorrectiva'
+                                    ],
+                                    launch: function () {
+                                    Ext.QuickTips.init();
+                                    var addEvento = Ext.create('WCF_ENAP.view.ui.DatosSeguimiento', {
+                                    cmpPadre: me
+                                    });
+                                    addEvento.show();
+                                    addEvento.on('destroy', function () {
+                                    Ext.getCmp('pnl_gmap').show();
+                                    });
+                                    }
+                                    });
 
-                                            }
-                                        }
-                                        */
+                                    }
+                                    }
+                                    */
                                     ]
                                 },
                                 {
@@ -544,6 +618,7 @@
     },
     afterRender: function () {
         this.contextMenuYear.getComponent(0).select((new Date()).getFullYear());
+        this.contextMenuYear.getComponent(1).select('0');
         this.contextMenuYear.getComponent(0).checkChange();
         this.callParent(arguments);
     }

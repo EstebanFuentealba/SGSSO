@@ -366,15 +366,29 @@ markers: [{
 		
     },
 	createMarkerFromRecord :  function (record) {
+		var markersIcons = ['red','orange','yellow','blue','green','white'],
+			dataIcon = {};
+		try{
+			var calificacion = parseInt(record.get('AVG_CALIFICACION'));
+			if(calificacion > 0){
+				dataIcon = '/icons/mm_20_'+markersIcons[calificacion-1]+'.png';
+			} 
+			else {
+				dataIcon = '/icons/mm_20_white.png';
+			}
+		}catch(e){
+			dataIcon = '/icons/mm_20_green.png';
+		}
 		return {
 			id: record.get('ID_EVENTO'),
 			lat: record.get('LAT_EVENTO'),
 			lng: record.get('LNG_EVENTO'),
 			marker: {
+				icon: dataIcon,
 				title: record.get('NOMBRE_DEPARTAMENTO'),
 				//animation: google.maps.Animation.DROP,
 				infoWindow: {
-					content: '<h1>Hola</h1><p>' + record.get('DESCRIPCION_GENERAL') + '</p>'
+					content: '<h1>'+record.get('NOMBRE_DEPARTAMENTO')+'</h1><p>' + record.get('DESCRIPCION_GENERAL') + '</p>'
 				}
 			}
 		};
@@ -566,7 +580,7 @@ markers: [{
             this.getMap().setCenter(point, this.zoomLevel)
             this.lastCenter = point;
         }
-
+//markersIcons
         var mark = new google.maps.Marker(Ext.apply(marker, {
             position: point
         }));

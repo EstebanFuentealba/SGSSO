@@ -364,13 +364,14 @@ namespace WCF_ENAP
             //} catch (Exception ex) { objJSON.success = false; }
             return objJSON;
         }
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_ORGANIZACION={ID_ORGANIZACION}&ANO={ANO}")]
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&ID_ORGANIZACION={ID_ORGANIZACION}&ANO={ANO}&CALIFICACION={CALIFICACION}")]
         public JSONCollection<List<sp_get_eventos_listResult>> GetCollection(int _page,
             int _start,
             int _limit,
             string _sort,
             int ID_ORGANIZACION,
-            int ANO)
+            int ANO,
+            int CALIFICACION)
         {
             ExtJSSort sort = null;
             if (_sort != null)
@@ -401,8 +402,12 @@ namespace WCF_ENAP
                 _limit = 10;
             }
             _start = (_page * _limit) - _limit;
-
-            var query = bd.sp_get_eventos_list(_start, _limit, ID_ORGANIZACION, ANO).OrderBy(orderBy(sort));
+            int CALIFICACION__ = 0;
+            if (CALIFICACION != null)
+            {
+                CALIFICACION__ = CALIFICACION;
+            }
+            var query = bd.sp_get_eventos_list(_start, _limit, ID_ORGANIZACION, ANO, CALIFICACION__).OrderBy(orderBy(sort));
             //aki
             query = query.Select(r => r);
             List<sp_get_eventos_listResult> results = query.ToList(); // :S
