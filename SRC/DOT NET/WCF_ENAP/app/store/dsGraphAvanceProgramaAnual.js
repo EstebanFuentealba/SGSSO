@@ -17,7 +17,6 @@ Ext.define('WCF_ENAP.store.dsGraphAvanceProgramaAnual', {
             autoLoad: false,
             autoSync: false,
             storeId: 'dsGraphAvanceProgramaAnual',
-            pageSize: 10,
             remoteSort: true,
             model: 'WCF_ENAP.model.GraphAvanceProgramaAnual',
             proxy: {

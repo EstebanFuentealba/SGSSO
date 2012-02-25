@@ -40,36 +40,40 @@ namespace WCF_ENAP
             bool _TEMPLATE)
         {
             JSONCollection<List<sp_get_programas_anualesResult>> objJSON = new JSONCollection<List<sp_get_programas_anualesResult>>();
-            try
+            //try {
+            List<ExtJSSort> sort = null;
+            if (_sort != null)
             {
-                List<ExtJSSort> sort = null;
-                if (_sort != null)
-                {
-                    JavaScriptSerializer ser = new JavaScriptSerializer();
-                    sort = ser.Deserialize<List<ExtJSSort>>(_sort);
-                }
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                sort = ser.Deserialize<List<ExtJSSort>>(_sort);
+            }
+
+            if (_page == 0)
+            {
+                _page = 1;
+            }
+            if (_limit == 0)
+            {
+                _limit = 10;
+            }
+            _start = (_page * _limit) - _limit;
+            var query = bd.sp_get_programas_anuales(_ANO_INICIO, _ID_DEPARTAMENTO_ORGANIZACION, _ID_DIVISION , _TEMPLATE, _start, _limit).Select(r => r);
+            if (sort != null)
+            {
                 if (sort[sort.Count - 1] != null && sort[sort.Count - 1].direction == null)
                 {
                     sort[sort.Count - 1].direction = "DESC";
                 }
-                if (_page == 0)
-                {
-                    _page = 1;
-                }
-                if (_limit == 0)
-                {
-                    _limit = 10;
-                }
-                _start = (_page * _limit) - _limit;
-                var query = bd.sp_get_programas_anuales(_ANO_INICIO, _ID_DIVISION,_TEMPLATE, _start, _limit).OrderBy(orderBy(sort[sort.Count - 1])).Select(r => r);
-                List<sp_get_programas_anualesResult> results = query.ToList();
-                objJSON.items = results;
-                objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count<TBL_PROGRAMA_ANUAL>();
-                objJSON.success = true;
+                query = query.OrderBy(orderBy(sort[sort.Count - 1]));
             }
-            catch (Exception ex) {
-                objJSON.success = false;
-            }
+            List<sp_get_programas_anualesResult> results = query.ToList();
+            objJSON.items = results;
+            objJSON.totalCount = bd.TBL_PROGRAMA_ANUAL.Count<TBL_PROGRAMA_ANUAL>();
+            objJSON.success = true;
+            //}
+            //catch (Exception ex) {
+            //    objJSON.success = false;
+            //}
             return objJSON;
         }
 

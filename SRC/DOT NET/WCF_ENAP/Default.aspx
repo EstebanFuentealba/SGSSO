@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Language" content="es" />
     <!-- [CSS] -->
     <link href="/ext-4.0.2a/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+    <!--<link href="/ext-4.0.7-gpl/resources/css/ext-all.css" rel="stylesheet" type="text/css" />-->
     <link href="/js/layouts/css/layout-browser.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/ClearButton.css" rel="stylesheet" type="text/css" />
     <link href="/ux/css/ProgressColumn.css" rel="stylesheet" type="text/css" />
@@ -17,6 +18,7 @@
     <!-- [/CSS] -->
     <!-- [JS] -->
     <script src="/ext-4.0.2a/ext-all.js" type="text/javascript"></script>
+    <!--<script src="/ext-4.0.7-gpl/bootstrap.js" type="text/javascript"></script>-->
 	<script src="/ext-4.0.2a/locale/ext-lang-es.js" type="text/javascript"></script>
     <script src="/js/ext-utils-koala.js" type="text/javascript"></script>
 	<script src="/js/layouts/layout-browser.js" type="text/javascript"></script>

@@ -7,7 +7,7 @@ Ext.define('WCF_ENAP.model.ProgramaAnual', {
         { "name": "ID_DIVISION", "type": "int" },
         { "name": "NOMBRE_DIVISION", "type": "string" },
         { "name": "OBJETIVO_META", "type": "string" },
-        { "name": "FECHA_CREACION", "type": "date" },
+        { "name": "FECHA_CREACION", "type": "string" },
         { "name": "PROGRAMA", "type": "string" },
         { "name": "NOMBRE_PROGRAMA", "type": "string" },
         { "name": "MES_INICIO", "type": "int" },
@@ -26,11 +26,9 @@ Ext.define('WCF_ENAP.store.dsProgramaAnual', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: false,
+            autoLoad: true,
             autoSync: true,
             storeId: 'dsProgramaAnual',
-            pageSize: 10,
-            remoteSort: true,
             groupField: 'PROGRAMA',
             model: 'WCF_ENAP.model.ProgramaAnual',
             proxy: {

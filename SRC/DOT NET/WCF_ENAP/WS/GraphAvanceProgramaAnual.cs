@@ -34,13 +34,15 @@ namespace WCF_ENAP
         {
             bd = new DataClassesEnapDataContext();
         }
-        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ANO_INICIO={_ANO_INICIO}")]
+        [WebGet(UriTemplate = "?page={_page}&start={_start}&limit={_limit}&sort={_sort}&dir={_dir}&ANO_INICIO={_ANO_INICIO}&ID_DIVISION={_ID_DIVISION}&ID_DEPARTAMENTO_ORGANIZACION={_ID_DEPARTAMENTO_ORGANIZACION}")]
         public JSONCollection<List<sp_indicadores_all_programa_anualResult>> GetCollection(int _page, 
             int _start, 
             int _limit, 
             string _sort, 
             string _dir,
-            int _ANO_INICIO)
+            int _ANO_INICIO,
+            int _ID_DIVISION,
+            int _ID_DEPARTAMENTO_ORGANIZACION)
         {
             ExtJSSort sort = null;
             if (_sort != null)
@@ -63,7 +65,7 @@ namespace WCF_ENAP
             }
             _start = (_page * _limit) - _limit;
             JSONCollection<List<sp_indicadores_all_programa_anualResult>> objJSON = new JSONCollection<List<sp_indicadores_all_programa_anualResult>>();
-            var query = bd.sp_indicadores_all_programa_anual(_ANO_INICIO, _start, _limit);
+            var query = bd.sp_indicadores_all_programa_anual(_ANO_INICIO,_ID_DEPARTAMENTO_ORGANIZACION,_ID_DIVISION, _start, _limit);
             objJSON.items = query.ToList<sp_indicadores_all_programa_anualResult>();
             objJSON.success = true;
             return objJSON;

@@ -53,8 +53,10 @@
                 text: 'R',
                 width: 40,
                 dataIndex: varName.toLocaleUpperCase() + '_R',
+                
                 editor: {
-                    xtype: 'numberfield'
+                    xtype: 'numberfield',
+                    minValue: 0
                 }
             }, {
                 text: '%',

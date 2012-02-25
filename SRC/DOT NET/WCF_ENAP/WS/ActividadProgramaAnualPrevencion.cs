@@ -653,18 +653,18 @@ namespace WCF_ENAP
                     }
                 }
 
-                objeto.ENERO_R = nuevo.ENERO_R;
-                objeto.FEBRERO_R = nuevo.FEBRERO_R;
-                objeto.MARZO_R = nuevo.MARZO_R;
-                objeto.ABRIL_R = nuevo.ABRIL_R;
-                objeto.MAYO_R = nuevo.MAYO_R;
-                objeto.JUNIO_R = nuevo.JUNIO_R;
-                objeto.JULIO_R = nuevo.JULIO_R;
-                objeto.AGOSTO_R = nuevo.AGOSTO_R;
-                objeto.SEPTIEMBRE_R = nuevo.SEPTIEMBRE_R;
-                objeto.OCTUBRE_R = nuevo.OCTUBRE_R;
-                objeto.NOVIEMBRE_R = nuevo.NOVIEMBRE_R;
-                objeto.DICIEMBRE_R = nuevo.DICIEMBRE_R;
+                objeto.ENERO_R = (objeto.ENERO_P < nuevo.ENERO_R) ? objeto.ENERO_P : objeto.ENERO_R;
+                objeto.FEBRERO_R = (objeto.FEBRERO_P < nuevo.FEBRERO_R) ? objeto.FEBRERO_P : nuevo.FEBRERO_R;
+                objeto.MARZO_R = (objeto.MARZO_P < nuevo.MARZO_R) ? objeto.MARZO_P : nuevo.MARZO_R;
+                objeto.ABRIL_R = (objeto.ABRIL_P < nuevo.ABRIL_R) ? objeto.ABRIL_P : nuevo.ABRIL_R;
+                objeto.MAYO_R = (objeto.MAYO_P < nuevo.MAYO_R) ? objeto.MAYO_P : nuevo.MAYO_R;
+                objeto.JUNIO_R = (objeto.JUNIO_P < nuevo.JUNIO_R) ? objeto.JUNIO_P : nuevo.JUNIO_R;
+                objeto.JULIO_R = (objeto.JULIO_P < nuevo.JULIO_R) ? objeto.JULIO_P : nuevo.JULIO_R;
+                objeto.AGOSTO_R = (objeto.AGOSTO_P < nuevo.AGOSTO_R) ? objeto.AGOSTO_P : nuevo.AGOSTO_R;
+                objeto.SEPTIEMBRE_R = (objeto.SEPTIEMBRE_P < nuevo.SEPTIEMBRE_R) ? objeto.SEPTIEMBRE_P : nuevo.SEPTIEMBRE_R;
+                objeto.OCTUBRE_R = (objeto.OCTUBRE_P < nuevo.OCTUBRE_R) ? objeto.OCTUBRE_P : nuevo.OCTUBRE_R;
+                objeto.NOVIEMBRE_R = (objeto.NOVIEMBRE_P < nuevo.NOVIEMBRE_R) ? objeto.NOVIEMBRE_P : nuevo.NOVIEMBRE_R;
+                objeto.DICIEMBRE_R = (objeto.DICIEMBRE_P < nuevo.DICIEMBRE_R) ? objeto.DICIEMBRE_P : nuevo.DICIEMBRE_R;
                 
                 objeto.MES_INICIO = nuevo.MES_INICIO;
                 bd.SubmitChanges();
